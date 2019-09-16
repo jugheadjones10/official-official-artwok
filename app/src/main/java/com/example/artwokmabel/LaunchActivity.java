@@ -1,5 +1,5 @@
 package com.example.artwokmabel;
 
-public class launchActivity {
+public class LaunchActivity {
 
 }
