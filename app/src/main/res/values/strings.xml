@@ -1,3 +1,11 @@
 <resources>
-    <string name="app_name">Artwok Mabel</string>
+    <string name="app_name">Artwok</string>
+    <string name="buy_sell_share">Buy. Sell. Share.</string>
+    <string name="login">Login</string>
+    <string name="artwok_logo">artwok_logo</string>
+    <string name="back_button">back_button</string>
+    <string name="facebook_button">facebook_button</string>
+    <string name="google_button">google_button</string>
+    <string name="facebook_app_id">672016339977436</string>
+    <string name="fb_login_protocol_scheme">fb672016339977436</string>
 </resources>
