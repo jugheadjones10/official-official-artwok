@@ -1,0 +1,179 @@
+{
+  "project_info": {
+    "project_number": "615648868486",
+    "firebase_url": "https://artwok-database.firebaseio.com",
+    "project_id": "artwok-database",
+    "storage_bucket": "artwok-database.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:615648868486:android:70b3f456deec0bf3",
+        "android_client_info": {
+          "package_name": "com.artwok"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "615648868486-9bh70oin8eqo5537tp0hl6erev4ba67p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.artwok",
+            "certificate_hash": "42e71a1ddf76297ab33a86d781da3d13522a1fe2"
+          }
+        },
+        {
+          "client_id": "615648868486-pltdongs92308fp8dd2gmmrghlphbhhc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPoa3TlvlKUSdjC35hRSNbkru6BPMmeWE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "615648868486-pltdongs92308fp8dd2gmmrghlphbhhc.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "615648868486-n4rl39o8leq752hnjfj4csqdicanalu8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.artwork.artwok"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:615648868486:android:ef3af5613192d5d388b907",
+        "android_client_info": {
+          "package_name": "com.example.artwokmabel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "615648868486-6oe10qmusq71euub0v0r2fuiia3776le.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.artwokmabel",
+            "certificate_hash": "88e2ba6e3cfd0be6c65f7d61096bd9190301527a"
+          }
+        },
+        {
+          "client_id": "615648868486-pltdongs92308fp8dd2gmmrghlphbhhc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPoa3TlvlKUSdjC35hRSNbkru6BPMmeWE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "615648868486-pltdongs92308fp8dd2gmmrghlphbhhc.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "615648868486-n4rl39o8leq752hnjfj4csqdicanalu8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.artwork.artwok"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:615648868486:android:d1bfe923295cee5788b907",
+        "android_client_info": {
+          "package_name": "com.sourcey.materiallogindemo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "615648868486-pltdongs92308fp8dd2gmmrghlphbhhc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPoa3TlvlKUSdjC35hRSNbkru6BPMmeWE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "615648868486-pltdongs92308fp8dd2gmmrghlphbhhc.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "615648868486-n4rl39o8leq752hnjfj4csqdicanalu8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.artwork.artwok"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:615648868486:android:a54425e1125d94a688b907",
+        "android_client_info": {
+          "package_name": "com.sourcey.materialloginexample"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "615648868486-uk82m3vdlotp2me1e0p1hp8t3vq6738j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sourcey.materialloginexample",
+            "certificate_hash": "33a8852115e904497f8d57eb0a38bc5ce190cfc6"
+          }
+        },
+        {
+          "client_id": "615648868486-pltdongs92308fp8dd2gmmrghlphbhhc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPoa3TlvlKUSdjC35hRSNbkru6BPMmeWE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "615648868486-pltdongs92308fp8dd2gmmrghlphbhhc.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "615648868486-n4rl39o8leq752hnjfj4csqdicanalu8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.artwork.artwok"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
