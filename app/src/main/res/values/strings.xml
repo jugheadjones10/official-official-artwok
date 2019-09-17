@@ -8,4 +8,8 @@
     <string name="google_button">google_button</string>
     <string name="facebook_app_id">237713850467910</string>
     <string name="fb_login_protocol_scheme">fb237713850467910</string>
+    <string name="login_button">Login</string>
+    <string name="login_username_hint">Username</string>
+    <string name="login_password_hint">Password</string>
+    <string name="forgot">Forgot Username or Password?</string>
 </resources>
