@@ -25,7 +25,6 @@ public class SearchBarActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_search, menu);
 
         MenuItem searchItem = menu.findItem(R.id.svsearchbar);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
