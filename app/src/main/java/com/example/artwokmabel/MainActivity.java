@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view)
             {
-                setContentView(R.layout.main_page);
+                setContentView(R.layout.activity_login);
             }
         });
 
