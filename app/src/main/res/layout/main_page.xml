@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="49dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="58dp"
+                android:layout_height="match_parent"
+                android:paddingLeft="5dp"
+                android:paddingTop="5dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="5dp"
+                android:src="@drawable/official_logo" />
+
+            <EditText
+                android:id="@+id/search_bar"
+                android:layout_width="257dp"
+                android:layout_height="35dp"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:background="@layout/rounded_border_edittext"
+                android:hint="Search..."
+                android:paddingLeft="15dp" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:background="@color/white"
+                android:padding="10dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/notification" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:background="@color/white"
+                android:padding="10dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/user" />
+
+        </LinearLayout>
+
+        <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:orientation="horizontal">-->
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="25dp"
+                    android:paddingRight="25dp"
+                    android:text="@string/home"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="25dp"
+                    android:paddingRight="25dp"
+                    android:text="Handmade"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="25dp"
+                    android:paddingRight="25dp"
+                    android:text="Gifts"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="25dp"
+                    android:paddingRight="25dp"
+                    android:text="Groups"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="25dp"
+                    android:paddingRight="25dp"
+                    android:text="Requests"
+                    android:textSize="20sp" />
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+                    android:adjustViewBounds="true"
+                    android:padding="3dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/add" />
+
+            </LinearLayout>
+
+        </HorizontalScrollView>
+        <!--</LinearLayout>-->
+
+    </LinearLayout>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="633dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="285dp"
+                android:background="@color/white"
+                android:src="@drawable/rick_and_morty" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="285dp"
+                android:background="@color/white"
+                android:src="@drawable/rick_and_morty" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="285dp"
+                android:background="@color/white"
+                android:src="@drawable/rick_and_morty" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="285dp"
+                android:background="@color/white"
+                android:src="@drawable/rick_and_morty" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="285dp"
+                android:background="@color/white"
+                android:src="@drawable/rick_and_morty" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="285dp"
+                android:background="@color/white"
+                android:src="@drawable/rick_and_morty" />
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
