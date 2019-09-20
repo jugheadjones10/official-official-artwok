@@ -20,5 +20,6 @@
     <string name="listings">listings</string>
     <string name="posts">posts</string>
     <string name="dashboard">dashboard</string>
+    <string name="forgot_password">Forgot password?</string>
 
 </resources>

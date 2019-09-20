@@ -14,7 +14,7 @@
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         app:layout_constraintVertical_bias="0.7"
-        app:layout_constraintBottom_toTopOf="@+id/button2"
+        app:layout_constraintBottom_toTopOf="@+id/login_button"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="46dp">
 
@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        app:layout_constraintBottom_toTopOf="@+id/button2"
+        app:layout_constraintBottom_toTopOf="@+id/login_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textInputLayout1"
@@ -43,7 +43,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/login_button"
         android:layout_width="183dp"
         android:layout_height="55dp"
         android:background="@color/artwok_blue"
@@ -65,17 +65,17 @@
         app:layout_constraintVertical_bias="0.43"
         app:srcCompat="@drawable/official_logo" />
 
-    <TextView
+    <Button
         android:id="@+id/tvforgotpass"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:gravity="center"
-        android:text="@string/forgot"
-        app:layout_constraintVertical_bias="0.1"
+        android:layout_width="230dp"
+        android:layout_height="41dp"
+        android:background="#00FFFFFF"
+        android:text="@string/forgot_password"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.976" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
