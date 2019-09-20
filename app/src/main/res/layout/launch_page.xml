@@ -36,22 +36,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.518" />
 
-    <!--<ImageButton-->
-        <!--android:id="@+id/back_button"-->
-        <!--android:layout_width="38dp"-->
-        <!--android:layout_height="42dp"-->
-        <!--android:background="#00FFFFFF"-->
-        <!--android:contentDescription="@string/back_button"-->
-        <!--android:scaleType="centerInside"-->
-        <!--app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--app:layout_constraintHorizontal_bias="0.043"-->
-        <!--app:layout_constraintLeft_toLeftOf="parent"-->
-        <!--app:layout_constraintRight_toRightOf="parent"-->
-        <!--app:layout_constraintTop_toTopOf="parent"-->
-        <!--app:layout_constraintVertical_bias="0.023"-->
-        <!--app:srcCompat="@drawable/back_button" />-->
-    <!--Unnecessary back button-->
-
     <Button
         android:id="@+id/login_button"
         android:layout_width="wrap_content"
@@ -65,24 +49,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.862" />
 
-
-    <!--<com.facebook.login.widget.LoginButton-->
-        <!--android:id="@+id/facebook_button"-->
-        <!--android:layout_width="195dp"-->
-        <!--android:layout_height="67dp"-->
-        <!--android:layout_gravity="center_horizontal"-->
-        <!--android:layout_marginStart="8dp"-->
-        <!--android:layout_marginLeft="8dp"-->
-        <!--android:layout_marginTop="8dp"-->
-        <!--android:layout_marginEnd="8dp"-->
-        <!--android:layout_marginRight="8dp"-->
-        <!--android:layout_marginBottom="8dp"-->
-        <!--app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--app:layout_constraintEnd_toEndOf="parent"-->
-        <!--app:layout_constraintHorizontal_bias="0.505"-->
-        <!--app:layout_constraintStart_toStartOf="parent"-->
-        <!--app:layout_constraintTop_toTopOf="parent"-->
-        <!--app:layout_constraintVertical_bias="0.68" />-->
 
     <com.facebook.login.widget.LoginButton
         android:id="@+id/facebook_button"

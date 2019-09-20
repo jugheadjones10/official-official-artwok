@@ -45,16 +45,38 @@ public class MainActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     ImageButton google_login;
     GoogleSignInClient mGoogleSignInClient;
-    private LoginButton loginButton;
+    private LoginButton fbLoginButton;
+    private Button loginButton;
     private CallbackManager callbackManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.launch_page);
 
-        loginButton = findViewById(R.id.facebook_button);
+        fbLoginButton = findViewById(R.id.facebook_button);
         google_login = findViewById(R.id.google_button);
+        loginButton = findViewById(R.id.login_button);
+
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                setContentView(R.layout.main_page);
+            }
+        });
+
+///////////////////////////////////////DO NOT TOUCH BELOW -- IT'S ALL AUTHENTICATION CODE //////////////////////////////////////
+///////////////////////////////////////DO NOT TOUCH BELOW -- IT'S ALL AUTHENTICATION CODE //////////////////////////////////////
+///////////////////////////////////////DO NOT TOUCH BELOW -- IT'S ALL AUTHENTICATION CODE //////////////////////////////////////
+///////////////////////////////////////DO NOT TOUCH BELOW -- IT'S ALL AUTHENTICATION CODE //////////////////////////////////////
+///////////////////////////////////////DO NOT TOUCH BELOW -- IT'S ALL AUTHENTICATION CODE //////////////////////////////////////
+///////////////////////////////////////DO NOT TOUCH BELOW -- IT'S ALL AUTHENTICATION CODE //////////////////////////////////////
+///////////////////////////////////////DO NOT TOUCH BELOW -- IT'S ALL AUTHENTICATION CODE //////////////////////////////////////
+///////////////////////////////////////DO NOT TOUCH BELOW -- IT'S ALL AUTHENTICATION CODE //////////////////////////////////////
+///////////////////////////////////////DO NOT TOUCH BELOW -- IT'S ALL AUTHENTICATION CODE //////////////////////////////////////
+///////////////////////////////////////DO NOT TOUCH BELOW -- IT'S ALL AUTHENTICATION CODE //////////////////////////////////////
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -73,9 +95,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
         callbackManager = CallbackManager.Factory.create();
-        loginButton.setReadPermissions(Arrays.asList("email", "public_profile"));
+        fbLoginButton.setReadPermissions(Arrays.asList("email", "public_profile"));
 
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+        fbLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
 
