@@ -21,4 +21,10 @@
     <string name="posts">posts</string>
     <string name="dashboard">dashboard</string>
     <string name="forgot_password">Forgot password?</string>
+    <string name="font">Font:</string>
+    <string name="font_size">Font Size</string>
+    <string name="calibri">Calibri</string>
+    <string name="addDescription">add_description</string>
+    <string name="save">string</string>
+    <string name="list">upload_post_button</string>
 </resources>

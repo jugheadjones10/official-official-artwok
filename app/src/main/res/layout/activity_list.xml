@@ -35,7 +35,6 @@
             android:id="@+id/new_post_image"
             android:layout_width="match_parent"
             android:layout_height="314dp"
-            android:contentDescription="@string/addPicture"
             app:srcCompat="@drawable/add" />
 
         <LinearLayout
@@ -48,7 +47,7 @@
                 android:layout_width="5dip"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Font: " />
+                android:text="@string/font" />
 
             <EditText
                 android:id="@+id/editText2"
@@ -57,14 +56,15 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:text="Calibri" />
+                android:text="@string/calibri"
+                android:autofillHints="" />
 
             <TextView
                 android:id="@+id/textView4"
                 android:layout_width="30dip"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Font Size" />
+                android:text="@string/font_size" />
 
             <ImageButton
                 android:id="@+id/imageButton"
