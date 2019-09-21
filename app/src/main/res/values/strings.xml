@@ -13,7 +13,6 @@
     <string name="login_password_hint">Password</string>
     <string name="forgot">Forgot Username or Password?</string>
     <string name="home">Home</string>
-<<<<<<< Updated upstream
     <string name="profile_name">profile name</string>
     <string name="lorem_ipsum_is_placeholder_text_commonly_used_in_the_graphic_print_and_publishing_industries_for_previewing_layouts_and_visual_mockups">Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.</string>
     <string name="todo">TODO</string>
@@ -22,13 +21,4 @@
     <string name="posts">posts</string>
     <string name="dashboard">dashboard</string>
     <string name="forgot_password">Forgot password?</string>
-=======
-    <string name="list">List!</string>
-    <string name="save">Save</string>
-    <string name="addDescription">Add Description...</string>
-    <string name="addPicture">Add Picture</string>
-
-
->>>>>>> Stashed changes
-
 </resources>
