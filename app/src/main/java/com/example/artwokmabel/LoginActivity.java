@@ -1,5 +1,6 @@
 package com.example.artwokmabel;
 
+<<<<<<< Updated upstream
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -42,3 +43,9 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 }
+=======
+import androidx.appcompat.app.AppCompatActivity;
+
+public class LoginActivity extends AppCompatActivity {
+}
+>>>>>>> Stashed changes
