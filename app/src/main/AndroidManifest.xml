@@ -35,10 +35,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".ForgotPasswordActivity" />
-        <activity android:name=".SearchBarActivity" />
         <activity android:name=".HomePageActivity" />
         <activity android:name=".ProfilePageActivity" />
         <activity android:name=".UploadPostActivity" />
+        <activity android:name=".SearchBarActivity" />
+        <activity android:name=".SearchUsersActivity" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

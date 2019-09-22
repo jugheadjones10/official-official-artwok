@@ -1,6 +1,7 @@
 package com.example.artwokmabel;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -60,7 +61,9 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                                             }
                                         });
                                 alertDialog.show();
-//                                startActivity(new Intent (ForgotPasswordActivity.this, MainActivity.class));
+//                                finish();
+//                                startActivity(new Intent(ForgotPasswordActivity.this, MainActivity.class));
+
                             } else {
                                 AlertDialog alertDialog = new AlertDialog.Builder(ForgotPasswordActivity.this).create();
                                 alertDialog.setTitle("Unsuccessful");

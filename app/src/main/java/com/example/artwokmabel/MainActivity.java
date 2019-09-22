@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     private LoginButton fbLoginButton;
     private Button loginButton;
     private CallbackManager callbackManager;
+    private EditText searchBar;
 
 
     @Override
@@ -58,12 +60,22 @@ public class MainActivity extends AppCompatActivity {
         fbLoginButton = findViewById(R.id.facebook_button);
         google_login = findViewById(R.id.google_button);
         loginButton = findViewById(R.id.login_button);
+        searchBar = findViewById(R.id.et_mainsearchbar);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
             {
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        searchBar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                Intent intent = new Intent(getApplicationContext(), SearchBarActivity.class);
                 startActivity(intent);
             }
         });

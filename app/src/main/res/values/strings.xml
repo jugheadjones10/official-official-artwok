@@ -27,4 +27,5 @@
     <string name="addDescription">add_description</string>
     <string name="save">string</string>
     <string name="list">upload_post_button</string>
+    <string name="search_hint">Search Listings, Posts, Users/Groups</string>
 </resources>
