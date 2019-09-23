@@ -160,8 +160,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateUI(FirebaseUser user) {
         if(user != null){
-
-//            String name = user.getDisplayName();
+              Intent intent = new Intent(getApplicationContext(), HomePageActivity.class);
+              startActivity(intent);
+    //         String name = user.getDisplayName();
 //            String email = user.getEmail();
 //            String photo = String.valueOf(user.getPhotoUrl());
         }else{
