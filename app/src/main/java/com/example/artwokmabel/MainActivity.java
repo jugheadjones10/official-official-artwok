@@ -51,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
     private CallbackManager callbackManager;
     private EditText searchBar;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,15 +66,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view)
             {
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        searchBar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view)
-            {
-                Intent intent = new Intent(getApplicationContext(), SearchBarActivity.class);
                 startActivity(intent);
             }
         });

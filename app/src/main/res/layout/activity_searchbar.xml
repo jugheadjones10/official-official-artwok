@@ -57,7 +57,6 @@
         android:background="@android:color/background_light"
         app:srcCompat="@mipmap/search_icon" />
 
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_resultlist"
         android:layout_width="match_parent"
