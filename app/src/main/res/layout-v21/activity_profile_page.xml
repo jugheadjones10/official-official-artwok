@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/profile_app"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@color/artwok_white">
+
+        <ImageView
+            android:id="@+id/group_profile"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:translationX="245dp"
+            android:translationY="10dp"
+            app:srcCompat="@drawable/ic_group" />
+
+        <ImageView
+            android:id="@+id/heart_profile"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:translationX="280dp"
+            android:translationY="-18dp"
+            app:srcCompat="@drawable/ic_heart" />
+
+        <ImageView
+            android:id="@+id/message_profile"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:translationX="315dp"
+            android:translationY="-46dp"
+            app:srcCompat="@drawable/ic_message" />
+
+        <ImageView
+            android:id="@+id/settings_profile"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:translationX="350dp"
+            android:translationY="-74dp"
+            app:srcCompat="@drawable/ic_settings" />
+
+        <ImageView
+            android:id="@+id/profile_picture"
+            android:layout_width="100dp"
+            android:layout_height="128dp"
+            android:scaleType="fitXY"
+            android:translationX="30dp"
+            android:translationY="-70dp" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <com.google.android.material.tabs.TabLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabGravity="fill"
+        app:tabMode="fixed"
+        android:id="@+id/profile_tab"
+        app:tabTextColor="@color/artwok_white"
+        app:tabIndicatorColor="@color/artwok_blue"
+        android:background="@color/design_default_color_primary"
+        />
+
+    <androidx.viewpager.widget.ViewPager
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/profile_viewpager">
+
+    </androidx.viewpager.widget.ViewPager>
+
+
+</LinearLayout>
