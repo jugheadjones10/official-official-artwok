@@ -30,6 +30,7 @@
     <string name="search_hint">Search Listings, Posts, Users/Groups</string>
     <string name="upload_post_add_description">Add description...</string>
     <string name="upload_post_add_hashtags">Add #hashtags...</string>
+    <string name="upload">upload</string>
     <string-array name="font_array">
         <item>Calibri</item>
         <item>Times New Roman</item>
