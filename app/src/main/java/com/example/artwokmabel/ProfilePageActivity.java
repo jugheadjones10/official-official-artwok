@@ -14,7 +14,6 @@ import com.google.android.material.tabs.TabLayout;
 public class ProfilePageActivity extends AppCompatActivity {
 
     private TabLayout tablayout;
-    private AppBarLayout appBarLayout;
     private ViewPager viewPager;
 
     @Override
@@ -23,7 +22,6 @@ public class ProfilePageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile_page);
 
         tablayout = (TabLayout) findViewById(R.id.profile_tab);
-        appBarLayout = (AppBarLayout) findViewById(R.id.profile_app);
         viewPager = (ViewPager) findViewById(R.id.profile_viewpager);
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
