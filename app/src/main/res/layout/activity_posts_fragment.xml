@@ -1,35 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_posts_fragment"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="center">
+    android:orientation="vertical">
 
-    <Button
-        android:id="@+id/profile_upload"
-        android:layout_width="118dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/roundedbutton"
-        android:text="@string/upload"
-        android:translationX="135dp"
-        android:translationY="250dp" />
-
-    <View
-        android:id="@+id/posts_bar"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="38dp"
-        android:background="@color/artwok_lightblue"
-        android:translationY="-50dp" />
+        android:layout_height="0dp"
+        android:layout_weight="0.16"
+        android:background="@color/artwok_lightblue">
 
-    <ImageButton
-        android:id="@+id/grid_button2"
-        android:layout_width="28dp"
-        android:layout_height="28dp"
-        android:background="#00FFFFFF"
-        android:contentDescription="@string/todo"
-        android:scaleType="fitXY"
-        android:translationX="350dp"
-        android:translationY="-83dp"
-        app:srcCompat="@drawable/ic_grid" />
+        <ImageButton
+            android:id="@+id/profile_postings_grid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00FFFFFF"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.958"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.025"
+            app:srcCompat="@drawable/ic_grid" />
+
+        <Button
+            android:id="@+id/profile_upload_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/roundedbutton"
+            android:text="@string/upload"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/nestedScrollView"
+            app:layout_constraintVertical_bias="0.90"
+            />
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="40dp"
+            android:background="@color/artwok_white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0">
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>
