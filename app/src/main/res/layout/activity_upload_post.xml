@@ -7,146 +7,239 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/new_post_toolbar"
-        android:layout_width="409dp"
-        android:layout_height="51dp"
-        android:background="@color/artwok_blue"
-        android:minHeight="40dip"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.001" />
-
-    <LinearLayout
-        android:layout_width="410dp"
-        android:layout_height="678dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/new_post_toolbar"
-        app:layout_constraintVertical_bias="1.0">
-
-        <ImageView
-            android:id="@+id/new_post_image"
-            android:layout_width="match_parent"
-            android:layout_height="314dp"
-            app:srcCompat="@drawable/add" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="43dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="5dip"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/font" />
-
-            <EditText
-                android:id="@+id/editText2"
-                android:layout_width="20dip"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="@string/calibri"
-                android:autofillHints="" />
-
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="30dip"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/font_size" />
-
-            <ImageButton
-                android:id="@+id/imageButton"
-                android:layout_width="4dip"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:srcCompat="@drawable/com_facebook_tooltip_black_topnub" />
-
-            <ImageButton
-                android:id="@+id/imageButton2"
-                android:layout_width="4dip"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:srcCompat="@drawable/com_facebook_tooltip_black_bottomnub" />
-
-            <Button
-                android:id="@+id/redBtn"
-                android:layout_width="20dip"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@color/artwok_red"/>
-
-            <Button
-                android:id="@+id/GreenBtn"
-                android:layout_width="20dip"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@android:color/holo_green_light"/>
-
-            <Button
-                android:id="@+id/BlueBtn"
-                android:layout_width="15dip"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@android:color/holo_blue_light" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
 
             <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="20dip"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:srcCompat="@drawable/color_palette" />
+                android:id="@+id/upload_pic_imageView"
+                android:layout_width="match_parent"
+                android:layout_height="314dp"
+                android:layout_gravity="center"
+                android:paddingLeft="70dp"
+                android:paddingTop="70dp"
+                android:paddingRight="70dp"
+                android:paddingBottom="70dp"
+                app:srcCompat="@drawable/upload_pic_btn" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="43dp"
+                android:background="#D3D3D3"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/selectFontText"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.07"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:scaleType="fitCenter"
+                    android:text="@string/font"
+                    android:textAlignment="center" />
+
+                <Spinner
+                    android:id="@+id/fontSelectSpinner"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.13" />
+
+                <ImageView
+                    android:id="@+id/incFont"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.05"
+                    android:padding="5dp"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/ic_inc_font" />
+
+                <ImageView
+                    android:id="@+id/decFont"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.05"
+                    android:padding="5dp"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/ic_dec_font" />
+
+                <ImageView
+                    android:id="@+id/boldBtn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.05"
+                    android:padding="5dp"
+                    app:srcCompat="@drawable/ic_bold_text" />
+
+                <ImageView
+                    android:id="@+id/italicsBtn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.05"
+                    android:padding="5dp"
+                    app:srcCompat="@drawable/ic_italic_text" />
+
+                <ImageView
+                    android:id="@+id/underlineBtn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.05"
+                    android:padding="5dp"
+                    app:srcCompat="@drawable/ic_underline_text" />
+
+                <ImageView
+                    android:id="@+id/strikeBtn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.05"
+                    android:padding="5dp"
+                    app:srcCompat="@drawable/ic_strike_text" />
+
+                <ImageView
+                    android:id="@+id/highlightBtn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.05"
+                    android:padding="5dp"
+                    app:srcCompat="@drawable/ic_highlight_text" />
+
+                <ImageView
+                    android:id="@+id/alignBtn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.05"
+                    android:padding="5dp"
+                    app:srcCompat="@drawable/ic_align_flat" />
+
+            </LinearLayout>
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="43dp"
+                android:layout_weight="0.45">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="#CDCDCD"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/redBtn"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="34dp"
+                        android:layout_height="match_parent"
+                        android:layout_margin="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/btn_red_circle"
+                        android:padding="0dp" />
+
+                    <Button
+                        android:id="@+id/greenBtn"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="34dp"
+                        android:layout_height="match_parent"
+                        android:layout_margin="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/btn_green_circle" />
+
+                    <Button
+                        android:id="@+id/blueBtn"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="34dp"
+                        android:layout_height="match_parent"
+                        android:layout_margin="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/btn_blue_circle" />
+
+                    <Button
+                        android:id="@+id/yellowBtn"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="34dp"
+                        android:layout_height="match_parent"
+                        android:layout_margin="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/btn_orange_circle" />
+
+                    <Button
+                        android:id="@+id/purpleBtn"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="34dp"
+                        android:layout_height="match_parent"
+                        android:layout_margin="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/btn_purple_circle" />
+
+                    <Button
+                        android:id="@+id/blackBtn"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="34dp"
+                        android:layout_height="match_parent"
+                        android:layout_margin="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/btn_black_circle" />
+
+                    <Button
+                        android:id="@+id/whiteBtn"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="34dp"
+                        android:layout_height="match_parent"
+                        android:layout_margin="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/btn_white_circle" />
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <EditText
+                android:id="@+id/new_post_desc"
+                android:layout_width="match_parent"
+                android:layout_height="247dp"
+                android:autofillHints="@string/addDescription"
+                android:ems="10"
+                android:gravity="start|top"
+                android:hint="@string/upload_post_add_description"
+                android:inputType="textMultiLine"
+                android:padding="10dp" />
+
+            <EditText
+                android:id="@+id/new_post_hashtags"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:ems="10"
+                android:gravity="start|top"
+                android:hint="@string/upload_post_add_hashtags"
+                android:inputType="textMultiLine"
+                android:padding="10dp" />
+
+            <LinearLayout
+                style="?android:attr/buttonBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/list_btn"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@string/list"
+                    android:textColor="@color/artwok_black" />
+
+                <Button
+                    android:id="@+id/save_btn"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@string/save"
+                    android:textColor="@color/artwok_black" />
+            </LinearLayout>
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="47dp"
-            android:orientation="horizontal"></LinearLayout>
-
-        <EditText
-            android:id="@+id/new_post_desc"
-            android:layout_width="410dp"
-            android:layout_height="197dp"
-            android:autofillHints="@string/addDescription"
-            android:ems="10"
-            android:gravity="start|top"
-            android:inputType="textMultiLine" />
-
-        <LinearLayout
-            style="?android:attr/buttonBarStyle"
-            android:layout_width="410dp"
-            android:layout_height="70dp"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/list_btn"
-                style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="210dp"
-                android:layout_height="70dp"
-                android:layout_weight="1"
-                android:text="@string/list" />
-
-            <Button
-                android:id="@+id/save_btn"
-                style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="193dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="@string/save" />
-        </LinearLayout>
-
-    </LinearLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
