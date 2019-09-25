@@ -20,19 +20,14 @@
     <string name="dashboard">dashboard</string>
     <string name="forgot_password">Forgot password?</string>
     <string name="font">Font:</string>
-    <string name="font_size">Font Size:</string>
+    <string name="font_size">Font Size</string>
     <string name="calibri">Calibri</string>
     <string name="addDescription">add_description</string>
-    <string name="save">Save</string>
-    <string name="list">Upload</string>
+    <string name="save">string</string>
+    <string name="list">upload_post_button</string>
     <string name="search_hint">Search Listings, Posts, Users/Groups</string>
-    <string name="upload_post_add_description">Add description...</string>
-    <string name="upload_post_add_hashtags">Add #hashtags...</string>
     <string name="upload">upload</string>
-    <string-array name="font_array">
-        <item>Calibri</item>
-        <item>Times New Roman</item>
-        <item>Arial</item>
-    </string-array>
-
+    <string name="add_listings">Add listings</string>
+    <string name="listings_caps">LISTINGS: </string>
+    <string name="type_here">Type Here</string>
 </resources>

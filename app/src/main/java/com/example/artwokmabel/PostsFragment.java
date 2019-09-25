@@ -24,7 +24,7 @@ public class PostsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.activity_posts_fragment, container, false);
-        Button button = (Button) view.findViewById(R.id.profile_upload);
+        Button button = (Button) view.findViewById(R.id.profile_upload_button);
 
         button.setOnClickListener(new View.OnClickListener()
         {
