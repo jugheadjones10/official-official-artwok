@@ -48,6 +48,37 @@ public class FirestoreRepo {
         return firestoreRepo;
     }
 
+
+
+    public LiveData<List<Listing>> getUserListings(String uid){
+        final MutableLiveData<List<Listing>> data = new MutableLiveData<>();
+        List<Listing> tempData = new ArrayList<>();
+
+        db.collection("Users")
+            .document(uid)
+            .collection("Listings")
+            .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.w("TAG", "Listen failed.", e);
+                            return;
+                        }
+
+                        tempData.clear();
+                        for(DocumentSnapshot single: queryDocumentSnapshots){
+                            Listing listdata = changeDocToListingModel(single);
+                            tempData.add(listdata);
+                        }
+
+                        Collections.sort(tempData, new SortListings());
+                        data.setValue(tempData);
+                    }
+                });
+
+        return data;
+    }
+
     public LiveData<List<Listing>> getSingleCategoryListings(String category){
         final MutableLiveData<List<Listing>> data = new MutableLiveData<>();
         List<Listing> tempData = new ArrayList<>();
