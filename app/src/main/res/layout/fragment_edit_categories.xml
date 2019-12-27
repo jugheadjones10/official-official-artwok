@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable name="callback" type="com.example.artwokmabel.homepage.callbacks.EditCategorySaveCallback"/>
+    </data>
+
+    <LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/save_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="365dp"
+            android:layout_marginBottom="10dp"
+            android:padding="8dp"
+            android:text="Save"
+            android:onClick="@{() -> callback.onClick()}"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/cat_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="false"
+            android:foregroundGravity="center_horizontal"/>
+
+    </LinearLayout>
+</layout>

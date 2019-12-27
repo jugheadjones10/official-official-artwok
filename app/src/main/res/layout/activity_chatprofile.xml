@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout>
+    <data>
+        <variable name="user" type="com.example.artwokmabel.chat.models.UserUserModel"/>
+        <variable name="messagecallback" type="com.example.artwokmabel.chat.activities.ChatProfileActivity.OnChatClicked"/>
+    </data>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:id="@+id/container_linear">
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/chatprofile_imageview"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:srcCompat="@drawable/profileicon"
+        android:layout_gravity="center"
+        android:layout_marginVertical="20dp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:layout_marginVertical="20dp">
+        <TextView
+            android:id="@+id/chat_profile_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{user.userName}"
+            android:layout_gravity="center"
+            android:textSize="20dp"
+            android:layout_marginVertical="5dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="One Line Introduction"
+            android:layout_gravity="center"
+            android:textSize="16dp"
+            android:layout_marginVertical="5dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:layout_marginVertical="20dp">
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_blacknwhite"
+            android:layout_marginHorizontal="10dp"/>
+
+        <ImageButton
+            android:id="@+id/btn_createchat"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:background="@drawable/btn_blacknwhite"
+            android:onClick="@{() -> messagecallback != null ? messagecallback.onChatClicked() : null}"
+            app:srcCompat="@drawable/ic_message" />
+    </LinearLayout>
+
+</LinearLayout>
+</layout>

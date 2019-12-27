@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <com.synnapps.carouselview.CarouselView
+                android:id="@+id/carouselView"
+                android:layout_width="match_parent"
+                android:layout_height="314dp"
+                app:fillColor="#FFFFFFFF"
+                app:pageColor="#00000000"
+                app:radius="6dp"
+                app:slideInterval="3000"
+                app:strokeColor="#FF777777"
+                app:autoPlay="false"
+                app:strokeWidth="1dp"/>
+
+            <ImageView
+                android:id="@+id/uploadPic"
+                android:layout_width="match_parent"
+                android:layout_height="314dp"
+                android:layout_gravity="center"
+                android:padding="100dp"
+                app:srcCompat="@drawable/upload_pic_btn" />
+
+<!--            <HorizontalScrollView-->
+<!--                android:id="@+id/color_parlette_view"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="40dp"-->
+<!--                android:layout_weight="0.45">-->
+
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:background="#FFFFFF"-->
+<!--                    android:orientation="horizontal">-->
+
+<!--                    <Button-->
+<!--                        android:id="@+id/redBtn"-->
+<!--                        style="?android:attr/borderlessButtonStyle"-->
+<!--                        android:layout_width="31dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_margin="5dp"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@drawable/btn_circle_red"-->
+<!--                        android:padding="0dp" />-->
+
+<!--                    <Button-->
+<!--                        android:id="@+id/pinkBtnL"-->
+<!--                        style="?android:attr/borderlessButtonStyle"-->
+<!--                        android:layout_width="31dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_margin="5dp"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@drawable/btn_circle_pink"-->
+<!--                        android:padding="0dp" />-->
+
+<!--                    <Button-->
+<!--                        android:id="@+id/greenBtn"-->
+<!--                        style="?android:attr/borderlessButtonStyle"-->
+<!--                        android:layout_width="31dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_margin="5dp"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@drawable/btn_circle_green" />-->
+
+<!--                    <Button-->
+<!--                        android:id="@+id/blueBtn"-->
+<!--                        style="?android:attr/borderlessButtonStyle"-->
+<!--                        android:layout_width="31dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_margin="5dp"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@drawable/btn_circle_blue" />-->
+
+
+<!--                    <Button-->
+<!--                        android:id="@+id/darkBlueBtn"-->
+<!--                        style="?android:attr/borderlessButtonStyle"-->
+<!--                        android:layout_width="31dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_margin="5dp"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@drawable/btn_circle_dark_blue" />-->
+
+<!--                    <Button-->
+<!--                        android:id="@+id/yellowBtn"-->
+<!--                        style="?android:attr/borderlessButtonStyle"-->
+<!--                        android:layout_width="31dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_margin="5dp"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@drawable/btn_circle_orange" />-->
+
+<!--                    <Button-->
+<!--                        android:id="@+id/purpleBtn"-->
+<!--                        style="?android:attr/borderlessButtonStyle"-->
+<!--                        android:layout_width="31dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_margin="5dp"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@drawable/btn_circle_purple" />-->
+
+<!--                    <Button-->
+<!--                        android:id="@+id/blackBtn"-->
+<!--                        style="?android:attr/borderlessButtonStyle"-->
+<!--                        android:layout_width="31dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_margin="5dp"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@drawable/btn_circle_black" />-->
+
+<!--                    &lt;!&ndash;Button-->
+<!--                        android:id="@+id/whiteBtn"-->
+<!--                        style="?android:attr/borderlessButtonStyle"-->
+<!--                        android:layout_width="32dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_margin="5dp"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@drawable/btn_circle_white" /&ndash;&gt;-->
+<!--                </LinearLayout>-->
+<!--            </HorizontalScrollView>-->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="43dp"
+                android:paddingRight="3dp"
+                android:orientation="horizontal">
+
+
+
+<!--                &lt;!&ndash;TextView-->
+<!--                    android:id="@+id/selectFontText"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="0.07"-->
+<!--                    android:gravity="center_horizontal|center_vertical"-->
+<!--                    android:scaleType="fitCenter"-->
+<!--                    android:text="@string/font"-->
+<!--                    android:textAlignment="center" /&ndash;&gt;-->
+
+<!--                <Spinner-->
+<!--                    android:id="@+id/fontSelectSpinner"-->
+<!--                    style="@style/spinner_style"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="0.11"-->
+<!--                    android:entries="@array/font_name_array" />-->
+
+<!--                <Spinner-->
+<!--                    android:id="@+id/fontSizeSpinner"-->
+<!--                    style="@style/spinner_style"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="0.065"-->
+<!--                    android:entries="@array/font_size_array" />-->
+
+<!--                &lt;!&ndash;ImageView-->
+<!--                    android:id="@+id/incFont"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="0.05"-->
+<!--                    android:padding="5dp"-->
+<!--                    android:scaleType="centerInside"-->
+<!--                    app:srcCompat="@drawable/ic_inc_font" />-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/decFont"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="0.05"-->
+<!--                    android:padding="5dp"-->
+<!--                    android:scaleType="centerInside"-->
+<!--                    app:srcCompat="@drawable/ic_dec_font" /&ndash;&gt;-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/divider"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="0.016"-->
+<!--                    android:padding="5dp"-->
+<!--                    app:srcCompat="@drawable/ic_divider" />-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/boldBtn"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="0.03"-->
+<!--                    android:padding="5dp"-->
+<!--                    app:srcCompat="@drawable/ic_bold" />-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/italicsBtn"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="0.03"-->
+<!--                    android:padding="5dp"-->
+<!--                    app:srcCompat="@drawable/ic_italics" />-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/underlineBtn"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="0.03"-->
+<!--                    android:padding="5dp"-->
+<!--                    app:srcCompat="@drawable/ic_underline" />-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/highlightBtn"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="0.027"-->
+<!--                    android:padding="5dp"-->
+<!--                    app:srcCompat="@drawable/ic_highlight" />-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/fillBtn"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="0.033"-->
+<!--                    android:padding="5dp"-->
+<!--                    app:srcCompat="@drawable/ic_fill" />-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/divider2"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="0.016"-->
+<!--                    android:padding="5dp"-->
+<!--                    app:srcCompat="@drawable/ic_divider" />-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/alignLeft"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="0.033"-->
+<!--                    android:padding="5dp"-->
+<!--                    app:srcCompat="@drawable/ic_left" />-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/alignCenter"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="0.033"-->
+<!--                    android:padding="5dp"-->
+<!--                    app:srcCompat="@drawable/ic_center" />-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/alignRight"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="0.033"-->
+<!--                    android:padding="5dp"-->
+<!--                    app:srcCompat="@drawable/ic_right" />-->
+
+            </LinearLayout>
+
+
+
+
+<!--            EDITOR-->
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:background="@color/white"
+                android:layout_marginTop="?attr/actionBarSize"
+                android:layout_height="match_parent">
+
+                <!-- Begin Editor toolbar -->
+
+                <HorizontalScrollView android:id="@+id/tools"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#e6e6e6"
+                    android:scrollbars="none">
+
+                    <include layout="@layout/editor_toolbar_linearlayout_horizontal" />
+
+                </HorizontalScrollView>
+                <!--End of Editor toolbar -->
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginEnd="0dp"
+                    android:layout_marginBottom="0dp"
+                    android:scrollbars="vertical">
+
+                    <com.github.irshulx.Editor
+                        android:id="@+id/editor"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingLeft="20dp"
+                        android:paddingTop="10dp"
+                        android:paddingRight="20dp"
+                        android:paddingBottom="100dp"
+                        app:placeholder="Start writing here..."
+                        app:render_type="Editor"></com.github.irshulx.Editor>
+                </ScrollView>
+            </RelativeLayout>
+<!--                        EDITOR-->
+
+<!--            <EditText-->
+<!--                android:id="@+id/new_post_desc"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="247dp"-->
+<!--                android:autofillHints="@string/addDescription"-->
+<!--                android:ems="10"-->
+<!--                android:gravity="start|top"-->
+<!--                android:hint="@string/upload_post_add_description"-->
+<!--                android:inputType="textMultiLine"-->
+<!--                android:padding="10dp" />-->
+
+            <EditText
+                android:id="@+id/new_post_hashtags"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:gravity="start|top"
+                android:hint="@string/upload_post_add_hashtags"
+                android:inputType="textMultiLine"
+                android:padding="10dp" />
+
+            <ProgressBar
+                android:id="@+id/upload_progress"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="0dp"
+                android:indeterminate="true"
+                android:visibility="invisible" />
+
+            <LinearLayout
+                style="?android:attr/buttonBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/upload_btn"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@string/list"
+                    android:textColor="@color/artwok_black" />
+
+                <Button
+                    android:id="@+id/save_btn"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@string/save"
+                    android:textColor="@color/artwok_black" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
