@@ -11,14 +11,14 @@ import java.util.List;
 
 public class IndivUserListingsViewModel extends ViewModel {
     private FirebaseAuth mAuth;
-    private final LiveData<List<Listing>> userListingsObservable;
+    private LiveData<List<Listing>> userListingsObservable;
 
     public IndivUserListingsViewModel() {
         mAuth = FirebaseAuth.getInstance();
-        userListingsObservable = FirestoreRepo.getInstance().getUserListings(mAuth.getCurrentUser().getUid());
     }
 
-    public LiveData<List<Listing>> getUserListingsObservable() {
+    public LiveData<List<Listing>> getUserListingsObservable(String userId) {
+        userListingsObservable = FirestoreRepo.getInstance().getUserListings(userId);
         return userListingsObservable;
     }
 }

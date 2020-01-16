@@ -103,7 +103,7 @@ public class IndivUserListingsFragment extends Fragment {
 
     private void observeViewModel(IndivUserListingsViewModel viewModel) {
         // Update the list when the data changes
-        viewModel.getUserListingsObservable().observe(this, new Observer<List<Listing>>() {
+        viewModel.getUserListingsObservable(indivUserId).observe(this, new Observer<List<Listing>>() {
             @Override
             public void onChanged(@Nullable List<Listing> listings) {
                 if (listings != null) {
