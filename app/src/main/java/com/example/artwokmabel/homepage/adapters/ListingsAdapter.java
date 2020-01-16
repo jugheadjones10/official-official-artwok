@@ -49,6 +49,7 @@ public class ListingsAdapter extends RecyclerView.Adapter<ListingsAdapter.myHold
     @Override
     public void onBindViewHolder(@NonNull myHolder myHolder, int i) {
         Listing data = listingsList.get(i);
+
         myHolder.binding.setListingclickcallback(new OnListingClicked());
         myHolder.binding.setProfilecallback(new OnProfileClicked());
         myHolder.binding.setListing(data);
