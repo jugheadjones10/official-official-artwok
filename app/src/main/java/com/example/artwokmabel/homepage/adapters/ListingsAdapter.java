@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.ItemListingsBinding;
-import com.example.artwokmabel.homepage.Activities.IndivListingActivity;
+import com.example.artwokmabel.homepage.activities.IndivListingActivity;
 import com.example.artwokmabel.homepage.fragments.indivuser.IndivUserFragment;
 import com.example.artwokmabel.homepage.homepagestuff.HomePageActivity;
 import com.example.artwokmabel.homepage.models.Listing;
@@ -108,15 +108,18 @@ public class ListingsAdapter extends RecyclerView.Adapter<ListingsAdapter.myHold
     public class OnListingClicked{
         public void onListClicked(Listing data){
             Intent intent = new Intent(mContext, IndivListingActivity.class);
-            intent.putExtra("username", data.getUsername());
-            intent.putExtra("postid", data.getPostid());
-            intent.putExtra("itemname", data.getName());
-            intent.putExtra("price", data.getPrice());
-            intent.putExtra("itemDesc", data.getDesc());
-            intent.putExtra("photos", data.getPhotos());
-            intent.putExtra("refund_exxhange", data.getReturn_exchange());
-            intent.putExtra("delivery", data.getDelivery());
-            intent.putExtra("userid", data.getUserid());
+
+//            intent.putExtra("username", data.getUsername());
+//            intent.putExtra("postid", data.getPostid());
+//            intent.putExtra("itemname", data.getName());
+//            intent.putExtra("price", data.getPrice());
+//            intent.putExtra("itemDesc", data.getDesc());
+//            intent.putExtra("photos", data.getPhotos());
+//            intent.putExtra("refund_exxhange", data.getReturn_exchange());
+//            intent.putExtra("delivery", data.getDelivery());
+//            intent.putExtra("userid", data.getUserid());
+            intent.putExtra("listing", data);
+
             mContext.startActivity(intent);
         }
     }

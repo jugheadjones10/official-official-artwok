@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.ItemPostsBinding;
-import com.example.artwokmabel.homepage.Activities.IndivPostActivity;
+import com.example.artwokmabel.homepage.activities.IndivPostActivity;
 import com.example.artwokmabel.homepage.fragments.indivuser.IndivUserFragment;
 import com.example.artwokmabel.homepage.callbacks.MainPostClickCallback;
 import com.example.artwokmabel.homepage.homepagestuff.HomePageActivity;

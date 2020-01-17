@@ -1,4 +1,4 @@
-package com.example.artwokmabel.homepage.Activities;
+package com.example.artwokmabel.homepage.activities;
 
 import android.content.Context;
 import android.content.Intent;

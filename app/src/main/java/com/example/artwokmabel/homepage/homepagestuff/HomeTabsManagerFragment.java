@@ -16,7 +16,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.AltMainHomeFragmentBinding;
-import com.example.artwokmabel.homepage.Activities.FavouritesActivity;
+import com.example.artwokmabel.homepage.activities.FavouritesActivity;
 import com.example.artwokmabel.homepage.fragments.TemporarySearchFragment;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -79,12 +79,11 @@ public class HomeTabsManagerFragment extends Fragment {
                     tabCategories = categories;
                     adapter.setCategoriesList(categories);
 
-                    binding.viewPager.setCurrentItem(categories.size());
+                    binding.viewPager.setCurrentItem(0);
                 }
             }
         });
     }
-
 
     public static HomeTabsManagerFragment getInstance(){
         return instance;

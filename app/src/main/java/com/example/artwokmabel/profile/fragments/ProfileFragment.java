@@ -15,7 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
-import com.example.artwokmabel.homepage.Activities.SettingsActivity;
+import com.example.artwokmabel.homepage.activities.SettingsActivity;
 import com.example.artwokmabel.profile.ProfileViewPagerAdapter;
 import com.example.artwokmabel.R;
 import com.google.android.gms.tasks.OnCompleteListener;

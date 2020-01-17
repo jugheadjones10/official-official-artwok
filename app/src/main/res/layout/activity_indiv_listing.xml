@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/indiv_post"
-    tools:context="com.example.artwokmabel.homepage.Activities.IndivPostActivity"
+    tools:context="com.example.artwokmabel.homepage.activities.IndivPostActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">

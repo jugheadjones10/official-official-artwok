@@ -7,12 +7,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.example.artwokmabel.Request.HomeRequestsFragment;
 import com.example.artwokmabel.homepage.fragments.EditCategoriesFragment;
 import com.example.artwokmabel.homepage.fragments.HomeFeedFragment;
-import com.example.artwokmabel.homepage.fragments.HomeGiftsFragment;
-import com.example.artwokmabel.homepage.fragments.HomeHandmadeFragment;
-import com.example.artwokmabel.homepage.fragments.HomeServicesFragment;
 import com.example.artwokmabel.homepage.fragments.HomeStandardCatFragment;
 
 import java.util.ArrayList;
@@ -61,7 +57,7 @@ public class TabsPagerAdapter extends FragmentStateAdapter {
                 tabFragment = new EditCategoriesFragment();
                 break;
             default:
-                tabFragment = new HomeHandmadeFragment();
+                tabFragment = new EditCategoriesFragment();
                 break;
         }
         return tabFragment;

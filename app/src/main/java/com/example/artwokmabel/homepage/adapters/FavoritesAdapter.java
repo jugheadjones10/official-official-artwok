@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.artwokmabel.homepage.Activities.IndivPostActivity;
+import com.example.artwokmabel.homepage.activities.IndivPostActivity;
 import com.example.artwokmabel.homepage.models.MainPost;
 import com.example.artwokmabel.R;
 import com.google.firebase.auth.FirebaseAuth;

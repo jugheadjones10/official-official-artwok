@@ -1,8 +1,9 @@
 package com.example.artwokmabel.homepage.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Listing {
+public class Listing implements Serializable {
 
     private String userid;
     private long nanopast;

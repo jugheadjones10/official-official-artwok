@@ -14,7 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.artwokmabel.homepage.Activities.IndivPostActivity;
+import com.example.artwokmabel.homepage.activities.IndivPostActivity;
 import com.example.artwokmabel.homepage.adapters.newCommentsAdapter;
 import com.example.artwokmabel.homepage.models.Comment;
 import com.example.artwokmabel.R;
