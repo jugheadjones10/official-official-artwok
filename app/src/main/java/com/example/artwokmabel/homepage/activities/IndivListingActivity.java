@@ -1,6 +1,7 @@
 package com.example.artwokmabel.homepage.activities;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -27,6 +28,7 @@ public class IndivListingActivity extends AppCompatActivity {
     private ActivityIndivListingNewNewBinding binding;
     private FirebaseAuth mAuth;
     private Listing listing;
+    private IndivListViewPagerAdapter adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,26 +37,8 @@ public class IndivListingActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         binding = DataBindingUtil.setContentView(this, R.layout.activity_indiv_listing_new_new);
 
-        IndivListViewPagerAdapter adapter = new IndivListViewPagerAdapter(this);
+        adapter = new IndivListViewPagerAdapter(this);
         //Changed above to passing in fragmentActivity
-
-        binding.pager.setAdapter(adapter);
-        new TabLayoutMediator(binding.tabLayout, binding.pager,
-            new TabLayoutMediator.TabConfigurationStrategy() {
-                @Override
-                public void onConfigureTab(TabLayout.Tab tab, int position) {
-                    if(position == 0){
-                        tab.setText("Description");
-                    }else if(position == 1){
-                        tab.setText("Reviews");
-                    }else if(position == 2){
-                        tab.setText("Delivery/Refund");
-                    }else{
-                        tab.setText("FAQ");
-                    }
-                }
-            }
-        ).attach();
 
         getIncomingIntent();
     }
@@ -65,6 +49,7 @@ public class IndivListingActivity extends AppCompatActivity {
         binding.setListing(listing);
 
         ArrayList<String> images = listing.getPhotos();
+        Log.d("listing_check", images.toString());
         binding.listingImage.setImageListener(new ImageListener() {
             @Override
             public void setImageForPosition(int position, ImageView imageView) {
@@ -75,6 +60,11 @@ public class IndivListingActivity extends AppCompatActivity {
                         .into(imageView);
             }
         });
+
+        if(images != null){
+            binding.listingImage.setPageCount(images.size());
+        }
+
 
         //Load profile pic into listing
 //        Picasso.get()
@@ -90,6 +80,24 @@ public class IndivListingActivity extends AppCompatActivity {
             binding.indivToolbar.inflateMenu(R.menu.indiv_listing_menu_yours);
         }
 
+        adapter.setListing(listing);
+        binding.pager.setAdapter(adapter);
+        new TabLayoutMediator(binding.tabLayout, binding.pager,
+                new TabLayoutMediator.TabConfigurationStrategy() {
+                    @Override
+                    public void onConfigureTab(TabLayout.Tab tab, int position) {
+                        if(position == 0){
+                            tab.setText("Description");
+                        }else if(position == 1){
+                            tab.setText("Reviews");
+                        }else if(position == 2){
+                            tab.setText("Delivery/Refund");
+                        }else{
+                            tab.setText("FAQ");
+                        }
+                    }
+                }
+        ).attach();
     }
 
     @Override

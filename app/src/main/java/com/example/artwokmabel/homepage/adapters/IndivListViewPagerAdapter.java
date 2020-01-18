@@ -1,5 +1,7 @@
 package com.example.artwokmabel.homepage.adapters;
 
+import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -9,11 +11,18 @@ import com.example.artwokmabel.homepage.fragments.Indivlistings.DeliveryFragment
 import com.example.artwokmabel.homepage.fragments.Indivlistings.DescFragment;
 import com.example.artwokmabel.homepage.fragments.Indivlistings.FaqFragment;
 import com.example.artwokmabel.homepage.fragments.Indivlistings.ReviewFragment;
+import com.example.artwokmabel.homepage.models.Listing;
 
 public class IndivListViewPagerAdapter extends FragmentStateAdapter {
 
+    private Listing listing;
+
     public IndivListViewPagerAdapter(FragmentActivity fragmentActivity) {
         super(fragmentActivity);
+    }
+
+    public void setListing(Listing listing){
+        this.listing = listing;
     }
 
     @NonNull
@@ -24,9 +33,9 @@ public class IndivListViewPagerAdapter extends FragmentStateAdapter {
 
             Fragment fragment = new DescFragment();
 
-//            Bundle args = new Bundle();
-//            args.putInt("Arg", position + 1);
-//            fragment.setArguments(args);
+            Bundle args = new Bundle();
+            args.putString("description", listing.getDesc());
+            fragment.setArguments(args);
 
             return fragment;
 
@@ -34,28 +43,24 @@ public class IndivListViewPagerAdapter extends FragmentStateAdapter {
 
             Fragment fragment = new ReviewFragment();
 
-//            Bundle args = new Bundle();
-//            args.putInt("Arg", position + 1);
-//            fragment.setArguments(args);
+            Bundle args = new Bundle();
+            args.putString("review", "reviews. Make reviews xml");
+            fragment.setArguments(args);
 
             return fragment;
         }else if(position == 2){
 
             Fragment fragment = new DeliveryFragment();
 
-//            Bundle args = new Bundle();
-//            args.putInt("Arg", position + 1);
-//            fragment.setArguments(args);
+            Bundle args = new Bundle();
+            args.putString("delivery", listing.getDelivery());
+            args.putString("refund", listing.getReturn_exchange());
+            fragment.setArguments(args);
 
             return fragment;
         }else{
 
             Fragment fragment = new FaqFragment();
-
-//            Bundle args = new Bundle();
-//            args.putInt("Arg", position + 1);
-//            fragment.setArguments(args);
-
             return fragment;
         }
     }
