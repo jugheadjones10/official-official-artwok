@@ -5,12 +5,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    android:id="@+id/indiv_post"
-    tools:context="com.example.artwokmabel.homepage.activities.IndivPostActivity"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+
+    <data>
+        <variable name="listing" type="com.example.artwokmabel.homepage.models.Listing"/>
+    </data>
+
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/indiv_post"
+        tools:context="com.example.artwokmabel.homepage.activities.IndivPostActivity"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
     <!--    android:theme="@style/AppTheme.AppBarOverlay"-->
     <!--    android:background="?attr/colorPrimary"-->
@@ -126,18 +132,18 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_weight="1"
-                            android:paddingLeft="5dp" />
-<!--                        android:text="@{post.username}"-->
+                            android:paddingLeft="5dp"
+                            android:text="@{listing.username}" />
 
-                        <TextView
-                            android:id="@+id/post_date"
-                            style="@style/RegularCondensed"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"
-                            android:paddingLeft="5dp" />
-<!--                        android:text="@{post.timestamp}"-->
+<!--                        <TextView-->
+<!--                            android:id="@+id/post_date"-->
+<!--                            style="@style/RegularCondensed"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_gravity="center"-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:paddingLeft="5dp" />-->
+<!--&lt;!&ndash;                        android:text="@{post.timestamp}"&ndash;&gt;-->
 
                     </LinearLayout>
 
@@ -153,16 +159,16 @@
                         app:srcCompat="@drawable/favourite_post" />
 <!--                    android:onClick="@{() -> sharecallback.onClick(post)}"-->
 
-                    <ImageButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:adjustViewBounds="true"
-                        android:background="@null"
-                        android:padding="10dp"
-                        android:scaleType="fitCenter"
-                        android:id="@+id/triple_dot"
-                        app:srcCompat="@drawable/more" />
+<!--                    <ImageButton-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_gravity="center_vertical"-->
+<!--                        android:adjustViewBounds="true"-->
+<!--                        android:background="@null"-->
+<!--                        android:padding="10dp"-->
+<!--                        android:scaleType="fitCenter"-->
+<!--                        android:id="@+id/triple_dot"-->
+<!--                        app:srcCompat="@drawable/more" />-->
 
                 </LinearLayout>
 
@@ -173,47 +179,52 @@
     </com.google.android.material.appbar.AppBarLayout>
 
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/comment_bar"
-        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="200px"
-        android:hint="Comment"
-        app:endIconContentDescription="Send"
-        app:endIconDrawable="@drawable/ic_send_24px"
-        app:endIconMode="custom">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_comment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/artwok_white"
-            android:textColorHint="@color/artwok_white" />
-
-    </com.google.android.material.textfield.TextInputLayout>
 
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/nested_scroll"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="false"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+<!--        <com.google.android.material.textfield.TextInputLayout-->
+<!--            android:id="@+id/comment_bar"-->
+<!--            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="200px"-->
+<!--            android:hint="Comment"-->
+<!--            app:endIconContentDescription="Send"-->
+<!--            app:endIconDrawable="@drawable/ic_send_24px"-->
+<!--            app:endIconMode="custom">-->
+
+<!--            <com.google.android.material.textfield.TextInputEditText-->
+<!--                android:id="@+id/edit_comment"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:textColor="@color/artwok_white"-->
+<!--                android:textColorHint="@color/artwok_white" />-->
+
+<!--        </com.google.android.material.textfield.TextInputLayout>-->
 
 
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/nested_scroll"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="false"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tab_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/pager"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+                    <com.google.android.material.tabs.TabLayout
+                        android:id="@+id/tab_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
 
+                    <androidx.viewpager2.widget.ViewPager2
+                        android:id="@+id/pager"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+                </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
 
