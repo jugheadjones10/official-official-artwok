@@ -30,7 +30,6 @@ public class IndivListViewPagerAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
 
         if(position == 0){
-
             Fragment fragment = new DescFragment();
 
             Bundle args = new Bundle();
@@ -38,9 +37,7 @@ public class IndivListViewPagerAdapter extends FragmentStateAdapter {
             fragment.setArguments(args);
 
             return fragment;
-
         }else if(position == 1){
-
             Fragment fragment = new ReviewFragment();
 
             Bundle args = new Bundle();
@@ -49,7 +46,6 @@ public class IndivListViewPagerAdapter extends FragmentStateAdapter {
 
             return fragment;
         }else if(position == 2){
-
             Fragment fragment = new DeliveryFragment();
 
             Bundle args = new Bundle();
@@ -59,7 +55,6 @@ public class IndivListViewPagerAdapter extends FragmentStateAdapter {
 
             return fragment;
         }else{
-
             Fragment fragment = new FaqFragment();
             return fragment;
         }

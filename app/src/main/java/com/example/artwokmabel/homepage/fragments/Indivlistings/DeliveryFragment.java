@@ -1,6 +1,7 @@
 package com.example.artwokmabel.homepage.fragments.Indivlistings;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,12 +25,13 @@ public class DeliveryFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_indiv_listing_delivery, container, false);
 
-
         delivery = view.findViewById(R.id.delivery_text);
         refund = view.findViewById(R.id.refund_text);
-        
+
         String deliveryText = getArguments().getString("delivery");
         String refundText = getArguments().getString("refund");
+
+        Log.d("checkDelivery", deliveryText + "    " + refundText);
 
         delivery.setText(deliveryText);
         refund.setText(refundText);

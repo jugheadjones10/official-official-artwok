@@ -14,6 +14,7 @@ import androidx.databinding.DataBindingUtil;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.ActivityIndivListingNewNewBinding;
 import com.example.artwokmabel.homepage.adapters.IndivListViewPagerAdapter;
+import com.example.artwokmabel.homepage.callbacks.ShareClickCallback;
 import com.example.artwokmabel.homepage.models.Listing;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -38,7 +39,6 @@ public class IndivListingActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_indiv_listing_new_new);
 
         adapter = new IndivListViewPagerAdapter(this);
-        //Changed above to passing in fragmentActivity
 
         getIncomingIntent();
     }
@@ -47,6 +47,7 @@ public class IndivListingActivity extends AppCompatActivity {
 
         listing = (Listing)getIntent().getSerializableExtra("listing");
         binding.setListing(listing);
+        binding.setSharecallback(new ShareClickCallback());
 
         ArrayList<String> images = listing.getPhotos();
         Log.d("listing_check", images.toString());
@@ -65,7 +66,6 @@ public class IndivListingActivity extends AppCompatActivity {
             binding.listingImage.setPageCount(images.size());
         }
 
-
         //Load profile pic into listing
 //        Picasso.get()
 //                .load(listing.get)
@@ -82,6 +82,8 @@ public class IndivListingActivity extends AppCompatActivity {
 
         adapter.setListing(listing);
         binding.pager.setAdapter(adapter);
+
+
         new TabLayoutMediator(binding.tabLayout, binding.pager,
                 new TabLayoutMediator.TabConfigurationStrategy() {
                     @Override
