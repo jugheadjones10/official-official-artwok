@@ -8,6 +8,7 @@
 
     <data>
         <variable name="listing" type="com.example.artwokmabel.homepage.models.Listing"/>
+        <variable name="user" type="com.example.artwokmabel.homepage.models.User"/>
         <variable name="sharecallback" type="com.example.artwokmabel.homepage.callbacks.ShareClickCallback"/>
 
     </data>
@@ -20,21 +21,23 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-    <!--    android:theme="@style/AppTheme.AppBarOverlay"-->
-    <!--    android:background="?attr/colorPrimary"-->
+
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/indiv_appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        android:theme="@style/AppTheme.AppBarOverlay">
+<!--        app bar overlay made the words white-->
+<!--        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">-->
 
-        <!--        android:background="?attr/colorPrimary"-->
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/indiv_toolbar_collapse"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:contentScrim="@color/artwok_background_blue">
+            android:background="@color/artwok_background_blue"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+<!--            app:contentScrim="@color/artwok_background_blue"-->
+<!--            the above applies a cool fade-in fade-out effect-->
 
             <com.synnapps.carouselview.CarouselView
                 android:id="@+id/listing_image"
@@ -112,12 +115,11 @@
 
 
                     <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/profile"
+                        android:id="@+id/profile_picture"
                         android:layout_width="55dp"
                         android:layout_height="match_parent"
                         android:layout_gravity="left|center_vertical"
-                        android:padding="8dp"
-                        android:src="@drawable/rjha" />
+                        android:padding="8dp" />
 <!--                    android:onClick="@{() -> profilecallback.onClick(post)}"-->
 
                     <LinearLayout
@@ -135,7 +137,7 @@
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:paddingLeft="5dp"
-                            android:text="@{listing.username}" />
+                            android:text="@{user.username}" />
 
 <!--                        <TextView-->
 <!--                            android:id="@+id/post_date"-->

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -9,6 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="50px"
         android:orientation="vertical">
 
         <TextView
@@ -20,13 +21,36 @@
 
         <ExpandableListView
             android:id="@+id/seller_expandable_faq"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@android:color/darker_gray"
+            android:dividerHeight="0.5dp"
+            android:layoutDirection="rtl"/>
+        <!--        android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft"-->
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Buyer FAQ"
+            android:textSize="20dp"></TextView>
+
+
+        <ExpandableListView
+            android:id="@+id/buyer_expandable_faq"
             android:layout_height="match_parent"
             android:layout_width="match_parent"
             android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft"
             android:divider="@android:color/darker_gray"
             android:dividerHeight="0.5dp" />
-    </LinearLayout>
 
+    </LinearLayout>
 
 </LinearLayout>
 

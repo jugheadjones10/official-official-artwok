@@ -10,12 +10,15 @@ import android.widget.ImageView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.ActivityIndivListingNewNewBinding;
 import com.example.artwokmabel.homepage.adapters.IndivListViewPagerAdapter;
 import com.example.artwokmabel.homepage.callbacks.ShareClickCallback;
 import com.example.artwokmabel.homepage.models.Listing;
+import com.example.artwokmabel.homepage.models.User;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,6 +33,7 @@ public class IndivListingActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private Listing listing;
     private IndivListViewPagerAdapter adapter;
+    private GetUserObservableViewModel viewModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,6 +50,24 @@ public class IndivListingActivity extends AppCompatActivity {
     private void getIncomingIntent(){
 
         listing = (Listing)getIntent().getSerializableExtra("listing");
+
+        viewModel = ViewModelProviders.of(this).get(GetUserObservableViewModel.class);
+        viewModel.getUserObservable(listing.getUserid()).observe(this, new Observer<User>() {
+            @Override
+            public void onChanged(@Nullable User user) {
+                if (user != null) {
+                    binding.setUser(user);
+                    Log.d("profileimage", user.getUid() + user.getProfile_url());
+                    Picasso.get()
+                            .load(user.getProfile_url())
+                            .placeholder(R.drawable.user)
+                            .error(R.drawable.rick_and_morty)
+                            .into(binding.profilePicture);
+                }
+            }
+        });
+
+
         binding.setListing(listing);
         binding.setSharecallback(new ShareClickCallback());
 
@@ -74,6 +96,7 @@ public class IndivListingActivity extends AppCompatActivity {
 //                .into(imageView);
 
         setSupportActionBar(binding.indivToolbar);
+
         if(mAuth.getCurrentUser().getUid().equals(listing.getUserid())){
             binding.indivToolbar.inflateMenu(R.menu.indiv_listing_menu_mine);
         }else{
@@ -82,7 +105,6 @@ public class IndivListingActivity extends AppCompatActivity {
 
         adapter.setListing(listing);
         binding.pager.setAdapter(adapter);
-
 
         new TabLayoutMediator(binding.tabLayout, binding.pager,
                 new TabLayoutMediator.TabConfigurationStrategy() {

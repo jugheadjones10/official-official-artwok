@@ -12,6 +12,7 @@ import com.example.artwokmabel.chat.models.UserUserModel;
 import com.example.artwokmabel.homepage.models.Category;
 import com.example.artwokmabel.homepage.models.Listing;
 import com.example.artwokmabel.homepage.models.MainPost;
+import com.example.artwokmabel.homepage.models.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
@@ -49,6 +50,27 @@ public class FirestoreRepo {
     }
 
 
+    public LiveData<User> getUser(String uid){
+
+        final MutableLiveData<User> data = new MutableLiveData<>();
+
+        db.collection("Users")
+                .document(uid)
+                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable DocumentSnapshot snapshot, @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.w("TAG", "Listen failed.", e);
+                            return;
+                        }
+
+                        User user = snapshot.toObject(User.class);
+                        data.setValue(user);
+                    }
+                });
+
+        return data;
+    }
 
     public LiveData<List<Listing>> getUserListings(String uid){
         final MutableLiveData<List<Listing>> data = new MutableLiveData<>();

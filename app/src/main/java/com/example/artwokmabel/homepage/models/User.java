@@ -3,26 +3,43 @@ package com.example.artwokmabel.homepage.models;
 import java.util.ArrayList;
 
 public class User {
+
+    public User(String username, String uid, String profile_url, ArrayList<String> following, ArrayList<String> followers, ArrayList<String> chatrooms, ArrayList<String> fav_listings, ArrayList<String> fav_posts, ArrayList<String> fav_requests, ArrayList<String> favorites, String email) {
+        this.username = username;
+        this.uid = uid;
+        this.profile_url = profile_url;
+        this.following = following;
+        this.followers = followers;
+        this.chatrooms = chatrooms;
+        this.fav_listings = fav_listings;
+        this.fav_posts = fav_posts;
+        this.fav_requests = fav_requests;
+        this.favorites = favorites;
+        this.email = email;
+    }
+
     public String username;
     public String uid;
-    public String profileUrl;
+    public String profile_url;
     public ArrayList<String> following;
     public ArrayList<String> followers;
     public ArrayList<String> chatrooms;
+    public ArrayList<String> fav_listings;
+    public ArrayList<String> fav_posts;
+    public ArrayList<String> fav_requests;
+    public ArrayList<String> favorites;
     public String email;
 
     public User(){
 
     }
 
-    public User(String username, String uid, String profileUrl, ArrayList<String> following, ArrayList<String> followers, ArrayList<String> chatrooms, String email) {
-        this.username = username;
-        this.uid = uid;
-        this.profileUrl = profileUrl;
-        this.following = following;
-        this.followers = followers;
-        this.chatrooms = chatrooms;
-        this.email = email;
+    public String getProfile_url() {
+        return profile_url;
+    }
+
+    public void setProfile_url(String profile_url) {
+        this.profile_url = profile_url;
     }
 
     public String getUsername() {
@@ -41,13 +58,6 @@ public class User {
         this.uid = uid;
     }
 
-    public String getProfileUrl() {
-        return profileUrl;
-    }
-
-    public void setProfileUrl(String profileUrl) {
-        this.profileUrl = profileUrl;
-    }
 
     public ArrayList<String> getFollowing() {
         return following;
@@ -73,6 +83,38 @@ public class User {
         this.chatrooms = chatrooms;
     }
 
+    public ArrayList<String> getFav_listings() {
+        return fav_listings;
+    }
+
+    public void setFav_listings(ArrayList<String> fav_listings) {
+        this.fav_listings = fav_listings;
+    }
+
+    public ArrayList<String> getFav_posts() {
+        return fav_posts;
+    }
+
+    public void setFav_posts(ArrayList<String> fav_posts) {
+        this.fav_posts = fav_posts;
+    }
+
+    public ArrayList<String> getFav_requests() {
+        return fav_requests;
+    }
+
+    public void setFav_requests(ArrayList<String> fav_requests) {
+        this.fav_requests = fav_requests;
+    }
+
+    public ArrayList<String> getFavorites() {
+        return favorites;
+    }
+
+    public void setFavorites(ArrayList<String> favorites) {
+        this.favorites = favorites;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -80,4 +122,5 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
+
 }
