@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
@@ -34,6 +35,7 @@ public class IndivListingActivity extends AppCompatActivity {
     private Listing listing;
     private IndivListViewPagerAdapter adapter;
     private GetUserObservableViewModel viewModel;
+    private User me;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,11 +52,47 @@ public class IndivListingActivity extends AppCompatActivity {
     private void getIncomingIntent(){
 
         listing = (Listing)getIntent().getSerializableExtra("listing");
-
         viewModel = ViewModelProviders.of(this).get(GetUserObservableViewModel.class);
+
+        viewModel.getUserObservable(mAuth.getCurrentUser().getUid()).observe(this, new Observer<User>() {
+            @Override
+            public void onChanged(@Nullable User user) {
+                if (user != null) {
+                    me = user;
+
+                    if(listing.getUserid().equals(mAuth.getCurrentUser().getUid())){
+                        binding.favoriteButton.setVisibility(View.GONE);
+                    }else{
+                        ArrayList<String> favs = me.getFav_listings();
+                        Log.d("favfav", favs.toString());
+
+                        if(favs != null && favs.contains(listing.getPostid())){
+                            binding.favoriteButton.setImageResource(R.drawable.like);
+                        }else{
+                            binding.favoriteButton.setImageResource(R.drawable.favourite_post);
+                        }
+
+                        binding.favoriteButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                if(favs != null && favs.contains(listing.getPostid())){
+                                    viewModel.removeUserListingFavs(listing.getPostid());
+                                }else{
+                                    viewModel.addUserListingFavs(listing.getPostid());
+                                }
+                            }
+                        });
+
+                    }
+                }
+            }
+        });
+
         viewModel.getUserObservable(listing.getUserid()).observe(this, new Observer<User>() {
             @Override
             public void onChanged(@Nullable User user) {
+
                 if (user != null) {
                     binding.setUser(user);
                     Log.d("profileimage", user.getUid() + user.getProfile_url());
@@ -67,9 +105,60 @@ public class IndivListingActivity extends AppCompatActivity {
             }
         });
 
-
         binding.setListing(listing);
         binding.setSharecallback(new ShareClickCallback());
+
+//        if(listing.getUserid().equals(mAuth.getCurrentUser().getUid())){
+//            binding.shareButton.setImageResource(R.drawable.menu);
+//        }else{
+//            db = FirebaseFirestore.getInstance();
+//            db.collection("Users")
+//                    .document(mAuth.getCurrentUser().getUid())
+//                    .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+//                        @Override
+//                        public void onEvent(@Nullable DocumentSnapshot snapshot, @Nullable FirebaseFirestoreException e) {
+//                            if (e != null) {
+//                                Log.w("TAG", "Listen failed.", e);
+//                                return;
+//                            }
+//
+//                            if(snapshot.exists()){
+//                                ArrayList<String> favs = (ArrayList<String>) snapshot.get("fav_posts");
+//                                if(favs.contains(getIntent().getStringExtra("postid"))){
+//                                    favorite.setImageResource(R.drawable.like);
+//                                }else{
+//                                    favorite.setImageResource(R.drawable.favourite_post);
+//                                }
+//                            }
+//                        }
+//                    });
+//
+//            favorite.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    db.collection("Users")
+//                            .document(mAuth.getCurrentUser().getUid())
+//                            .get()
+//                            .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+//                                @Override
+//                                public void onSuccess(DocumentSnapshot documentSnapshot) {
+//                                    ArrayList<String> favs = (ArrayList<String>) documentSnapshot.get("fav_posts");
+//                                    if(favs.contains(getIntent().getStringExtra("postid"))){
+//                                        favorite.setImageResource(R.drawable.favourite_post);
+//                                        db.collection("Users")
+//                                                .document( mAuth.getCurrentUser().getUid())
+//                                                .update("fav_posts", FieldValue.arrayRemove(getIntent().getStringExtra("postid")));
+//                                    }else{
+//                                        favorite.setImageResource(R.drawable.like);
+//                                        db.collection("Users")
+//                                                .document( mAuth.getCurrentUser().getUid())
+//                                                .update("fav_posts", FieldValue.arrayUnion(getIntent().getStringExtra("postid")));
+//                                    }
+//                                }
+//                            });
+//                }
+//            });
+//        }
 
         ArrayList<String> images = listing.getPhotos();
         Log.d("listing_check", images.toString());

@@ -49,6 +49,17 @@ public class FirestoreRepo {
         return firestoreRepo;
     }
 
+    public void addUserListingFavs(String listingId, String userId){
+        db.collection("Users")
+                .document(userId)
+                .update("fav_listings", FieldValue.arrayUnion(listingId));
+    }
+
+    public void removeUserListingFavs(String listingId, String userId){
+        db.collection("Users")
+                .document(userId)
+                .update("fav_listings", FieldValue.arrayRemove(listingId));
+    }
 
     public LiveData<User> getUser(String uid){
 
