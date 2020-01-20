@@ -1,4 +1,4 @@
-package com.example.artwokmabel.Auth;
+package com.example.artwokmabel.auth;
 
 import android.app.ActivityOptions;
 import android.app.ProgressDialog;
@@ -14,9 +14,11 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 
-import com.example.artwokmabel.homepage.homepagestuff.HomePageActivity;
 import com.example.artwokmabel.R;
+import com.example.artwokmabel.databinding.ActivityLoginBinding;
+import com.example.artwokmabel.homepage.homepagestuff.HomePageActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -37,6 +39,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private EditText emailInput;
     private EditText passwordInput;
     private TextView forgotPassword;
+
+    private ActivityLoginBinding binding;
 
     private ProgressDialog mProgressDialog;
 
@@ -67,11 +71,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
 
-        forgotPassword = findViewById(R.id.tv_forgotpassword);
-        loginButton = findViewById(R.id.loginActivity_button_login);
-        createAccount = findViewById(R.id.loginActivity_button_signup);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
+
+//        forgotPassword = findViewById(R.id.tv_forgotpassword);
+//        loginButton = findViewById(R.id.loginActivity_button_login);
+//        createAccount = findViewById(R.id.loginActivity_button_signup);
         forgotPassword.setOnClickListener(this);
         loginButton.setOnClickListener(this);
         createAccount.setOnClickListener(this);

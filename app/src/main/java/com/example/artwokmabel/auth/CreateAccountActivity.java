@@ -1,4 +1,4 @@
-package com.example.artwokmabel.Auth;
+package com.example.artwokmabel.auth;
 
 import android.app.ProgressDialog;
 import android.content.Intent;

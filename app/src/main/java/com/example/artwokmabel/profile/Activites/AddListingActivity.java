@@ -29,7 +29,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.artwokmabel.Auth.LoginActivity;
+import com.example.artwokmabel.auth.LoginActivity;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.homepage.models.Listing;
 import com.google.android.gms.tasks.OnCompleteListener;

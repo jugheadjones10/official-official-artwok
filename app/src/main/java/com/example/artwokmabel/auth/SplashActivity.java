@@ -1,4 +1,4 @@
-package com.example.artwokmabel.Auth;
+package com.example.artwokmabel.auth;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.artwokmabel.Auth.LoginActivity;
 import com.example.artwokmabel.BuildConfig;
 import com.example.artwokmabel.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -76,7 +75,7 @@ public class SplashActivity extends AppCompatActivity {
             builder.create().show();
 
         }else {
-            startActivity(new Intent(this, LoginActivity.class));
+            startActivity(new Intent(this, LoginActivityNew.class));
         }
 
     }

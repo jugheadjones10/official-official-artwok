@@ -12,7 +12,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.example.artwokmabel.Auth.LoginActivity;
+import com.example.artwokmabel.auth.LoginActivity;
 import com.example.artwokmabel.profile.ProfileViewPagerAdapter;
 import com.example.artwokmabel.profile.fragments.DashboardFragment;
 import com.example.artwokmabel.profile.fragments.ListingsFragment;

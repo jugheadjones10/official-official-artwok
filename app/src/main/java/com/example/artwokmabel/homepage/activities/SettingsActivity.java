@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.artwokmabel.Auth.LoginActivity;
+import com.example.artwokmabel.auth.LoginActivity;
 import com.example.artwokmabel.homepage.adapters.SettingsAdapter;
 import com.example.artwokmabel.homepage.models.SettingsModel;
 import com.example.artwokmabel.R;

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="oncreateacctclicked"
+            type="com.example.artwokmabel.auth.LoginActivityNew.OnCreateAccountClicked" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/activity_login_options_bg"
+        android:gravity="bottom|center_horizontal"
+        android:orientation="vertical">
+
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="-400dp"
+            android:src="@drawable/login_people_fun" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="143dp"
+            android:src="@drawable/artwok_login_icon" />
+
+        <LinearLayout
+            android:id="@+id/login_options_buttons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="100dp"
+            android:gravity="center_horizontal|center_vertical"
+            android:orientation="vertical">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/login_button_material"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="230dp"
+                android:layout_height="40dp"
+                android:text="Log in"
+                android:textAllCaps="false"
+                android:textColor="@color/artwok_white"
+                app:backgroundTint="@color/login_buttons_color"
+                app:cornerRadius="8dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/create_account_button_material"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="230dp"
+                android:layout_height="40dp"
+                android:onClick="@{() -> oncreateacctclicked.onCreateAccountClicked()}"
+                android:text="Create account"
+                android:textAllCaps="false"
+                android:textColor="@color/artwok_white"
+                app:backgroundTint="@color/login_buttons_color"
+                app:cornerRadius="8dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/social_companies_buttons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="0dp"
+            android:gravity="center_horizontal|center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="false"
+                android:layout_margin="8dp"
+                android:src="@drawable/google_login_options" />
+
+            <ImageView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="8dp"
+                android:src="@drawable/facebook_login_options" />
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+</layout>

@@ -20,7 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.artwokmabel.Auth.LoginActivity;
+import com.example.artwokmabel.auth.LoginActivity;
 import com.example.artwokmabel.R;
 import com.github.irshulx.Editor;
 import com.github.irshulx.EditorListener;

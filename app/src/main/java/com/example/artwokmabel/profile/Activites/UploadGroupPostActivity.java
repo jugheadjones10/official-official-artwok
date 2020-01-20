@@ -30,7 +30,7 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.artwokmabel.Auth.LoginActivity;
+import com.example.artwokmabel.auth.LoginActivity;
 import com.example.artwokmabel.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;

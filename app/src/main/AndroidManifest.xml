@@ -13,7 +13,7 @@
         android:roundIcon="@drawable/official_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".Auth.SplashActivity">
+        <activity android:name=".auth.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -30,7 +30,7 @@
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name" />
-        <activity android:name=".Auth.LoginActivity">
+        <activity android:name=".auth.LoginActivity">
 <!--            <intent-filter>-->
 <!--                <action android:name="android.intent.action.MAIN" />-->
 <!--                <category android:name="android.intent.category.LAUNCHER" />-->
@@ -63,10 +63,10 @@
         <!--  https://stackoverflow.com/questions/42051956/how-to-hide-the-bottomnavigationview-below-keyboard-with-adjustresize-set-->
         <activity android:name=".homepage.homepagestuff.HomePageActivity"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".Auth.ForgotPasswordActivity" />
+        <activity android:name=".auth.ForgotPasswordActivity" />
         <activity android:name=".RubbishReference.LaunchPageActivity" />
         <activity android:name=".RubbishReference.SearchDefaultActivity" />
-        <activity android:name=".Auth.CreateAccountActivity" />
+        <activity android:name=".auth.CreateAccountActivity" />
         <activity android:name=".profile.Activites.GroupActivity" />
         <activity android:name=".chat.activities.ChatActivity" />
         <activity android:name=".chat.activities.ChatProfileActivity" />
@@ -80,6 +80,12 @@
         <activity android:name=".Request.RequestsActivity" />
         <activity android:name=".Request.IndivRequestsActivity" />
         <activity android:name=".homepage.activities.IndivListingActivity" />
+
+        <activity android:name=".auth.LoginActivityNew" />
+        <activity android:name=".auth.CreateAccountEmailActivity"
+            android:parentActivityName=".auth.LoginActivityNew"/>
+
+
 
         <!--        PUSH NOTIFICATIONS-->
 <!--        <service-->

@@ -13,7 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.artwokmabel.Auth.CreateAccountActivity;
+import com.example.artwokmabel.auth.CreateAccountActivity;
 import com.example.artwokmabel.homepage.homepagestuff.HomePageActivity;
 import com.example.artwokmabel.R;
 import com.google.android.gms.tasks.OnCompleteListener;

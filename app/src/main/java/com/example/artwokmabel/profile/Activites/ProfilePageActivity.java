@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.artwokmabel.Auth.LoginActivity;
+import com.example.artwokmabel.auth.LoginActivity;
 import com.example.artwokmabel.profile.ProfileViewPagerAdapter;
 import com.example.artwokmabel.profile.fragments.DashboardFragment;
 import com.example.artwokmabel.profile.fragments.ListingsFragment;

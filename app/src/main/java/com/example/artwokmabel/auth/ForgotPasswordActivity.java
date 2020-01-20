@@ -1,4 +1,4 @@
-package com.example.artwokmabel.Auth;
+package com.example.artwokmabel.auth;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
