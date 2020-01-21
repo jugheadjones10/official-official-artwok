@@ -8,25 +8,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.example.artwokmabel.R;
-import com.example.artwokmabel.databinding.ActivityCreateAccountEmailBinding;
+import com.example.artwokmabel.databinding.ActivityLoginLoginBinding;
 
-public class CreateAccountEmailActivity extends AppCompatActivity {
-    private ActivityCreateAccountEmailBinding binding;
+public class LoginLoginActivity extends AppCompatActivity {
+
+    private ActivityLoginLoginBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_create_account_email);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_login_login);
         binding.emailEditText.requestFocus();
-        binding.setEmailonnextclicked(new EmailOnNextClicked());
-
-        setSupportActionBar(binding.zeroUiToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    public class EmailOnNextClicked {
-        public void emailOnNextClicked(){
+    public class OnCreateAccountClicked {
+        public void onCreateAccountClicked(){
             Intent intent = new Intent(getApplicationContext(), CreateAccountUsernameActivity.class);
 
             // create an animation effect sliding from left to right
@@ -39,5 +36,4 @@ public class CreateAccountEmailActivity extends AppCompatActivity {
             }
         }
     }
-
 }

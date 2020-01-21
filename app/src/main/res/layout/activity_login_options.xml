@@ -7,6 +7,9 @@
         <variable
             name="oncreateacctclicked"
             type="com.example.artwokmabel.auth.LoginActivityNew.OnCreateAccountClicked" />
+        <variable
+            name="onloginclicked"
+            type="com.example.artwokmabel.auth.LoginActivityNew.OnLoginClicked" />
     </data>
 
     <RelativeLayout
@@ -44,18 +47,19 @@
                 android:id="@+id/login_button_material"
                 style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="230dp"
-                android:layout_height="40dp"
+                android:layout_height="@dimen/zero_ui_login_blue_buttons"
                 android:text="Log in"
                 android:textAllCaps="false"
                 android:textColor="@color/artwok_white"
                 app:backgroundTint="@color/login_buttons_color"
+                android:onClick="@{() -> onloginclicked.onLoginClicked()}"
                 app:cornerRadius="8dp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/create_account_button_material"
                 style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="230dp"
-                android:layout_height="40dp"
+                android:layout_height="@dimen/zero_ui_login_blue_buttons"
                 android:onClick="@{() -> oncreateacctclicked.onCreateAccountClicked()}"
                 android:text="Create account"
                 android:textAllCaps="false"

@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="emailonnextclicked"
-            type="com.example.artwokmabel.auth.CreateAccountEmailActivity.EmailOnNextClicked" />
+            name="onnextclicked"
+            type="com.example.artwokmabel.auth.CreateAccountUsernameActivity.OnUsernameNextClicked" />
     </data>
 
     <RelativeLayout
@@ -23,25 +23,33 @@
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="Change Email"
+                android:textColor="@color/artwok_black"
+                android:textSize="14sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
+
                 <View android:layout_height="0dp"
                     android:layout_width="fill_parent"
                     android:layout_weight="1" />
-
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginRight="@dimen/create_account_text_margin"
                     android:gravity="center_vertical"
-                    android:textStyle="bold"
+                    android:text="Create Acccount"
                     android:textColor="@color/artwok_black"
                     android:textSize="@dimen/create_account_text"
-                    android:text="Create Acccount" />
+                    android:textStyle="bold" />
+
             </LinearLayout>
 
 
@@ -75,11 +83,11 @@
                 app:boxCornerRadiusBottomStart="8dp"
                 app:boxCornerRadiusTopStart="8dp"
                 app:boxStrokeColor="@color/artwok_black"
-                android:hint="Email"
+                android:hint="Username"
                 app:hintTextColor="@color/artwok_black">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/email_edit_text"
+                    android:id="@+id/username_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
@@ -95,7 +103,7 @@
                 android:textAllCaps="false"
                 android:textColor="@color/artwok_white"
                 app:backgroundTint="@color/login_buttons_color"
-                android:onClick="@{() -> emailonnextclicked.emailOnNextClicked()}"
+                android:onClick="@{() -> onnextclicked.onUsernameNextClicked()}"
                 app:cornerRadius="8dp" />
         </LinearLayout>
 
