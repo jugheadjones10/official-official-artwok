@@ -28,9 +28,9 @@ public class LoginLoginActivity extends AppCompatActivity {
         instance = this;
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login_login);
         binding.setOnloginclicked(new OnLoginClicked());
+        binding.setOnforgotpasswordclicked(new OnForgotPasswordClicked());
         binding.emailEditText.requestFocus();
         binding.progressBar.setVisibility(View.GONE);
-
     }
 
     public class OnLoginClicked {
@@ -50,6 +50,20 @@ public class LoginLoginActivity extends AppCompatActivity {
                         email,
                         password
                 );
+            }
+        }
+    }
+
+    public class OnForgotPasswordClicked {
+        public void onForgotPasswordClicked(){
+            Intent intent = new Intent(getApplicationContext(), ForgotPasswordActivityNew.class);
+            // create an animation effect sliding from left to right
+            ActivityOptions activityOptions = null;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                activityOptions = ActivityOptions.makeCustomAnimation(binding.getRoot().getContext(), R.anim.fromright,R.anim.toleft);
+                startActivity(intent,activityOptions.toBundle());
+            } else {
+                startActivity(intent);
             }
         }
     }

@@ -47,7 +47,6 @@
     <string name="rc_color">splash_background</string>
     <string name="tab_format">Tab: %1$d</string>
     <string name="msg_token_fmt">Token value %s </string>
-    <string name="forgotpassword"><u>Forgot Password?</u></string>
     <string name="singapore_dollars"><u>S$</u></string>
     <string name="set_delivery_policies"><u>Set Delivery Policies</u></string>
     <string name="set_return_exchange_policies"><u>Set Return / Exchange Policies</u></string>

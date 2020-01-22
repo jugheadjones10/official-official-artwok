@@ -1,5 +1,6 @@
 package com.example.artwokmabel.homepage.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,9 +10,11 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.artwokmabel.R;
+import com.example.artwokmabel.auth.LoginActivityNew;
 import com.example.artwokmabel.homepage.adapters.NotifsAdapter;
 import com.example.artwokmabel.homepage.models.Notification;
-import com.example.artwokmabel.R;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
@@ -42,6 +45,16 @@ public class NotifsFragment extends Fragment {
         notificationsList.add(testNotif);
         notificationsList.add(testNotif);
         notifsAdapter.notifyDataSetChanged();
+
+
+        view.findViewById(R.id.sign_out_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(getActivity(), LoginActivityNew.class);
+                startActivity(intent);
+            }
+        });
 
         return view;
     }

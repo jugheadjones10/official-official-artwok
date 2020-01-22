@@ -7,6 +7,12 @@
         <variable
             name="emailonnextclicked"
             type="com.example.artwokmabel.auth.CreateAccountEmailActivity.EmailOnNextClicked" />
+        <variable
+            name="loginpagecallback"
+            type="com.example.artwokmabel.homepage.callbacks.LoginPageCallback" />
+        <variable
+            name="context"
+            type="com.example.artwokmabel.auth.CreateAccountEmailActivity" />
     </data>
 
     <RelativeLayout
@@ -72,6 +78,20 @@
             android:gravity="center_horizontal|center_vertical"
             android:orientation="vertical">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:text="Email" />
+
+            </LinearLayout>
+
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
@@ -83,10 +103,8 @@
                 app:boxCornerRadiusBottomStart="8dp"
                 app:boxCornerRadiusTopStart="8dp"
                 app:boxStrokeColor="@color/artwok_black"
-                android:hint="Email"
                 app:errorEnabled="true"
-                app:errorIconDrawable="@drawable/error_exclamation"
-                app:hintTextColor="@color/artwok_black">
+                app:errorIconDrawable="@drawable/error_exclamation">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/email_edit_text"
@@ -133,6 +151,7 @@
                 android:text="Log In"
                 android:textAllCaps="false"
                 android:textColor="@color/zero_ui_log_in_text"
+                android:onClick="@{() -> loginpagecallback.loginPageCallback(context)}"
                 app:cornerRadius="8dp" />
         </LinearLayout>
 

@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.Repositories.FirestoreRepo;
 import com.example.artwokmabel.databinding.ActivityCreateAccountEmailBinding;
+import com.example.artwokmabel.homepage.callbacks.LoginPageCallback;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -31,6 +32,8 @@ public class CreateAccountEmailActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_create_account_email);
         binding.emailEditText.requestFocus();
         binding.setEmailonnextclicked(new EmailOnNextClicked());
+        binding.setLoginpagecallback(new LoginPageCallback());
+        binding.setContext(this);
         binding.progressBar.setVisibility(View.GONE);
 
         setSupportActionBar(binding.zeroUiToolbar);

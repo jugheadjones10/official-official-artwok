@@ -10,11 +10,15 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearSnapHelper;
+import androidx.recyclerview.widget.SnapHelper;
 
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.MainFeedFragmentBinding;
 import com.example.artwokmabel.homepage.adapters.ListingsAdapter;
 import com.example.artwokmabel.homepage.adapters.PostsAdapter;
+import com.example.artwokmabel.homepage.models.Listing;
 import com.example.artwokmabel.homepage.models.MainPost;
 
 import java.util.List;
@@ -39,8 +43,13 @@ public class HomeFeedFragment extends Fragment {
         binding.recyclerview.setAdapter(postsAdapter);
 
         //Todo: bring back listings recycler view
-//        listingsAdapter = new ListingsAdapter(getActivity(), listingsList);
-//        binding.listingsRecycler.setAdapter(listingsAdapter);
+        listingsAdapter = new ListingsAdapter(getContext());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        binding.listingsRecycler.setLayoutManager(layoutManager);
+        binding.listingsRecycler.setAdapter(listingsAdapter);
+
+        SnapHelper snapHelper = new LinearSnapHelper();
+        snapHelper.attachToRecyclerView(binding.listingsRecycler);
 
         return binding.getRoot();
     }
@@ -58,9 +67,18 @@ public class HomeFeedFragment extends Fragment {
         // Update the list when the data changes
         viewModel.getFeedPostsObeservable().observe(this, new Observer<List<MainPost>>() {
             @Override
-            public void onChanged(@Nullable List<MainPost> categories) {
-                if (categories != null) {
-                    postsAdapter.setPostsList(categories);
+            public void onChanged(@Nullable List<MainPost> posts) {
+                if (posts != null) {
+                    postsAdapter.setPostsList(posts);
+                }
+            }
+        });
+
+        viewModel.getFeedListingObservable().observe(this, new Observer<List<Listing>>() {
+            @Override
+            public void onChanged(@Nullable List<Listing> listings) {
+                if (listings != null) {
+                    listingsAdapter.setListingsList(listings);
                 }
             }
         });

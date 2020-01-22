@@ -9,6 +9,9 @@ import androidx.databinding.DataBindingUtil;
 
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.ActivityLoginOptionsBinding;
+import com.example.artwokmabel.homepage.homepagestuff.HomePageActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivityNew extends AppCompatActivity{
     private ActivityLoginOptionsBinding binding;
@@ -20,6 +23,17 @@ public class LoginActivityNew extends AppCompatActivity{
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login_options);
         binding.setOncreateacctclicked(new OnCreateAccountClicked());
         binding.setOnloginclicked(new OnLoginClicked());
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser != null){
+            Intent intent = new Intent(getApplicationContext(), HomePageActivity.class);
+            startActivity(intent);
+        }
     }
 
     public class OnCreateAccountClicked{

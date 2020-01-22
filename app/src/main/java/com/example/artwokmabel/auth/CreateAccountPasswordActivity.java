@@ -12,6 +12,7 @@ import androidx.databinding.DataBindingUtil;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.Repositories.FirestoreRepo;
 import com.example.artwokmabel.databinding.ActivityCreateAccountPasswordBinding;
+import com.example.artwokmabel.homepage.callbacks.LoginPageCallback;
 
 public class CreateAccountPasswordActivity extends AppCompatActivity {
 
@@ -31,6 +32,8 @@ public class CreateAccountPasswordActivity extends AppCompatActivity {
         binding.passwordEditText.requestFocus();
         binding.setOncreateacctclicked(new OnCreateAccountClicked());
         binding.progressBar.setVisibility(View.GONE);
+        binding.setLoginpagecallback(new LoginPageCallback());
+        binding.setContext(this);
 
         setSupportActionBar(binding.zeroUiToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -41,7 +44,9 @@ public class CreateAccountPasswordActivity extends AppCompatActivity {
 
             if(binding.passwordEditText.getText().toString().length() == 0){
                 binding.retypePasswordEditText.setError("Please enter a password");
-            }else if(!binding.passwordEditText.getText().toString().equals(binding.retypePasswordEditText.getText().toString())){
+            }else if(binding.passwordEditText.getText().toString().length() < 6){
+                binding.retypePasswordEditText.setError("Please enter at least 6 characters");
+            } else if(!binding.passwordEditText.getText().toString().equals(binding.retypePasswordEditText.getText().toString())){
                 binding.retypePasswordEditText.setError("Passwords do not match");
             }else if(!binding.termsCheck.isChecked() || !binding.privacyCheck.isChecked()){
                 Toast toast=Toast.makeText(getApplicationContext(),"Please agree to our Privacy Policy & Terms of Use", Toast.LENGTH_SHORT);

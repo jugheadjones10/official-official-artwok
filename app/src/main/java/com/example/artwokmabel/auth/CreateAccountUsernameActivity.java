@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.Repositories.FirestoreRepo;
 import com.example.artwokmabel.databinding.ActivityCreateAccountUsernameBinding;
+import com.example.artwokmabel.homepage.callbacks.LoginPageCallback;
 
 public class CreateAccountUsernameActivity extends AppCompatActivity {
     private ActivityCreateAccountUsernameBinding binding;
@@ -29,6 +30,8 @@ public class CreateAccountUsernameActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_create_account_username);
         binding.usernameEditText.requestFocus();
         binding.setOnnextclicked(new OnUsernameNextClicked());
+        binding.setLoginpagecallback(new LoginPageCallback());
+        binding.setContext(this);
         binding.progressBar.setVisibility(View.GONE);
 
         setSupportActionBar(binding.zeroUiToolbar);

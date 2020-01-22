@@ -572,6 +572,48 @@ public class FirestoreRepo {
         return data;
     }
 
+    public LiveData<List<Listing>> getFeedListings(String userId){
+        DocumentReference userRef = FirestoreRepo.getInstance().getUserRef(userId);
+
+        final MutableLiveData<List<Listing>> data = new MutableLiveData<>();
+        List<Listing> tempData = new ArrayList<>();
+
+        userRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot snapshot, @Nullable FirebaseFirestoreException e) {
+                ArrayList<String> following = (ArrayList<String>) snapshot.get("following");
+                following.add(userId);
+                ///////////////////////////////////////////////////////////////
+                tempData.clear();
+                for(int i = 0; i < following.size(); i++){
+                    String oneFollowing = following.get(i);
+                    FirestoreRepo.getInstance().getUserListingsQuery(oneFollowing)
+                            .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                @Override
+                                public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException e) {
+
+                                    if (e != null) {
+                                        Log.w("TAG", "Listen failed.", e);
+                                        return;
+                                    }
+
+                                    for (QueryDocumentSnapshot doc : value) {
+                                        Listing listdata = changeDocToListingModel(doc);
+                                        tempData.add(listdata);
+                                    }
+
+                                    //Below sorts posts according to date posted
+                                    Collections.sort((ArrayList)tempData, new SortListings());
+                                    data.setValue(tempData);
+                                }
+                            });
+                }
+            }
+        });
+
+        return data;
+    }
+
     public LiveData<List<UserUserModel>> getFollowings(String userId){
         DocumentReference userRef = FirestoreRepo.getInstance().getUserRef(userId);
 
@@ -620,6 +662,12 @@ public class FirestoreRepo {
         return userPostsTask;
     }
 
+    public Query getUserListingsQuery(String userId){
+        Query userListingsTask = db.collection("Users")
+                .document(userId)
+                .collection("Listings");
+        return userListingsTask;
+    }
 
     //Utils
     class SortMain implements Comparator<MainPost> {
