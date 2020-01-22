@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="oncreateacctclicked"
-            type="com.example.artwokmabel.auth.LoginActivityNew.OnCreateAccountClicked" />
+            name="onloginclicked"
+            type="com.example.artwokmabel.auth.LoginLoginActivity.OnLoginClicked" />
     </data>
 
     <RelativeLayout
@@ -14,6 +14,15 @@
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
         android:orientation="vertical">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="270dp" />
+
 
         <ImageView
             android:layout_width="match_parent"
@@ -90,6 +99,7 @@
                 android:textAllCaps="false"
                 android:textColor="@color/artwok_white"
                 app:backgroundTint="@color/login_buttons_color"
+                android:onClick="@{() -> onloginclicked.onLoginClicked()}"
                 app:cornerRadius="8dp" />
         </LinearLayout>
 

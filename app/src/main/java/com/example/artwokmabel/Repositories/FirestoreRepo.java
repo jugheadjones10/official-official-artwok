@@ -1,20 +1,32 @@
 package com.example.artwokmabel.Repositories;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.algolia.search.saas.Client;
+import com.algolia.search.saas.Index;
+import com.example.artwokmabel.auth.CreateAccountEmailActivity;
+import com.example.artwokmabel.auth.CreateAccountPasswordActivity;
+import com.example.artwokmabel.auth.CreateAccountUsernameActivity;
+import com.example.artwokmabel.auth.LoginLoginActivity;
 import com.example.artwokmabel.chat.models.Comment;
 import com.example.artwokmabel.chat.models.UserUserModel;
 import com.example.artwokmabel.homepage.models.Category;
 import com.example.artwokmabel.homepage.models.Listing;
 import com.example.artwokmabel.homepage.models.MainPost;
 import com.example.artwokmabel.homepage.models.User;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -24,6 +36,9 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -47,6 +62,135 @@ public class FirestoreRepo {
             firestoreRepo = new FirestoreRepo();
         }
         return firestoreRepo;
+    }
+
+
+    private void PushUserToAlgolia(String username, String userid){
+        Client client = new Client("CTIOUIUY3T", "7f3f4f1b7f3eab10acf7e980b2023a23");
+        Index algoliaIndex = client.getIndex("Users");
+
+        JSONObject newData = null;
+        try {
+            newData = new JSONObject()
+                    .put("username", username);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        algoliaIndex.saveObjectAsync(newData, userid, null);
+    }
+
+    public void logIntoAccount(String email, String password){
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(LoginLoginActivity.getInstance(), new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            LoginLoginActivity.getInstance().loginCallback();
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signInWithEmail:failure", task.getException());
+                            Toast.makeText(LoginLoginActivity.getInstance(), "Login failed",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+
+    public void createAccount(String email, String username,  String password){
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(CreateAccountPasswordActivity.getInstance(), new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            String uid = task.getResult().getUser().getUid();
+
+                            User userObject = new User(
+                                    username,
+                                    uid,
+                                    "https://firebasestorage.googleapis.com/v0/b/artwok-database.appspot.com/o/Default_images%2Faccount.png?alt=media&token=8c34c02a-4c2c-4708-a802-73af4978b7d0",
+                                    new ArrayList<String>(),
+                                    new ArrayList<String>(),
+                                    new ArrayList<String>(),
+                                    new ArrayList<String>(),
+                                    new ArrayList<String>(),
+                                    new ArrayList<String>(),
+                                    new ArrayList<String>(),
+                                    email
+                            );
+
+                            db.collection("Users")
+                                    .document(uid)
+                                    .set(userObject)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Log.d(TAG, "DocumentSnapshot successfully written!");
+                                            PushUserToAlgolia(username, uid);
+                                            CreateAccountPasswordActivity.getInstance().createAccountCallback();
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Log.w(TAG, "Error writing document", e);
+                                            Toast.makeText(CreateAccountPasswordActivity.getInstance(), "Create account failed", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                            Toast.makeText(CreateAccountPasswordActivity.getInstance(), "Create account failed", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+
+    public void isEmailDuplicate(String email){
+        db.collection("Users")
+                .whereEqualTo("email", email)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, Integer.toString(task.getResult().size()));
+                            if (task.getResult().size() != 0) {
+                                CreateAccountEmailActivity.getInstance().isEmailDuplicateCallback(true);
+                            }else{
+                                CreateAccountEmailActivity.getInstance().isEmailDuplicateCallback(false);
+                            }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+    }
+
+    public void isUsernameDuplicate(String username){
+        db.collection("Users")
+                .whereEqualTo("username", username)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, Integer.toString(task.getResult().size()));
+                            if (task.getResult().size() != 0) {
+                                CreateAccountUsernameActivity.getInstance().isUsernameDuplicateCallback(true);
+                            }else{
+                                CreateAccountUsernameActivity.getInstance().isUsernameDuplicateCallback(false);
+                            }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
     }
 
     public void addUserListingFavs(String listingId, String userId){

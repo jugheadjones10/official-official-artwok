@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class User {
 
-    public User(String username, String uid, String profile_url, ArrayList<String> following, ArrayList<String> followers, ArrayList<String> chatrooms, ArrayList<String> fav_listings, ArrayList<String> fav_posts, ArrayList<String> fav_requests, ArrayList<String> favorites, String email) {
+    public User(String username, String uid, String profile_url, ArrayList<String> following, ArrayList<String> followers, ArrayList<String> chatrooms, ArrayList<String> fav_listings, ArrayList<String> fav_posts, ArrayList<String> fav_requests, ArrayList<String> tab_categories, String email) {
         this.username = username;
         this.uid = uid;
         this.profile_url = profile_url;
@@ -14,7 +14,7 @@ public class User {
         this.fav_listings = fav_listings;
         this.fav_posts = fav_posts;
         this.fav_requests = fav_requests;
-        this.favorites = favorites;
+        this.tab_categories = tab_categories;
         this.email = email;
     }
 
@@ -27,7 +27,7 @@ public class User {
     public ArrayList<String> fav_listings;
     public ArrayList<String> fav_posts;
     public ArrayList<String> fav_requests;
-    public ArrayList<String> favorites;
+    public ArrayList<String> tab_categories;
     public String email;
 
     public User(){
@@ -107,14 +107,6 @@ public class User {
         this.fav_requests = fav_requests;
     }
 
-    public ArrayList<String> getFavorites() {
-        return favorites;
-    }
-
-    public void setFavorites(ArrayList<String> favorites) {
-        this.favorites = favorites;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -123,4 +115,11 @@ public class User {
         this.email = email;
     }
 
+    public ArrayList<String> getTab_categories() {
+        return tab_categories;
+    }
+
+    public void setTab_categories(ArrayList<String> tab_categories) {
+        this.tab_categories = tab_categories;
+    }
 }

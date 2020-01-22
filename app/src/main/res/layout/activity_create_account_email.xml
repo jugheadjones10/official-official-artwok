@@ -15,6 +15,14 @@
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="270dp" />
+
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/zero_ui_toolbar"
             android:layout_width="match_parent"
@@ -76,6 +84,8 @@
                 app:boxCornerRadiusTopStart="8dp"
                 app:boxStrokeColor="@color/artwok_black"
                 android:hint="Email"
+                app:errorEnabled="true"
+                app:errorIconDrawable="@drawable/error_exclamation"
                 app:hintTextColor="@color/artwok_black">
 
                 <com.google.android.material.textfield.TextInputEditText
