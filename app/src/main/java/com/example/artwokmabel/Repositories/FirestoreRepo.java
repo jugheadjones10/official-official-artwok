@@ -87,12 +87,14 @@ public class FirestoreRepo {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            LoginLoginActivity.getInstance().loginCallback();
+                            LoginLoginActivity.getInstance().loginCallback(true);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
                             Toast.makeText(LoginLoginActivity.getInstance(), "Login failed",
                                     Toast.LENGTH_SHORT).show();
+
+                            LoginLoginActivity.getInstance().loginCallback(false);
                         }
                     }
                 });
@@ -132,7 +134,7 @@ public class FirestoreRepo {
                                         public void onSuccess(Void aVoid) {
                                             Log.d(TAG, "DocumentSnapshot successfully written!");
                                             PushUserToAlgolia(username, uid);
-                                            CreateAccountPasswordActivity.getInstance().createAccountCallback();
+                                            CreateAccountPasswordActivity.getInstance().createAccountCallback(true);
                                         }
                                     })
                                     .addOnFailureListener(new OnFailureListener() {
@@ -146,6 +148,8 @@ public class FirestoreRepo {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
                             Toast.makeText(CreateAccountPasswordActivity.getInstance(), "Create account failed", Toast.LENGTH_SHORT).show();
+
+                            CreateAccountPasswordActivity.getInstance().createAccountCallback(false);
                         }
                     }
                 });

@@ -1,19 +1,21 @@
 package com.example.artwokmabel.homepage.adapters;
 
+import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.CatItemCardBinding;
-import com.example.artwokmabel.homepage.fragments.EditCategoriesFragment;
 import com.example.artwokmabel.homepage.callbacks.CategoryClickCallback;
+import com.example.artwokmabel.homepage.fragments.EditCategoriesFragment;
 import com.example.artwokmabel.homepage.models.Category;
 import com.squareup.picasso.Picasso;
 
@@ -22,9 +24,10 @@ import java.util.List;
 public class CatCardsAdapter extends RecyclerView.Adapter<CatCardsAdapter.CatHolder> {
 
     private List<Category> categories;
+    private Context context;
 
-    public CatCardsAdapter() {
-
+    public CatCardsAdapter(Context context) {
+        this.context = context;
     }
 
     @NonNull
@@ -52,12 +55,16 @@ public class CatCardsAdapter extends RecyclerView.Adapter<CatCardsAdapter.CatHol
 
         Picasso.get().load(categories.get(position).getCategoryPhoto()).into(holder.binding.catImage);
 
-        holder.binding.tickView.bringToFront();
+        //holder.binding.tickView.bringToFront();
 
         if(categories.get(position).isChecked()){
-            holder.binding.tickView.setVisibility(View.VISIBLE);
+            holder.binding.catTitle.setBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.category_title_grey, null));
+            holder.binding.catTitle.setTextColor(Color.WHITE);
+            //holder.binding.tickView.setVisibility(View.VISIBLE);
         }else{
-            holder.binding.tickView.setVisibility(View.INVISIBLE);
+            holder.binding.catTitle.setBackgroundColor(Color.WHITE);
+            holder.binding.catTitle.setTextColor(Color.BLACK);
+            //holder.binding.tickView.setVisibility(View.INVISIBLE);
         }
 
         holder.binding.executePendingBindings();

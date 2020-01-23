@@ -68,17 +68,20 @@ public class LoginLoginActivity extends AppCompatActivity {
         }
     }
 
-    public void loginCallback(){
+    public void loginCallback(boolean successful){
+
         binding.progressBar.setVisibility(View.GONE);
 
-        Intent intent = new Intent(getApplicationContext(), HomePageActivity.class);
-        // create an animation effect sliding from left to right
-        ActivityOptions activityOptions = null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
-            activityOptions = ActivityOptions.makeCustomAnimation(binding.getRoot().getContext(), R.anim.fromright,R.anim.toleft);
-            startActivity(intent,activityOptions.toBundle());
-        } else {
-            startActivity(intent);
+        if(successful){
+            Intent intent = new Intent(getApplicationContext(), HomePageActivity.class);
+            // create an animation effect sliding from left to right
+            ActivityOptions activityOptions = null;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                activityOptions = ActivityOptions.makeCustomAnimation(binding.getRoot().getContext(), R.anim.fromright,R.anim.toleft);
+                startActivity(intent,activityOptions.toBundle());
+            } else {
+                startActivity(intent);
+            }
         }
     }
 }

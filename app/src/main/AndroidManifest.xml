@@ -89,6 +89,8 @@
         <activity android:name=".auth.CreateAccountPasswordActivity"
             android:parentActivityName=".auth.CreateAccountUsernameActivity"/>
         <activity android:name=".auth.LoginLoginActivity" />
+        <activity android:name=".auth.ForgotPasswordActivityNew"
+            android:parentActivityName=".auth.LoginLoginActivity"/>
 
 
         <!--        PUSH NOTIFICATIONS-->

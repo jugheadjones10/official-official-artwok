@@ -33,11 +33,12 @@ public class EditCategoriesFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_edit_categories, container, false);
+        binding.saveBtn.bringToFront();
         instance = this;
 
         //Todo: find trigger and solution to weird "edit" turns into other tab bug
-        binding.catRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-        adapter = new CatCardsAdapter();
+        binding.catRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+        adapter = new CatCardsAdapter(getContext());
         binding.catRecyclerView.setAdapter(adapter);
 
         return binding.getRoot();

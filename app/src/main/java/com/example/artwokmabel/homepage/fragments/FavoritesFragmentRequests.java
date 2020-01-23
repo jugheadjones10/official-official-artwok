@@ -41,7 +41,7 @@ public class FavoritesFragmentRequests extends Fragment {
         catsArrayList = new ArrayList<>();
 
 //        adapter = new CatCardsAdapter(getActivity(), catsArrayList);
-        adapter = new CatCardsAdapter();
+        adapter = new CatCardsAdapter(getContext());
         recyclerView.setAdapter(adapter);
 
         db = FirebaseFirestore.getInstance();

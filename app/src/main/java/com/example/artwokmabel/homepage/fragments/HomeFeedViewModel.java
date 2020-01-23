@@ -20,8 +20,10 @@ public class HomeFeedViewModel extends ViewModel {
     public HomeFeedViewModel() {
 
         mAuth = FirebaseAuth.getInstance();
-        feedPostsObeservable = FirestoreRepo.getInstance().getFeedPosts(mAuth.getCurrentUser().getUid());
-        feedListingsObeservable = FirestoreRepo.getInstance().getFeedListings(mAuth.getCurrentUser().getUid());
+//        feedPostsObeservable = FirestoreRepo.getInstance().getFeedPosts(mAuth.getCurrentUser().getUid());
+//        feedListingsObeservable = FirestoreRepo.getInstance().getFeedListings(mAuth.getCurrentUser().getUid());
+        feedPostsObeservable = FirestoreRepo.getInstance().getFeedPosts("pBw1jicoofgeHp6jNq2TuiAK2Wk1");
+        feedListingsObeservable = FirestoreRepo.getInstance().getFeedListings("pBw1jicoofgeHp6jNq2TuiAK2Wk1");
     }
 
     public LiveData<List<MainPost>> getFeedPostsObeservable() {

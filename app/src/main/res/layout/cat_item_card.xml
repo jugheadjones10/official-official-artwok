@@ -11,23 +11,24 @@
 
 
     <androidx.cardview.widget.CardView
-    app:cardBackgroundColor="@android:color/white"
-    app:cardCornerRadius="2dp"
-    app:cardElevation="6dp"
-    android:layout_margin="8dp"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:onClick="@{() -> callback.onClick(category)}">
+        app:cardBackgroundColor="@android:color/white"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="6dp"
+        android:layout_margin="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:onClick="@{() -> callback.onClick(category)}">
 
 
-        <ImageView
-            android:id="@+id/tickView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="30dp"
-            android:src="@drawable/ic_tick_point"
-            android:visibility="invisible"/>
+<!--        <ImageView-->
+<!--            android:id="@+id/tickView"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginLeft="30dp"-->
+<!--            android:layout_marginTop="30dp"-->
+<!--            android:src="@drawable/ic_tick_point"-->
+<!--            android:visibility="invisible"/>-->
 
         <LinearLayout
             android:orientation="vertical"
@@ -38,17 +39,17 @@
             <ImageView
                 android:id="@+id/cat_image"
                 android:layout_width="match_parent"
-                android:layout_height="200dp" />
+                android:layout_height="100dp" />
 
 
             <TextView
                 android:id="@+id/cat_title"
                 style="@style/RegularCondensed"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:gravity="center"
                 android:text="@{category.name}"
-                android:textSize="25sp" />
+                android:textSize="15sp" />
 
         </LinearLayout>
 
