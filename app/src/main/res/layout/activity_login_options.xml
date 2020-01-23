@@ -10,6 +10,9 @@
         <variable
             name="onloginclicked"
             type="com.example.artwokmabel.auth.LoginActivityNew.OnLoginClicked" />
+        <variable
+            name="ongoogleloginclicked"
+            type="com.example.artwokmabel.auth.LoginActivityNew.OnGoogleLoginClicked" />
     </data>
 
     <RelativeLayout
@@ -82,14 +85,15 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="false"
                 android:layout_margin="8dp"
-                android:src="@drawable/google_login_options" />
+                android:onClick="@{() -> ongoogleloginclicked.onGoogleLoginClicked()}"
+                android:src="@drawable/google_artwok" />
 
             <ImageView
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_margin="8dp"
-                android:src="@drawable/facebook_login_options" />
+                android:src="@drawable/facebook_artwok" />
 
         </LinearLayout>
 

@@ -2,6 +2,7 @@ package com.example.artwokmabel.homepage.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -11,12 +12,11 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.LinearSnapHelper;
-import androidx.recyclerview.widget.SnapHelper;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.MainFeedFragmentBinding;
-import com.example.artwokmabel.homepage.adapters.ListingsAdapter;
+import com.example.artwokmabel.homepage.adapters.ListingsHomeAdapter;
 import com.example.artwokmabel.homepage.adapters.PostsAdapter;
 import com.example.artwokmabel.homepage.models.Listing;
 import com.example.artwokmabel.homepage.models.MainPost;
@@ -28,7 +28,7 @@ public class HomeFeedFragment extends Fragment {
     private MainFeedFragmentBinding binding;
     private HomeFeedViewModel viewModel;
     private PostsAdapter postsAdapter;
-    private ListingsAdapter listingsAdapter;
+    private ListingsHomeAdapter listingsAdapter;
     //Todo: add horizontal scrollable listings
 
     @Override
@@ -43,17 +43,36 @@ public class HomeFeedFragment extends Fragment {
         binding.recyclerview.setAdapter(postsAdapter);
 
         //Todo: bring back listings recycler view
-        listingsAdapter = new ListingsAdapter(getContext());
+        listingsAdapter = new ListingsHomeAdapter(getContext());
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        binding.listingsRecycler.setLayoutManager(layoutManager);
-        binding.listingsRecycler.setAdapter(listingsAdapter);
+        binding.horizontalRecyclerViewListings.setLayoutManager(layoutManager);
+        binding.horizontalRecyclerViewListings.setAdapter(listingsAdapter);
 
-        SnapHelper snapHelper = new LinearSnapHelper();
-        snapHelper.attachToRecyclerView(binding.listingsRecycler);
+        binding.horizontalRecyclerViewListings.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+            @Override
+            public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+                int action = e.getAction();
+                switch (action) {
+                    case MotionEvent.ACTION_MOVE:
+                        rv.getParent().requestDisallowInterceptTouchEvent(true);
+                        break;
+                }
+                return false;
+            }
+
+            @Override
+            public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+
+            }
+
+            @Override
+            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+            }
+        });
 
         return binding.getRoot();
     }
-
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {

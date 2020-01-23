@@ -1,7 +1,6 @@
 package com.example.artwokmabel.homepage.fragments;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +16,6 @@ import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.MainGiftsFragmentBinding;
 import com.example.artwokmabel.homepage.adapters.ListingsAdapter;
 import com.example.artwokmabel.homepage.models.Listing;
-import com.example.artwokmabel.homepage.models.MainPost;
 
 import java.util.List;
 

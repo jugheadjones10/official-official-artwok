@@ -4,15 +4,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <variable name="profilecallback" type="com.example.artwokmabel.homepage.adapters.ListingsHomeAdapter.OnProfileClicked"/>
-        <variable name="listingclickcallback" type="com.example.artwokmabel.homepage.adapters.ListingsHomeAdapter.OnListingClicked"/>
+        <variable name="profilecallback" type="com.example.artwokmabel.homepage.adapters.ListingsAdapter.OnProfileClicked"/>
+        <variable name="listingclickcallback" type="com.example.artwokmabel.homepage.adapters.ListingsAdapter.OnListingClicked"/>
         <variable name="listing" type="com.example.artwokmabel.homepage.models.Listing"/>
     </data>
 
 
     <androidx.cardview.widget.CardView
         android:id="@+id/parent_layout_card"
-        android:layout_width="130dp"
+        android:layout_width="match_parent"
 
         android:layout_height="wrap_content"
         android:layout_margin="2dp"
@@ -47,7 +47,7 @@
                 <com.synnapps.carouselview.CarouselView
                     android:id="@+id/carouselView"
                     android:layout_width="match_parent"
-                    android:layout_height="130dp"
+                    android:layout_height="150dp"
                     app:autoPlay="false"
                     app:indicatorVisibility="invisible"
                     app:pageColor="#00000000"
@@ -66,7 +66,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
-
 
                     <LinearLayout
                         android:layout_width="match_parent"

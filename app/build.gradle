@@ -152,6 +152,9 @@ dependencies {
     implementation "com.karumi:dexter:5.0.0"
     implementation 'com.github.yalantis:ucrop:2.2.2'
 
+    //Horizontally scrollable recycler view
+    implementation 'com.github.takusemba:multisnaprecyclerview:2.0.1'
+
 //Facebook
 //    implementation 'com.facebook.android:facebook-android-sdk:5.0.1'
 }

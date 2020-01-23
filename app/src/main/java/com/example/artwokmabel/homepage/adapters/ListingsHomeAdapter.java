@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.artwokmabel.R;
-import com.example.artwokmabel.databinding.ItemListingsNormalBinding;
+import com.example.artwokmabel.databinding.ItemListingsBinding;
 import com.example.artwokmabel.homepage.activities.IndivListingActivity;
 import com.example.artwokmabel.homepage.fragments.indivuser.IndivUserFragment;
 import com.example.artwokmabel.homepage.homepagestuff.HomePageActivity;
@@ -29,31 +29,30 @@ import com.synnapps.carouselview.ImageListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListingsAdapter extends RecyclerView.Adapter<ListingsAdapter.myHolder> {
+public class ListingsHomeAdapter extends RecyclerView.Adapter<ListingsHomeAdapter.homeListingsHolder>{
     private Context mContext;
     private List<Listing> listingsList;
     private FirebaseFirestore db;
 
-    public ListingsAdapter(Context context){
+    public ListingsHomeAdapter(Context context){
         this.mContext = context;
     }
 
     @NonNull
     @Override
-    public myHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
-
-        ItemListingsNormalBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.item_listings_normal, parent,false);
-        return new ListingsAdapter.myHolder(binding);
-
+    public ListingsHomeAdapter.homeListingsHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
+        ItemListingsBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.item_listings, parent,false);
+        return new ListingsHomeAdapter.homeListingsHolder(binding);
     }
 
+
     @Override
-    public void onBindViewHolder(@NonNull myHolder myHolder, int i) {
+    public void onBindViewHolder(@NonNull ListingsHomeAdapter.homeListingsHolder homeListingsHolder, int i) {
         Listing data = listingsList.get(i);
 
-        myHolder.binding.setListingclickcallback(new OnListingClicked());
-        myHolder.binding.setProfilecallback(new OnProfileClicked());
-        myHolder.binding.setListing(data);
+        homeListingsHolder.binding.setListingclickcallback(new ListingsHomeAdapter.OnListingClicked());
+        homeListingsHolder.binding.setProfilecallback(new ListingsHomeAdapter.OnProfileClicked());
+        homeListingsHolder.binding.setListing(data);
 
         ArrayList<String> images = data.getPhotos();
         ImageListener imageListener = new ImageListener() {
@@ -69,16 +68,16 @@ public class ListingsAdapter extends RecyclerView.Adapter<ListingsAdapter.myHold
             }
         };
 
-        myHolder.binding.carouselView.setImageClickListener(new ImageClickListener() {
+        homeListingsHolder.binding.carouselView.setImageClickListener(new ImageClickListener() {
             @Override
             public void onClick(int position) {
-                new OnListingClicked().onListClicked(data);
+                new ListingsHomeAdapter.OnListingClicked().onListClicked(data);
             }
         });
 
         if(images != null){
-            myHolder.binding.carouselView.setPageCount(images.size());
-            myHolder.binding.carouselView.setImageListener(imageListener);
+            homeListingsHolder.binding.carouselView.setPageCount(images.size());
+            homeListingsHolder.binding.carouselView.setImageListener(imageListener);
         }
 
         //Todo: replace the below with view model next time
@@ -96,7 +95,7 @@ public class ListingsAdapter extends RecyclerView.Adapter<ListingsAdapter.myHold
                                     .load(document.getString("profile_url"))
                                     .placeholder(R.drawable.loading_image)
                                     .error(R.drawable.rick_and_morty)
-                                    .into(myHolder.binding.profile);
+                                    .into(homeListingsHolder.binding.profile);
                         } else {
 
                         }
@@ -109,18 +108,7 @@ public class ListingsAdapter extends RecyclerView.Adapter<ListingsAdapter.myHold
     public class OnListingClicked{
         public void onListClicked(Listing data){
             Intent intent = new Intent(mContext, IndivListingActivity.class);
-
-//            intent.putExtra("username", data.getUsername());
-//            intent.putExtra("postid", data.getPostid());
-//            intent.putExtra("itemname", data.getName());
-//            intent.putExtra("price", data.getPrice());
-//            intent.putExtra("itemDesc", data.getDesc());
-//            intent.putExtra("photos", data.getPhotos());
-//            intent.putExtra("refund_exxhange", data.getReturn_exchange());
-//            intent.putExtra("delivery", data.getDelivery());
-//            intent.putExtra("userid", data.getUserid());
             intent.putExtra("listing", data);
-
             mContext.startActivity(intent);
         }
     }
@@ -144,7 +132,7 @@ public class ListingsAdapter extends RecyclerView.Adapter<ListingsAdapter.myHold
             DiffUtil.DiffResult result = DiffUtil.calculateDiff(new DiffUtil.Callback() {
                 @Override
                 public int getOldListSize() {
-                    return ListingsAdapter.this.listingsList.size();
+                    return ListingsHomeAdapter.this.listingsList.size();
                 }
 
                 @Override
@@ -154,13 +142,13 @@ public class ListingsAdapter extends RecyclerView.Adapter<ListingsAdapter.myHold
 
                 @Override
                 public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-                    return ListingsAdapter.this.listingsList.get(oldItemPosition).getPostid().equals(
+                    return ListingsHomeAdapter.this.listingsList.get(oldItemPosition).getPostid().equals(
                             listings.get(newItemPosition).getPostid());
                 }
 
                 @Override
                 public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
-                    return ListingsAdapter.this.listingsList.get(oldItemPosition).getPostid().equals(
+                    return ListingsHomeAdapter.this.listingsList.get(oldItemPosition).getPostid().equals(
                             listings.get(newItemPosition).getPostid());
                 }
             });
@@ -169,19 +157,17 @@ public class ListingsAdapter extends RecyclerView.Adapter<ListingsAdapter.myHold
         }
     }
 
-
-
     @Override
     public int getItemCount() {
         return listingsList == null ? 0 : listingsList.size();
     }
 
-    class myHolder extends RecyclerView.ViewHolder {
-        private ItemListingsNormalBinding binding;
+    class homeListingsHolder extends RecyclerView.ViewHolder {
+        private ItemListingsBinding binding;
 
-        public myHolder(ItemListingsNormalBinding binding) {
+        public homeListingsHolder(ItemListingsBinding binding) {
             super(binding.getRoot());
-           this.binding = binding;
+            this.binding = binding;
         }
     }
 }

@@ -156,24 +156,24 @@ public class FirestoreRepo {
     }
 
     public void isEmailDuplicate(String email){
-        db.collection("Users")
-                .whereEqualTo("email", email)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            Log.d(TAG, Integer.toString(task.getResult().size()));
-                            if (task.getResult().size() != 0) {
-                                CreateAccountEmailActivity.getInstance().isEmailDuplicateCallback(true);
-                            }else{
-                                CreateAccountEmailActivity.getInstance().isEmailDuplicateCallback(false);
-                            }
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
+    db.collection("Users")
+            .whereEqualTo("email", email)
+            .get()
+            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if (task.isSuccessful()) {
+                        Log.d(TAG, Integer.toString(task.getResult().size()));
+                        if (task.getResult().size() != 0) {
+                            CreateAccountEmailActivity.getInstance().isEmailDuplicateCallback(true);
+                        }else{
+                            CreateAccountEmailActivity.getInstance().isEmailDuplicateCallback(false);
                         }
+                    } else {
+                        Log.d(TAG, "Error getting documents: ", task.getException());
                     }
-                });
+                }
+            });
     }
 
     public void isUsernameDuplicate(String username){

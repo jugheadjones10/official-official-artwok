@@ -5,51 +5,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-
-<!--<RelativeLayout-->
-<!--    android:id="@+id/main_feed_fragment"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="match_parent"-->
-<!--    android:orientation="vertical">-->
-
-
-<!--        <androidx.recyclerview.widget.RecyclerView-->
-<!--            android:id="@+id/listings_recycler"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="200dp"-->
-<!--            android:scrollbars="horizontal">-->
-<!--        </androidx.recyclerview.widget.RecyclerView>-->
-
-<!--        <androidx.recyclerview.widget.RecyclerView-->
-<!--            android:id="@+id/recyclerview"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:layout_below="@+id/listings_recycler"-->
-<!--            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
-<!--            app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
-<!--            tools:context=".HomeScreen" />-->
-
-
-<!--</RelativeLayout>-->
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/listings_recycler"
+                <com.takusemba.multisnaprecyclerview.MultiSnapRecyclerView
+                    android:id="@+id/horizontal_recycler_view_listings"
+                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:scrollbars="horizontal"
-                    android:orientation="horizontal">
-                </androidx.recyclerview.widget.RecyclerView>
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="8dp"
+                    app:msrv_interval="1"
+                    app:msrv_speed_ms_per_inch="100" />
 
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/recyclerview"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                            tools:context=".HomeScreen" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+<!--                tools:context=".HomeScreen"-->
         </LinearLayout>
 </layout>

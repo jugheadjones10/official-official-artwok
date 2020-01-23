@@ -53,6 +53,18 @@ public class TabsPagerAdapter extends FragmentStateAdapter {
                 args4.putString("category", "Handmade");
                 tabFragment.setArguments(args4);
                 break;
+            case "troll":
+                tabFragment = new HomeStandardCatFragment();
+                Bundle args5 = new Bundle();
+                args5.putString("category", "Troll");
+                tabFragment.setArguments(args5);
+                break;
+            case "flowers":
+                tabFragment = new HomeStandardCatFragment();
+                Bundle args6 = new Bundle();
+                args6.putString("category", "Flowers");
+                tabFragment.setArguments(args6);
+                break;
             case "edit":
                 tabFragment = new EditCategoriesFragment();
                 break;
