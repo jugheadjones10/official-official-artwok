@@ -65,7 +65,6 @@ public class CreateAccountPasswordActivity extends AppCompatActivity {
 
     public void createAccountCallback(boolean successful){
         binding.progressBar.setVisibility(View.GONE);
-
         if(successful){
             Intent intent = new Intent(getApplicationContext(), LoginLoginActivity.class);
             // create an animation effect sliding from left to right
