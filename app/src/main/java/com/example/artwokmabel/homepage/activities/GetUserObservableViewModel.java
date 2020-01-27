@@ -28,4 +28,12 @@ public class GetUserObservableViewModel extends ViewModel {
     public void removeUserListingFavs(String listingId){
         FirestoreRepo.getInstance().removeUserListingFavs(listingId,  mAuth.getCurrentUser().getUid());
     }
+
+    public void addUserRequestFavs(String requestId){
+        FirestoreRepo.getInstance().addUserRequestFavs(requestId, mAuth.getCurrentUser().getUid());
+    }
+
+    public void removeUserRequestFavs(String requestId){
+        FirestoreRepo.getInstance().removeUserRequestFavs(requestId, mAuth.getCurrentUser().getUid());
+    }
 }

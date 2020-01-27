@@ -14,9 +14,9 @@ public class Request implements Serializable {
     private String desc;
     private String username;
     private String postid;
-    private ArrayList<String> categories;
+    private String categories;
 
-    public Request(String userid, long price, ArrayList<String> photos, String name, String hashtags, String desc, String username, String postid, long nanopast, ArrayList<String> categories) {
+    public Request(String userid, long price, ArrayList<String> photos, String name, String hashtags, String desc, String username, String postid, long nanopast, String categories) {
         this.userid = userid;
         this.price = price;
         this.photos = photos;
@@ -29,11 +29,11 @@ public class Request implements Serializable {
         this.categories = categories;
     }
 
-    public ArrayList<String> getCategories() {
+    public String getCategories() {
         return categories;
     }
 
-    public void setCategories(ArrayList<String> categories) {
+    public void setCategories(String categories) {
         this.categories = categories;
     }
 
@@ -74,7 +74,7 @@ public class Request implements Serializable {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(long price) {
         this.price = price;
     }
 

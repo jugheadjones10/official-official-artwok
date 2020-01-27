@@ -10,6 +10,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import com.example.artwokmabel.homepage.fragments.EditCategoriesFragment;
 import com.example.artwokmabel.homepage.fragments.HomeFeedFragment;
 import com.example.artwokmabel.homepage.fragments.HomeStandardCatFragment;
+import com.example.artwokmabel.homepage.fragments.requestspagestuff.RequestsFragment;
 
 import java.util.ArrayList;
 
@@ -35,12 +36,6 @@ public class TabsPagerAdapter extends FragmentStateAdapter {
                 args.putString("category", "Gifts");
                 tabFragment.setArguments(args);
                 break;
-            case "requests":
-                tabFragment = new HomeStandardCatFragment();
-                Bundle args2 = new Bundle();
-                args2.putString("category", "Requests");
-                tabFragment.setArguments(args2);
-                break;
             case "services":
                 tabFragment = new HomeStandardCatFragment();
                 Bundle args3 = new Bundle();
@@ -64,6 +59,9 @@ public class TabsPagerAdapter extends FragmentStateAdapter {
                 Bundle args6 = new Bundle();
                 args6.putString("category", "Flowers");
                 tabFragment.setArguments(args6);
+                break;
+            case "requests":
+                tabFragment = new RequestsFragment();
                 break;
             case "edit":
                 tabFragment = new EditCategoriesFragment();

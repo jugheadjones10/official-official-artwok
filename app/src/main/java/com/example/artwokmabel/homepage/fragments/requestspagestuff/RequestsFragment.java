@@ -1,5 +1,6 @@
 package com.example.artwokmabel.homepage.fragments.requestspagestuff;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,12 +31,14 @@ public class RequestsFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_requests, container, false);
+        binding.addRequestButton.bringToFront();
+        binding.setCallback(new OnAddRequestClick());
 
-        binding.giftRecyclerview.setHasFixedSize(true);
-        binding.giftRecyclerview.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        binding.requestRecyclerview.setHasFixedSize(true);
+        binding.requestRecyclerview.setLayoutManager(new GridLayoutManager(getContext(), 2));
 
         requestsAdapter = new RequestsAdapter(getContext());
-        binding.giftRecyclerview.setAdapter(requestsAdapter);
+        binding.requestRecyclerview.setAdapter(requestsAdapter);
 
         return binding.getRoot();
     }
@@ -60,5 +63,12 @@ public class RequestsFragment extends Fragment {
                 }
             }
         });
+    }
+
+    public class OnAddRequestClick{
+        public void onAddRequestClick(){
+            Intent intent = new Intent(getContext(), UploadRequestActivity.class);
+            startActivity(intent);
+        }
     }
 }

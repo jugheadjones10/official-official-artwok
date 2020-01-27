@@ -1,5 +1,6 @@
 package com.example.artwokmabel.Repositories;
 
+import android.app.Activity;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -17,6 +18,7 @@ import com.example.artwokmabel.auth.LoginLoginActivity;
 import com.example.artwokmabel.chat.models.Comment;
 import com.example.artwokmabel.chat.models.UserUserModel;
 import com.example.artwokmabel.homepage.fragments.requestspagestuff.Request;
+import com.example.artwokmabel.homepage.fragments.requestspagestuff.UploadRequestActivity;
 import com.example.artwokmabel.homepage.models.Category;
 import com.example.artwokmabel.homepage.models.Listing;
 import com.example.artwokmabel.homepage.models.MainPost;
@@ -78,6 +80,36 @@ public class FirestoreRepo {
             e.printStackTrace();
         }
         algoliaIndex.saveObjectAsync(newData, userid, null);
+    }
+
+
+    public void uploadNewRequest(String postTitle, String postDesc, String category, Long budget, String currentUserId, ArrayList<String> postImageUris, Activity activity){
+
+        DocumentReference newRequestRef = db.collection("Users").document(currentUserId).collection("Requests").document();
+        Request newRequest = new Request(
+                currentUserId,
+                budget,
+                postImageUris,
+                postTitle,
+                "placeholderhashtags",
+                postDesc,
+                "temporary username",
+                newRequestRef.getId(),
+                System.currentTimeMillis(),
+                category);
+
+        newRequestRef.set(newRequest)
+                .addOnSuccessListener(aVoid -> {
+                    Toast.makeText(activity, "Successfully uploaded ic_dm.", Toast.LENGTH_LONG).show();
+                    UploadRequestActivity.getInstance().onUploaded();
+                })
+                .addOnFailureListener(e ->
+                        Toast.makeText(activity, "Failed to upload ic_dm. awd", Toast.LENGTH_LONG)
+                                .show());
+
+        db.collection("Users")
+            .document(currentUserId)
+            .update("number_of_posts", FieldValue.increment(1));
     }
 
     public void logIntoAccount(String email, String password){
@@ -196,6 +228,18 @@ public class FirestoreRepo {
                         }
                     }
                 });
+    }
+
+    public void addUserRequestFavs(String requestId, String userId){
+        db.collection("Users")
+                .document(userId)
+                .update("fav_requests", FieldValue.arrayUnion(requestId));
+    }
+
+    public void removeUserRequestFavs(String requestId, String userId){
+        db.collection("Users")
+                .document(userId)
+                .update("fav_requests", FieldValue.arrayRemove(requestId));
     }
 
     public void addUserListingFavs(String listingId, String userId){
@@ -330,6 +374,32 @@ public class FirestoreRepo {
 
         return data;
     }
+
+    public LiveData<List<Category>> getAllCategories(){
+        final MutableLiveData<List<Category>> data = new MutableLiveData<>();
+        List<Category> tempData = new ArrayList<>();
+
+        db.collection("Categories")
+            .get()
+            .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                @Override
+                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+
+                    for(DocumentSnapshot snap : queryDocumentSnapshots){
+                        Category newCategory = new Category(
+                                snap.getString("name"),
+                                snap.getString("photo")
+                        );
+
+                        tempData.add(newCategory);
+                    }
+                    data.setValue(tempData);
+                }
+
+            });
+        return data;
+    }
+
 
     public LiveData<List<Category>> getCategoriesList(String userId){
         final MutableLiveData<List<Category>> data = new MutableLiveData<>();
@@ -785,7 +855,7 @@ public class FirestoreRepo {
                 "temp",
                 doc.getId(),
                 (long)doc.get("nanopast"),
-                (ArrayList<String>) doc.get("categories")
+                doc.getString("categories")
         );
     }
 }

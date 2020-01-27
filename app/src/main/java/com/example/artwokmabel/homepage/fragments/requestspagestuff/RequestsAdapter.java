@@ -13,11 +13,9 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.artwokmabel.R;
-import com.example.artwokmabel.Request.IndivRequestActivity;
 import com.example.artwokmabel.databinding.ItemRequestsBinding;
 import com.example.artwokmabel.homepage.fragments.indivuser.IndivUserFragment;
 import com.example.artwokmabel.homepage.homepagestuff.HomePageActivity;
-import com.example.artwokmabel.homepage.models.Listing;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -118,7 +116,7 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.myHold
     }
 
     public class OnProfileClicked{
-        public void onProfileClicked(Listing data){
+        public void onProfileClicked(Request data){
             IndivUserFragment indivUserFrag = new IndivUserFragment();
             Bundle args = new Bundle();
             args.putString("poster_username", data.getUsername());
@@ -127,12 +125,12 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.myHold
         }
     }
 
-    public void setRequestsList(final List<Request> listings) {
+    public void setRequestsList(final List<Request> requests) {
 
         if (this.requestsList == null) {
 
-            this.requestsList = listings;
-            notifyItemRangeInserted(0, listings.size());
+            this.requestsList = requests;
+            notifyItemRangeInserted(0, requests.size());
 
         } else {
 
@@ -144,23 +142,23 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.myHold
 
                 @Override
                 public int getNewListSize() {
-                    return listings.size();
+                    return requests.size();
                 }
 
                 @Override
                 public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
                     return RequestsAdapter.this.requestsList.get(oldItemPosition).getPostid().equals(
-                            listings.get(newItemPosition).getPostid());
+                            requests.get(newItemPosition).getPostid());
                 }
 
                 @Override
                 public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
                     return RequestsAdapter.this.requestsList.get(oldItemPosition).getPostid().equals(
-                            listings.get(newItemPosition).getPostid());
+                            requests.get(newItemPosition).getPostid());
                 }
             });
 
-            this.requestsList = listings;
+            this.requestsList = requests;
             result.dispatchUpdatesTo(this);
         }
     }

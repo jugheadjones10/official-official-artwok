@@ -131,7 +131,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:gravity="end"
-                            android:text="@{Long.toString(request.price)}"
+                            android:text="@{request.categories}"
                             android:textSize="15sp"/>
 
                     </LinearLayout>
