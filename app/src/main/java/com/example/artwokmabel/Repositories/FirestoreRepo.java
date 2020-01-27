@@ -16,6 +16,7 @@ import com.example.artwokmabel.auth.CreateAccountUsernameActivity;
 import com.example.artwokmabel.auth.LoginLoginActivity;
 import com.example.artwokmabel.chat.models.Comment;
 import com.example.artwokmabel.chat.models.UserUserModel;
+import com.example.artwokmabel.homepage.fragments.requestspagestuff.Request;
 import com.example.artwokmabel.homepage.models.Category;
 import com.example.artwokmabel.homepage.models.Listing;
 import com.example.artwokmabel.homepage.models.MainPost;
@@ -257,6 +258,32 @@ public class FirestoreRepo {
                     }
                 });
 
+        return data;
+    }
+
+    public LiveData<List<Request>> getRequests(){
+        final MutableLiveData<List<Request>> data = new MutableLiveData<>();
+        List<Request> tempData = new ArrayList<>();
+
+        db.collectionGroup("Requests")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.w("TAG", "Listen failed.", e);
+                            return;
+                        }
+
+                        tempData.clear();
+                        for(DocumentSnapshot single: queryDocumentSnapshots){
+                            Request requestData= changeDocToRequestModel(single);
+                            tempData.add(requestData);
+                        }
+
+                        Collections.sort(tempData, new SortRequests());
+                        data.setValue(tempData);
+                    }
+                });
         return data;
     }
 
@@ -686,6 +713,12 @@ public class FirestoreRepo {
         }
     }
 
+    class SortRequests implements Comparator<Request> {
+        public int compare(Request a, Request b){
+            return (int)b.getNanopast() - (int)a.getNanopast();
+        }
+    }
+
     class SortMessages implements Comparator<Comment> {
         public int compare(Comment a, Comment b){
             return Math.toIntExact(b.getTimestamp() - a.getTimestamp());
@@ -734,6 +767,21 @@ public class FirestoreRepo {
                 doc.getString("hashtags"),
                 doc.getString("desc"),
                 doc.getString("delivery"),
+                "temp",
+                doc.getId(),
+                (long)doc.get("nanopast"),
+                (ArrayList<String>) doc.get("categories")
+        );
+    }
+
+    private Request changeDocToRequestModel(DocumentSnapshot doc){
+        return new Request(
+                doc.getString("userid"),
+                (long)doc.get("price"),
+                (ArrayList<String>) doc.get("photos"),
+                doc.getString("name"),
+                doc.getString("hashtags"),
+                doc.getString("desc"),
                 "temp",
                 doc.getId(),
                 (long)doc.get("nanopast"),

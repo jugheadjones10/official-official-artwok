@@ -46,7 +46,7 @@ public class HomeRequestsFragment extends Fragment {
         recyclerView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getActivity(), IndivRequestsActivity.class);
+                Intent i = new Intent(getActivity(), IndivRequestActivity.class);
                 startActivity(i);
             }
         });

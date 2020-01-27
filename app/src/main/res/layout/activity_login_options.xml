@@ -95,7 +95,5 @@
                 android:src="@drawable/facebook_artwok" />
 
         </LinearLayout>
-
-
     </RelativeLayout>
 </layout>
