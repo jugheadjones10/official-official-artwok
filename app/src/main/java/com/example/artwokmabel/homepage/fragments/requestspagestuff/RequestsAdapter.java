@@ -198,6 +198,7 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.myHold
             });
 
             this.requestsList = requests;
+            notifyDataSetChanged();
             result.dispatchUpdatesTo(this);
         }
     }
