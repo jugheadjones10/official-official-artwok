@@ -1,4 +1,4 @@
-package com.example.artwokmabel.homepage.fragments;
+package com.example.artwokmabel.homepage.favoritestuff;
 
 import android.os.Bundle;
 import android.util.Log;

@@ -1,4 +1,4 @@
-package com.example.artwokmabel.homepage.activities;
+package com.example.artwokmabel.homepage.favoritestuff;
 
 import android.os.Bundle;
 
@@ -6,10 +6,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
-import com.example.artwokmabel.homepage.adapters.FavouritesAdapter;
-import com.example.artwokmabel.homepage.fragments.FavoritesFragmentListings;
-import com.example.artwokmabel.homepage.fragments.FavoritesFragmentPosts;
-import com.example.artwokmabel.homepage.fragments.FavoritesFragmentRequests;
 import com.example.artwokmabel.R;
 import com.google.android.material.tabs.TabLayout;
 

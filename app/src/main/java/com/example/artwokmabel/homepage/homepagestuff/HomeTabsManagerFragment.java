@@ -16,7 +16,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.AltMainHomeFragmentBinding;
-import com.example.artwokmabel.homepage.activities.FavouritesActivity;
+import com.example.artwokmabel.homepage.favoritestuff.FavouritesActivity;
 import com.example.artwokmabel.homepage.fragments.TemporarySearchFragment;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;

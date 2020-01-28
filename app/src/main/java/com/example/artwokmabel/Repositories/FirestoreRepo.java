@@ -2,6 +2,7 @@ package com.example.artwokmabel.Repositories;
 
 import android.app.Activity;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -11,6 +12,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.algolia.search.saas.Client;
 import com.algolia.search.saas.Index;
+import com.example.artwokmabel.R;
 import com.example.artwokmabel.auth.CreateAccountEmailActivity;
 import com.example.artwokmabel.auth.CreateAccountPasswordActivity;
 import com.example.artwokmabel.auth.CreateAccountUsernameActivity;
@@ -27,6 +29,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -253,6 +256,291 @@ public class FirestoreRepo {
                 .document(userId)
                 .update("fav_listings", FieldValue.arrayRemove(listingId));
     }
+
+    public void addUserPostFavs(String postId, String userId){
+        db.collection("Users")
+                .document(userId)
+                .update("fav_posts", FieldValue.arrayUnion(postId));
+    }
+
+    public void removeUserPostFavs(String postId, String userId){
+        db.collection("Users")
+                .document(userId)
+                .update("fav_posts", FieldValue.arrayRemove(postId));
+    }
+
+    public LiveData<List<String>> getUserFavRequests(String userId){
+        final MutableLiveData<List<String>> data = new MutableLiveData<>();
+
+        db.collection("Users")
+                .document(userId)
+                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable DocumentSnapshot snapshot, @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.w("TAG", "Listen failed.", e);
+                            return;
+                        }
+                        if(snapshot.exists()){
+                            ArrayList<String> favs = (ArrayList<String>) snapshot.get("fav_requests");
+                            data.setValue(favs);
+                        }
+                    }
+                });
+        return data;
+    }
+
+
+    public LiveData<List<String>> getUserFavPosts(String userId){
+        final MutableLiveData<List<String>> data = new MutableLiveData<>();
+
+        db.collection("Users")
+                .document(userId)
+                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable DocumentSnapshot snapshot, @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.w("TAG", "Listen failed.", e);
+                            return;
+                        }
+                        if(snapshot.exists()){
+                            ArrayList<String> favs = (ArrayList<String>) snapshot.get("fav_posts");
+                            data.setValue(favs);
+                        }
+                    }
+                });
+        return data;
+    }
+
+    public LiveData<List<Request>> getUserFavRequestsObjects(String userId){
+        final MutableLiveData<List<Request>> data = new MutableLiveData<>();
+        List<Request> tempData = new ArrayList<>();
+
+        Log.d("thestuffreturnedREQUEST", "user id from b4 db call" + userId);
+
+        db.collection("Users")
+                .document(userId)
+                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable DocumentSnapshot snapshot,
+                                        @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.w(TAG, "Listen failed.", e);
+                            return;
+                        }
+
+                        if (snapshot != null && snapshot.exists()) {
+                            Log.d(TAG, " data: " + snapshot.getData());
+
+                            ArrayList<String> favRequestsIds = (ArrayList<String>) snapshot.getData().get("fav_requests");
+                            //Get array list of fav posts
+                            Log.d("thestuffreturnedREQUEST", "my user id  " + userId);
+                            Log.d("thestuffreturnedREQUEST", "my listing_fav_ids  " + favRequestsIds.toString());
+
+                            tempData.clear();
+                            List<Task> tasks = new ArrayList<>();
+                            for(int i = 0; i < favRequestsIds.size(); i++) {
+                                Log.d("thestuffreturnedREQUEST", "I'm inside the for loop now");
+
+                                Task task =  db.collectionGroup("Requests")
+                                        .whereEqualTo("postid", favRequestsIds.get(i))
+                                        .get()
+                                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                                Log.d("thestuffreturnedREQUEST", "I'm below the query snapshot  " + Integer.toString(queryDocumentSnapshots.size()));
+
+                                                if(!queryDocumentSnapshots.isEmpty()){
+                                                    for(DocumentSnapshot request: queryDocumentSnapshots){
+                                                        Request requestObject = changeDocToRequestModel(request);
+                                                        Log.d("thestuffreturnedREQUEST", "middleman within the for loop" + requestObject.getPostid());
+                                                        tempData.add(requestObject);
+                                                    }
+                                                }
+                                            }
+                                        }).addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.d("thestuffreturnedREQUEST", "THE DB CALL FAILED");
+                                            }
+                                        });
+                                tasks.add(task);
+                            }
+
+                            Tasks.whenAll(tasks.toArray(new Task[0]))
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Log.d("thestuffreturnedREQUEST", "final resulting temp data" + tempData.toString());
+                                            data.setValue(tempData);
+                                        }
+                                    });
+                        } else {
+                            Log.d(TAG, " data: null");
+                        }
+                    }
+                });
+
+        return data;
+    }
+
+    public LiveData<List<Listing>> getUserFavListingsObjects(String userId){
+        final MutableLiveData<List<Listing>> data = new MutableLiveData<>();
+        List<Listing> tempData = new ArrayList<>();
+
+        Log.d("thestuffreturned", "user id from b4 db call" + userId);
+
+        db.collection("Users")
+                .document(userId)
+                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable DocumentSnapshot snapshot,
+                                        @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.w(TAG, "Listen failed.", e);
+                            return;
+                        }
+
+                        if (snapshot != null && snapshot.exists()) {
+                            Log.d(TAG, " data: " + snapshot.getData());
+
+                            ArrayList<String> favListingsIds = (ArrayList<String>) snapshot.getData().get("fav_listings");
+                            //Get array list of fav posts
+                            Log.d("thestuffreturned", "my user id  " + userId);
+                            Log.d("thestuffreturned", "my listing_fav_ids  " + favListingsIds.toString());
+
+                            tempData.clear();
+                            List<Task> tasks = new ArrayList<>();
+                            for(int i = 0; i < favListingsIds.size(); i++) {
+                                Task task =  db.collectionGroup("Listings")
+                                    .whereEqualTo("postid", favListingsIds.get(i))
+                                    .get()
+                                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                        @Override
+                                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                            if(!queryDocumentSnapshots.isEmpty()){
+                                                for(DocumentSnapshot listing: queryDocumentSnapshots){
+                                                    Listing listingObject = changeDocToListingModel(listing);
+                                                    //Fav favPost = new Fav(postid,  (ArrayList<String>) document.get("photos"));
+                                                    Log.d("listingsDiagnostic", listingObject.getPostid());
+                                                    tempData.add(listingObject);
+                                                }
+                                            }
+                                        }
+                                    });
+                                tasks.add(task);
+                            }
+
+                            Tasks.whenAll(tasks.toArray(new Task[0]))
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Log.d("thestuffreturned", "final resulting temp data" + tempData.toString());
+                                    data.setValue(tempData);
+                                }
+                            });
+                        } else {
+                            Log.d(TAG, " data: null");
+                        }
+                    }
+                });
+
+        return data;
+    }
+
+    public LiveData<List<String>> getUserFavListings(String userId){
+        final MutableLiveData<List<String>> data = new MutableLiveData<>();
+
+        db.collection("Users")
+                .document(userId)
+                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable DocumentSnapshot snapshot, @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.w("TAG", "Listen failed.", e);
+                            return;
+                        }
+                        if(snapshot.exists()){
+                            ArrayList<String> favs = (ArrayList<String>) snapshot.get("fav_listings");
+                            data.setValue(favs);
+                        }
+                    }
+                });
+        return data;
+    }
+
+    public void switchUserFavRequests(String userId, Request request, ImageView favorite){
+        db.collection("Users")
+                .document(userId)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot snapshot) {
+                        if(snapshot.exists()){
+                            ArrayList<String> favs = (ArrayList<String>) snapshot.get("fav_requests");
+                            if (favs != null) {
+                                if(favs.contains(request.getPostid())){
+                                    favorite.setImageResource(R.drawable.favourite_post);
+                                    Log.d("thisruns", request.getPostid());
+                                    FirestoreRepo.getInstance().removeUserRequestFavs(request.getPostid(), userId);
+                                }else{
+                                    favorite.setImageResource(R.drawable.like);
+                                    FirestoreRepo.getInstance().addUserRequestFavs(request.getPostid(), userId);
+                                }
+                            }
+                        }
+                    }
+                });
+    }
+
+    public void switchUserFavPosts(String userId, MainPost post, ImageView favorite){
+        db.collection("Users")
+                .document(userId)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot snapshot) {
+                        if(snapshot.exists()){
+                            ArrayList<String> favs = (ArrayList<String>) snapshot.get("fav_posts");
+                            if (favs != null) {
+                                if(favs.contains(post.getPostId())){
+                                    favorite.setImageResource(R.drawable.favourite_post);
+                                    Log.d("thisruns", post.getPostId());
+                                    FirestoreRepo.getInstance().removeUserPostFavs(post.getPostId(), userId);
+                                }else{
+                                    favorite.setImageResource(R.drawable.like);
+                                    FirestoreRepo.getInstance().addUserPostFavs(post.getPostId(), userId);
+                                }
+                            }
+                        }
+                    }
+                });
+    }
+
+    public void switchUserFavListings(String userId, Listing listing, ImageView favorite){
+        db.collection("Users")
+                .document(userId)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot snapshot) {
+                        if(snapshot.exists()){
+                            ArrayList<String> favs = (ArrayList<String>) snapshot.get("fav_listings");
+                            if (favs != null) {
+                                if(favs.contains(listing.getPostid())){
+                                    favorite.setImageResource(R.drawable.favourite_post);
+                                    Log.d("thisruns", listing.getPostid());
+                                    FirestoreRepo.getInstance().removeUserListingFavs(listing.getPostid(), userId);
+                                }else{
+                                    favorite.setImageResource(R.drawable.like);
+                                    FirestoreRepo.getInstance().addUserListingFavs(listing.getPostid(), userId);
+                                }
+                            }
+                        }
+                    }
+                });
+    }
+
 
     public LiveData<User> getUser(String uid){
 

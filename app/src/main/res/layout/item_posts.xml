@@ -8,7 +8,10 @@
         <variable name="profilecallback" type="com.example.artwokmabel.homepage.callbacks.MainPostClickCallback"/>
         <variable name="sharecallback" type="com.example.artwokmabel.homepage.callbacks.MainPostClickCallback"/>
         <variable name="postclickcallback" type="com.example.artwokmabel.homepage.callbacks.MainPostClickCallback"/>
+        <variable name="onfavpostclicked" type="com.example.artwokmabel.homepage.adapters.PostsAdapter.OnFavPostClicked"/>
         <variable name="post" type="com.example.artwokmabel.homepage.models.MainPost"/>
+
+        <variable name="favorite" type="android.widget.ImageView"/>
     </data>
 
     <androidx.cardview.widget.CardView
@@ -126,7 +129,7 @@
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="5dp"
                 android:id="@+id/favorite"
-                android:onClick="@{() -> postclickcallback.onClick(post)}"/>
+                android:onClick="@{() -> onfavpostclicked.onFavPostClicked(post, favorite)}"/>
 
         </RelativeLayout>
 

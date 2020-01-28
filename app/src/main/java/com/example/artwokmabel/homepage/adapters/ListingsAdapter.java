@@ -8,7 +8,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,6 +24,7 @@ import com.example.artwokmabel.homepage.homepagestuff.HomePageActivity;
 import com.example.artwokmabel.homepage.models.Listing;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
@@ -33,9 +38,14 @@ public class ListingsAdapter extends RecyclerView.Adapter<ListingsAdapter.myHold
     private Context mContext;
     private List<Listing> listingsList;
     private FirebaseFirestore db;
+    private ListingsAdapterViewModel viewModel;
+    private FirebaseAuth mAuth;
+
 
     public ListingsAdapter(Context context){
         this.mContext = context;
+        this.mAuth = FirebaseAuth.getInstance();
+        viewModel = ViewModelProviders.of((FragmentActivity)context).get(ListingsAdapterViewModel.class);
     }
 
     @NonNull
@@ -44,7 +54,6 @@ public class ListingsAdapter extends RecyclerView.Adapter<ListingsAdapter.myHold
 
         ItemListingsNormalBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.item_listings_normal, parent,false);
         return new ListingsAdapter.myHolder(binding);
-
     }
 
     @Override
@@ -54,6 +63,10 @@ public class ListingsAdapter extends RecyclerView.Adapter<ListingsAdapter.myHold
         myHolder.binding.setListingclickcallback(new OnListingClicked());
         myHolder.binding.setProfilecallback(new OnProfileClicked());
         myHolder.binding.setListing(data);
+
+        myHolder.binding.setFavorite(myHolder.binding.normalListingLike);
+
+        myHolder.binding.normalListingLike.bringToFront();
 
         ArrayList<String> images = data.getPhotos();
         ImageListener imageListener = new ImageListener() {
@@ -102,6 +115,24 @@ public class ListingsAdapter extends RecyclerView.Adapter<ListingsAdapter.myHold
                         }
                     }
                 });
+
+        if(data.getUserid().equals(mAuth.getCurrentUser().getUid())){
+            myHolder.binding.normalListingLike.setImageResource(R.drawable.menu);
+        }else {
+            myHolder.binding.setOnfavlistingclicked(new OnFavListingClicked());
+            viewModel.getUserFavListingsObservable().observe((FragmentActivity) mContext, new Observer<List<String>>() {
+                @Override
+                public void onChanged(@Nullable List<String> favListings) {
+                    if (favListings != null) {
+                        if (favListings.contains(data.getPostid())) {
+                            myHolder.binding.normalListingLike.setImageResource(R.drawable.like);
+                        } else {
+                            myHolder.binding.normalListingLike.setImageResource(R.drawable.favourite_post);
+                        }
+                    }
+                }
+            });
+        }
     }
 
 
@@ -135,6 +166,13 @@ public class ListingsAdapter extends RecyclerView.Adapter<ListingsAdapter.myHold
         }
     }
 
+    public class OnFavListingClicked{
+        public void onFavListingClicked(Listing listing, ImageView favorite){
+            viewModel.switchUserFavListingsNonObservable(listing, favorite);
+        }
+    }
+
+
 
     public void setListingsList(final List<Listing> listings) {
         if (this.listingsList == null) {
@@ -165,10 +203,10 @@ public class ListingsAdapter extends RecyclerView.Adapter<ListingsAdapter.myHold
                 }
             });
             this.listingsList = listings;
+            notifyDataSetChanged();
             result.dispatchUpdatesTo(this);
         }
     }
-
 
 
     @Override

@@ -23,17 +23,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class RequestDetailsFragment extends Fragment {
+public class AddRequestDetailsFragment extends Fragment {
 
     private FragmentAddRequestDetailsBinding binding;
-    private static RequestDetailsFragment instance;
+    private static AddRequestDetailsFragment instance;
     private RequestDetailsFragmentViewModel viewModel;
     private String[] categories;
     private boolean[] checkedCategoriesArray;
     private int count = 0;
     private String finalizedCategory;
 
-    public RequestDetailsFragment getInstance(){
+    public static AddRequestDetailsFragment getInstance(){
         return instance;
     }
 
@@ -41,7 +41,7 @@ public class RequestDetailsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_request_details, container, false);
-
+        binding.setOncategoryclicked(new OnSelectCateogry());
 
         instance = this;
         viewModel = ViewModelProviders.of(this).get(RequestDetailsFragmentViewModel.class);
@@ -59,12 +59,12 @@ public class RequestDetailsFragment extends Fragment {
                     for(Category cat : categories){
                         allCategories.add(cat.getName());
                     }
-                    RequestDetailsFragment.this.categories = allCategories.toArray(new String[allCategories.size()]);
+                    AddRequestDetailsFragment.this.categories = allCategories.toArray(new String[allCategories.size()]);
 
-//                    if(RequestDetailsFragment.this.checkedCategoriesArray.length == 0){
+//                    if(AddRequestDetailsFragment.this.checkedCategoriesArray.length == 0){
                         boolean checkedArray[] = new boolean[allCategories.size()];
                         Arrays.fill(checkedArray, false);
-                        RequestDetailsFragment.this.checkedCategoriesArray = checkedArray;
+                        AddRequestDetailsFragment.this.checkedCategoriesArray = checkedArray;
 //                    }
                     //Todo: add another false to checkedCategoriesArray instead of remaking a whole new array with all false.
                     //need to maintain the trues
@@ -73,10 +73,9 @@ public class RequestDetailsFragment extends Fragment {
         });
     }
 
-    public double getBudget(){
-        return Double.parseDouble(binding.budgetDecimal.getText().toString());
+    public long getBudget(){
+        return (long)Double.parseDouble(binding.budgetDecimal.getText().toString());
     }
-
 
     public String getCategory(){
         return finalizedCategory;

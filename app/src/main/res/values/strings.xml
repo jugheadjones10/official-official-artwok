@@ -65,8 +65,6 @@
     <string name="Login_log_in">Log in</string>
     <string name="Login_create_account">Create account</string>
     <string name="Login_couple_image">Login_couple_image</string>
-    <string name="Login_create_account">Create account</string>
-    <string name="Login_log_in">Log in</string>
 
     <string-array name="orderrefund">
         <item>2 to 3 days on regular basis</item>

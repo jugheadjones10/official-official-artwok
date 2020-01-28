@@ -7,6 +7,9 @@
         <variable name="profilecallback" type="com.example.artwokmabel.homepage.adapters.ListingsAdapter.OnProfileClicked"/>
         <variable name="listingclickcallback" type="com.example.artwokmabel.homepage.adapters.ListingsAdapter.OnListingClicked"/>
         <variable name="listing" type="com.example.artwokmabel.homepage.models.Listing"/>
+
+        <variable name="onfavlistingclicked" type="com.example.artwokmabel.homepage.adapters.ListingsAdapter.OnFavListingClicked"/>
+        <variable name="favorite" type="android.widget.ImageView"/>
     </data>
 
 
@@ -32,6 +35,7 @@
                 android:layout_height="match_parent">
 
                 <ImageView
+                    android:id="@+id/normal_listing_like"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_alignParentEnd="true"
@@ -42,6 +46,7 @@
                     android:layout_marginEnd="15dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginBottom="5dp"
+                    android:onClick="@{() -> onfavlistingclicked.onFavListingClicked(listing, favorite)}"
                     android:src="@drawable/favourite_post" />
 
                 <com.synnapps.carouselview.CarouselView

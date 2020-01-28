@@ -8,7 +8,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,6 +22,7 @@ import com.example.artwokmabel.homepage.fragments.indivuser.IndivUserFragment;
 import com.example.artwokmabel.homepage.homepagestuff.HomePageActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
@@ -32,9 +37,13 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.myHold
     private Context mContext;
     private List<Request> requestsList;
     private FirebaseFirestore db;
+    private FirebaseAuth mAuth;
+    private RequestsAdapterViewModel viewModel;
 
     public RequestsAdapter(Context context){
         this.mContext = context;
+        this.mAuth = FirebaseAuth.getInstance();
+        viewModel = ViewModelProviders.of((FragmentActivity)context).get(RequestsAdapterViewModel.class);
     }
 
     @NonNull
@@ -50,9 +59,13 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.myHold
     public void onBindViewHolder(@NonNull RequestsAdapter.myHolder myHolder, int i) {
         Request data = requestsList.get(i);
 
+        myHolder.binding.requestFavorite.bringToFront();
         myHolder.binding.setRequestclickcallback(new RequestsAdapter.OnRequestClicked());
         myHolder.binding.setProfilecallback(new RequestsAdapter.OnProfileClicked());
         myHolder.binding.setRequest(data);
+
+        myHolder.binding.setFavorite(myHolder.binding.requestFavorite);
+
 
         ArrayList<String> images = data.getPhotos();
         ImageListener imageListener = new ImageListener() {
@@ -101,6 +114,25 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.myHold
                         }
                     }
                 });
+
+        if(data.getUserid().equals(mAuth.getCurrentUser().getUid())){
+            myHolder.binding.requestFavorite.setImageResource(R.drawable.menu);
+        }else {
+            myHolder.binding.setOnfavrequestclicked(new OnFavRequestClicked());
+
+            viewModel.getUserFavRequestsObservable().observe((FragmentActivity) mContext, new Observer<List<String>>() {
+                @Override
+                public void onChanged(@Nullable List<String> favRequests) {
+                    if (favRequests != null) {
+                        if (favRequests.contains(data.getPostid())) {
+                            myHolder.binding.requestFavorite.setImageResource(R.drawable.like);
+                        } else {
+                            myHolder.binding.requestFavorite.setImageResource(R.drawable.favourite_post);
+                        }
+                    }
+                }
+            });
+        }
     }
 
 
@@ -124,6 +156,13 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.myHold
             HomePageActivity.getInstance().loadFragment(indivUserFrag);
         }
     }
+
+    public class OnFavRequestClicked{
+        public void onFavRequestClicked(Request request, ImageView favorite){
+            viewModel.switchUserFavRequestsNonObservable(request, favorite);
+        }
+    }
+
 
     public void setRequestsList(final List<Request> requests) {
 

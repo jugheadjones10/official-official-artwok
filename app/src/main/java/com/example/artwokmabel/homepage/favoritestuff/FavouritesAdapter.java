@@ -1,4 +1,4 @@
-package com.example.artwokmabel.homepage.adapters;
+package com.example.artwokmabel.homepage.favoritestuff;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;

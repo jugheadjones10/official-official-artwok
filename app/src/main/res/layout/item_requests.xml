@@ -7,6 +7,9 @@
         <variable name="profilecallback" type="com.example.artwokmabel.homepage.fragments.requestspagestuff.RequestsAdapter.OnProfileClicked"/>
         <variable name="requestclickcallback" type="com.example.artwokmabel.homepage.fragments.requestspagestuff.RequestsAdapter.OnRequestClicked"/>
         <variable name="request" type="com.example.artwokmabel.homepage.fragments.requestspagestuff.Request"/>
+
+        <variable name="onfavrequestclicked" type="com.example.artwokmabel.homepage.fragments.requestspagestuff.RequestsAdapter.OnFavRequestClicked"/>
+        <variable name="favorite" type="android.widget.ImageView"/>
     </data>
 
 
@@ -29,6 +32,7 @@
                 android:layout_height="match_parent">
 
                 <ImageView
+                    android:id="@+id/request_favorite"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_alignParentEnd="true"
@@ -39,6 +43,7 @@
                     android:layout_marginEnd="15dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginBottom="5dp"
+                    android:onClick="@{() -> onfavrequestclicked.onFavRequestClicked(request, favorite)}"
                     android:src="@drawable/favourite_post" />
 
                 <com.synnapps.carouselview.CarouselView
