@@ -340,7 +340,7 @@ public class FirestoreRepo {
                             tempData.clear();
                             List<Task> tasks = new ArrayList<>();
                             for(int i = 0; i < favRequestsIds.size(); i++) {
-                                Log.d("thestuffreturnedREQUEST", "I'm inside the for loop now");
+                                Log.d("thestuffreturnedREQUEST", "I'm inside the for loop now  " + favRequestsIds.get(0));
 
                                 Task task =  db.collectionGroup("Requests")
                                         .whereEqualTo("postid", favRequestsIds.get(i))
