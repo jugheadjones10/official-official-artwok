@@ -12,11 +12,11 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.example.artwokmabel.profile.Activites.newUploadPostActivity;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.ActivityPostsFragmentBinding;
 import com.example.artwokmabel.homepage.adapters.PostsAdapter;
 import com.example.artwokmabel.homepage.models.MainPost;
+import com.example.artwokmabel.profile.MainActivity;
 
 import java.util.List;
 
@@ -64,7 +64,7 @@ public class PostsFragment extends Fragment {
 
     public class OnUploadButtonClicked{
         public void onUploadButtonClicked(){
-            Intent intent = new Intent(getApplicationContext(), newUploadPostActivity.class);
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
         }
     }

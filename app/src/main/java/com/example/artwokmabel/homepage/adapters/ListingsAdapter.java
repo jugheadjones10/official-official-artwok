@@ -2,7 +2,6 @@ package com.example.artwokmabel.homepage.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -19,13 +18,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.ItemListingsNormalBinding;
 import com.example.artwokmabel.homepage.activities.IndivListingActivity;
-import com.example.artwokmabel.homepage.fragments.indivuser.IndivUserFragment;
-import com.example.artwokmabel.homepage.homepagestuff.HomePageActivity;
 import com.example.artwokmabel.homepage.models.Listing;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 import com.synnapps.carouselview.ImageClickListener;
@@ -61,7 +55,7 @@ public class ListingsAdapter extends RecyclerView.Adapter<ListingsAdapter.myHold
         Listing data = listingsList.get(i);
 
         myHolder.binding.setListingclickcallback(new OnListingClicked());
-        myHolder.binding.setProfilecallback(new OnProfileClicked());
+        //myHolder.binding.setProfilecallback(new OnProfileClicked());
         myHolder.binding.setListing(data);
 
         myHolder.binding.setFavorite(myHolder.binding.normalListingLike);
@@ -95,26 +89,26 @@ public class ListingsAdapter extends RecyclerView.Adapter<ListingsAdapter.myHold
         }
 
         //Todo: replace the below with view model next time
-        db = FirebaseFirestore.getInstance();
-        db.collection("Users")
-                .document(data.getUserid())
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
-
-                            Picasso.get()
-                                    .load(document.getString("profile_url"))
-                                    .placeholder(R.drawable.loading_image)
-                                    .error(R.drawable.rick_and_morty)
-                                    .into(myHolder.binding.profile);
-                        } else {
-
-                        }
-                    }
-                });
+//        db = FirebaseFirestore.getInstance();
+//        db.collection("Users")
+//                .document(data.getUserid())
+//                .get()
+//                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+//                        if (task.isSuccessful()) {
+//                            DocumentSnapshot document = task.getResult();
+//
+//                            Picasso.get()
+//                                    .load(document.getString("profile_url"))
+//                                    .placeholder(R.drawable.loading_image)
+//                                    .error(R.drawable.rick_and_morty)
+//                                    .into(myHolder.binding.profile);
+//                        } else {
+//
+//                        }
+//                    }
+//                });
 
         if(data.getUserid().equals(mAuth.getCurrentUser().getUid())){
             myHolder.binding.normalListingLike.setImageResource(R.drawable.menu);
@@ -156,15 +150,15 @@ public class ListingsAdapter extends RecyclerView.Adapter<ListingsAdapter.myHold
         }
     }
 
-    public class OnProfileClicked{
-        public void onProfileClicked(Listing data){
-            IndivUserFragment indivUserFrag = new IndivUserFragment();
-            Bundle args = new Bundle();
-            args.putString("poster_username", data.getUsername());
-            indivUserFrag.setArguments(args);
-            HomePageActivity.getInstance().loadFragment(indivUserFrag);
-        }
-    }
+//    public class OnProfileClicked{
+//        public void onProfileClicked(Listing data){
+//            IndivUserFragment indivUserFrag = new IndivUserFragment();
+//            Bundle args = new Bundle();
+//            args.putString("poster_username", data.getUsername());
+//            indivUserFrag.setArguments(args);
+//            HomePageActivity.getInstance().loadFragment(indivUserFrag);
+//        }
+//    }
 
     public class OnFavListingClicked{
         public void onFavListingClicked(Listing listing, ImageView favorite){

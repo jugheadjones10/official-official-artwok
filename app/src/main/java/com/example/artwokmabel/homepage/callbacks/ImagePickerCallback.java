@@ -16,10 +16,11 @@ import java.util.List;
 public class ImagePickerCallback {
 
     private Activity activity;
-    public static final int REQUEST_IMAGE = 100;
+    private int requestCode;
 
-    public ImagePickerCallback(Activity activity){
+    public ImagePickerCallback(Activity activity, int requestCode){
         this.activity = activity;
+        this.requestCode = requestCode;
     }
 
     public void onImagePickerClicked(){
@@ -71,7 +72,7 @@ public class ImagePickerCallback {
         intent.putExtra(ImagePickerActivity.INTENT_BITMAP_MAX_WIDTH, 1000);
         intent.putExtra(ImagePickerActivity.INTENT_BITMAP_MAX_HEIGHT, 1000);
 
-        activity.startActivityForResult(intent, REQUEST_IMAGE);
+        activity.startActivityForResult(intent, requestCode);
     }
 
     private void launchGalleryIntent() {
@@ -82,6 +83,6 @@ public class ImagePickerCallback {
         intent.putExtra(ImagePickerActivity.INTENT_LOCK_ASPECT_RATIO, true);
         intent.putExtra(ImagePickerActivity.INTENT_ASPECT_RATIO_X, 1); // 16x9, 1x1, 3:4, 3:2
         intent.putExtra(ImagePickerActivity.INTENT_ASPECT_RATIO_Y, 1);
-        activity.startActivityForResult(intent, REQUEST_IMAGE);
+        activity.startActivityForResult(intent, requestCode);
     }
 }

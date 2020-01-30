@@ -33,6 +33,7 @@ public class HomeStandardCatFragment extends Fragment {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.main_gifts_fragment, container, false);
 
+
         binding.giftRecyclerview.setHasFixedSize(true);
         binding.giftRecyclerview.setLayoutManager(new GridLayoutManager(getContext(), 2));
 

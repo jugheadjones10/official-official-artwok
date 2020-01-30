@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.provider.OpenableColumns;
 import android.util.Log;
 import android.view.View;
-import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -17,7 +16,7 @@ import androidx.databinding.DataBindingUtil;
 
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.Repositories.FirestoreRepo;
-import com.example.artwokmabel.databinding.ActivityUploadListing3Binding;
+import com.example.artwokmabel.databinding.ActivityUploadRequestBinding;
 import com.example.artwokmabel.homepage.callbacks.ImagePickerCallback;
 import com.example.artwokmabel.homepage.homepagestuff.HomePageActivity;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -38,23 +37,21 @@ import java.util.Random;
 
 public class UploadRequestActivity extends AppCompatActivity {
 
-
     private StorageReference storageReference;
     private FirebaseFirestore firebaseFirestore;
     private Uri postImageUri = null;
     private ArrayList<String> postImageUris = new ArrayList<String>();
     private boolean more_than_one_img = false;
-    private ArrayList<String> finCatList = new ArrayList<String>();
-    private HorizontalScrollView colorPalette;
-    private boolean hashtagEditable = true;
     private static UploadRequestActivity instance;
+    public static final int REQUEST_IMAGE = 100;
+
 
     //Todo: edit ucrop library to allow for editing of multiple images
     int numPostArray[] = {0};
 
     String[] imageURIs = {"","","","",""};
 
-    private ActivityUploadListing3Binding binding;
+    private ActivityUploadRequestBinding binding;
     private String currentUserId;
     private FirebaseAuth mAuth;
     private InidvAddRequestPagerAdapter adapter;
@@ -69,7 +66,7 @@ public class UploadRequestActivity extends AppCompatActivity {
         postImageUris.clear();
 
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_upload_listing_3);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_upload_request);
 
         instance = this;
         adapter = new InidvAddRequestPagerAdapter(this);
@@ -113,60 +110,16 @@ public class UploadRequestActivity extends AppCompatActivity {
         binding.carouselView.setImageClickListener(new ImageClickListener() {
             @Override
             public void onClick(int position) {
-                new ImagePickerCallback(UploadRequestActivity.this).onImagePickerClicked();
+                new ImagePickerCallback(UploadRequestActivity.this, REQUEST_IMAGE).onImagePickerClicked();
             }
         });
-
-        String [] categoryArray = new String[] {"Gifts", "Services", "Handmade", "cat4", "cat5", "cat6"};
-        boolean [] checkedCategoriesArray = new boolean[]{
-                false, false, false, false, false, false, false
-        };
-
-//        binding.selectCategoryL.setOnClickListener(new View.OnClickListener(){
-//            public void onClick(View view){
-//                finCatList.clear();
-//                AlertDialog.Builder builder = new AlertDialog.Builder(UploadRequestActivity.this);
-//
-//                final List<String> categoryList = Arrays.asList(categoryArray);
-//                builder.setTitle("Select Categories");
-//                //builder.setIcon(R.drawable.);
-//
-//                builder.setMultiChoiceItems(categoryArray, checkedCategoriesArray, new DialogInterface.OnMultiChoiceClickListener(){
-//                    public void onClick(DialogInterface dialogInterface, int which, boolean isChcked){
-//                        checkedCategoriesArray[which] = isChcked;
-//                        String currentItem = categoryList.get(which);
-//                        Toast.makeText(UploadRequestActivity.this, currentItem+" "+ isChcked, Toast.LENGTH_LONG);
-//                    }
-//                });
-//
-//                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener(){
-//                    public void onClick(DialogInterface dialog, int which){
-//                        for(int i=0; i<checkedCategoriesArray.length; i++){
-//                            if(checkedCategoriesArray[i]){
-//                                finCatList.add(categoryArray[i]);
-//                            }
-//                        }
-//                    }
-//                });
-//
-//                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//
-//                    }
-//                });
-//                AlertDialog dialog = builder.create();
-//                dialog.show();
-//            }
-//        });
 
         binding.uploadPicL.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                new ImagePickerCallback(UploadRequestActivity.this).onImagePickerClicked();
+                new ImagePickerCallback(UploadRequestActivity.this, REQUEST_IMAGE).onImagePickerClicked();
             }
         });
-
 
         binding.uploadBtnL.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -190,49 +143,7 @@ public class UploadRequestActivity extends AppCompatActivity {
                 else if(postImageUris.isEmpty() && postImageUri == null){
                     Toast.makeText(UploadRequestActivity.this, "Please add at least one photo of your listing.", Toast.LENGTH_LONG).show();
                 }else{
-
-//                    int price = Integer.parseInt(setPrice.getText().toString());
-//                    String delivery = deliveryPolicies.getText().toString();
-//                    String returnExchange = returnExchangePolicies.getText().toString();
-                    // text (hashtags optional) and picture has been chosen; no empty or null value
-
-
                     binding.uploadProgressL.setVisibility(View.VISIBLE);
-                    getUserPostNumPost();
-//                    if(more_than_one_img){
-//
-//                        DocumentReference newListingRef = firebaseFirestore.collection("Users").document(LoginActivity.uid).collection("Listings").document();
-//                        Listing newListing = new Listing(
-//                                LoginActivity.uid,
-//                                returnExchange,
-//                                price,
-//                                postImageUris,
-//                                title,
-//                                newPostHashtags.getText().toString(),
-//                                newPostDesc.getText().toString(),
-//                                delivery,
-//                                "temporary username",
-//                                newListingRef.getId(),
-//                                System.currentTimeMillis(),
-//                                finCatList);
-//
-//                        newListingRef.set(newListing)
-//                                .addOnSuccessListener(aVoid -> {
-//                                    Toast.makeText(AddListingActivity.this, "Successfully uploaded ic_dm.", Toast.LENGTH_LONG).show();
-//                                    finish();
-//                                    uploadProgress.setVisibility(View.INVISIBLE);
-//                                })
-//                                .addOnFailureListener(e ->
-//                                        Toast.makeText(AddListingActivity.this, "Failed to upload ic_dm.", Toast.LENGTH_LONG)
-//                                                .show());
-//
-//                        firebaseFirestore
-//                                .collection("Users")
-//                                .document(LoginActivity.uid)
-//                                .update("number_of_listings", FieldValue.increment(1));
-//
-//                    }else{
-
                     FirestoreRepo.getInstance().uploadNewRequest(postTitle, postDesc, category, budget, currentUserId, postImageUris, UploadRequestActivity.this);
                 }}
 //            }
@@ -252,48 +163,6 @@ public class UploadRequestActivity extends AppCompatActivity {
             Picasso.get().load(imageURIs[position]).into(imageView);
         }
     };
-
-    private void openGallery(){ // opens gallery intent and waits for user to pick an ic_dm
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("image/*");
-        //intent.addCategory(Intent.CATEGORY_OPENABLE);
-        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-
-        // Launching the Intent
-        startActivityForResult(intent,1);
-
-//        Intent intent = new Intent();
-//        intent.setType("ic_dm/*");
-//        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-//        intent.setAction(Intent.ACTION_GET_CONTENT);
-//        startActivityForResult(Intent.createChooser(intent,"Select Picture"), 1);
-    }
-
-    public void getUserPostNumPost(){
-//        DocumentReference docRef = firebaseFirestore.collection("Users").document(currentUserId);
-//
-//        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-//                if (task.isSuccessful()) {
-//                    DocumentSnapshot document = task.getResult();
-//                    if (document.exists()) {
-//                        Log.d("LOG: ", "DocumentSnapshot data: " + document.getData());
-////                        String name = "number_of_posts";
-//                        String name = "number_of_listings";
-////                        YJ - changed number of posts to number of listings
-//                        numPostArray[0] = ((Long) document.get(name)).intValue();
-//
-//                    } else {
-//                        Log.d("LOG: ", "No such document");
-//                        getUserPostNumPost();
-//                    }
-//                } else {
-//                    Log.d("LOG: ", "get failed with ", task.getException());
-//                }
-//            }
-//        });
-    }
 
     @Override
     protected void onActivityResult (int requestCode, int resultCode, Intent data) {

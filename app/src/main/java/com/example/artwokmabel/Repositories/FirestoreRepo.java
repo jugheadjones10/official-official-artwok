@@ -25,6 +25,7 @@ import com.example.artwokmabel.homepage.models.Category;
 import com.example.artwokmabel.homepage.models.Listing;
 import com.example.artwokmabel.homepage.models.MainPost;
 import com.example.artwokmabel.homepage.models.User;
+import com.example.artwokmabel.profile.uploadlisting.UploadListingAcitvity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -85,6 +86,32 @@ public class FirestoreRepo {
         algoliaIndex.saveObjectAsync(newData, userid, null);
     }
 
+    public void uploadNewListing(String postTitle, String postDesc, ArrayList<String> categories, Long price, String delivery, String refund, String currentUserId, ArrayList<String> postImageUris, Activity activity){
+
+        DocumentReference newListingRef = db.collection("Users").document(currentUserId).collection("Listings").document();
+        Listing newListing = new Listing(
+                currentUserId,
+                refund,
+                price,
+                postImageUris,
+                postTitle,
+                "placeholderhashtags",
+                postDesc,
+                delivery,
+                "temporary username",
+                newListingRef.getId(),
+                System.currentTimeMillis(),
+                categories);
+
+        newListingRef.set(newListing)
+                .addOnSuccessListener(aVoid -> {
+                    Toast.makeText(activity, "Successfully uploaded ic_dm.", Toast.LENGTH_LONG).show();
+                    UploadListingAcitvity.getInstance().onUploaded();
+                })
+                .addOnFailureListener(e ->
+                        Toast.makeText(activity, "Failed to upload ic_dm. awd", Toast.LENGTH_LONG)
+                                .show());
+    }
 
     public void uploadNewRequest(String postTitle, String postDesc, String category, Long budget, String currentUserId, ArrayList<String> postImageUris, Activity activity){
 
@@ -231,6 +258,52 @@ public class FirestoreRepo {
                         }
                     }
                 });
+    }
+
+    public LiveData<Integer> getUserNumPosts(String userId){
+        final MutableLiveData<Integer> data = new MutableLiveData<>();
+
+        db.collection("Users")
+                .document(userId)
+                .collection("Posts")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.w("TAG", "Listen failed.", e);
+                            return;
+                        }
+                        int count = 0;
+                        for (DocumentSnapshot document : queryDocumentSnapshots) {
+                            count++;
+                        }
+                        data.setValue(count);
+                    }
+                });
+        return data;
+    }
+
+    public LiveData<Integer> getUserNumListings(String userId){
+        final MutableLiveData<Integer> data = new MutableLiveData<>();
+
+        db.collection("Users")
+                .document(userId)
+                .collection("Listings")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.w("TAG", "Listen failed.", e);
+                            return;
+                        }
+                        int count = 0;
+                        for (DocumentSnapshot document : queryDocumentSnapshots) {
+                            count++;
+                        }
+                        data.setValue(count);
+                    }
+                });
+        return data;
     }
 
     public void addUserRequestFavs(String requestId, String userId){

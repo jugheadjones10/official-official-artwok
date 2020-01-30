@@ -32,7 +32,7 @@
     <string name="upload_post_add_hashtags">Add #hashtags...</string>
     <string name="upload_post_add_category">Add category...</string>
 
-    <string name="upload">upload</string>
+    <string name="upload">Upload</string>
     <string name="add_listing">Add Listing</string>
     <string name="item">Item</string>
     <string name="price">Price</string>
@@ -95,4 +95,17 @@
         <item>20</item>
 
     </string-array>
+
+    <string name="editor_app_name">RichTextEditor</string>
+
+    <string name="toolbar_placement_top">Toolbar at top</string>
+    <string name="toolbar_placement_bottom">Toolbar at bottom</string>
+
+    <string name="toolbar_appearance_inline">Toolbar inline</string>
+    <string name="toolbar_appearance_grouped">Toolbar grouped</string>
+
+    <string name="add_html_from_web_page">Add HTML from web page</string>
+
+    <string name="dialog_add_html_from_web_page_url_label">Web site address</string>
+    <string name="dialog_add_html_from_web_page_url_hint">http://</string>
 </resources>

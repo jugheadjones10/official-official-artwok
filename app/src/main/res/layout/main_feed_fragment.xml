@@ -10,16 +10,23 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <com.takusemba.multisnaprecyclerview.MultiSnapRecyclerView
+<!--                <com.takusemba.multisnaprecyclerview.MultiSnapRecyclerView-->
+<!--                    android:id="@+id/horizontal_recycler_view_listings"-->
+<!--                    android:orientation="horizontal"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_gravity="center_vertical"-->
+<!--                    android:layout_marginBottom="8dp"-->
+<!--                    android:layout_marginTop="8dp"-->
+<!--                    app:msrv_interval="1"-->
+<!--                    app:msrv_speed_ms_per_inch="100" />-->
+
+                <com.yarolegovich.discretescrollview.DiscreteScrollView
                     android:id="@+id/horizontal_recycler_view_listings"
-                    android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
                     android:layout_marginBottom="8dp"
-                    android:layout_marginTop="8dp"
-                    app:msrv_interval="1"
-                    app:msrv_speed_ms_per_inch="100" />
+                    android:layout_marginTop="8dp"/>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerview"

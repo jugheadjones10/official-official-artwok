@@ -155,6 +155,10 @@ dependencies {
     //Horizontally scrollable recycler view
     implementation 'com.github.takusemba:multisnaprecyclerview:2.0.1'
 
+    implementation 'com.yarolegovich:discrete-scrollview:1.4.9'
+
+    implementation 'net.dankito.richtexteditor:richtexteditor-android:2.0.8'
+
 //Facebook
 //    implementation 'com.facebook.android:facebook-android-sdk:5.0.1'
 }

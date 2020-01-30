@@ -152,7 +152,6 @@ public class ImagePickerActivity extends AppCompatActivity {
                         token.continuePermissionRequest();
                     }
                 }).check();
-
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

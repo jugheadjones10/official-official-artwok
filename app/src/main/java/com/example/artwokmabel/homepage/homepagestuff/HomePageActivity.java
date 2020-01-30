@@ -6,11 +6,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.artwokmabel.R;
 import com.example.artwokmabel.chat.fragments.MessageFragment;
 import com.example.artwokmabel.homepage.fragments.GroupsFragment;
 import com.example.artwokmabel.homepage.fragments.NotifsFragment;
-import com.example.artwokmabel.profile.fragments.ProfileFragment;
-import com.example.artwokmabel.R;
+import com.example.artwokmabel.profile.Activites.ProfilePageFragment2;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
@@ -58,7 +58,7 @@ public class HomePageActivity extends AppCompatActivity {
                         loadFragment(fragment);
                         return true;
                     case R.id.main_profile_fragment:
-                        fragment = new ProfileFragment();
+                        fragment = new ProfilePageFragment2();
                         loadFragment(fragment);
                         return true;
                 }
