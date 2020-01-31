@@ -13,21 +13,23 @@
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/save_btn"
-            android:layout_width="100dp"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="600dp"
+            android:layout_marginTop="5dp"
             android:gravity="center"
             android:onClick="@{() -> callback.onClick()}"
-            android:padding="8dp"
+            android:padding="6dp"
             android:text="Save" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/cat_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_below="@+id/save_btn"
             android:layout_alignParentBottom="false"
+            android:layout_marginTop="5dp"
             android:foregroundGravity="center_horizontal" />
 
     </RelativeLayout>
