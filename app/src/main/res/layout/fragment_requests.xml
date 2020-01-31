@@ -13,54 +13,55 @@
         android:layout_height="match_parent">
 
 
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:id="@+id/add_request_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="50dp"
-            android:onClick="@{() -> callback.onAddRequestClick()}"
-            android:padding="8dp"
-            android:text="Add Request"
-            app:layout_constraintBottom_toBottomOf="@+id/request_recyclerview"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/request_recyclerview" />
+<!--        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton-->
+<!--            android:id="@+id/add_request_button"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginBottom="50dp"-->
+<!--            android:onClick="@{() -> callback.onAddRequestClick()}"-->
+<!--            android:padding="8dp"-->
+<!--            android:text="@string/add_request"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="@+id/request_recyclerview"-->
+<!--            tools:ignore="UnknownIdInLayout" />-->
 
         <LinearLayout
             android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#fffafa"
-            android:gravity="center_vertical"
+            android:layout_marginTop="3dp"
+            android:background="#33C9DC"
             android:orientation="horizontal"
-            android:padding="10dp"
+            android:padding="5dp"
             android:paddingBottom="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="View: " />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_marginLeft="5dp"
-                android:src="@drawable/ic_grid" />
+                android:text="All Requests"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
 
             <TextView
+                android:id="@+id/add_request_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="Filter: " />
-
-            <ImageView
-                android:layout_width="28dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="5dp"
-                android:src="@drawable/filter" />
-
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="5dp"
+                android:onClick="@{() -> callback.onAddRequestClick()}"
+                android:text="Add Requests"
+                android:textColor="@color/artwok_black"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -68,6 +69,8 @@
             android:id="@+id/request_recyclerview"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

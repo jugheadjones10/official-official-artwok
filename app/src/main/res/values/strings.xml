@@ -108,4 +108,5 @@
 
     <string name="dialog_add_html_from_web_page_url_label">Web site address</string>
     <string name="dialog_add_html_from_web_page_url_hint">http://</string>
+    <string name="add_request">Add Request</string>
 </resources>

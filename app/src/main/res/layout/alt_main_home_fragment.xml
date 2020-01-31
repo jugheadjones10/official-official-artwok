@@ -24,7 +24,7 @@
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
+                    android:layout_height="45dp"
                     android:layout_weight="1"
                     android:background="?attr/colorPrimary"
                     app:contentInsetStart="0dp"
@@ -35,40 +35,40 @@
                     <LinearLayout
                         android:id="@+id/linearLayout3"
                         android:layout_width="match_parent"
-                        android:layout_height="49dp"
+                        android:layout_height="45dp"
                         android:layout_weight="1"
                         android:orientation="horizontal">
                         <ImageView
-                            android:layout_width="55dp"
+                            android:layout_width="100dp"
                             android:layout_height="match_parent"
-                            android:layout_gravity="left|center_vertical"
-                            android:paddingLeft="5dp"
-                            android:paddingTop="5dp"
-                            android:paddingRight="10dp"
-                            android:paddingBottom="5dp"
-                            android:src="@drawable/official_logo" />
+                            android:layout_gravity="start|bottom"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="10dp"
+                            android:src="@drawable/artwok_login_icon" />
 
-                        <EditText
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"/>
+
+                        <ImageView
                             android:id="@+id/mainsearchbar"
-                            android:focusable="false"
-                            android:layout_width="fill_parent"
-                            android:layout_height="36dp"
-                            android:layout_gravity="center_horizontal|center_vertical"
-                            android:layout_weight="1"
-                            android:background="@layout/rounded_border_edittext"
-                            android:hint="Search..."
-                            android:paddingLeft="15dp" />
+                            android:layout_width="25dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/search_icon" />
 
                         <ImageButton
                             android:id="@+id/fav_btn"
-                            android:layout_width="wrap_content"
+                            android:layout_width="45dp"
                             android:layout_height="wrap_content"
+
                             android:layout_gravity="center_vertical"
                             android:adjustViewBounds="true"
                             android:background="@null"
                             android:padding="10dp"
                             android:scaleType="fitCenter"
-                            android:src="@drawable/favourite" />
+                            android:src="@drawable/ic_heart" />
                     </LinearLayout>
                 </androidx.appcompat.widget.Toolbar>
 
@@ -76,7 +76,7 @@
                 <com.google.android.material.tabs.TabLayout
                     android:id="@+id/tabs"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     app:tabGravity="fill"
                     app:tabIndicatorColor="@color/artwok_white"
                     app:tabMode="scrollable">

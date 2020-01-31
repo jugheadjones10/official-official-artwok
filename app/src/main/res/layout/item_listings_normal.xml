@@ -36,15 +36,12 @@
 
                 <ImageView
                     android:id="@+id/normal_listing_like"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
                     android:layout_marginStart="5dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="7dp"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="10dp"
                     android:layout_marginBottom="5dp"
                     android:onClick="@{() -> onfavlistingclicked.onFavListingClicked(listing, favorite)}"
                     android:src="@drawable/favourite_post" />
