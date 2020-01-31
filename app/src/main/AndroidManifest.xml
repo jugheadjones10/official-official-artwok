@@ -13,6 +13,7 @@
         android:roundIcon="@drawable/official_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
+        <activity android:name=".auth.LoginActivityNew"/>
         <activity android:name=".auth.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,10 +32,7 @@
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name" />
         <activity android:name=".auth.LoginActivity">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+
         </activity>
         <activity
             android:name="com.facebook.CustomTabActivity"
@@ -48,21 +46,24 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".profile.Activites.UploadPostActivity" >
-            <intent-filter>
+        <activity android:name=".profile.uploadpost.UploadPostActivity" >
+<!--            <intent-filter>-->
 
-                <action android:name="android.intent.action.SEND_MULTIPLE" />
-                <!--<category android:name="android.intent.category.DEFAULT" />-->
-                <data android:mimeType="image/*" />
-            </intent-filter>
+<!--                <action android:name="android.intent.action.SEND_MULTIPLE" />-->
+<!--                &lt;!&ndash;<category android:name="android.intent.category.DEFAULT" />&ndash;&gt;-->
+<!--                <data android:mimeType="image/*" />-->
+<!--            </intent-filter>-->
         </activity>
-        <activity android:name=".profile.Activites.ProfilePageActivity" />
+        <activity android:name=".profile.Activites.newUploadPostActivity" />
 
 
         <!--  BELOW ADJUST PAN MIGHT BE A PROBLEM WHEN USING SCROLL VIEW -->
         <!--  https://stackoverflow.com/questions/42051956/how-to-hide-the-bottomnavigationview-below-keyboard-with-adjustresize-set-->
         <activity android:name=".homepage.homepagestuff.HomePageActivity"
             android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".profile.uploadlisting.UploadListingAcitvity"
+            android:windowSoftInputMode="adjustPan"/>
+
         <activity android:name=".auth.ForgotPasswordActivity" />
         <activity android:name=".RubbishReference.LaunchPageActivity" />
         <activity android:name=".RubbishReference.SearchDefaultActivity" />
@@ -83,8 +84,6 @@
         <activity android:name=".homepage.fragments.requestspagestuff.UploadRequestActivity"
             android:windowSoftInputMode="adjustNothing"/>
 
-
-        <activity android:name=".auth.LoginActivityNew" />
         <activity android:name=".auth.CreateAccountEmailActivity"
             android:parentActivityName=".auth.LoginActivityNew"/>
         <activity android:name=".auth.CreateAccountUsernameActivity"
@@ -117,7 +116,6 @@
 
         <!-- Image Picker activity -->
         <activity android:name=".profile.Activites.ImagePickerActivity" />
-        <activity android:name=".profile.Activites.newUploadPostActivity" />
 
         <!-- uCrop cropping activity -->
         <activity

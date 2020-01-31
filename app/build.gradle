@@ -157,8 +157,7 @@ dependencies {
 
     implementation 'com.yarolegovich:discrete-scrollview:1.4.9'
 
-    implementation 'net.dankito.richtexteditor:richtexteditor-android:2.0.8'
-
+    api ('com.github.wordpress-mobile.WordPress-Aztec-Android:aztec:v1.3.36')
 //Facebook
 //    implementation 'com.facebook.android:facebook-android-sdk:5.0.1'
 }

@@ -17,7 +17,7 @@ import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.ActivityListingsFragmentBinding;
 import com.example.artwokmabel.homepage.adapters.ListingsAdapter;
 import com.example.artwokmabel.homepage.models.Listing;
-import com.example.artwokmabel.profile.Activites.AddListingActivity;
+import com.example.artwokmabel.profile.uploadlisting.UploadListingAcitvity;
 
 import java.util.List;
 
@@ -25,7 +25,6 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 
 
 public class ListingsFragment extends Fragment {
-
     private ActivityListingsFragmentBinding binding;
     private ListingsAdapter adapter;
     private ListingsFragmentViewModel viewModel;
@@ -74,7 +73,7 @@ public class ListingsFragment extends Fragment {
 
     public class OnAddListingClicked{
         public void onAddListingClicked(){
-            Intent intent = new Intent(getApplicationContext(), AddListingActivity.class);
+            Intent intent = new Intent(getApplicationContext(), UploadListingAcitvity.class);
             startActivity(intent);
         }
     }

@@ -16,7 +16,7 @@ import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.ActivityPostsFragmentBinding;
 import com.example.artwokmabel.homepage.adapters.PostsAdapter;
 import com.example.artwokmabel.homepage.models.MainPost;
-import com.example.artwokmabel.profile.MainActivity;
+import com.example.artwokmabel.profile.uploadpost.UploadPostActivity;
 
 import java.util.List;
 
@@ -64,7 +64,7 @@ public class PostsFragment extends Fragment {
 
     public class OnUploadButtonClicked{
         public void onUploadButtonClicked(){
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            Intent intent = new Intent(getApplicationContext(), UploadPostActivity.class);
             startActivity(intent);
         }
     }

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -14,7 +15,7 @@ import androidx.databinding.DataBindingUtil;
 
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.Repositories.FirestoreRepo;
-import com.example.artwokmabel.databinding.ActivityUploadListing4Binding;
+import com.example.artwokmabel.databinding.ActivityUploadListing5Binding;
 import com.example.artwokmabel.homepage.callbacks.ImagePickerCallback;
 import com.example.artwokmabel.homepage.fragments.requestspagestuff.AddRequestDescFragment;
 import com.example.artwokmabel.homepage.homepagestuff.HomePageActivity;
@@ -46,7 +47,7 @@ public class UploadListingAcitvity extends AppCompatActivity {
     //Todo: edit ucrop library to allow for editing of multiple images
     String[] imageURIs = {"","","","",""};
 
-    private ActivityUploadListing4Binding binding;
+    private ActivityUploadListing5Binding binding;
     private String currentUserId;
     private FirebaseAuth mAuth;
     private UploadListingPagerAdapter adapter;
@@ -61,11 +62,15 @@ public class UploadListingAcitvity extends AppCompatActivity {
         //postImageUris.clear();
 
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_upload_listing_4);
-
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_upload_listing_5);
+        binding.uploadProgressL.setVisibility(View.GONE);
         instance = this;
         adapter = new UploadListingPagerAdapter(this);
         binding.pager.setAdapter(adapter);
+
+        setSupportActionBar(binding.indivToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        binding.indivToolbar.inflateMenu(R.menu.indiv_listing_menu_mine);
 
         new TabLayoutMediator(binding.tabLayout, binding.pager,
                 new TabLayoutMediator.TabConfigurationStrategy() {
@@ -160,7 +165,7 @@ public class UploadListingAcitvity extends AppCompatActivity {
     ImageListener imageListener = new ImageListener() {
         @Override
         public void setImageForPosition(int position, ImageView imageView) {
-            Picasso.get().load(imageURIs[position]).into(imageView);
+            Picasso.get().load(postImageUris.get(position)).into(imageView);
         }
     };
 
@@ -228,5 +233,12 @@ public class UploadListingAcitvity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.indiv_listing_menu_mine, menu);
+        return true;
     }
 }

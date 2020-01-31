@@ -16,13 +16,12 @@
             android:id="@+id/imageView3"
             android:layout_width="0dp"
             android:layout_height="100dp"
-            android:layout_marginTop="32dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_weight="3"
-            app:srcCompat="@drawable/budget_details_lady" />
+            app:srcCompat="@drawable/business_shop_illustration" />
 
         <LinearLayout
             android:id="@+id/price_layout"
@@ -38,24 +37,17 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="40dp"
                 android:gravity="bottom"
                 android:text="Set Price"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/textInputLayout2"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
+                android:textSize="15sp"
+                android:textStyle="bold" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/price_input_layout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 app:boxCornerRadiusBottomEnd="8dp"
                 app:boxCornerRadiusBottomStart="8dp"
                 app:boxCornerRadiusTopEnd="8dp"
@@ -66,7 +58,8 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/price_edit_text"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
                     android:textColor="@color/artwok_black" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -77,7 +70,6 @@
             android:id="@+id/categories_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
             android:orientation="vertical"
             android:paddingLeft="30dp"
             android:paddingRight="30dp"
@@ -88,11 +80,10 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="40dp"
                 android:gravity="bottom"
                 android:text="Set Categories"
-                android:textSize="18sp"
+                android:textSize="15sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/textInputLayout2"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -104,9 +95,7 @@
                 android:id="@+id/choose_categories"
                 style="@style/Widget.MaterialComponents.Button"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_gravity="left|center_vertical"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:backgroundTint="@color/cat_bar_grey"
                 android:gravity="center_vertical"
                 android:onClick="@{() -> oncategoryclicked.onSelectCategory()}"
@@ -115,6 +104,7 @@
                 android:text="Choose"
                 android:textAllCaps="false"
                 android:textColor="@color/artwok_black"
+                android:textSize="12sp"
                 app:cornerRadius="8dp"
                 app:icon="@drawable/downarrow"
                 app:iconGravity="end"

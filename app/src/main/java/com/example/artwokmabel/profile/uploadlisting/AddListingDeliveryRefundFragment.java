@@ -32,10 +32,10 @@ public class AddListingDeliveryRefundFragment  extends Fragment {
     }
 
     public String getDelivery(){
-        return binding.deliveryDetails.getText().toString();
+        return binding.deliveryEditText.getText().toString();
     }
 
     public String getRefund(){
-        return binding.refundPolicy.getText().toString();
+        return binding.refundEditText.getText().toString();
     }
 }

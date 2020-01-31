@@ -7,7 +7,6 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.artwokmabel.homepage.fragments.Indivlistings.FaqFragment;
 import com.example.artwokmabel.homepage.fragments.requestspagestuff.AddRequestDescFragment;
-import com.example.artwokmabel.homepage.fragments.requestspagestuff.AddRequestDetailsFragment;
 
 public class UploadListingPagerAdapter extends FragmentStateAdapter {
 
@@ -23,7 +22,7 @@ public class UploadListingPagerAdapter extends FragmentStateAdapter {
             Fragment fragment = new AddRequestDescFragment();
             return fragment;
         }else if (position == 1){
-            Fragment fragment = new AddRequestDetailsFragment();
+            Fragment fragment = new AddListingDetailsFragment();
             return fragment;
         }else if (position == 2){
             Fragment fragment = new AddListingDeliveryRefundFragment();
