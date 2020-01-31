@@ -129,11 +129,26 @@ public class UploadListingAcitvity extends AppCompatActivity {
                 String postDesc = AddRequestDescFragment.getInstance().getDesc();
                 String postTitle = AddRequestDescFragment.getInstance().getTitle();
 
-                ArrayList<String> categories = AddListingDetailsFragment.getInstance().getCategories();
-                long budget = AddListingDetailsFragment.getInstance().getBudget();
+                ArrayList<String> categories;
+                long budget;
+                if(AddListingDetailsFragment.getInstance() == null){
+                    categories = null;
+                    budget = -1;
+                }else{
+                    categories = AddListingDetailsFragment.getInstance().getCategories();
+                    budget = AddListingDetailsFragment.getInstance().getBudget();
+                }
 
-                String deliveryDetails = AddListingDeliveryRefundFragment.getInstance().getDelivery();
-                String refundPolicy = AddListingDeliveryRefundFragment.getInstance().getRefund();
+
+                String deliveryDetails;
+                String refundPolicy;
+                if(AddListingDeliveryRefundFragment.getInstance() == null){
+                    deliveryDetails = "";
+                    refundPolicy = "";
+                }else{
+                    deliveryDetails = AddListingDeliveryRefundFragment.getInstance().getDelivery();
+                    refundPolicy = AddListingDeliveryRefundFragment.getInstance().getRefund();
+                }
 
                 if(postDesc.isEmpty()){
                     Toast.makeText(UploadListingAcitvity.this, "Please fill the description for your listing.", Toast.LENGTH_LONG).show();
@@ -145,6 +160,8 @@ public class UploadListingAcitvity extends AppCompatActivity {
                     Toast.makeText(UploadListingAcitvity.this, "Please enter your refund policy", Toast.LENGTH_LONG).show();
                 } else if(categories == null || categories.size() == 0){
                     Toast.makeText(UploadListingAcitvity.this, "Please select the category for your request.", Toast.LENGTH_LONG).show();
+                } else if(budget == -1){
+                    Toast.makeText(UploadListingAcitvity.this, "Please enter the price.", Toast.LENGTH_LONG).show();
                 } else if(postImageUris.isEmpty() && postImageUri == null){
                     Toast.makeText(UploadListingAcitvity.this, "Please add at least one photo of your listing.", Toast.LENGTH_LONG).show();
                 }else{

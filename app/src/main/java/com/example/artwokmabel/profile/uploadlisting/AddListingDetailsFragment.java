@@ -32,7 +32,7 @@ public class AddListingDetailsFragment extends Fragment {
     private RequestDetailsFragmentViewModel viewModel;
     private String[] categories;
     private boolean[] checkedCategoriesArray;
-    private ArrayList<String> finalizedCategories = new ArrayList<>();
+    private ArrayList<String> finalizedCategories;
 
     public static AddListingDetailsFragment getInstance(){
         return instance;
@@ -45,6 +45,7 @@ public class AddListingDetailsFragment extends Fragment {
         binding.setOncategoryclicked(new AddListingDetailsFragment.OnSelectCateogry());
         binding.priceEditText.setFilters(new InputFilter[]{new DigitsInputFilter(3, 2, Double.POSITIVE_INFINITY)});
 
+        finalizedCategories = new ArrayList<>();
         instance = this;
         viewModel = ViewModelProviders.of(this).get(RequestDetailsFragmentViewModel.class);
         observeViewModel(viewModel);
@@ -75,7 +76,12 @@ public class AddListingDetailsFragment extends Fragment {
     }
 
     public long getBudget(){
-        return (long)Double.parseDouble(binding.priceEditText.getText().toString());
+        String finalBudget = binding.priceEditText.getText().toString();
+        if(finalBudget.isEmpty()){
+            return -1;
+        }else{
+            return (long)Double.parseDouble(binding.priceEditText.getText().toString());
+        }
     }
 
     public ArrayList<String> getCategories(){

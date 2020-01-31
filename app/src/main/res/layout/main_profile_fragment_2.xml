@@ -33,6 +33,8 @@
                 android:padding="5dp"
                 android:scaleType="fitCenter"
                 app:srcCompat="@drawable/ic_group" />
+<!--            android:onClick="@{() -> onpeopleclicked.onPeopleClicked()}"-->
+
 
             <ImageButton
                 android:id="@+id/profile_settings"
