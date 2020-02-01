@@ -1,4 +1,4 @@
-package com.example.artwokmabel.profile.Activites;
+package com.example.artwokmabel.profile.activities;
 
 import android.app.Activity;
 import android.content.DialogInterface;

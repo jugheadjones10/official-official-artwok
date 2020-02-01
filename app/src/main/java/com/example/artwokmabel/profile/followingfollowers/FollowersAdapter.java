@@ -123,9 +123,7 @@ public class FollowersAdapter extends RecyclerView.Adapter<FollowersAdapter.myHo
             result.dispatchUpdatesTo(this);
         }
     }
-
-
-
+    
     public class OnFollowingClicked{
         public void onFollowingClicked(Button followingButton, User user){
             if(followingButton.getText().toString().equals("Following")){

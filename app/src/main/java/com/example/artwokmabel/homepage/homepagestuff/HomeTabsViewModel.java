@@ -11,6 +11,7 @@ import java.util.ArrayList;
 public class HomeTabsViewModel extends ViewModel {
     private FirebaseAuth mAuth;
     private final LiveData<ArrayList<String>> categoryListObservable;
+    private ArrayList<String> categoriesListMaintainable;
 
     public HomeTabsViewModel() {
         mAuth = FirebaseAuth.getInstance();
@@ -20,5 +21,13 @@ public class HomeTabsViewModel extends ViewModel {
 
     public LiveData<ArrayList<String>> getCategoryListObservable() {
         return categoryListObservable;
+    }
+
+    public ArrayList<String> getCategoriesListMaintainable() {
+        return categoriesListMaintainable;
+    }
+
+    public void setCategoriesListMaintainable(ArrayList<String> categoriesListMaintainable) {
+        this.categoriesListMaintainable = categoriesListMaintainable;
     }
 }

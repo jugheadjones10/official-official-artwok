@@ -41,9 +41,27 @@ public class HomeTabsManagerFragment extends Fragment {
         adapter = new TabsPagerAdapter(this);
         binding.viewPager.setAdapter(adapter);
 
+
         new TabLayoutMediator(binding.tabs, binding.viewPager,
                 (tab, position) -> tab.setText(tabCategories.get(position))
         ).attach();
+
+//        new TabLayoutMediator(binding.tabs, binding.viewPager,
+//                new TabLayoutMediator.TabConfigurationStrategy() {
+//                    @Override
+//                    public void onConfigureTab(TabLayout.Tab tab, int position) {
+//                        if(position == 0){
+//                            tab.setText("Following");
+//                        }else{
+//                            tab.setText("Followers");
+//                        }
+//                    }
+//                }
+//        ).attach();
+//        new TabLayoutMediator(binding.tabs, binding.viewPager,
+//                (tab, position) -> tab.setText(tabCategories.get(position))
+//        ).attach();
+
         binding.tabs.setTabMode(TabLayout.MODE_SCROLLABLE);
         setUpClickListeners();
 
@@ -76,10 +94,27 @@ public class HomeTabsManagerFragment extends Fragment {
                     categories.add(0, "feed");
                     categories.add("edit");
 
-                    tabCategories = categories;
-                    adapter.setCategoriesList(categories);
+//                    for(String cat : categories){
+//                        Log.d("catfight", "From data base  " + cat);
+//                    }
+//
+//                    if(viewModel.getCategoriesListMaintainable() != null){
+//                        for(String cat :  viewModel.getCategoriesListMaintainable()){
+//                            Log.d("catfight", "From view model " + cat);
+//                        }
+//                        Log.d("catfight", "are they indeed equal  " + categories.equals(viewModel.getCategoriesListMaintainable()));
+//                        Log.d("catfight", "\n");
+//                    }
+                    
+                    if(viewModel.getCategoriesListMaintainable() == null || !viewModel.getCategoriesListMaintainable().equals(categories)){
 
-                    binding.viewPager.setCurrentItem(0);
+                        tabCategories = categories;
+                        viewModel.setCategoriesListMaintainable(categories);
+
+                        adapter.setCategoriesList(categories);
+                        binding.viewPager.setCurrentItem(0);
+                    }
+
                 }
             }
         });
