@@ -21,6 +21,13 @@
 <!--                    app:msrv_interval="1"-->
 <!--                    app:msrv_speed_ms_per_inch="100" />-->
 
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="5dp"
+                android:src="@drawable/banner1" />
+
                 <com.yarolegovich.discretescrollview.DiscreteScrollView
                     android:id="@+id/horizontal_recycler_view_listings"
                     android:layout_width="match_parent"
