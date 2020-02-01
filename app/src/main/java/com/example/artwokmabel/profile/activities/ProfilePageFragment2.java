@@ -1,5 +1,6 @@
-package com.example.artwokmabel.profile.Activites;
+package com.example.artwokmabel.profile.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.MainProfileFragment2Binding;
 import com.example.artwokmabel.homepage.models.User;
 import com.example.artwokmabel.profile.ProfileViewPagerAdapter;
+import com.example.artwokmabel.profile.followingfollowers.FollowingFollowersActivity;
 import com.example.artwokmabel.profile.fragments.DashboardFragment;
 import com.example.artwokmabel.profile.fragments.ListingsFragment;
 import com.example.artwokmabel.profile.fragments.PostsFragment;
@@ -31,7 +33,7 @@ public class ProfilePageFragment2 extends Fragment {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.main_profile_fragment_2, container, false);
         binding.profileTab.bringToFront();
-        //binding.setOnpeopleclicked(new OnPeopleClicked());
+        binding.setOnpeopleclicked(new OnPeopleClicked());
 
         ProfileViewPagerAdapter adapter = new ProfileViewPagerAdapter(getChildFragmentManager());
         adapter.AddFragment(new ListingsFragment(),"Listings");
@@ -68,9 +70,10 @@ public class ProfilePageFragment2 extends Fragment {
         return binding.getRoot();
     }
 
-//    public class OnPeopleClicked{
-//        public void onPeopleClicked(){
-//
-//        }
-//    }
+    public class OnPeopleClicked{
+        public void onPeopleClicked(){
+            Intent intent = new Intent(getContext(), FollowingFollowersActivity.class);
+            startActivity(intent);
+        }
+    }
 }

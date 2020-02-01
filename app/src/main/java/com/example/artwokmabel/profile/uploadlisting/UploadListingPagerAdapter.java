@@ -10,17 +10,8 @@ import com.example.artwokmabel.homepage.fragments.requestspagestuff.AddRequestDe
 
 public class UploadListingPagerAdapter extends FragmentStateAdapter {
 
-    Fragment descFragment;
-    Fragment detailsFragment;
-    Fragment refundFragment;
-    Fragment faqFragment;
-
     public UploadListingPagerAdapter(FragmentActivity fragmentActivity) {
         super(fragmentActivity);
-        descFragment = new AddRequestDescFragment();
-        detailsFragment = new AddListingDetailsFragment();
-        refundFragment = new AddListingDeliveryRefundFragment();
-        faqFragment = new FaqFragment();
     }
 
     @NonNull
@@ -28,13 +19,17 @@ public class UploadListingPagerAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
 
         if(position == 0){
-            return descFragment;
+            Fragment fragment = new AddRequestDescFragment();
+            return fragment;
         }else if (position == 1){
-            return detailsFragment;
+            Fragment fragment = new AddListingDetailsFragment();
+            return fragment;
         }else if (position == 2){
-            return refundFragment;
+            Fragment fragment = new AddListingDeliveryRefundFragment();
+            return fragment;
         }else{
-            return faqFragment;
+            Fragment fragment = new FaqFragment();
+            return fragment;
         }
     }
 

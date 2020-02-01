@@ -1,4 +1,4 @@
-package com.example.artwokmabel.profile.Activites;
+package com.example.artwokmabel.profile.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;

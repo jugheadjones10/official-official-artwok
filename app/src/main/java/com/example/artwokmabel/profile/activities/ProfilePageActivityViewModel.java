@@ -1,4 +1,4 @@
-package com.example.artwokmabel.profile.Activites;
+package com.example.artwokmabel.profile.activities;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;

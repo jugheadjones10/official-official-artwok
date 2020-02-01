@@ -54,7 +54,7 @@
 <!--                <data android:mimeType="image/*" />-->
 <!--            </intent-filter>-->
         </activity>
-        <activity android:name=".profile.Activites.newUploadPostActivity" />
+        <activity android:name=".profile.activities.newUploadPostActivity" />
 
 
         <!--  BELOW ADJUST PAN MIGHT BE A PROBLEM WHEN USING SCROLL VIEW -->
@@ -68,12 +68,12 @@
         <activity android:name=".RubbishReference.LaunchPageActivity" />
         <activity android:name=".RubbishReference.SearchDefaultActivity" />
         <activity android:name=".auth.CreateAccountActivity" />
-        <activity android:name=".profile.Activites.GroupActivity" />
+        <activity android:name=".profile.activities.GroupActivity" />
         <activity android:name=".chat.activities.ChatActivity" />
         <activity android:name=".chat.activities.ChatProfileActivity" />
-        <activity android:name=".profile.Activites.AddListingActivity"/>
-        <activity android:name=".profile.Activites.GroupProfileActivity" />
-        <activity android:name=".profile.Activites.UploadGroupPostActivity" />
+        <activity android:name=".profile.activities.AddListingActivity"/>
+        <activity android:name=".profile.activities.GroupProfileActivity" />
+        <activity android:name=".profile.activities.UploadGroupPostActivity" />
         <activity android:name=".chat.activities.ChatOrderActivity" />
         <activity android:name=".chat.activities.ChatOrderReviewActivity" />
         <activity android:name=".homepage.favoritestuff.FavouritesActivity" />
@@ -93,6 +93,8 @@
         <activity android:name=".auth.LoginLoginActivity" />
         <activity android:name=".auth.ForgotPasswordActivityNew"
             android:parentActivityName=".auth.LoginLoginActivity"/>
+
+        <activity android:name=".profile.followingfollowers.FollowingFollowersActivity"/>
 
 
         <!--        PUSH NOTIFICATIONS-->
@@ -115,7 +117,7 @@
             android:value="@string/facebook_application_id" />
 
         <!-- Image Picker activity -->
-        <activity android:name=".profile.Activites.ImagePickerActivity" />
+        <activity android:name=".profile.activities.ImagePickerActivity" />
 
         <!-- uCrop cropping activity -->
         <activity

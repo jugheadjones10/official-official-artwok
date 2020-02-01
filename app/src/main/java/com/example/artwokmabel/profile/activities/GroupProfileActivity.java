@@ -1,4 +1,4 @@
-package com.example.artwokmabel.profile.Activites;
+package com.example.artwokmabel.profile.activities;
 
 import android.content.Intent;
 import android.os.Bundle;

@@ -10,7 +10,7 @@ import com.example.artwokmabel.R;
 import com.example.artwokmabel.chat.fragments.MessageFragment;
 import com.example.artwokmabel.homepage.fragments.GroupsFragment;
 import com.example.artwokmabel.homepage.fragments.NotifsFragment;
-import com.example.artwokmabel.profile.Activites.ProfilePageFragment2;
+import com.example.artwokmabel.profile.activities.ProfilePageFragment2;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 

@@ -7,9 +7,11 @@
         <variable name="user" type="com.example.artwokmabel.homepage.models.User"/>
         <variable name="numposts" type="Integer"/>
         <variable name="numlistings" type="Integer"/>
+        <variable name="onpeopleclicked" type="com.example.artwokmabel.profile.activities.ProfilePageFragment2.OnPeopleClicked"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/profile_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -32,8 +34,8 @@
                 android:background="@null"
                 android:padding="5dp"
                 android:scaleType="fitCenter"
+                android:onClick="@{() -> onpeopleclicked.onPeopleClicked()}"
                 app:srcCompat="@drawable/ic_group" />
-<!--            android:onClick="@{() -> onpeopleclicked.onPeopleClicked()}"-->
 
 
             <ImageButton

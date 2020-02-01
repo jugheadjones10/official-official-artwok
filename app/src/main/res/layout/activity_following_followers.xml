@@ -38,15 +38,6 @@
                         android:layout_height="49dp"
                         android:layout_weight="1"
                         android:orientation="horizontal">
-                        <ImageView
-                            android:layout_width="55dp"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="left|center_vertical"
-                            android:paddingLeft="5dp"
-                            android:paddingTop="5dp"
-                            android:paddingRight="10dp"
-                            android:paddingBottom="5dp"
-                            android:src="@drawable/official_logo" />
 
                         <EditText
                             android:id="@+id/mainsearchbar"
@@ -59,16 +50,6 @@
                             android:hint="Search..."
                             android:paddingLeft="15dp" />
 
-                        <ImageButton
-                            android:id="@+id/fav_btn"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:adjustViewBounds="true"
-                            android:background="@null"
-                            android:padding="10dp"
-                            android:scaleType="fitCenter"
-                            android:src="@drawable/favourite" />
                     </LinearLayout>
                 </androidx.appcompat.widget.Toolbar>
 
@@ -79,7 +60,6 @@
                     android:layout_height="wrap_content"
                     app:tabGravity="fill"
                     app:tabIndicatorColor="@color/artwok_white"
-                    app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
                     app:tabMode="scrollable">
                 </com.google.android.material.tabs.TabLayout>
             </com.google.android.material.appbar.AppBarLayout>
@@ -88,7 +68,7 @@
                 android:id="@+id/view_pager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     </LinearLayout>

@@ -1,6 +1,4 @@
-package com.example.artwokmabel.profile.Activites;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.example.artwokmabel.profile.activities;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -8,6 +6,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.MediaController;
 import android.widget.VideoView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.artwokmabel.R;
 

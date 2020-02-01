@@ -15,7 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.artwokmabel.profile.Activites.GroupProfileActivity;
+import com.example.artwokmabel.profile.activities.GroupProfileActivity;
 import com.example.artwokmabel.homepage.models.GroupModel;
 import com.example.artwokmabel.R;
 
