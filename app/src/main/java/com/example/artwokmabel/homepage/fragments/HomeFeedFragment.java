@@ -39,15 +39,15 @@ public class HomeFeedFragment extends Fragment {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.main_feed_fragment, container, false);
 
-        binding.recyclerview.setHasFixedSize(true);
+        binding.recyclerview.setHasFixedSize(false);
+
 
         postsAdapter = new PostsAdapter(getContext());
         binding.recyclerview.setAdapter(postsAdapter);
 
         //Todo: bring back listings recycler view
         listingsAdapter = new ListingsHomeAdapter(getContext());
-//        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-//        binding.horizontalRecyclerViewListings.setLayoutManager(layoutManager);
+
         InfiniteScrollAdapter wrapper = InfiniteScrollAdapter.wrap(listingsAdapter);
         binding.horizontalRecyclerViewListings.setAdapter(wrapper);
         binding.horizontalRecyclerViewListings.setItemTransformer(new ScaleTransformer.Builder()

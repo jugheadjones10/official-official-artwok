@@ -105,7 +105,7 @@ public class HomeTabsManagerFragment extends Fragment {
 //                        Log.d("catfight", "are they indeed equal  " + categories.equals(viewModel.getCategoriesListMaintainable()));
 //                        Log.d("catfight", "\n");
 //                    }
-                    
+
                     if(viewModel.getCategoriesListMaintainable() == null || !viewModel.getCategoriesListMaintainable().equals(categories)){
 
                         tabCategories = categories;
