@@ -7,13 +7,13 @@
     <data>
         <variable
             name="oncreateacctclicked"
-            type="com.example.artwokmabel.auth.LoginActivityNew.OnCreateAccountClicked" />
+            type="com.example.artwokmabel.login.LoginOptionsActivity.OnCreateAccountClicked" />
         <variable
             name="onloginclicked"
-            type="com.example.artwokmabel.auth.LoginActivityNew.OnLoginClicked" />
+            type="com.example.artwokmabel.login.LoginOptionsActivity.OnLoginClicked" />
         <variable
             name="ongoogleloginclicked"
-            type="com.example.artwokmabel.auth.LoginActivityNew.OnGoogleLoginClicked" />
+            type="com.example.artwokmabel.login.LoginOptionsActivity.OnGoogleLoginClicked" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -6,13 +6,13 @@
     <data>
         <variable
             name="onnextclicked"
-            type="com.example.artwokmabel.auth.CreateAccountUsernameActivity.OnUsernameNextClicked" />
+            type="com.example.artwokmabel.login.CreateAccountUsernameActivity.OnUsernameNextClicked" />
         <variable
             name="loginpagecallback"
             type="com.example.artwokmabel.homepage.callbacks.LoginPageCallback" />
         <variable
             name="context"
-            type="com.example.artwokmabel.auth.CreateAccountUsernameActivity" />
+            type="com.example.artwokmabel.login.CreateAccountUsernameActivity" />
     </data>
 
     <RelativeLayout

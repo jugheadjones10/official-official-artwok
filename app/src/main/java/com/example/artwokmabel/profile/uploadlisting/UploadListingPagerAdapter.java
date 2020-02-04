@@ -5,8 +5,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.example.artwokmabel.homepage.fragments.Indivlistings.FaqFragment;
-import com.example.artwokmabel.homepage.fragments.requestspagestuff.AddRequestDescFragment;
+import com.example.artwokmabel.homepage.listing.FaqFragment;
+import com.example.artwokmabel.homepage.request.upload.UploadRequestDescFragment;
 
 public class UploadListingPagerAdapter extends FragmentStateAdapter {
 
@@ -19,13 +19,13 @@ public class UploadListingPagerAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
 
         if(position == 0){
-            Fragment fragment = new AddRequestDescFragment();
+            Fragment fragment = new UploadRequestDescFragment();
             return fragment;
         }else if (position == 1){
-            Fragment fragment = new AddListingDetailsFragment();
+            Fragment fragment = new UploadListingDetailsFragment();
             return fragment;
         }else if (position == 2){
-            Fragment fragment = new AddListingDeliveryRefundFragment();
+            Fragment fragment = new UploadListingDeliveryFragment();
             return fragment;
         }else{
             Fragment fragment = new FaqFragment();

@@ -16,9 +16,9 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.artwokmabel.R;
-import com.example.artwokmabel.databinding.ItemListingsNormalBinding;
-import com.example.artwokmabel.homepage.activities.IndivListingActivity;
-import com.example.artwokmabel.homepage.models.Listing;
+import com.example.artwokmabel.databinding.ItemNormalListingBinding;
+import com.example.artwokmabel.homepage.listing.ListingActivity;
+import com.example.artwokmabel.models.Listing;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
@@ -46,7 +46,7 @@ public class ListingsAdapter extends RecyclerView.Adapter<ListingsAdapter.myHold
     @Override
     public myHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
 
-        ItemListingsNormalBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.item_listings_normal, parent,false);
+        ItemNormalListingBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.item_normal_listing, parent,false);
         return new ListingsAdapter.myHolder(binding);
     }
 
@@ -133,7 +133,7 @@ public class ListingsAdapter extends RecyclerView.Adapter<ListingsAdapter.myHold
     //Todo: might need to add on clicked to carousel view
     public class OnListingClicked{
         public void onListClicked(Listing data){
-            Intent intent = new Intent(mContext, IndivListingActivity.class);
+            Intent intent = new Intent(mContext, ListingActivity.class);
 
 //            intent.putExtra("username", data.getUsername());
 //            intent.putExtra("postid", data.getPostid());
@@ -209,9 +209,9 @@ public class ListingsAdapter extends RecyclerView.Adapter<ListingsAdapter.myHold
     }
 
     class myHolder extends RecyclerView.ViewHolder {
-        private ItemListingsNormalBinding binding;
+        private ItemNormalListingBinding binding;
 
-        public myHolder(ItemListingsNormalBinding binding) {
+        public myHolder(ItemNormalListingBinding binding) {
             super(binding.getRoot());
            this.binding = binding;
         }

@@ -11,7 +11,7 @@
         android:id="@+id/search_results_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context="com.example.artwokmabel.homepage.fragments.Userssearch.ProductFragment">
+        tools:context=".homepage.search.users.ProductFragment">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/search_results_appbar"

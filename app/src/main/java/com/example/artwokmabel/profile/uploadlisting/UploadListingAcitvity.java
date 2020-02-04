@@ -13,12 +13,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import com.example.artwokmabel.HomePageActivity;
 import com.example.artwokmabel.R;
-import com.example.artwokmabel.Repositories.FirestoreRepo;
-import com.example.artwokmabel.databinding.ActivityUploadListing5Binding;
+import com.example.artwokmabel.databinding.ActivityUploadListingBinding;
 import com.example.artwokmabel.homepage.callbacks.ImagePickerCallback;
-import com.example.artwokmabel.homepage.fragments.requestspagestuff.AddRequestDescFragment;
-import com.example.artwokmabel.homepage.homepagestuff.HomePageActivity;
+import com.example.artwokmabel.homepage.request.upload.UploadRequestDescFragment;
+import com.example.artwokmabel.repos.FirestoreRepo;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.tabs.TabLayout;
@@ -47,7 +47,7 @@ public class UploadListingAcitvity extends AppCompatActivity {
     //Todo: edit ucrop library to allow for editing of multiple images
     String[] imageURIs = {"","","","",""};
 
-    private ActivityUploadListing5Binding binding;
+    private ActivityUploadListingBinding binding;
     private String currentUserId;
     private FirebaseAuth mAuth;
     private UploadListingPagerAdapter adapter;
@@ -62,7 +62,7 @@ public class UploadListingAcitvity extends AppCompatActivity {
         //postImageUris.clear();
 
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_upload_listing_5);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_upload_listing);
         binding.uploadProgressL.setVisibility(View.GONE);
         instance = this;
         adapter = new UploadListingPagerAdapter(this);
@@ -126,28 +126,28 @@ public class UploadListingAcitvity extends AppCompatActivity {
             @Override
             public void onClick (View view){
 
-                String postDesc = AddRequestDescFragment.getInstance().getDesc();
-                String postTitle = AddRequestDescFragment.getInstance().getTitle();
+                String postDesc = UploadRequestDescFragment.getInstance().getDesc();
+                String postTitle = UploadRequestDescFragment.getInstance().getTitle();
 
                 ArrayList<String> categories;
                 long budget;
-                if(AddListingDetailsFragment.getInstance() == null){
+                if(UploadListingDetailsFragment.getInstance() == null){
                     categories = null;
                     budget = -1;
                 }else{
-                    categories = AddListingDetailsFragment.getInstance().getCategories();
-                    budget = AddListingDetailsFragment.getInstance().getBudget();
+                    categories = UploadListingDetailsFragment.getInstance().getCategories();
+                    budget = UploadListingDetailsFragment.getInstance().getBudget();
                 }
 
 
                 String deliveryDetails;
                 String refundPolicy;
-                if(AddListingDeliveryRefundFragment.getInstance() == null){
+                if(UploadListingDeliveryFragment.getInstance() == null){
                     deliveryDetails = "";
                     refundPolicy = "";
                 }else{
-                    deliveryDetails = AddListingDeliveryRefundFragment.getInstance().getDelivery();
-                    refundPolicy = AddListingDeliveryRefundFragment.getInstance().getRefund();
+                    deliveryDetails = UploadListingDeliveryFragment.getInstance().getDelivery();
+                    refundPolicy = UploadListingDeliveryFragment.getInstance().getRefund();
                 }
 
                 if(postDesc.isEmpty()){

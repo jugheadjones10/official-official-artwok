@@ -5,7 +5,7 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.artwokmabel.Repositories.FirestoreRepo;
+import com.example.artwokmabel.repos.FirestoreRepo;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;

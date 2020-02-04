@@ -13,8 +13,8 @@
         android:roundIcon="@drawable/official_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".auth.LoginActivityNew"/>
-        <activity android:name=".auth.SplashActivity">
+        <activity android:name=".login.LoginOptionsActivity"/>
+        <activity android:name=".login.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -31,7 +31,7 @@
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name" />
-        <activity android:name=".auth.LoginActivity">
+        <activity android:name=".rubbish.LoginActivityOld">
 
         </activity>
         <activity
@@ -54,47 +54,45 @@
 <!--                <data android:mimeType="image/*" />-->
 <!--            </intent-filter>-->
         </activity>
-        <activity android:name=".profile.activities.newUploadPostActivity" />
 
 
         <!--  BELOW ADJUST PAN MIGHT BE A PROBLEM WHEN USING SCROLL VIEW -->
         <!--  https://stackoverflow.com/questions/42051956/how-to-hide-the-bottomnavigationview-below-keyboard-with-adjustresize-set-->
-        <activity android:name=".homepage.homepagestuff.HomePageActivity"
+        <activity android:name=".HomePageActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".profile.uploadlisting.UploadListingAcitvity"
             android:windowSoftInputMode="adjustPan"/>
 
-        <activity android:name=".auth.ForgotPasswordActivity" />
-        <activity android:name=".RubbishReference.LaunchPageActivity" />
-        <activity android:name=".RubbishReference.SearchDefaultActivity" />
-        <activity android:name=".auth.CreateAccountActivity" />
-        <activity android:name=".profile.activities.GroupActivity" />
+        <activity android:name=".rubbish.ForgotPasswordActivityOld" />
+        <activity android:name=".rubbish.LaunchPageActivity" />
+        <activity android:name=".rubbish.CreateAccountActivity" />
+        <activity android:name=".rubbish.GroupActivity" />
         <activity android:name=".chat.activities.ChatActivity" />
         <activity android:name=".chat.activities.ChatProfileActivity" />
-        <activity android:name=".profile.activities.AddListingActivity"/>
-        <activity android:name=".profile.activities.GroupProfileActivity" />
-        <activity android:name=".profile.activities.UploadGroupPostActivity" />
+        <activity android:name=".rubbish.AddListingActivity"/>
+        <activity android:name=".groups.GroupProfileActivity" />
+        <activity android:name=".groups.UploadGroupPostActivity" />
         <activity android:name=".chat.activities.ChatOrderActivity" />
         <activity android:name=".chat.activities.ChatOrderReviewActivity" />
-        <activity android:name=".homepage.favoritestuff.FavouritesActivity" />
-        <activity android:name=".homepage.activities.SettingsActivity" />
-        <activity android:name=".homepage.activities.IndivListingActivity"
-            android:parentActivityName=".homepage.homepagestuff.HomePageActivity"/>
-        <activity android:name=".homepage.fragments.requestspagestuff.IndivRequestActivity" />
-        <activity android:name=".homepage.fragments.requestspagestuff.UploadRequestActivity"
+        <activity android:name=".homepage.favorites.FavoritesActivity" />
+        <activity android:name=".settings.SettingsActivity" />
+        <activity android:name=".homepage.listing.ListingActivity"
+            android:parentActivityName=".HomePageActivity"/>
+        <activity android:name=".homepage.request.indiv.RequestActivity" />
+        <activity android:name=".homepage.request.upload.UploadRequestActivity"
             android:windowSoftInputMode="adjustNothing"/>
 
-        <activity android:name=".auth.CreateAccountEmailActivity"
-            android:parentActivityName=".auth.LoginActivityNew"/>
-        <activity android:name=".auth.CreateAccountUsernameActivity"
-            android:parentActivityName=".auth.CreateAccountEmailActivity"/>
-        <activity android:name=".auth.CreateAccountPasswordActivity"
-            android:parentActivityName=".auth.CreateAccountUsernameActivity"/>
-        <activity android:name=".auth.LoginLoginActivity" />
-        <activity android:name=".auth.ForgotPasswordActivityNew"
-            android:parentActivityName=".auth.LoginLoginActivity"/>
+        <activity android:name=".login.CreateAccountEmailActivity"
+            android:parentActivityName=".login.LoginOptionsActivity"/>
+        <activity android:name=".login.CreateAccountUsernameActivity"
+            android:parentActivityName=".login.CreateAccountEmailActivity"/>
+        <activity android:name=".login.CreateAccountPasswordActivity"
+            android:parentActivityName=".login.CreateAccountUsernameActivity"/>
+        <activity android:name=".login.LoginActivity" />
+        <activity android:name=".login.ForgotPasswordActivity"
+            android:parentActivityName=".login.LoginActivity"/>
 
-        <activity android:name=".profile.followingfollowers.FollowingFollowersActivity"/>
+        <activity android:name=".profile.people.PeopleActivity"/>
 
 
         <!--        PUSH NOTIFICATIONS-->
@@ -108,8 +106,8 @@
 <!--        <activity android:name=".LoginActivityUNUSED" />-->
 <!--        <activity android:name=".SignupActivityUNUSED" />-->
 
-        <activity android:name=".homepage.activities.IndivPostActivity"
-            android:parentActivityName=".homepage.homepagestuff.HomePageActivity"
+        <activity android:name=".homepage.post.PostActivity"
+            android:parentActivityName=".HomePageActivity"
             android:windowSoftInputMode="adjustPan" />
         <!--        Above is attempt to make comment bar move above keyboard when comment bar is pressed-->
         <meta-data
@@ -117,7 +115,7 @@
             android:value="@string/facebook_application_id" />
 
         <!-- Image Picker activity -->
-        <activity android:name=".profile.activities.ImagePickerActivity" />
+        <activity android:name=".profile.utils.ImagePickerActivity" />
 
         <!-- uCrop cropping activity -->
         <activity

@@ -16,14 +16,14 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.artwokmabel.HomePageActivity;
 import com.example.artwokmabel.R;
-import com.example.artwokmabel.databinding.ItemPostsBinding;
-import com.example.artwokmabel.homepage.activities.IndivPostActivity;
+import com.example.artwokmabel.databinding.ItemPostBinding;
 import com.example.artwokmabel.homepage.callbacks.MainPostClickCallback;
-import com.example.artwokmabel.homepage.fragments.indivuser.IndivUserFragment;
-import com.example.artwokmabel.homepage.homepagestuff.HomePageActivity;
-import com.example.artwokmabel.homepage.homepagestuff.HomeTabsManagerFragment;
-import com.example.artwokmabel.homepage.models.MainPost;
+import com.example.artwokmabel.homepage.homepagewrapper.HomeTabsFragment;
+import com.example.artwokmabel.homepage.post.PostActivity;
+import com.example.artwokmabel.homepage.user.IndivUserFragment;
+import com.example.artwokmabel.models.MainPost;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -59,7 +59,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.myHolder> {
     @NonNull
     @Override
     public myHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
-        ItemPostsBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.item_posts, parent,false);
+        ItemPostBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.item_post, parent,false);
 
         return new myHolder(binding);
     }
@@ -248,14 +248,14 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.myHolder> {
             String shareBody = "Here is the share content body";
             sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Subject Here");
             sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
-            HomeTabsManagerFragment.getInstance().startActivity(Intent.createChooser(sharingIntent, "Share via"));
+            HomeTabsFragment.getInstance().startActivity(Intent.createChooser(sharingIntent, "Share via"));
         }
     };
 
     public final MainPostClickCallback postClickCallback = new MainPostClickCallback() {
         @Override
         public void onClick(MainPost post) {
-            Intent intent = new Intent(mContext, IndivPostActivity.class);
+            Intent intent = new Intent(mContext, PostActivity.class);
             intent.putExtra("description", post.getDesc());
             intent.putExtra("hashtags", post.getHashtags());
             intent.putExtra("postid", post.getPostId());
@@ -278,9 +278,9 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.myHolder> {
     }
 
     class myHolder extends RecyclerView.ViewHolder {
-        ItemPostsBinding binding;
+        ItemPostBinding binding;
 
-        public myHolder(ItemPostsBinding binding) {
+        public myHolder(ItemPostBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }

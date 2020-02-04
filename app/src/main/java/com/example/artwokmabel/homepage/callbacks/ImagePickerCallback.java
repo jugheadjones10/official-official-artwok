@@ -4,7 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 
-import com.example.artwokmabel.profile.activities.ImagePickerActivity;
+import com.example.artwokmabel.profile.utils.ImagePickerActivity;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;

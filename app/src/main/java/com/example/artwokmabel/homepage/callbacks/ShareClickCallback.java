@@ -2,7 +2,7 @@ package com.example.artwokmabel.homepage.callbacks;
 
 import android.content.Intent;
 
-import com.example.artwokmabel.homepage.homepagestuff.HomeTabsManagerFragment;
+import com.example.artwokmabel.homepage.homepagewrapper.HomeTabsFragment;
 
 public class ShareClickCallback {
     public void onClick(){
@@ -11,6 +11,6 @@ public class ShareClickCallback {
         String shareBody = "Here is the share content body";
         sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Subject Here");
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
-        HomeTabsManagerFragment.getInstance().startActivity(Intent.createChooser(sharingIntent, "Share via"));
+        HomeTabsFragment.getInstance().startActivity(Intent.createChooser(sharingIntent, "Share via"));
     }
 }

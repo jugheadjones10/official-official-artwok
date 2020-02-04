@@ -5,8 +5,8 @@ import android.widget.ImageView;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.artwokmabel.Repositories.FirestoreRepo;
-import com.example.artwokmabel.homepage.models.Listing;
+import com.example.artwokmabel.repos.FirestoreRepo;
+import com.example.artwokmabel.models.Listing;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;

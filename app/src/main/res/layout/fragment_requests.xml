@@ -4,7 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-        <variable name="callback" type="com.example.artwokmabel.homepage.fragments.requestspagestuff.RequestsFragment.OnAddRequestClick"/>
+        <variable name="callback" type="com.example.artwokmabel.homepage.request.tab.RequestsFragment.OnAddRequestClick"/>
     </data>
 
 
