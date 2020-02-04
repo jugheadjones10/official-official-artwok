@@ -4,10 +4,10 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.artwokmabel.repos.FirestoreRepo;
 
-public class FollowingFollowersAdapterViewModel extends ViewModel {
+public class PeopleAdapterViewModel extends ViewModel {
 
 
-    public FollowingFollowersAdapterViewModel() {
+    public PeopleAdapterViewModel() {
 
     }
 

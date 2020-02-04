@@ -1,4 +1,4 @@
-package com.example.artwokmabel.profile.followingfollowers;
+package com.example.artwokmabel.profile.people;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -21,7 +21,7 @@ import java.util.List;
 public class FollowersFragment  extends Fragment {
 
     private FragmentFollowingBinding binding;
-    private FollowingFollowersViewModel viewModel;
+    private PeopleViewModel viewModel;
     private FollowersAdapter followersAdapter;
     //Todo: add horizontal scrollable listings
 
@@ -35,7 +35,7 @@ public class FollowersFragment  extends Fragment {
         followersAdapter = new FollowersAdapter(getContext());
         binding.recyclerview.setAdapter(followersAdapter);
 
-        viewModel = ViewModelProviders.of(this).get(FollowingFollowersViewModel.class);
+        viewModel = ViewModelProviders.of(this).get(PeopleViewModel.class);
 
         observeViewModel(viewModel);
 
@@ -43,7 +43,7 @@ public class FollowersFragment  extends Fragment {
     }
 
 
-    private void observeViewModel(FollowingFollowersViewModel viewModel) {
+    private void observeViewModel(PeopleViewModel viewModel) {
         // Update the list when the data changes
         viewModel.getFollowersUsersObservable().observe(this, new Observer<List<User>>() {
             @Override

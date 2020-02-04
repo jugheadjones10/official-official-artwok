@@ -1,4 +1,4 @@
-package com.example.artwokmabel.homepage.request;
+package com.example.artwokmabel.homepage.request.tab;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.FragmentRequestsBinding;
+import com.example.artwokmabel.models.Request;
+import com.example.artwokmabel.homepage.request.upload.UploadRequestActivity;
 
 import java.util.List;
 

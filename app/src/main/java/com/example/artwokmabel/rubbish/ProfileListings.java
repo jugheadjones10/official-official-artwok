@@ -1,4 +1,4 @@
-package com.example.artwokmabel.profile.Models;
+package com.example.artwokmabel.rubbish;
 
 public class ProfileListings {
 

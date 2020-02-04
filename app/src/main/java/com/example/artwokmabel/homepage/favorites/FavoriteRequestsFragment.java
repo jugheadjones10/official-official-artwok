@@ -1,4 +1,4 @@
-package com.example.artwokmabel.homepage.favoritestuff;
+package com.example.artwokmabel.homepage.favorites;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -14,23 +14,23 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.example.artwokmabel.R;
-import com.example.artwokmabel.databinding.FragmentFavouritesRequestsBinding;
-import com.example.artwokmabel.homepage.fragments.requestspagestuff.Request;
-import com.example.artwokmabel.homepage.fragments.requestspagestuff.RequestsAdapter;
+import com.example.artwokmabel.databinding.FragmentFavoriteRequestsBinding;
+import com.example.artwokmabel.models.Request;
+import com.example.artwokmabel.homepage.request.tab.RequestsAdapter;
 
 import java.util.List;
 
-public class FavoritesFragmentRequests extends Fragment {
+public class FavoriteRequestsFragment extends Fragment {
     private RequestsAdapter adapter;
 
-    private FragmentFavouritesRequestsBinding binding;
+    private FragmentFavoriteRequestsBinding binding;
     private FavoriteRequestsFragmentViewModel viewModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_favourites_requests, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_favorite_requests, container, false);
 
         binding.favRequestsRecyclerview.setHasFixedSize(true);
         binding.favRequestsRecyclerview.setLayoutManager(new GridLayoutManager(getActivity(), 2));

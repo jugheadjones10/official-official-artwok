@@ -9,7 +9,7 @@ import androidx.databinding.DataBindingUtil;
 
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.ActivityLoginOptionsBinding;
-import com.example.artwokmabel.homepage.homepagestuff.HomePageActivity;
+import com.example.artwokmabel.HomePageActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -17,9 +17,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class LoginActivityNew extends AppCompatActivity {
+public class LoginOptionsActivity extends AppCompatActivity {
 
-    private final String TAG = "LoginActivityNew";
+    private final String TAG = "LoginOptionsActivity";
     private ActivityLoginOptionsBinding binding;
     private GoogleSignInClient mGoogleSignInClient;
 
@@ -125,7 +125,7 @@ public class LoginActivityNew extends AppCompatActivity {
 
     public class OnLoginClicked{
         public void onLoginClicked(){
-            Intent intent = new Intent(getApplicationContext(), LoginLoginActivity.class);
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
 
             // create an animation effect sliding from left to right
             ActivityOptions activityOptions = null;

@@ -1,4 +1,4 @@
-package com.example.artwokmabel.homepage.favoritestuff;
+package com.example.artwokmabel.homepage.favorites;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -7,7 +7,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FavouritesAdapter extends FragmentPagerAdapter {
+public class FavoritesPagerAdapter extends FragmentPagerAdapter {
 
     private final List<Fragment> mFragmentList = new ArrayList<>();
     private final List<String> mFragmentTitleList = new ArrayList<>();
@@ -19,7 +19,7 @@ public class FavouritesAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         return mFragmentTitleList.get(position);
     }
-    public FavouritesAdapter(FragmentManager fm){
+    public FavoritesPagerAdapter(FragmentManager fm){
         super(fm);
     }
     @Override

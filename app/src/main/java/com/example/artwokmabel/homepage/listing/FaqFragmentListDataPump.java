@@ -1,4 +1,4 @@
-package com.example.artwokmabel.homepage.fragments.Indivlistings;
+package com.example.artwokmabel.homepage.listing;
 
 import java.util.ArrayList;
 import java.util.HashMap;

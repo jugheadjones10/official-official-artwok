@@ -15,12 +15,10 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.artwokmabel.R;
-import com.example.artwokmabel.databinding.ActivityIndivListingNewNewBinding;
-import com.example.artwokmabel.homepage.activities.GetUserObservableViewModel;
-import com.example.artwokmabel.homepage.adapters.IndivListViewPagerAdapter;
+import com.example.artwokmabel.databinding.ActivityListingBinding;
 import com.example.artwokmabel.homepage.callbacks.ShareClickCallback;
-import com.example.artwokmabel.homepage.models.Listing;
-import com.example.artwokmabel.homepage.models.User;
+import com.example.artwokmabel.models.Listing;
+import com.example.artwokmabel.models.User;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,13 +27,13 @@ import com.synnapps.carouselview.ImageListener;
 
 import java.util.ArrayList;
 
-public class IndivListingActivity extends AppCompatActivity {
+public class ListingActivity extends AppCompatActivity {
 
-    private ActivityIndivListingNewNewBinding binding;
+    private ActivityListingBinding binding;
     private FirebaseAuth mAuth;
     private Listing listing;
-    private IndivListViewPagerAdapter adapter;
-    private GetUserObservableViewModel viewModel;
+    private ListingPagerAdapter adapter;
+    private ListingActivityViewModel viewModel;
     private User me;
 
     @Override
@@ -43,9 +41,9 @@ public class IndivListingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         mAuth = FirebaseAuth.getInstance();
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_indiv_listing_new_new);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_listing);
 
-        adapter = new IndivListViewPagerAdapter(this);
+        adapter = new ListingPagerAdapter(this);
 
         getIncomingIntent();
     }
@@ -53,7 +51,7 @@ public class IndivListingActivity extends AppCompatActivity {
     private void getIncomingIntent(){
 
         listing = (Listing)getIntent().getSerializableExtra("listing");
-        viewModel = ViewModelProviders.of(this).get(GetUserObservableViewModel.class);
+        viewModel = ViewModelProviders.of(this).get(ListingActivityViewModel.class);
 
         viewModel.getUserObservable(mAuth.getCurrentUser().getUid()).observe(this, new Observer<User>() {
             @Override

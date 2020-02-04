@@ -1,4 +1,4 @@
-package com.example.artwokmabel.homepage.homepagestuff;
+package com.example.artwokmabel.homepage.homepagewrapper;
 
 import android.os.Bundle;
 
@@ -9,16 +9,16 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.artwokmabel.homepage.edit.EditCategoriesFragment;
 import com.example.artwokmabel.homepage.postsfeed.HomeFeedFragment;
-import com.example.artwokmabel.homepage.fragments.HomeStandardCatFragment;
-import com.example.artwokmabel.homepage.request.RequestsFragment;
+import com.example.artwokmabel.homepage.listingstab.ListingsTabFragment;
+import com.example.artwokmabel.homepage.request.tab.RequestsFragment;
 
 import java.util.ArrayList;
 
-public class TabsPagerAdapter extends FragmentStateAdapter {
+public class HomeTabsPagerAdapter extends FragmentStateAdapter {
     private ArrayList<String> categoriesList;
-    final private String TAG = "TabsPagerAdapter";
+    final private String TAG = "HomeTabsPagerAdapter";
 
-    public TabsPagerAdapter(Fragment frag) {
+    public HomeTabsPagerAdapter(Fragment frag) {
         super(frag);
     }
 
@@ -31,31 +31,31 @@ public class TabsPagerAdapter extends FragmentStateAdapter {
                 tabFragment = new HomeFeedFragment();
                 break;
             case "gifts":
-                tabFragment = new HomeStandardCatFragment();
+                tabFragment = new ListingsTabFragment();
                 Bundle args = new Bundle();
                 args.putString("category", "Gifts");
                 tabFragment.setArguments(args);
                 break;
             case "services":
-                tabFragment = new HomeStandardCatFragment();
+                tabFragment = new ListingsTabFragment();
                 Bundle args3 = new Bundle();
                 args3.putString("category", "Services");
                 tabFragment.setArguments(args3);
                 break;
             case "handmade":
-                tabFragment = new HomeStandardCatFragment();
+                tabFragment = new ListingsTabFragment();
                 Bundle args4 = new Bundle();
                 args4.putString("category", "Handmade");
                 tabFragment.setArguments(args4);
                 break;
             case "troll":
-                tabFragment = new HomeStandardCatFragment();
+                tabFragment = new ListingsTabFragment();
                 Bundle args5 = new Bundle();
                 args5.putString("category", "Troll");
                 tabFragment.setArguments(args5);
                 break;
             case "flowers":
-                tabFragment = new HomeStandardCatFragment();
+                tabFragment = new ListingsTabFragment();
                 Bundle args6 = new Bundle();
                 args6.putString("category", "Flowers");
                 tabFragment.setArguments(args6);
@@ -82,7 +82,7 @@ public class TabsPagerAdapter extends FragmentStateAdapter {
             DiffUtil.DiffResult result = DiffUtil.calculateDiff(new DiffUtil.Callback() {
                 @Override
                 public int getOldListSize() {
-                    return TabsPagerAdapter.this.categoriesList.size();
+                    return HomeTabsPagerAdapter.this.categoriesList.size();
                 }
 
                 @Override
@@ -92,13 +92,13 @@ public class TabsPagerAdapter extends FragmentStateAdapter {
 
                 @Override
                 public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-                    return TabsPagerAdapter.this.categoriesList.get(oldItemPosition)
+                    return HomeTabsPagerAdapter.this.categoriesList.get(oldItemPosition)
                             .equals(categoriesList.get(newItemPosition));
                 }
 
                 @Override
                 public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
-                    return TabsPagerAdapter.this.categoriesList.get(oldItemPosition)
+                    return HomeTabsPagerAdapter.this.categoriesList.get(oldItemPosition)
                             .equals(categoriesList.get(newItemPosition));
                 }
             });

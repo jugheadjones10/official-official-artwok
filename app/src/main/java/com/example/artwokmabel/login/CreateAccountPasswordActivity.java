@@ -1,4 +1,4 @@
-package com.example.artwokmabel.auth;
+package com.example.artwokmabel.login;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.example.artwokmabel.R;
-import com.example.artwokmabel.Repositories.FirestoreRepo;
+import com.example.artwokmabel.repos.FirestoreRepo;
 import com.example.artwokmabel.databinding.ActivityCreateAccountPasswordBinding;
 import com.example.artwokmabel.homepage.callbacks.LoginPageCallback;
 
@@ -66,7 +66,7 @@ public class CreateAccountPasswordActivity extends AppCompatActivity {
     public void createAccountCallback(boolean successful){
         binding.progressBar.setVisibility(View.GONE);
         if(successful){
-            Intent intent = new Intent(getApplicationContext(), LoginLoginActivity.class);
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
             // create an animation effect sliding from left to right
             ActivityOptions activityOptions = null;
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {

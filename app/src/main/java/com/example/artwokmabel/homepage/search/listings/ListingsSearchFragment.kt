@@ -1,4 +1,4 @@
-package com.example.artwokmabel.homepage.search.Listingssearch
+package com.example.artwokmabel.homepage.search.listings
 
 import android.os.Bundle
 import android.view.LayoutInflater

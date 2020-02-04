@@ -1,4 +1,4 @@
-package com.example.artwokmabel.homepage.models;
+package com.example.artwokmabel.models;
 
 import java.io.Serializable;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.example.artwokmabel.homepage.adapters;
+package com.example.artwokmabel.rubbish;
 
 import android.content.Context;
 import android.util.Log;
@@ -13,8 +13,8 @@ import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.artwokmabel.homepage.fragments.newViewCommentsFragment;
-import com.example.artwokmabel.homepage.models.Comment;
+import com.example.artwokmabel.homepage.post.CommentsFragment;
+import com.example.artwokmabel.models.Comment;
 import com.example.artwokmabel.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -85,7 +85,7 @@ public class CommentListAdapter extends ArrayAdapter<Comment> {
             holder.reply = (TextView) convertView.findViewById(R.id.comment_reply);
             holder.profileImage = (CircleImageView) convertView.findViewById(R.id.comment_profile_image);
 
-            if(mAuth.getCurrentUser().getUid().equals(newViewCommentsFragment.getInstance().userid)){
+            if(mAuth.getCurrentUser().getUid().equals(CommentsFragment.getInstance().userid)){
                 holder.like = (ImageView) convertView.findViewById(R.id.comment_like);
 
                 holder.like.setOnClickListener(new View.OnClickListener() {

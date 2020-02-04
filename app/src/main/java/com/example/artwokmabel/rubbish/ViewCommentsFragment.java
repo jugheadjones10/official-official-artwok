@@ -20,8 +20,8 @@
 //import androidx.core.view.ViewCompat;
 //import androidx.fragment.app.Fragment;
 //
-//import com.example.artwokmabel.HomePage.Activities.IndivListingActivity;
-//import com.example.artwokmabel.HomePage.Activities.IndivPostActivity;
+//import com.example.artwokmabel.HomePage.Activities.ListingActivity;
+//import com.example.artwokmabel.HomePage.Activities.PostActivity;
 //import com.example.artwokmabel.HomePage.Adapters.CommentListAdapter;
 //import com.example.artwokmabel.HomePage.Models.Comment;
 //import com.example.artwokmabel.R;
@@ -80,7 +80,7 @@
 //    @Nullable
 //    @Override
 //    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-//        View view = inflater.inflate(R.layout.fragment_view_comments, container, false);
+//        View view = inflater.inflate(R.layout.fragment_comments, container, false);
 //        mListView = (ListView) view.findViewById(R.id.listView);
 //
 //        ((AppCompatActivity) getActivity()).setSupportActionBar(bar);
@@ -172,17 +172,17 @@
 //
 //        //Eventuall this number 5 will have to change - different phone sizes of users
 //        if(adapter.getCount() > 5){
-//            ViewCompat.setNestedScrollingEnabled(IndivPostActivity.getInstance().nestedScroll, true);
+//            ViewCompat.setNestedScrollingEnabled(PostActivity.getInstance().nestedScroll, true);
 //
 //            AppBarLayout.LayoutParams layoutParams= (AppBarLayout.LayoutParams)
-//                    IndivPostActivity.getInstance().collapsingToolbarLayout.getLayoutParams();
+//                    PostActivity.getInstance().collapsingToolbarLayout.getLayoutParams();
 //            layoutParams.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL | AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
-//            IndivPostActivity.getInstance().collapsingToolbarLayout.setLayoutParams(layoutParams);
+//            PostActivity.getInstance().collapsingToolbarLayout.setLayoutParams(layoutParams);
 //
 //            //One small problem - currently it scrolls to the last post minus one. Include the last post.
 //            Integer listHeight = mListView.getHeight();//Height is in pixels
-//            IndivPostActivity.getInstance().indivAppBar.setExpanded(false, true);
-//            IndivPostActivity.getInstance().nestedScroll.smoothScrollTo(0, listHeight);
+//            PostActivity.getInstance().indivAppBar.setExpanded(false, true);
+//            PostActivity.getInstance().nestedScroll.smoothScrollTo(0, listHeight);
 //        }else{
 //
 //        }
@@ -222,20 +222,20 @@
 //    private void setupWidgets(){
 //
 //         adapter = new CommentListAdapter(mContext,
-//                R.layout.layout_comment, mComments, db, userid, postid, databaseComments);
+//                R.layout.item_comment, mComments, db, userid, postid, databaseComments);
 //         mListView.setAdapter(adapter);
 //
 //        if(adapter.getCount() > 5){
 //
 //        }else{
-//            ViewCompat.setNestedScrollingEnabled(IndivPostActivity.getInstance().nestedScroll, false);
-//            IndivPostActivity.getInstance().indivAppBar.setExpanded(true,true);
+//            ViewCompat.setNestedScrollingEnabled(PostActivity.getInstance().nestedScroll, false);
+//            PostActivity.getInstance().indivAppBar.setExpanded(true,true);
 //
 //            //Changing layout params prevents scrolling when the user swipes by touching the carouselView (collapsing toolbar)
 //            AppBarLayout.LayoutParams layoutParams= (AppBarLayout.LayoutParams)
-//                    IndivPostActivity.getInstance().collapsingToolbarLayout.getLayoutParams();
+//                    PostActivity.getInstance().collapsingToolbarLayout.getLayoutParams();
 //            layoutParams.setScrollFlags(0);
-//            IndivPostActivity.getInstance().collapsingToolbarLayout.setLayoutParams(layoutParams);
+//            PostActivity.getInstance().collapsingToolbarLayout.setLayoutParams(layoutParams);
 //        }
 //
 //        ListViewHeightExpander.setListViewHeightBasedOnChildren(mListView);

@@ -1,4 +1,4 @@
-package com.example.artwokmabel.homepage.fragments.Indivlistings;
+package com.example.artwokmabel.homepage.listing;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -20,7 +20,7 @@ public class DescFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_indiv_listing_desc, container, false);
+        view = inflater.inflate(R.layout.fragment_listing_desc, container, false);
 
         desc = view.findViewById(R.id.desc_text);
 

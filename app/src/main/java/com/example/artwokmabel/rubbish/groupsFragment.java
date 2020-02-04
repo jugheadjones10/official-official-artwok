@@ -1,4 +1,4 @@
-package com.example.artwokmabel.RubbishReference;
+package com.example.artwokmabel.rubbish;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.artwokmabel.homepage.models.GroupModel;
+import com.example.artwokmabel.models.GroupModel;
 import com.example.artwokmabel.R;
 
 import java.util.ArrayList;

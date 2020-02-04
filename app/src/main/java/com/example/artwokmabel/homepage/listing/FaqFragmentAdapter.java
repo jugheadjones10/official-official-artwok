@@ -13,14 +13,14 @@ import com.example.artwokmabel.R;
 import java.util.HashMap;
 import java.util.List;
 
-    public class FaqExpandableListAdapter extends BaseExpandableListAdapter {
+    public class FaqFragmentAdapter extends BaseExpandableListAdapter {
 
         private Context context;
         private List<String> expandableListTitle;
         private HashMap<String, List<String>> expandableListDetail;
 
-        public FaqExpandableListAdapter(Context context, List<String> expandableListTitle,
-                                           HashMap<String, List<String>> expandableListDetail) {
+        public FaqFragmentAdapter(Context context, List<String> expandableListTitle,
+                                  HashMap<String, List<String>> expandableListDetail) {
             this.context = context;
             this.expandableListTitle = expandableListTitle;
             this.expandableListDetail = expandableListDetail;

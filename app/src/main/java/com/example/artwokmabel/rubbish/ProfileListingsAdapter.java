@@ -1,4 +1,4 @@
-package com.example.artwokmabel.profile.Adapters;
+package com.example.artwokmabel.rubbish;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.artwokmabel.R;
-import com.example.artwokmabel.rubbish.ProfileListings;
 
 import java.util.List;
 
@@ -30,7 +29,7 @@ public class ProfileListingsAdapter extends RecyclerView.Adapter<ProfileListings
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
         LayoutInflater mInflater = LayoutInflater.from(mContext);
-        view = mInflater.inflate(R.layout.item_profile_listings, parent, false);
+        view = mInflater.inflate(R.layout.z_item_profile_listings, parent, false);
         return new MyViewHolder(view);
 
     }

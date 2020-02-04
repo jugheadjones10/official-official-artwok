@@ -1,18 +1,18 @@
-package com.example.artwokmabel.homepage.activities;
+package com.example.artwokmabel.homepage.listing;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.artwokmabel.repos.FirestoreRepo;
-import com.example.artwokmabel.homepage.models.User;
+import com.example.artwokmabel.models.User;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class GetUserObservableViewModel extends ViewModel {
+public class ListingActivityViewModel extends ViewModel {
 
     private LiveData<User> userObservable;
     private FirebaseAuth mAuth;
 
-    public GetUserObservableViewModel() {
+    public ListingActivityViewModel() {
         mAuth = FirebaseAuth.getInstance();
     }
 

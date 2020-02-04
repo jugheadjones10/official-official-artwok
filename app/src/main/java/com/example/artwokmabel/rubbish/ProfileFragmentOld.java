@@ -1,4 +1,4 @@
-package com.example.artwokmabel.profile.fragments;
+package com.example.artwokmabel.rubbish;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
@@ -15,8 +15,11 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.artwokmabel.profile.user.ProfileListingsFragment;
+import com.example.artwokmabel.profile.user.ProfilePostsFragment;
+import com.example.artwokmabel.profile.user.DashboardFragment;
 import com.example.artwokmabel.settings.SettingsActivity;
-import com.example.artwokmabel.profile.ProfileViewPagerAdapter;
+import com.example.artwokmabel.profile.user.ProfileFragmentPagerAdapter;
 import com.example.artwokmabel.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -54,7 +57,7 @@ public class ProfileFragmentOld extends Fragment {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         settingsbtn = view.findViewById(R.id.profile_settings);
 
-        ProfileViewPagerAdapter adapter = new ProfileViewPagerAdapter(getChildFragmentManager());
+        ProfileFragmentPagerAdapter adapter = new ProfileFragmentPagerAdapter(getChildFragmentManager());
         profileDesc.setText(retrieveDesc());
 
         db.collection("Users")
@@ -76,8 +79,8 @@ public class ProfileFragmentOld extends Fragment {
 
 
         // Adding Fragments
-        adapter.AddFragment(new ListingsFragment(),"Listings");
-        adapter.AddFragment(new PostsFragment(),"Posts");
+        adapter.AddFragment(new ProfileListingsFragment(),"Listings");
+        adapter.AddFragment(new ProfilePostsFragment(),"Posts");
         adapter.AddFragment(new DashboardFragment(),"Dashboard");
 
         // Adapter setup

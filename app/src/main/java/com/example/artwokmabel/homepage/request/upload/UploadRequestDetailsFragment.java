@@ -1,4 +1,4 @@
-package com.example.artwokmabel.homepage.request;
+package com.example.artwokmabel.homepage.request.upload;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -16,41 +16,41 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.artwokmabel.R;
-import com.example.artwokmabel.databinding.FragmentAddRequestDetailsBinding;
-import com.example.artwokmabel.homepage.models.Category;
+import com.example.artwokmabel.databinding.FragmentUploadRequestDetailsBinding;
+import com.example.artwokmabel.models.Category;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class AddRequestDetailsFragment extends Fragment {
+public class UploadRequestDetailsFragment extends Fragment {
 
-    private FragmentAddRequestDetailsBinding binding;
-    private static AddRequestDetailsFragment instance;
-    private RequestDetailsFragmentViewModel viewModel;
+    private FragmentUploadRequestDetailsBinding binding;
+    private static UploadRequestDetailsFragment instance;
+    private UploadRequestDetailsViewModel viewModel;
     private String[] categories;
     private boolean[] checkedCategoriesArray;
     private int count = 0;
     private String finalizedCategory;
 
-    public static AddRequestDetailsFragment getInstance(){
+    public static UploadRequestDetailsFragment getInstance(){
         return instance;
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_request_details, container, false);
-        binding.setOncategoryclicked(new OnSelectCateogry());
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_upload_request_details, container, false);
+        binding.setOncategoryclicked(new OnSelectCategory());
 
         instance = this;
-        viewModel = ViewModelProviders.of(this).get(RequestDetailsFragmentViewModel.class);
+        viewModel = ViewModelProviders.of(this).get(UploadRequestDetailsViewModel.class);
         observeViewModel(viewModel);
 
         return binding.getRoot();
     }
 
-    private void observeViewModel(RequestDetailsFragmentViewModel viewModel) {
+    private void observeViewModel(UploadRequestDetailsViewModel viewModel) {
         viewModel.getAllCategoriesObservable().observe(this, new Observer<List<Category>>() {
             @Override
             public void onChanged(@Nullable List<Category> categories) {
@@ -59,12 +59,12 @@ public class AddRequestDetailsFragment extends Fragment {
                     for(Category cat : categories){
                         allCategories.add(cat.getName());
                     }
-                    AddRequestDetailsFragment.this.categories = allCategories.toArray(new String[allCategories.size()]);
+                    UploadRequestDetailsFragment.this.categories = allCategories.toArray(new String[allCategories.size()]);
 
-//                    if(AddRequestDetailsFragment.this.checkedCategoriesArray.length == 0){
+//                    if(UploadRequestDetailsFragment.this.checkedCategoriesArray.length == 0){
                         boolean checkedArray[] = new boolean[allCategories.size()];
                         Arrays.fill(checkedArray, false);
-                        AddRequestDetailsFragment.this.checkedCategoriesArray = checkedArray;
+                        UploadRequestDetailsFragment.this.checkedCategoriesArray = checkedArray;
 //                    }
                     //Todo: add another false to checkedCategoriesArray instead of remaking a whole new array with all false.
                     //need to maintain the trues
@@ -81,7 +81,7 @@ public class AddRequestDetailsFragment extends Fragment {
         return finalizedCategory;
     }
 
-    public class OnSelectCateogry{
+    public class OnSelectCategory{
         public void onSelectCategory(){
 
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());

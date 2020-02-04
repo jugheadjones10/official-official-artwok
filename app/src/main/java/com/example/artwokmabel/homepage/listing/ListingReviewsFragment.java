@@ -11,14 +11,14 @@ import androidx.fragment.app.Fragment;
 
 import com.example.artwokmabel.R;
 
-public class ReviewFragment extends Fragment {
+public class ListingReviewsFragment extends Fragment {
     View view;
-    public ReviewFragment() {}
+    public ListingReviewsFragment() {}
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_indiv_listing_review, container, false);
+        view = inflater.inflate(R.layout.fragment_listing_reviews, container, false);
 
         return view;
     }

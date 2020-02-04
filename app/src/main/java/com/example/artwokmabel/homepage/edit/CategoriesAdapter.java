@@ -1,4 +1,4 @@
-package com.example.artwokmabel.homepage.adapters;
+package com.example.artwokmabel.homepage.edit;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -13,27 +13,26 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.artwokmabel.R;
-import com.example.artwokmabel.databinding.CatItemCardBinding;
+import com.example.artwokmabel.databinding.ItemCategoryBinding;
 import com.example.artwokmabel.homepage.callbacks.CategoryClickCallback;
-import com.example.artwokmabel.homepage.edit.EditCategoriesFragment;
-import com.example.artwokmabel.homepage.models.Category;
+import com.example.artwokmabel.models.Category;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class CatCardsAdapter extends RecyclerView.Adapter<CatCardsAdapter.CatHolder> {
+public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.CatHolder> {
 
     private List<Category> categories;
     private Context context;
 
-    public CatCardsAdapter(Context context) {
+    public CategoriesAdapter(Context context) {
         this.context = context;
     }
 
     @NonNull
     @Override
     public CatHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
-        CatItemCardBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.cat_item_card, parent, false);
+        ItemCategoryBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.item_category, parent, false);
 
         return new CatHolder(binding);
     }
@@ -83,7 +82,7 @@ public class CatCardsAdapter extends RecyclerView.Adapter<CatCardsAdapter.CatHol
             DiffUtil.DiffResult result = DiffUtil.calculateDiff(new DiffUtil.Callback() {
                 @Override
                 public int getOldListSize() {
-                    return CatCardsAdapter.this.categories.size();
+                    return CategoriesAdapter.this.categories.size();
                 }
 
                 @Override
@@ -93,13 +92,13 @@ public class CatCardsAdapter extends RecyclerView.Adapter<CatCardsAdapter.CatHol
 
                 @Override
                 public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-                    return CatCardsAdapter.this.categories.get(oldItemPosition).getName() ==
+                    return CategoriesAdapter.this.categories.get(oldItemPosition).getName() ==
                             categories.get(newItemPosition).getName();
                 }
 
                 @Override
                 public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
-                    return CatCardsAdapter.this.categories.get(oldItemPosition).getName() ==
+                    return CategoriesAdapter.this.categories.get(oldItemPosition).getName() ==
                             categories.get(newItemPosition).getName();
                 }
             });
@@ -115,9 +114,9 @@ public class CatCardsAdapter extends RecyclerView.Adapter<CatCardsAdapter.CatHol
 
     static class CatHolder extends RecyclerView.ViewHolder {
 
-        CatItemCardBinding binding;
+        ItemCategoryBinding binding;
 
-        public CatHolder(CatItemCardBinding binding) {
+        public CatHolder(ItemCategoryBinding binding) {
            super(binding.getRoot());
            this.binding = binding;
         }

@@ -1,4 +1,4 @@
-package com.example.artwokmabel.homepage.favoritestuff;
+package com.example.artwokmabel.homepage.favorites;
 
 import android.os.Bundle;
 
@@ -9,7 +9,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.artwokmabel.R;
 import com.google.android.material.tabs.TabLayout;
 
-public class FavouritesActivity extends AppCompatActivity {
+public class FavoritesActivity extends AppCompatActivity {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -17,17 +17,17 @@ public class FavouritesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_favourites);
+        setContentView(R.layout.activity_favorites);
 
         tabLayout = findViewById(R.id.fav_tabs);
         viewPager = findViewById(R.id.fav_viewpager);
 
-        FavouritesAdapter adapter = new FavouritesAdapter(this.getSupportFragmentManager());
+        FavoritesPagerAdapter adapter = new FavoritesPagerAdapter(this.getSupportFragmentManager());
 
         // Adding Fragments
-        adapter.addFragment(new FavoritesFragmentListings(),"Listings");
-        adapter.addFragment(new FavoritesFragmentPosts(),"Posts");
-        adapter.addFragment(new FavoritesFragmentRequests(),"Requests");
+        adapter.addFragment(new FavoriteListingsFragment(),"Listings");
+        adapter.addFragment(new FavoritePostsFragment(),"Posts");
+        adapter.addFragment(new FavoriteRequestsFragment(),"Requests");
 
         // Adapter Setup
         viewPager.setAdapter(adapter);

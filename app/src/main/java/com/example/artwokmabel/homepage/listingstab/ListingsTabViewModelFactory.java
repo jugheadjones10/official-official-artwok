@@ -12,31 +12,16 @@ import com.example.artwokmabel.models.Listing;
 
 import java.util.List;
 
-class HomeStandardCatFactory extends ViewModelProvider.NewInstanceFactory {
+class ListingsTabViewModelFactory extends ViewModelProvider.NewInstanceFactory {
 
     private final String cat;
-    public HomeStandardCatFactory(String cat) {
+    public ListingsTabViewModelFactory(String cat) {
         this.cat = cat;
     }
 
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-        return (T) new HomeStandardCatViewModel(cat);
+        return (T) new ListingsTabViewModel(cat);
     }
-}
-
-public class HomeStandardCatViewModel extends ViewModel {
-
-    private final LiveData<List<Listing>> listingsObeservable;
-
-    public HomeStandardCatViewModel(String cat) {
-        Log.d("viewModelCat", cat);
-        listingsObeservable = FirestoreRepo.getInstance().getSingleCategoryListings(cat);
-    }
-
-    public LiveData<List<Listing>> getListingsObeservable() {
-        return listingsObeservable;
-    }
-
 }

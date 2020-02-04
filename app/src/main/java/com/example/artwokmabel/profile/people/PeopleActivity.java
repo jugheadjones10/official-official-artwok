@@ -1,4 +1,4 @@
-package com.example.artwokmabel.profile.followingfollowers;
+package com.example.artwokmabel.profile.people;
 
 import android.os.Bundle;
 
@@ -6,25 +6,25 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.example.artwokmabel.R;
-import com.example.artwokmabel.databinding.ActivityFollowingFollowersBinding;
+import com.example.artwokmabel.databinding.ActivityPeopleBinding;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
-public class FollowingFollowersActivity extends AppCompatActivity {
+public class PeopleActivity extends AppCompatActivity {
 
-    private FollowingFollowersTabsPagerAdapter adapter;
-    private ActivityFollowingFollowersBinding binding;
+    private PeoplePagerAdapter adapter;
+    private ActivityPeopleBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_following_followers);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_people);
 
         setSupportActionBar(binding.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        adapter = new FollowingFollowersTabsPagerAdapter(this);
+        adapter = new PeoplePagerAdapter(this);
         binding.viewPager.setAdapter(adapter);
 
         new TabLayoutMediator(binding.tabs, binding.viewPager,

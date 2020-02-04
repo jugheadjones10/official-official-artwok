@@ -9,13 +9,13 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
 
-public class FollowingFollowersViewModel extends ViewModel {
+public class PeopleViewModel extends ViewModel {
 
     private FirebaseAuth mAuth;
     private final LiveData<List<User>> followingUsersObservable;
     private final LiveData<List<User>> followersUsersObservable;
 
-    public FollowingFollowersViewModel() {
+    public PeopleViewModel() {
         mAuth = FirebaseAuth.getInstance();
         followingUsersObservable = FirestoreRepo.getInstance().getUserFollowings(mAuth.getCurrentUser().getUid());
         followersUsersObservable = FirestoreRepo.getInstance().getUserFollowers(mAuth.getCurrentUser().getUid());

@@ -1,4 +1,4 @@
-package com.example.artwokmabel.homepage.request;
+package com.example.artwokmabel.homepage.request.indiv;
 
 import android.os.Bundle;
 
@@ -9,13 +9,14 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.artwokmabel.homepage.listing.DescFragment;
 import com.example.artwokmabel.homepage.listing.FaqFragment;
+import com.example.artwokmabel.models.Request;
 
-public class IndivRequestPagerAdapter extends FragmentStateAdapter {
+public class RequestPagerAdapter extends FragmentStateAdapter {
 
 
     private Request request;
 
-    public IndivRequestPagerAdapter(FragmentActivity fragmentActivity) {
+    public RequestPagerAdapter(FragmentActivity fragmentActivity) {
         super(fragmentActivity);
     }
 

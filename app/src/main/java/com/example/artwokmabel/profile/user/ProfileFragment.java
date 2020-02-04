@@ -1,4 +1,4 @@
-package com.example.artwokmabel.profile.activities;
+package com.example.artwokmabel.profile.user;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,19 +13,15 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.artwokmabel.R;
-import com.example.artwokmabel.databinding.MainProfileFragment2Binding;
+import com.example.artwokmabel.databinding.FragmentProfileBinding;
 import com.example.artwokmabel.models.User;
-import com.example.artwokmabel.profile.ProfileViewPagerAdapter;
-import com.example.artwokmabel.profile.followingfollowers.FollowingFollowersActivity;
-import com.example.artwokmabel.profile.fragments.DashboardFragment;
-import com.example.artwokmabel.profile.fragments.ListingsFragment;
-import com.example.artwokmabel.profile.fragments.PostsFragment;
+import com.example.artwokmabel.profile.people.PeopleActivity;
 import com.squareup.picasso.Picasso;
 
-public class ProfilePageFragment2 extends Fragment {
+public class ProfileFragment extends Fragment {
 
-    private ProfilePageActivityViewModel viewModel;
-    private MainProfileFragment2Binding binding;
+    private ProfileFragmentViewModel viewModel;
+    private FragmentProfileBinding binding;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -35,16 +31,16 @@ public class ProfilePageFragment2 extends Fragment {
         binding.profileTab.bringToFront();
         binding.setOnpeopleclicked(new OnPeopleClicked());
 
-        ProfileViewPagerAdapter adapter = new ProfileViewPagerAdapter(getChildFragmentManager());
-        adapter.AddFragment(new ListingsFragment(),"Listings");
-        adapter.AddFragment(new PostsFragment(),"Posts");
+        ProfileFragmentPagerAdapter adapter = new ProfileFragmentPagerAdapter(getChildFragmentManager());
+        adapter.AddFragment(new ProfileListingsFragment(),"Listings");
+        adapter.AddFragment(new ProfilePostsFragment(),"Posts");
         adapter.AddFragment(new DashboardFragment(),"Dashboard");
 
         // Adapter setup
         binding.profileViewpager.setAdapter(adapter);
         binding.profileTab.setupWithViewPager(binding.profileViewpager);
 
-        viewModel = ViewModelProviders.of(this).get(ProfilePageActivityViewModel.class);
+        viewModel = ViewModelProviders.of(this).get(ProfileFragmentViewModel.class);
         viewModel.getUserObservable().observe(this, new Observer<User>() {
             @Override
             public void onChanged(@Nullable User user) {
@@ -72,7 +68,7 @@ public class ProfilePageFragment2 extends Fragment {
 
     public class OnPeopleClicked{
         public void onPeopleClicked(){
-            Intent intent = new Intent(getContext(), FollowingFollowersActivity.class);
+            Intent intent = new Intent(getContext(), PeopleActivity.class);
             startActivity(intent);
         }
     }

@@ -1,4 +1,4 @@
-package com.example.artwokmabel.homepage.feed;
+package com.example.artwokmabel.homepage.postsfeed;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,10 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.FragmentHomeFeedBinding;
-import com.example.artwokmabel.homepage.adapters.ListingsHomeAdapter;
 import com.example.artwokmabel.homepage.adapters.PostsAdapter;
-import com.example.artwokmabel.homepage.models.Listing;
-import com.example.artwokmabel.homepage.models.MainPost;
+import com.example.artwokmabel.models.Listing;
+import com.example.artwokmabel.models.MainPost;
 import com.yarolegovich.discretescrollview.InfiniteScrollAdapter;
 import com.yarolegovich.discretescrollview.transform.Pivot;
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer;

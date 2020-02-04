@@ -1,4 +1,4 @@
-package com.example.artwokmabel.login;
+package com.example.artwokmabel.rubbish;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -15,7 +15,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.algolia.search.saas.Client;
 import com.algolia.search.saas.Index;
 import com.example.artwokmabel.R;
-import com.example.artwokmabel.rubbish.LoginActivityOld;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -70,8 +69,8 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_create_account);
-        setContentView(R.layout.activity_signup);
+//        setContentView(R.layout.z_activity_create_account);
+        setContentView(R.layout.z_activity_signup);
 
         inputUserName = findViewById(R.id.signupActivity_edittext_name);
         //fullName = findViewById(R.id.input_fullname);

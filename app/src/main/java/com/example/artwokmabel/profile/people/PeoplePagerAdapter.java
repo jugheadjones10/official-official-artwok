@@ -1,13 +1,13 @@
-package com.example.artwokmabel.profile.followingfollowers;
+package com.example.artwokmabel.profile.people;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-public class FollowingFollowersTabsPagerAdapter extends FragmentStateAdapter {
+public class PeoplePagerAdapter extends FragmentStateAdapter {
 
-    public FollowingFollowersTabsPagerAdapter(FragmentActivity fragmentActivity) {
+    public PeoplePagerAdapter(FragmentActivity fragmentActivity) {
         super(fragmentActivity);
     }
 

@@ -1,4 +1,4 @@
-package com.example.artwokmabel.homepage.fragments;
+package com.example.artwokmabel.notifs;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,8 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.login.LoginOptionsActivity;
-import com.example.artwokmabel.homepage.adapters.NotifsAdapter;
-import com.example.artwokmabel.homepage.models.Notification;
+import com.example.artwokmabel.models.Notification;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
@@ -26,7 +25,7 @@ public class NotifsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.main_notifs_fragment, container, false);
+        view = inflater.inflate(R.layout.fragment_notifs, container, false);
 
         recyclerView = view.findViewById(R.id.notifs_recyclerview);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());

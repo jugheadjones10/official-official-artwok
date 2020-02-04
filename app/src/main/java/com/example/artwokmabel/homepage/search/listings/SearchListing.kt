@@ -1,4 +1,4 @@
-package com.example.artwokmabel.homepage.search.Listingssearch
+package com.example.artwokmabel.homepage.search.listings
 
 import com.algolia.instantsearch.core.highlighting.HighlightedString
 import com.algolia.instantsearch.helper.highlighting.Highlightable

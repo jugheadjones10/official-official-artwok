@@ -12,8 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.artwokmabel.homepage.post.IndivPostActivity;
-import com.example.artwokmabel.homepage.models.MainPost;
+import com.example.artwokmabel.homepage.post.PostActivity;
+import com.example.artwokmabel.models.MainPost;
 import com.example.artwokmabel.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -23,16 +23,16 @@ import com.synnapps.carouselview.ImageListener;
 
 import java.util.ArrayList;
 
-public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.FavHolder> {
+public class FavoritePostsAdapter extends RecyclerView.Adapter<FavoritePostsAdapter.FavHolder> {
 
     private Context context;
     public ArrayList<MainPost> favs;
     FirebaseFirestore db;
     FirebaseAuth mAuth;
 
-    //private static FavoritesAdapter instance = null;
+    //private static FavoritePostsAdapter instance = null;
 
-//    public static FavoritesAdapter getInstance(){
+//    public static FavoritePostsAdapter getInstance(){
 //        return instance;
 //    }
 
@@ -55,7 +55,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.FavH
 //                .update("fav_posts", FieldValue.arrayUnion(postid));
 //    }
 
-    public FavoritesAdapter(Context context, ArrayList<MainPost> favs) {
+    public FavoritePostsAdapter(Context context, ArrayList<MainPost> favs) {
 //        instance = this;
         Log.d("goddmamnImages", favs.toString());
         this.context = context;
@@ -65,7 +65,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.FavH
     @NonNull
     @Override
     public FavHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
-        View view = LayoutInflater.from(context).inflate(R.layout.fav_item, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_favorite_post, parent, false);
         return new FavHolder(view);
     }
 
@@ -98,7 +98,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.FavH
             @Override
             public void onClick(View v) {
                 Log.d("ADW", "I got cliked");
-                Intent intent = new Intent(context, IndivPostActivity.class);
+                Intent intent = new Intent(context, PostActivity.class);
                 intent.putExtra("description", fav.getDesc());
                 intent.putExtra("hashtags", fav.getHashtags());
                 intent.putExtra("postid", fav.getPostId());

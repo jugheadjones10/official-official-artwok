@@ -1,4 +1,4 @@
-package com.example.artwokmabel.homepage.adapters;
+package com.example.artwokmabel.homepage.listing;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,7 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.artwokmabel.homepage.models.Review;
+import com.example.artwokmabel.models.Review;
 import com.example.artwokmabel.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -19,7 +19,7 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.reviewHolder> {
+public class ListingReviewsAdapter extends RecyclerView.Adapter<ListingReviewsAdapter.reviewHolder> {
 
     private static final String TAG = "CommentListAdapter";
 
@@ -30,22 +30,22 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.reviewHo
     private FirebaseAuth mAuth;
 
 
-    public ReviewsAdapter(Context context, List<Review> reviews) {
+    public ListingReviewsAdapter(Context context, List<Review> reviews) {
         mContext = context;
         list = reviews;
     }
 
     @NonNull
     @Override
-    public ReviewsAdapter.reviewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public ListingReviewsAdapter.reviewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_review,viewGroup,false);
 
-        ReviewsAdapter.reviewHolder myHolder = new ReviewsAdapter.reviewHolder(view);
+        ListingReviewsAdapter.reviewHolder myHolder = new ListingReviewsAdapter.reviewHolder(view);
         return myHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ReviewsAdapter.reviewHolder myHolder, int i) {
+    public void onBindViewHolder(@NonNull ListingReviewsAdapter.reviewHolder myHolder, int i) {
         Review data = list.get(i);
 
         myHolder.review.setText(data.getReview());

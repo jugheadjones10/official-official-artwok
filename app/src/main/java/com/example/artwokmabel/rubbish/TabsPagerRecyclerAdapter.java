@@ -1,4 +1,4 @@
-package com.example.artwokmabel.homepage.homepagestuff;
+package com.example.artwokmabel.rubbish;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.artwokmabel.homepage.models.Category;
+import com.example.artwokmabel.models.Category;
 import com.example.artwokmabel.R;
 
 import java.util.List;
@@ -22,7 +22,7 @@ public class TabsPagerRecyclerAdapter extends RecyclerView.Adapter<TabsPagerRecy
     @Override
     public TabsHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_posts,viewGroup,false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_post,viewGroup,false);
 
         return new TabsHolder(view);
     }

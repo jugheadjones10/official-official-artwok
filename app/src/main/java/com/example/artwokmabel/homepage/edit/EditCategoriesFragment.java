@@ -1,4 +1,4 @@
-package com.example.artwokmabel.homepage.fragments;
+package com.example.artwokmabel.homepage.edit;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,9 +14,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.FragmentEditCategoriesBinding;
-import com.example.artwokmabel.homepage.adapters.CatCardsAdapter;
 import com.example.artwokmabel.homepage.callbacks.EditCategorySaveCallback;
-import com.example.artwokmabel.homepage.models.Category;
+import com.example.artwokmabel.models.Category;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +24,7 @@ public class EditCategoriesFragment extends Fragment {
 
     private FragmentEditCategoriesBinding binding;
     private EditCategoriesViewModel viewModel;
-    public CatCardsAdapter adapter;
+    public CategoriesAdapter adapter;
     private static EditCategoriesFragment instance;
 
     @Override
@@ -38,7 +37,7 @@ public class EditCategoriesFragment extends Fragment {
 
         //Todo: find trigger and solution to weird "edit" turns into other tab bug
         binding.catRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
-        adapter = new CatCardsAdapter(getContext());
+        adapter = new CategoriesAdapter(getContext());
         binding.catRecyclerView.setAdapter(adapter);
 
         return binding.getRoot();

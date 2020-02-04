@@ -20,7 +20,7 @@ import com.algolia.search.model.APIKey
 import com.algolia.search.model.ApplicationID
 import com.algolia.search.model.Attribute
 import com.algolia.search.model.IndexName
-import com.example.artwokmabel.homepage.search.Listingssearch.MyFacetListViewHolder
+import com.example.artwokmabel.homepage.search.listings.MyFacetListViewHolder
 import io.ktor.client.features.logging.LogLevel
 
 

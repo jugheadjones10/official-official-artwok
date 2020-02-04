@@ -1,4 +1,4 @@
-package com.example.artwokmabel.homepage.models;
+package com.example.artwokmabel.models;
 
 public class Categories {
 

@@ -1,4 +1,4 @@
-package com.example.artwokmabel.homepage.homepagestuff;
+package com.example.artwokmabel.homepage.homepagewrapper;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,7 +15,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.artwokmabel.R;
-import com.example.artwokmabel.databinding.AltMainHomeFragmentBinding;
+import com.example.artwokmabel.databinding.FragmentHomeTabsBinding;
 import com.example.artwokmabel.homepage.favorites.FavoritesActivity;
 import com.example.artwokmabel.homepage.search.TemporarySearchFragment;
 import com.google.android.material.tabs.TabLayout;
@@ -23,22 +23,22 @@ import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.util.ArrayList;
 
-public class HomeTabsManagerFragment extends Fragment {
+public class HomeTabsFragment extends Fragment {
 
-    private TabsPagerAdapter adapter;
-    private AltMainHomeFragmentBinding binding;
+    private HomeTabsPagerAdapter adapter;
+    private FragmentHomeTabsBinding binding;
     private ArrayList<String> tabCategories;
-    private static HomeTabsManagerFragment instance = null;
+    private static HomeTabsFragment instance = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        binding = DataBindingUtil.inflate(inflater, R.layout.alt_main_home_fragment, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home_tabs, container, false);
         instance = this;
         ((AppCompatActivity)getActivity()).setSupportActionBar(binding.toolbar);
 
-        adapter = new TabsPagerAdapter(this);
+        adapter = new HomeTabsPagerAdapter(this);
         binding.viewPager.setAdapter(adapter);
 
 
@@ -120,7 +120,7 @@ public class HomeTabsManagerFragment extends Fragment {
         });
     }
 
-    public static HomeTabsManagerFragment getInstance(){
+    public static HomeTabsFragment getInstance(){
         return instance;
     }
 

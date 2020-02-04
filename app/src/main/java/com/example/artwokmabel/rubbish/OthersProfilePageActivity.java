@@ -1,4 +1,4 @@
-package com.example.artwokmabel.profile.activities;
+package com.example.artwokmabel.rubbish;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -13,10 +13,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.artwokmabel.R;
-import com.example.artwokmabel.profile.ProfileViewPagerAdapter;
-import com.example.artwokmabel.profile.fragments.DashboardFragment;
-import com.example.artwokmabel.profile.fragments.ListingsFragment;
-import com.example.artwokmabel.profile.fragments.PostsFragment;
+import com.example.artwokmabel.profile.user.ProfilePostsFragment;
+import com.example.artwokmabel.profile.user.ProfileFragmentPagerAdapter;
+import com.example.artwokmabel.profile.user.DashboardFragment;
+import com.example.artwokmabel.profile.user.ProfileListingsFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.tabs.TabLayout;
@@ -64,12 +64,12 @@ public class OthersProfilePageActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        ProfileViewPagerAdapter adapter = new ProfileViewPagerAdapter(getSupportFragmentManager());
+        ProfileFragmentPagerAdapter adapter = new ProfileFragmentPagerAdapter(getSupportFragmentManager());
         profileDesc.setText(retrieveDesc());
 
         // Adding Fragments
-        adapter.AddFragment(new ListingsFragment(),"Listings");
-        adapter.AddFragment(new PostsFragment(),"Posts");
+        adapter.AddFragment(new ProfileListingsFragment(),"Listings");
+        adapter.AddFragment(new ProfilePostsFragment(),"Posts");
         adapter.AddFragment(new DashboardFragment(),"Dashboard");
 
         // Adapter setup

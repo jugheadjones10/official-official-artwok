@@ -1,4 +1,4 @@
-package com.example.artwokmabel.homepage.adapters;
+package com.example.artwokmabel.homepage.listing;
 
 import android.os.Bundle;
 
@@ -7,17 +7,13 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.example.artwokmabel.homepage.listing.DeliveryFragment;
-import com.example.artwokmabel.homepage.listing.DescFragment;
-import com.example.artwokmabel.homepage.listing.FaqFragment;
-import com.example.artwokmabel.homepage.listing.ReviewFragment;
-import com.example.artwokmabel.homepage.models.Listing;
+import com.example.artwokmabel.models.Listing;
 
-public class IndivListViewPagerAdapter extends FragmentStateAdapter {
+public class ListingPagerAdapter extends FragmentStateAdapter {
 
     private Listing listing;
 
-    public IndivListViewPagerAdapter(FragmentActivity fragmentActivity) {
+    public ListingPagerAdapter(FragmentActivity fragmentActivity) {
         super(fragmentActivity);
     }
 
@@ -38,7 +34,7 @@ public class IndivListViewPagerAdapter extends FragmentStateAdapter {
 
             return fragment;
         }else if(position == 1){
-            Fragment fragment = new ReviewFragment();
+            Fragment fragment = new ListingReviewsFragment();
 
             Bundle args = new Bundle();
             args.putString("review", "reviews. Make reviews xml");

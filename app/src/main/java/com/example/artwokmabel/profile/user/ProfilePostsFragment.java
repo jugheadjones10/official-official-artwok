@@ -1,4 +1,4 @@
-package com.example.artwokmabel.profile.fragments;
+package com.example.artwokmabel.profile.user;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +13,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.artwokmabel.R;
-import com.example.artwokmabel.databinding.ActivityPostsFragmentBinding;
+import com.example.artwokmabel.databinding.FragmentProfilePostsBinding;
 import com.example.artwokmabel.homepage.adapters.PostsAdapter;
 import com.example.artwokmabel.models.MainPost;
 import com.example.artwokmabel.profile.uploadpost.UploadPostActivity;
@@ -22,16 +22,16 @@ import java.util.List;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
-public class PostsFragment extends Fragment {
-    ActivityPostsFragmentBinding binding;
-    PostsViewModel viewModel;
+public class ProfilePostsFragment extends Fragment {
+    FragmentProfilePostsBinding binding;
+    ProfilePostsViewModel viewModel;
     PostsAdapter adapter;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        binding = DataBindingUtil.inflate(inflater, R.layout.activity_posts_fragment, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile_posts, container, false);
 
         binding.setCallback(new OnUploadButtonClicked());
         binding.recyclerview.setHasFixedSize(true);
@@ -45,12 +45,12 @@ public class PostsFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        viewModel = ViewModelProviders.of(this).get(PostsViewModel.class);
+        viewModel = ViewModelProviders.of(this).get(ProfilePostsViewModel.class);
 
         observeViewModel(viewModel);
     }
 
-    private void observeViewModel(PostsViewModel viewModel) {
+    private void observeViewModel(ProfilePostsViewModel viewModel) {
         // Update the list when the data changes
         viewModel.getUserPostsObeservable().observe(this, new Observer<List<MainPost>>() {
             @Override

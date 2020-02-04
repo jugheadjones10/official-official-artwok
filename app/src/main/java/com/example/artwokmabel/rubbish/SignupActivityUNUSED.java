@@ -42,7 +42,7 @@
 //    @Override
 //    protected void onCreate(Bundle savedInstanceState) {
 //        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_signup);
+//        setContentView(R.layout.z_activity_signup);
 //        FirebaseRemoteConfig mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
 //        splash_background = mFirebaseRemoteConfig.getString(getString(R.string.rc_color));
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

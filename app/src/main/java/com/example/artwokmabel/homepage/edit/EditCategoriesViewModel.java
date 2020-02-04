@@ -1,11 +1,11 @@
-package com.example.artwokmabel.homepage.fragments;
+package com.example.artwokmabel.homepage.edit;
 
 import android.app.Application;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.example.artwokmabel.homepage.models.Category;
+import com.example.artwokmabel.models.Category;
 import com.example.artwokmabel.repos.FirestoreRepo;
 import com.google.firebase.auth.FirebaseAuth;
 

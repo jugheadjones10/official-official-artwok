@@ -1,4 +1,4 @@
-package com.example.artwokmabel.auth;
+package com.example.artwokmabel.login;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.example.artwokmabel.R;
-import com.example.artwokmabel.Repositories.FirestoreRepo;
+import com.example.artwokmabel.repos.FirestoreRepo;
 import com.example.artwokmabel.databinding.ActivityCreateAccountEmailBinding;
 import com.example.artwokmabel.homepage.callbacks.LoginPageCallback;
 

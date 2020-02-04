@@ -1,4 +1,4 @@
-package com.example.artwokmabel.homepage.adapters;
+package com.example.artwokmabel.homepage.postsfeed;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,11 +13,11 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.artwokmabel.R;
-import com.example.artwokmabel.databinding.ItemListingsBinding;
-import com.example.artwokmabel.homepage.listing.IndivListingActivity;
+import com.example.artwokmabel.databinding.ItemHomeListingBinding;
+import com.example.artwokmabel.HomePageActivity;
+import com.example.artwokmabel.homepage.listing.ListingActivity;
+import com.example.artwokmabel.models.Listing;
 import com.example.artwokmabel.homepage.user.IndivUserFragment;
-import com.example.artwokmabel.homepage.homepagestuff.HomePageActivity;
-import com.example.artwokmabel.homepage.models.Listing;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -41,7 +41,7 @@ public class ListingsHomeAdapter extends RecyclerView.Adapter<ListingsHomeAdapte
     @NonNull
     @Override
     public ListingsHomeAdapter.homeListingsHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
-        ItemListingsBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.item_listings, parent,false);
+        ItemHomeListingBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.item_home_listing, parent,false);
         return new ListingsHomeAdapter.homeListingsHolder(binding);
     }
 
@@ -107,7 +107,7 @@ public class ListingsHomeAdapter extends RecyclerView.Adapter<ListingsHomeAdapte
     //Todo: might need to add on clicked to carousel view
     public class OnListingClicked{
         public void onListClicked(Listing data){
-            Intent intent = new Intent(mContext, IndivListingActivity.class);
+            Intent intent = new Intent(mContext, ListingActivity.class);
             intent.putExtra("listing", data);
             mContext.startActivity(intent);
         }
@@ -163,9 +163,9 @@ public class ListingsHomeAdapter extends RecyclerView.Adapter<ListingsHomeAdapte
     }
 
     class homeListingsHolder extends RecyclerView.ViewHolder {
-        private ItemListingsBinding binding;
+        private ItemHomeListingBinding binding;
 
-        public homeListingsHolder(ItemListingsBinding binding) {
+        public homeListingsHolder(ItemHomeListingBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }

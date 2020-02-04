@@ -17,24 +17,24 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.artwokmabel.R;
-import com.example.artwokmabel.databinding.FragmentAddListingDetailsBinding;
+import com.example.artwokmabel.databinding.FragmentUploadListingDetailsBinding;
+import com.example.artwokmabel.models.Category;
 import com.example.artwokmabel.homepage.request.upload.UploadRequestDetailsViewModel;
-import com.example.artwokmabel.homepage.models.Category;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class AddListingDetailsFragment extends Fragment {
+public class UploadListingDetailsFragment extends Fragment {
 
-    private FragmentAddListingDetailsBinding binding;
-    private static AddListingDetailsFragment instance;
+    private FragmentUploadListingDetailsBinding binding;
+    private static UploadListingDetailsFragment instance;
     private UploadRequestDetailsViewModel viewModel;
     private String[] categories;
     private boolean[] checkedCategoriesArray;
     private ArrayList<String> finalizedCategories;
 
-    public static AddListingDetailsFragment getInstance(){
+    public static UploadListingDetailsFragment getInstance(){
         return instance;
     }
 
@@ -42,7 +42,7 @@ public class AddListingDetailsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_upload_listing_details, container, false);
-        binding.setOncategoryclicked(new AddListingDetailsFragment.OnSelectCateogry());
+        binding.setOncategoryclicked(new UploadListingDetailsFragment.OnSelectCateogry());
         binding.priceEditText.setFilters(new InputFilter[]{new DigitsInputFilter(3, 2, Double.POSITIVE_INFINITY)});
 
         finalizedCategories = new ArrayList<>();
@@ -62,11 +62,11 @@ public class AddListingDetailsFragment extends Fragment {
                     for(Category cat : categories){
                         allCategories.add(cat.getName());
                     }
-                    AddListingDetailsFragment.this.categories = allCategories.toArray(new String[allCategories.size()]);
+                    UploadListingDetailsFragment.this.categories = allCategories.toArray(new String[allCategories.size()]);
 
                     boolean checkedArray[] = new boolean[allCategories.size()];
                     Arrays.fill(checkedArray, false);
-                    AddListingDetailsFragment.this.checkedCategoriesArray = checkedArray;
+                    UploadListingDetailsFragment.this.checkedCategoriesArray = checkedArray;
 
                     //Todo: add another false to checkedCategoriesArray instead of remaking a whole new array with all false.
                     //need to maintain the trues

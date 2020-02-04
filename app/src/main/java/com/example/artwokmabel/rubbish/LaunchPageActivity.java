@@ -1,4 +1,4 @@
-package com.example.artwokmabel.RubbishReference;
+package com.example.artwokmabel.rubbish;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,8 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.artwokmabel.login.CreateAccountActivity;
-import com.example.artwokmabel.homepage.homepagestuff.HomePageActivity;
+import com.example.artwokmabel.HomePageActivity;
 import com.example.artwokmabel.R;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -53,7 +52,7 @@ public class LaunchPageActivity extends AppCompatActivity implements View.OnClic
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_launch_page);
+        setContentView(R.layout.z_activity_launch_page);
 
         //Below is all Facebook
         callbackManager = CallbackManager.Factory.create();
@@ -246,7 +245,7 @@ public class LaunchPageActivity extends AppCompatActivity implements View.OnClic
 //    @Override
 //    protected void onCreate(Bundle savedInstanceState) {
 //        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_launch_page);
+//        setContentView(R.layout.z_activity_launch_page);
 //
 //        //fbLoginButton = findViewById(R.id.facebook_button);
 //        google_login = findViewById(R.id.google_button);
@@ -257,7 +256,7 @@ public class LaunchPageActivity extends AppCompatActivity implements View.OnClic
 //            @Override
 //            public void onClick(View view)
 //            {
-//                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+//                Intent intent = new Intent(getApplicationContext(), LoginActivityOld.class);
 //                startActivity(intent);
 //            }
 //        });

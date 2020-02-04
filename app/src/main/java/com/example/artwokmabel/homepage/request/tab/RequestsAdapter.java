@@ -1,4 +1,4 @@
-package com.example.artwokmabel.homepage.request;
+package com.example.artwokmabel.homepage.request.tab;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,10 +16,12 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.artwokmabel.R;
-import com.example.artwokmabel.databinding.ItemRequestsBinding;
-import com.example.artwokmabel.homepage.user.IndivUserFragment;
 import com.example.artwokmabel.HomePageActivity;
+import com.example.artwokmabel.R;
+import com.example.artwokmabel.databinding.ItemRequestBinding;
+import com.example.artwokmabel.models.Request;
+import com.example.artwokmabel.homepage.request.indiv.RequestActivity;
+import com.example.artwokmabel.homepage.user.IndivUserFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -50,7 +52,7 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.myHold
     @Override
     public RequestsAdapter.myHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
 
-        ItemRequestsBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.item_requests, parent, false);
+        ItemRequestBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.item_request, parent, false);
         return new RequestsAdapter.myHolder(binding);
 
     }
@@ -139,7 +141,7 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.myHold
     //Todo: might need to add on clicked to carousel view
     public class OnRequestClicked{
         public void onRequestClicked(Request data){
-            Intent intent = new Intent(mContext, IndivRequestActivity.class);
+            Intent intent = new Intent(mContext, RequestActivity.class);
 
             intent.putExtra("request", data);
 
@@ -211,9 +213,9 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.myHold
     }
 
     class myHolder extends RecyclerView.ViewHolder {
-        private ItemRequestsBinding binding;
+        private ItemRequestBinding binding;
 
-        public myHolder(ItemRequestsBinding binding) {
+        public myHolder(ItemRequestBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }

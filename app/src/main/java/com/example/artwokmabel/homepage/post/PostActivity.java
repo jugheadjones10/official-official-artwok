@@ -21,8 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.artwokmabel.homepage.fragments.newViewCommentsFragment;
-import com.example.artwokmabel.homepage.homepagestuff.HomeTabsManagerFragment;
+import com.example.artwokmabel.homepage.homepagewrapper.HomeTabsFragment;
 import com.example.artwokmabel.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.appbar.AppBarLayout;
@@ -41,7 +40,7 @@ import com.synnapps.carouselview.ImageListener;
 
 import java.util.ArrayList;
 
-public class IndivPostActivity extends AppCompatActivity {
+public class PostActivity extends AppCompatActivity {
 
     private TextView post_desc;
     private TextView post_hashtags;
@@ -56,19 +55,19 @@ public class IndivPostActivity extends AppCompatActivity {
     TextInputLayout commentBar;
     TextInputEditText commentEdit;
 
-    private static IndivPostActivity instance = null;
+    private static PostActivity instance = null;
 
     int phoneHeight;
     Boolean heightSet;
 
-    public static IndivPostActivity getInstance(){
+    public static PostActivity getInstance(){
         return instance;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_indiv_post);
+        setContentView(R.layout.activity_post);
         instance = this;
         post_desc = (TextView)findViewById(R.id.post_desc);
         post_hashtags = (TextView)findViewById(R.id.post_hashtags);
@@ -122,7 +121,7 @@ public class IndivPostActivity extends AppCompatActivity {
                 String shareBody = "Here is the share content body";
                 sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Subject Here");
                 sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
-                HomeTabsManagerFragment.getInstance().startActivity(Intent.createChooser(sharingIntent, "Share via"));
+                HomeTabsFragment.getInstance().startActivity(Intent.createChooser(sharingIntent, "Share via"));
             }
         });
 
@@ -182,7 +181,7 @@ public class IndivPostActivity extends AppCompatActivity {
         }
 
 
-        newViewCommentsFragment fragment = new newViewCommentsFragment();
+        CommentsFragment fragment = new CommentsFragment();
         Bundle args = new Bundle();
         args.putString("postid", getIntent().getStringExtra("postid"));
         args.putString("userid", getIntent().getStringExtra("userid"));

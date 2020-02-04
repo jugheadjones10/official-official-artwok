@@ -1,4 +1,4 @@
-package com.example.artwokmabel.homepage.fragments;
+package com.example.artwokmabel.homepage.listingstab;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,17 +13,17 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.example.artwokmabel.R;
-import com.example.artwokmabel.databinding.MainGiftsFragmentBinding;
+import com.example.artwokmabel.databinding.FragmentListingsTabBinding;
 import com.example.artwokmabel.homepage.adapters.ListingsAdapter;
-import com.example.artwokmabel.homepage.models.Listing;
+import com.example.artwokmabel.models.Listing;
 
 import java.util.List;
 
-public class HomeStandardCatFragment extends Fragment {
+public class ListingsTabFragment extends Fragment {
 
-    private HomeStandardCatViewModel viewModel;
+    private ListingsTabViewModel viewModel;
     private ListingsAdapter listingsAdapter;
-    private MainGiftsFragmentBinding binding;
+    private FragmentListingsTabBinding binding;
     private String cat;
     //Todo: add horizontal scrollable listings
 
@@ -31,7 +31,7 @@ public class HomeStandardCatFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        binding = DataBindingUtil.inflate(inflater, R.layout.main_gifts_fragment, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_listings_tab, container, false);
 
 
         binding.giftRecyclerview.setHasFixedSize(true);
@@ -50,13 +50,13 @@ public class HomeStandardCatFragment extends Fragment {
 
         cat = getArguments().getString("category");
 
-        HomeStandardCatFactory modelFactory = new HomeStandardCatFactory(cat);
-        viewModel = ViewModelProviders.of(this, modelFactory).get(HomeStandardCatViewModel.class);
+        ListingsTabViewModelFactory modelFactory = new ListingsTabViewModelFactory(cat);
+        viewModel = ViewModelProviders.of(this, modelFactory).get(ListingsTabViewModel.class);
 
         observeViewModel(viewModel);
     }
 
-    private void observeViewModel(HomeStandardCatViewModel viewModel) {
+    private void observeViewModel(ListingsTabViewModel viewModel) {
         // Update the list when the data changes
         viewModel.getListingsObeservable().observe(this, new Observer<List<Listing>>() {
             @Override

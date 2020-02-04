@@ -1,4 +1,4 @@
-package com.example.artwokmabel.homepage.fragments.indivuser;
+package com.example.artwokmabel.homepage.user;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -14,8 +14,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
-import com.example.artwokmabel.profile.fragments.DashboardFragment;
-import com.example.artwokmabel.profile.ProfileViewPagerAdapter;
+import com.example.artwokmabel.profile.user.DashboardFragment;
+import com.example.artwokmabel.profile.user.ProfileFragmentPagerAdapter;
 import com.example.artwokmabel.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -34,7 +34,7 @@ public class IndivUserFragment extends Fragment {
     private ImageView profilePic;
     private  FirebaseFirestore db;
     private FirebaseAuth mAuth;
-    private ProfileViewPagerAdapter adapter;
+    private ProfileFragmentPagerAdapter adapter;
 
     private String userProfileUrl;
     private String userProfileDesc;
@@ -63,7 +63,7 @@ public class IndivUserFragment extends Fragment {
         userUsername.setText(retrievedUsername);
         retrieveFirebase(retrievedUsername);
 
-        adapter = new ProfileViewPagerAdapter(getChildFragmentManager());
+        adapter = new ProfileFragmentPagerAdapter(getChildFragmentManager());
 
         return view;
     }

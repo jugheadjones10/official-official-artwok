@@ -1,4 +1,4 @@
-package com.example.artwokmabel.profile.activities;
+package com.example.artwokmabel.groups;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,7 +18,7 @@ public class GroupProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_group_profile);
+        setContentView(R.layout.z_activity_group_profile);
 
         postButton = findViewById(R.id.btn_group_profile_post);
         postButton.setOnClickListener(new View.OnClickListener() {

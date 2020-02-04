@@ -1,4 +1,4 @@
-package com.example.artwokmabel.homepage.fragments;
+package com.example.artwokmabel.rubbish;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -11,8 +11,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.artwokmabel.homepage.adapters.ReviewsAdapter;
-import com.example.artwokmabel.homepage.models.Review;
+import com.example.artwokmabel.homepage.listing.ListingReviewsAdapter;
+import com.example.artwokmabel.models.Review;
 import com.example.artwokmabel.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
@@ -41,17 +41,17 @@ public class ReviewsFragment extends Fragment {
     private List<Review> mReviews = new ArrayList<>();
     private Context mContext;
 
-    private ReviewsAdapter adapter;
+    private ListingReviewsAdapter adapter;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_view_comments, container, false);
+        View view = inflater.inflate(R.layout.fragment_comments, container, false);
         mListView = view.findViewById(R.id.listView);
 
         mContext = getActivity();
 
-        adapter = new ReviewsAdapter(mContext, mReviews);
+        adapter = new ListingReviewsAdapter(mContext, mReviews);
         mListView.setAdapter(adapter);
 
 //        Bundle bundle = this.getArguments();

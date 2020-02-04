@@ -1,4 +1,4 @@
-package com.example.artwokmabel.homepage.adapters;
+package com.example.artwokmabel.notifs;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.artwokmabel.homepage.models.Notification;
+import com.example.artwokmabel.models.Notification;
 import com.example.artwokmabel.R;
 import com.squareup.picasso.Picasso;
 

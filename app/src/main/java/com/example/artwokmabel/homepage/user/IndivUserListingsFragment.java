@@ -1,4 +1,4 @@
-package com.example.artwokmabel.homepage.fragments.indivuser;
+package com.example.artwokmabel.homepage.user;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.FragmentIndivUserListingsBinding;
 import com.example.artwokmabel.homepage.adapters.ListingsAdapter;
-import com.example.artwokmabel.homepage.models.Listing;
+import com.example.artwokmabel.models.Listing;
 
 import java.util.List;
 

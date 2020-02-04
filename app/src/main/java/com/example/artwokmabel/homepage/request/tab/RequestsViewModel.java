@@ -1,8 +1,9 @@
-package com.example.artwokmabel.homepage.request;
+package com.example.artwokmabel.homepage.request.tab;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.artwokmabel.models.Request;
 import com.example.artwokmabel.repos.FirestoreRepo;
 
 import java.util.List;

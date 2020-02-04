@@ -1,4 +1,4 @@
-package com.example.artwokmabel.Repositories;
+package com.example.artwokmabel.repos;
 
 import android.app.Activity;
 import android.util.Log;
@@ -16,15 +16,15 @@ import com.example.artwokmabel.R;
 import com.example.artwokmabel.login.CreateAccountEmailActivity;
 import com.example.artwokmabel.login.CreateAccountPasswordActivity;
 import com.example.artwokmabel.login.CreateAccountUsernameActivity;
-import com.example.artwokmabel.login.LoginLoginActivity;
+import com.example.artwokmabel.login.LoginActivity;
 import com.example.artwokmabel.chat.models.Comment;
 import com.example.artwokmabel.chat.models.UserUserModel;
-import com.example.artwokmabel.homepage.fragments.requestspagestuff.Request;
-import com.example.artwokmabel.homepage.fragments.requestspagestuff.UploadRequestActivity;
-import com.example.artwokmabel.homepage.models.Category;
-import com.example.artwokmabel.homepage.models.Listing;
-import com.example.artwokmabel.homepage.models.MainPost;
-import com.example.artwokmabel.homepage.models.User;
+import com.example.artwokmabel.models.Request;
+import com.example.artwokmabel.homepage.request.upload.UploadRequestActivity;
+import com.example.artwokmabel.models.Category;
+import com.example.artwokmabel.models.Listing;
+import com.example.artwokmabel.models.MainPost;
+import com.example.artwokmabel.models.User;
 import com.example.artwokmabel.profile.uploadlisting.UploadListingAcitvity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -146,18 +146,18 @@ public class FirestoreRepo {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
         mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(LoginLoginActivity.getInstance(), new OnCompleteListener<AuthResult>() {
+                .addOnCompleteListener(LoginActivity.getInstance(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            LoginLoginActivity.getInstance().loginCallback(true);
+                            LoginActivity.getInstance().loginCallback(true);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(LoginLoginActivity.getInstance(), "Login failed",
+                            Toast.makeText(LoginActivity.getInstance(), "Login failed",
                                     Toast.LENGTH_SHORT).show();
 
-                            LoginLoginActivity.getInstance().loginCallback(false);
+                            LoginActivity.getInstance().loginCallback(false);
                         }
                     }
                 });

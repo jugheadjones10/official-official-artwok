@@ -1,4 +1,4 @@
-package com.example.artwokmabel.homepage.favoritestuff;
+package com.example.artwokmabel.homepage.favorites;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -11,8 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.artwokmabel.homepage.adapters.FavoritesAdapter;
-import com.example.artwokmabel.homepage.models.MainPost;
+import com.example.artwokmabel.models.MainPost;
 import com.example.artwokmabel.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,29 +23,29 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
-public class FavoritesFragmentPosts extends Fragment {
+public class FavoritePostsFragment extends Fragment {
     private RecyclerView recyclerView;
-    private FavoritesAdapter adapter;
+    private FavoritePostsAdapter adapter;
 
     private ArrayList<String> favPostIds;
     private ArrayList<MainPost> favPosts;
 
     FirebaseFirestore db;
     FirebaseAuth mAuth;
-    private String TAG = "FavoritesFragmentPosts";
+    private String TAG = "FavoritePostsFragment";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_favourites_posts, container, false);
+        View view = inflater.inflate(R.layout.fragment_favorite_posts, container, false);
         recyclerView = view.findViewById(R.id.cat_recycler_view);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
 
         favPostIds = new ArrayList<>();
         favPosts = new ArrayList<>();
 
-        adapter = new FavoritesAdapter(getActivity(), favPosts);
+        adapter = new FavoritePostsAdapter(getActivity(), favPosts);
         recyclerView.setAdapter(adapter);
 
         db = FirebaseFirestore.getInstance();

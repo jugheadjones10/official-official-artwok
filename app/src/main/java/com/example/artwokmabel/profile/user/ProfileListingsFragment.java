@@ -1,4 +1,4 @@
-package com.example.artwokmabel.profile.fragments;
+package com.example.artwokmabel.profile.user;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,7 +14,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.example.artwokmabel.R;
-import com.example.artwokmabel.databinding.ActivityListingsFragmentBinding;
+import com.example.artwokmabel.databinding.FragmentProfileListingsBinding;
 import com.example.artwokmabel.homepage.adapters.ListingsAdapter;
 import com.example.artwokmabel.models.Listing;
 import com.example.artwokmabel.profile.uploadlisting.UploadListingAcitvity;
@@ -24,12 +24,12 @@ import java.util.List;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 
-public class ListingsFragment extends Fragment {
-    private ActivityListingsFragmentBinding binding;
+public class ProfileListingsFragment extends Fragment {
+    private FragmentProfileListingsBinding binding;
     private ListingsAdapter adapter;
-    private ListingsFragmentViewModel viewModel;
+    private ProfileListingsViewModel viewModel;
 
-    public ListingsFragment() {
+    public ProfileListingsFragment() {
 
     }
 
@@ -37,7 +37,7 @@ public class ListingsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        binding = DataBindingUtil.inflate(inflater, R.layout.activity_listings_fragment, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile_listings, container, false);
         binding.setAddlistingcallback(new OnAddListingClicked());
 
         binding.profileListingsRecyclerview.setHasFixedSize(true);
@@ -54,12 +54,12 @@ public class ListingsFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        viewModel = ViewModelProviders.of(this).get(ListingsFragmentViewModel.class);
+        viewModel = ViewModelProviders.of(this).get(ProfileListingsViewModel.class);
 
         observeViewModel(viewModel);
     }
 
-    private void observeViewModel(ListingsFragmentViewModel viewModel) {
+    private void observeViewModel(ProfileListingsViewModel viewModel) {
         // Update the list when the data changes
         viewModel.getListingsObeservable().observe(this, new Observer<List<Listing>>() {
             @Override

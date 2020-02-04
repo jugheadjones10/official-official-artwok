@@ -1,4 +1,4 @@
-package com.example.artwokmabel.homepage.request;
+package com.example.artwokmabel.homepage.request.indiv;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -15,10 +15,11 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.artwokmabel.R;
-import com.example.artwokmabel.databinding.ActivityIndivRequestBinding;
-import com.example.artwokmabel.homepage.listing.ListingActivityViewModel;
+import com.example.artwokmabel.databinding.ActivityRequestBinding;
 import com.example.artwokmabel.homepage.callbacks.ShareClickCallback;
-import com.example.artwokmabel.homepage.models.User;
+import com.example.artwokmabel.homepage.listing.ListingActivityViewModel;
+import com.example.artwokmabel.models.Request;
+import com.example.artwokmabel.models.User;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,12 +28,12 @@ import com.synnapps.carouselview.ImageListener;
 
 import java.util.ArrayList;
 
-public class IndivRequestActivity extends AppCompatActivity {
+public class RequestActivity extends AppCompatActivity {
 
-    private ActivityIndivRequestBinding binding;
+    private ActivityRequestBinding binding;
     private FirebaseAuth mAuth;
     private Request request;
-    private IndivRequestPagerAdapter adapter;
+    private RequestPagerAdapter adapter;
     private ListingActivityViewModel viewModel;
     private User me;
 
@@ -41,9 +42,9 @@ public class IndivRequestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         mAuth = FirebaseAuth.getInstance();
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_indiv_request);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_request);
 
-        adapter = new IndivRequestPagerAdapter(this);
+        adapter = new RequestPagerAdapter(this);
 
         getIncomingIntent();
     }

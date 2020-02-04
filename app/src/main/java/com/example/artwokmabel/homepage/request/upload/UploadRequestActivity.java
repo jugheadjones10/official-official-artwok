@@ -1,4 +1,4 @@
-package com.example.artwokmabel.homepage.request;
+package com.example.artwokmabel.homepage.request.upload;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -54,7 +54,7 @@ public class UploadRequestActivity extends AppCompatActivity {
     private ActivityUploadRequestBinding binding;
     private String currentUserId;
     private FirebaseAuth mAuth;
-    private InidvAddRequestPagerAdapter adapter;
+    private UploadRequestPagerAdapter adapter;
 
     public static UploadRequestActivity getInstance(){
         return instance;
@@ -69,7 +69,7 @@ public class UploadRequestActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_upload_request);
 
         instance = this;
-        adapter = new InidvAddRequestPagerAdapter(this);
+        adapter = new UploadRequestPagerAdapter(this);
         binding.pager.setAdapter(adapter);
 
         new TabLayoutMediator(binding.tabLayout, binding.pager,
@@ -125,11 +125,11 @@ public class UploadRequestActivity extends AppCompatActivity {
             @Override
             public void onClick (View view){
 
-                String postDesc = AddRequestDescFragment.getInstance().getDesc();
-                String postTitle = AddRequestDescFragment.getInstance().getTitle();
+                String postDesc = UploadRequestDescFragment.getInstance().getDesc();
+                String postTitle = UploadRequestDescFragment.getInstance().getTitle();
 
-                String category = AddRequestDetailsFragment.getInstance().getCategory();
-                long budget = AddRequestDetailsFragment.getInstance().getBudget();
+                String category = UploadRequestDetailsFragment.getInstance().getCategory();
+                long budget = UploadRequestDetailsFragment.getInstance().getBudget();
 
                 if(postDesc.isEmpty()){
                     Toast.makeText(UploadRequestActivity.this, "Please fill the description for your listing.", Toast.LENGTH_LONG).show();

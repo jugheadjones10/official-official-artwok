@@ -13,10 +13,10 @@ import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.algolia.instantsearch.core.connection.ConnectionHandler
 import com.example.artwokmabel.R
-import com.example.artwokmabel.homepage.search.Listingssearch.ListingsSearchFragment
-import com.example.artwokmabel.homepage.search.Postssearch.PostsSearchFragment
-import com.example.artwokmabel.homepage.search.Userssearch.UsersSearchFragment
-import com.example.artwokmabel.homepage.models.TabDetailsModel
+import com.example.artwokmabel.homepage.search.listings.ListingsSearchFragment
+import com.example.artwokmabel.homepage.search.posts.PostsSearchFragment
+import com.example.artwokmabel.homepage.search.users.UsersSearchFragment
+import com.example.artwokmabel.models.TabDetailsModel
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.fragment_product.*
 import java.util.*

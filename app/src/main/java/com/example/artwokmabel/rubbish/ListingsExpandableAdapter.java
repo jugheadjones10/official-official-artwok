@@ -1,4 +1,4 @@
-package com.example.artwokmabel.homepage.adapters;
+package com.example.artwokmabel.rubbish;
 
 import android.content.Context;
 import android.view.LayoutInflater;

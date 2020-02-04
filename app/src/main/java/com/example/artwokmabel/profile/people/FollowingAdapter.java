@@ -1,4 +1,4 @@
-package com.example.artwokmabel.profile.followingfollowers;
+package com.example.artwokmabel.profile.people;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.artwokmabel.R;
-import com.example.artwokmabel.databinding.ItemFollowingsBinding;
+import com.example.artwokmabel.databinding.ItemFollowingBinding;
 import com.example.artwokmabel.models.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
@@ -25,7 +25,7 @@ public class FollowingAdapter extends RecyclerView.Adapter<FollowingAdapter.myHo
     private List<User> followingsList;
 
     private FirebaseAuth mAuth;
-    private FollowingFollowersAdapterViewModel viewModel;
+    private PeopleAdapterViewModel viewModel;
     private static FollowingAdapter instance;
 
     public static FollowingAdapter getInstance(){
@@ -39,13 +39,13 @@ public class FollowingAdapter extends RecyclerView.Adapter<FollowingAdapter.myHo
         this.mContext = context;
         instance = this;
 
-        viewModel = ViewModelProviders.of((FragmentActivity)context).get(FollowingFollowersAdapterViewModel.class);
+        viewModel = ViewModelProviders.of((FragmentActivity)context).get(PeopleAdapterViewModel.class);
     }
 
     @NonNull
     @Override
     public FollowingAdapter.myHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
-        ItemFollowingsBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.item_followings, parent,false);
+        ItemFollowingBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.item_following, parent,false);
 
         return new FollowingAdapter.myHolder(binding);
     }
@@ -136,9 +136,9 @@ public class FollowingAdapter extends RecyclerView.Adapter<FollowingAdapter.myHo
     }
 
     class myHolder extends RecyclerView.ViewHolder {
-        ItemFollowingsBinding binding;
+        ItemFollowingBinding binding;
 
-        public myHolder(ItemFollowingsBinding binding) {
+        public myHolder(ItemFollowingBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }

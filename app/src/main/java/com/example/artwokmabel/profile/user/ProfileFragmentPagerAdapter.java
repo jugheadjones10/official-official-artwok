@@ -1,4 +1,4 @@
-package com.example.artwokmabel.profile;
+package com.example.artwokmabel.profile.user;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -7,11 +7,11 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 import java.util.ArrayList;
 
-public class ProfileViewPagerAdapter extends FragmentPagerAdapter {
+public class ProfileFragmentPagerAdapter extends FragmentPagerAdapter {
     private final ArrayList<Fragment> fragmentList = new ArrayList<>();
     private final ArrayList<String> FragmentListTitles = new ArrayList<>();
 
-    public ProfileViewPagerAdapter(@NonNull FragmentManager fm) {
+    public ProfileFragmentPagerAdapter(@NonNull FragmentManager fm) {
         super(fm);
     }
 

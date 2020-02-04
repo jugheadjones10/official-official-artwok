@@ -13,12 +13,12 @@ import androidx.fragment.app.Fragment;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.FragmentUploadListingDeliveryBinding;
 
-public class AddListingDeliveryRefundFragment  extends Fragment {
+public class UploadListingDeliveryFragment extends Fragment {
 
     private FragmentUploadListingDeliveryBinding binding;
-    private static AddListingDeliveryRefundFragment instance;
+    private static UploadListingDeliveryFragment instance;
 
-    public static AddListingDeliveryRefundFragment getInstance(){
+    public static UploadListingDeliveryFragment getInstance(){
         return instance;
     }
 

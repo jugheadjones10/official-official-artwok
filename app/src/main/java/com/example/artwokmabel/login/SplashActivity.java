@@ -1,4 +1,4 @@
-package com.example.artwokmabel.auth;
+package com.example.artwokmabel.login;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -75,7 +75,7 @@ public class SplashActivity extends AppCompatActivity {
             builder.create().show();
 
         }else {
-            startActivity(new Intent(this, LoginActivityNew.class));
+            startActivity(new Intent(this, LoginOptionsActivity.class));
         }
 
     }

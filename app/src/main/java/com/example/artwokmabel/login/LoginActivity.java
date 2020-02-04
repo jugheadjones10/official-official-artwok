@@ -9,16 +9,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.example.artwokmabel.R;
+import com.example.artwokmabel.databinding.ActivityLoginBinding;
+import com.example.artwokmabel.HomePageActivity;
 import com.example.artwokmabel.repos.FirestoreRepo;
-import com.example.artwokmabel.databinding.ActivityLoginLoginBinding;
-import com.example.artwokmabel.homepage.homepagestuff.HomePageActivity;
 
-public class LoginLoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
-    private ActivityLoginLoginBinding binding;
-    private static LoginLoginActivity instance = null;
+    private ActivityLoginBinding binding;
+    private static LoginActivity instance = null;
 
-    public static LoginLoginActivity getInstance(){
+    public static LoginActivity getInstance(){
         return instance;
     }
 
@@ -26,7 +26,7 @@ public class LoginLoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         instance = this;
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_login_login);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
         binding.setOnloginclicked(new OnLoginClicked());
         binding.setOnforgotpasswordclicked(new OnForgotPasswordClicked());
         binding.emailEditText.requestFocus();
@@ -56,7 +56,7 @@ public class LoginLoginActivity extends AppCompatActivity {
 
     public class OnForgotPasswordClicked {
         public void onForgotPasswordClicked(){
-            Intent intent = new Intent(getApplicationContext(), ForgotPasswordActivityNew.class);
+            Intent intent = new Intent(getApplicationContext(), ForgotPasswordActivity.class);
             // create an animation effect sliding from left to right
             ActivityOptions activityOptions = null;
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {

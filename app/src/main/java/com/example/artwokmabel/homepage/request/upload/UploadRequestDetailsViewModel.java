@@ -1,18 +1,18 @@
-package com.example.artwokmabel.homepage.request;
+package com.example.artwokmabel.homepage.request.upload;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.artwokmabel.repos.FirestoreRepo;
-import com.example.artwokmabel.homepage.models.Category;
+import com.example.artwokmabel.models.Category;
 
 import java.util.List;
 
-public class RequestDetailsFragmentViewModel extends ViewModel {
+public class UploadRequestDetailsViewModel extends ViewModel {
 
     private final LiveData<List<Category>> allCategoriesObservable;
 
-    public RequestDetailsFragmentViewModel() {
+    public UploadRequestDetailsViewModel() {
         allCategoriesObservable = FirestoreRepo.getInstance().getAllCategories();
     }
 

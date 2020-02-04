@@ -1,4 +1,4 @@
-package com.example.artwokmabel.profile.activities;
+package com.example.artwokmabel.groups;
 
 import android.net.Uri;
 import android.widget.Button;

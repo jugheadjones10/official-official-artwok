@@ -1,10 +1,10 @@
-package com.example.artwokmabel.homepage.fragments.indivuser;
+package com.example.artwokmabel.homepage.user;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.artwokmabel.repos.FirestoreRepo;
-import com.example.artwokmabel.homepage.models.MainPost;
+import com.example.artwokmabel.models.MainPost;
 
 import java.util.List;
 

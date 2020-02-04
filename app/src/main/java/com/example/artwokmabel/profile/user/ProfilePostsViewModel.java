@@ -1,4 +1,4 @@
-package com.example.artwokmabel.profile.fragments;
+package com.example.artwokmabel.profile.user;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
@@ -9,12 +9,12 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
 
-public class PostsViewModel extends ViewModel {
+public class ProfilePostsViewModel extends ViewModel {
 
     private FirebaseAuth mAuth;
     private final LiveData<List<MainPost>> userPostsObeservable;
 
-    public PostsViewModel() {
+    public ProfilePostsViewModel() {
 
         mAuth = FirebaseAuth.getInstance();
         userPostsObeservable = FirestoreRepo.getInstance().getUserPosts(mAuth.getCurrentUser().getUid());

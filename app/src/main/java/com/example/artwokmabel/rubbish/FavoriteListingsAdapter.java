@@ -1,4 +1,4 @@
-package com.example.artwokmabel.homepage.favorites;
+package com.example.artwokmabel.rubbish;
 
 public class FavoriteListingsAdapter {
 //
@@ -16,7 +16,7 @@ public class FavoriteListingsAdapter {
 //    @Override
 //    public Holder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
 //
-//        ItemListingsNormalBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.item_listings_normal, parent,false);
+//        ItemListingsNormalBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.item_normal_listing, parent,false);
 //        return new Holder(binding);
 //    }
 //

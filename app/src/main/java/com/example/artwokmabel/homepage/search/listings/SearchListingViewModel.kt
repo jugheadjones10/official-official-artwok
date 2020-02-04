@@ -1,4 +1,4 @@
-package com.example.artwokmabel.homepage.search.Listingssearch
+package com.example.artwokmabel.homepage.search.listings
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel

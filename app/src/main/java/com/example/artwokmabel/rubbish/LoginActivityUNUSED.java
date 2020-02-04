@@ -1,4 +1,4 @@
-package com.example.artwokmabel.RubbishReference;
+package com.example.artwokmabel.rubbish;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -13,8 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.artwokmabel.login.CreateAccountActivity;
-import com.example.artwokmabel.homepage.homepagestuff.HomePageActivity;
+import com.example.artwokmabel.HomePageActivity;
 import com.example.artwokmabel.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -43,7 +42,7 @@ public class LoginActivityUNUSED extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.z_activity_login);
         firebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseAuth.signOut();

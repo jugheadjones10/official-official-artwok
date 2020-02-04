@@ -1,4 +1,4 @@
-package com.example.artwokmabel.profile.activities;
+package com.example.artwokmabel.rubbish;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -31,6 +31,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.models.Listing;
+import com.example.artwokmabel.profile.utils.ImagePickerActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;

@@ -1,4 +1,4 @@
-package com.example.artwokmabel.homepage.request;
+package com.example.artwokmabel.homepage.request.upload;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -7,10 +7,10 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.artwokmabel.homepage.listing.FaqFragment;
 
-public class InidvAddRequestPagerAdapter extends FragmentStateAdapter {
+public class UploadRequestPagerAdapter extends FragmentStateAdapter {
 
 
-    public InidvAddRequestPagerAdapter(FragmentActivity fragmentActivity) {
+    public UploadRequestPagerAdapter(FragmentActivity fragmentActivity) {
         super(fragmentActivity);
     }
 
@@ -19,10 +19,10 @@ public class InidvAddRequestPagerAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
 
         if(position == 0){
-            Fragment fragment = new AddRequestDescFragment();
+            Fragment fragment = new UploadRequestDescFragment();
             return fragment;
         }else if (position == 1){
-            Fragment fragment = new AddRequestDetailsFragment();
+            Fragment fragment = new UploadRequestDetailsFragment();
             return fragment;
         }else{
             Fragment fragment = new FaqFragment();

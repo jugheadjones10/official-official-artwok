@@ -1,4 +1,4 @@
-package com.example.artwokmabel.login;
+package com.example.artwokmabel.rubbish;
 
 import android.app.ActivityOptions;
 import android.app.ProgressDialog;
@@ -18,7 +18,7 @@ import androidx.databinding.DataBindingUtil;
 
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.ActivityLoginBinding;
-import com.example.artwokmabel.homepage.homepagestuff.HomePageActivity;
+import com.example.artwokmabel.HomePageActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -29,7 +29,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
+public class LoginActivityOld extends AppCompatActivity implements View.OnClickListener{
     private static final String TAG = "EmailPassword";
 
     private Button loginButton;
@@ -72,7 +72,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
+        binding = DataBindingUtil.setContentView(this, R.layout.z_activity_login);
 
 //        forgotPassword = findViewById(R.id.tv_forgotpassword);
 //        loginButton = findViewById(R.id.loginActivity_button_login);
@@ -123,7 +123,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(LoginActivity.this, "Authentication failed.",
+                            Toast.makeText(LoginActivityOld.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         }
@@ -186,7 +186,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
         } else if (i == R.id.tv_forgotpassword){
             // when the user presses on one of the items from friend list, a profile activity pops up
-                Intent intent = new Intent(v.getContext(), ForgotPasswordActivity.class);
+                Intent intent = new Intent(v.getContext(), ForgotPasswordActivityOld.class);
                 // create an animation effect sliding from left to right
                 ActivityOptions activityOptions = null;
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {

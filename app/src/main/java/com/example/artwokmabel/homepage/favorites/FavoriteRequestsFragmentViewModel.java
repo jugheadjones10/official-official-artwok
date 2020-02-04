@@ -1,4 +1,4 @@
-package com.example.artwokmabel.homepage.favoritestuff;
+package com.example.artwokmabel.homepage.favorites;
 
 import android.util.Log;
 
@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.artwokmabel.repos.FirestoreRepo;
-import com.example.artwokmabel.homepage.fragments.requestspagestuff.Request;
+import com.example.artwokmabel.models.Request;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;

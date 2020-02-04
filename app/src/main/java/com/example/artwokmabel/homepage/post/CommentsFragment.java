@@ -14,7 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.artwokmabel.homepage.models.Comment;
+import com.example.artwokmabel.models.Comment;
 import com.example.artwokmabel.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.appbar.AppBarLayout;
@@ -32,7 +32,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class newViewCommentsFragment extends Fragment {
+public class CommentsFragment extends Fragment {
 
     private static final String TAG = "ViewCommentsFragment";
 
@@ -54,17 +54,17 @@ public class newViewCommentsFragment extends Fragment {
     public String postid;
     public String userid;
 
-    private static newViewCommentsFragment instance;
-    public newCommentsAdapter adapter;
+    private static CommentsFragment instance;
+    public CommentsAdapter adapter;
 
-    public static newViewCommentsFragment getInstance(){
+    public static CommentsFragment getInstance(){
         return instance;
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_view_comments, container, false);
+        View view = inflater.inflate(R.layout.fragment_comments, container, false);
         mListView = view.findViewById(R.id.listView);
         instance = this;
 
@@ -76,7 +76,7 @@ public class newViewCommentsFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         mListView.setLayoutManager(layoutManager);
 
-        adapter = new newCommentsAdapter(mContext, mComments);
+        adapter = new CommentsAdapter(mContext, mComments);
         mListView.setAdapter(adapter);
 
         setHasOptionsMenu(true);

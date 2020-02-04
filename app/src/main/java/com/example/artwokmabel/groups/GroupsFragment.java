@@ -1,4 +1,4 @@
-package com.example.artwokmabel.homepage.fragments;
+package com.example.artwokmabel.groups;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,8 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.artwokmabel.profile.activities.GroupProfileActivity;
-import com.example.artwokmabel.homepage.models.GroupModel;
+import com.example.artwokmabel.models.GroupModel;
 import com.example.artwokmabel.R;
 
 import java.util.ArrayList;

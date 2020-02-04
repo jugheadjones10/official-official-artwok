@@ -1,4 +1,4 @@
-package com.example.artwokmabel.homepage.fragments.indivuser;
+package com.example.artwokmabel.homepage.user;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -15,7 +15,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.FragmentIndivUserPostsBinding;
 import com.example.artwokmabel.homepage.adapters.PostsAdapter;
-import com.example.artwokmabel.homepage.models.MainPost;
+import com.example.artwokmabel.models.MainPost;
 
 import java.util.List;
 

@@ -11,7 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.artwokmabel.homepage.models.Comment;
+import com.example.artwokmabel.models.Comment;
 import com.example.artwokmabel.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -23,7 +23,7 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class newCommentsAdapter extends RecyclerView.Adapter<newCommentsAdapter.commentHolder> {
+public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.commentHolder> {
 
     private static final String TAG = "CommentListAdapter";
 
@@ -34,22 +34,22 @@ public class newCommentsAdapter extends RecyclerView.Adapter<newCommentsAdapter.
     private FirebaseAuth mAuth;
 
 
-    public newCommentsAdapter(Context context, List<Comment> comments) {
+    public CommentsAdapter(Context context, List<Comment> comments) {
         this.mContext = context;
         this.list = comments;
     }
 
     @NonNull
     @Override
-    public newCommentsAdapter.commentHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_comment,viewGroup,false);
+    public CommentsAdapter.commentHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_comment,viewGroup,false);
 
-        newCommentsAdapter.commentHolder myHolder = new newCommentsAdapter.commentHolder(view);
+        CommentsAdapter.commentHolder myHolder = new CommentsAdapter.commentHolder(view);
         return myHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull newCommentsAdapter.commentHolder myHolder, int i) {
+    public void onBindViewHolder(@NonNull CommentsAdapter.commentHolder myHolder, int i) {
         Comment data = list.get(i);
 
         Log.d("DIC", data.toString());
@@ -70,15 +70,15 @@ public class newCommentsAdapter extends RecyclerView.Adapter<newCommentsAdapter.
                 @Override
                 public void onClick(View view) {
                     list.remove(i); // remove the item from the data list
-                    //newViewCommentsFragment.getInstance().mComments.remove(i);
-                    newViewCommentsFragment.getInstance().adapter.notifyDataSetChanged();
+                    //CommentsFragment.getInstance().mComments.remove(i);
+                    CommentsFragment.getInstance().adapter.notifyDataSetChanged();
 
                     db = FirebaseFirestore.getInstance();
                     mAuth = FirebaseAuth.getInstance();
                     db.collection("Users")
                             .document(mAuth.getCurrentUser().getUid())
                             .collection("Posts")
-                            .document(newViewCommentsFragment.getInstance().postid)
+                            .document(CommentsFragment.getInstance().postid)
                             .collection("Comments")
                             .document(data.getComment_id())
                             .delete()

@@ -8,15 +8,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.example.artwokmabel.R;
-import com.example.artwokmabel.databinding.ActivityForgotPasswordNewBinding;
+import com.example.artwokmabel.databinding.ActivityForgotPasswordBinding;
 
-public class ForgotPasswordActivityNew extends AppCompatActivity {
-    ActivityForgotPasswordNewBinding binding;
+public class ForgotPasswordActivity extends AppCompatActivity {
+    ActivityForgotPasswordBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_forgot_password_new);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_forgot_password);
         binding.emailForgotPassword.requestFocus();
         binding.setOnresetpasswordclicked(new OnResetPasswordClicked());
 
@@ -26,7 +26,7 @@ public class ForgotPasswordActivityNew extends AppCompatActivity {
 
     public class OnResetPasswordClicked{
         public void onResetPasswordClicked(){
-            Intent intent = new Intent(getApplicationContext(), LoginLoginActivity.class);
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
             // create an animation effect sliding from left to right
             ActivityOptions activityOptions = null;
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {

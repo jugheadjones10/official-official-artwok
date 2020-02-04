@@ -1,4 +1,4 @@
-package com.example.artwokmabel.homepage.fragments;
+package com.example.artwokmabel.rubbish;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -18,7 +18,7 @@ public class HomeSearchFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.main_search_fragment, container, false);
+        View view = inflater.inflate(R.layout.z_main_search_fragment, container, false);
 
         searchBar = view.findViewById(R.id.et_mainsearchbar);
         searchBar.requestFocus();

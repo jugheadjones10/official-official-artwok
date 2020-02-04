@@ -1,4 +1,4 @@
-package com.example.artwokmabel.homepage.favoritestuff;
+package com.example.artwokmabel.homepage.favorites;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -14,24 +14,24 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.example.artwokmabel.R;
-import com.example.artwokmabel.databinding.FragmentFavouritesListingsBinding;
+import com.example.artwokmabel.databinding.FragmentFavoriteListingsBinding;
 import com.example.artwokmabel.homepage.adapters.ListingsAdapter;
-import com.example.artwokmabel.homepage.models.Listing;
+import com.example.artwokmabel.models.Listing;
 
 import java.util.List;
 
-public class    FavoritesFragmentListings extends Fragment {
+public class FavoriteListingsFragment extends Fragment {
 
     private ListingsAdapter adapter;
 
-    private FragmentFavouritesListingsBinding binding;
+    private FragmentFavoriteListingsBinding binding;
     private FavoriteListingsFragmentViewModel viewModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_favourites_listings, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_favorite_listings, container, false);
 
         binding.favListingRecyclerView.setHasFixedSize(true);
         binding.favListingRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));

@@ -1,4 +1,4 @@
-package com.example.artwokmabel.homepage.fragments;
+package com.example.artwokmabel.homepage.search;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,7 +11,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import com.algolia.instantsearch.guides.gettingstarted.ProductFragment;
-import com.example.artwokmabel.homepage.homepagestuff.HomeTabsManagerFragment;
+import com.example.artwokmabel.homepage.homepagewrapper.HomeTabsFragment;
 import com.example.artwokmabel.R;
 
 public class TemporarySearchFragment extends Fragment {
@@ -34,7 +34,7 @@ public class TemporarySearchFragment extends Fragment {
         searchView.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                HomeTabsManagerFragment.getInstance().loadFragment(new ProductFragment());
+                HomeTabsFragment.getInstance().loadFragment(new ProductFragment());
             }
         });
 

@@ -1,4 +1,4 @@
-package com.example.artwokmabel.RubbishReference;
+package com.example.artwokmabel.rubbish;
 
 public class Name {
 
