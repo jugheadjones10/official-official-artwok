@@ -41,10 +41,6 @@ public class HomePageActivity extends AppCompatActivity {
             = item -> {
                 Fragment fragment = null;
                 switch (item.getItemId()) {
-                    case R.id.main_groups_fragment:
-                        fragment = new GroupsFragment();
-                        loadFragment(fragment);
-                        return true;
                     case R.id.main_chat_fragment:
                         fragment=new MessageFragment();
                         loadFragment(fragment);
