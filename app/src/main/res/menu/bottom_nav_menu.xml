@@ -11,10 +11,10 @@
         android:icon="@drawable/message"
         android:title="Chat" />
 
-    <item
-        android:id="@+id/main_groups_fragment"
-        android:icon="@drawable/groupicon"
-        android:title="Groups" />
+<!--    <item-->
+<!--        android:id="@+id/main_groups_fragment"-->
+<!--        android:icon="@drawable/groupicon"-->
+<!--        android:title="Groups" />-->
 
     <item
         android:id="@+id/main_notifs_fragment"
