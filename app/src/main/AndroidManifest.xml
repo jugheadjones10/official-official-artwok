@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.artwokmabel">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/official_logo"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/official_logo"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme.NoActionBar">
+        <activity android:name=".login.LoginOptionsActivity"/>
+        <activity android:name=".login.SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.darsh.multipleimageselect.activities.AlbumSelectActivity"
+            android:theme="@style/MultipleImageSelectTheme">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name" />
+        <activity android:name=".rubbish.LoginActivityOld">
+
+        </activity>
+        <activity
+            android:name="com.facebook.CustomTabActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="@string/fb_login_protocol_scheme" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".profile.uploadpost.UploadPostActivity" >
+<!--            <intent-filter>-->
+
+<!--                <action android:name="android.intent.action.SEND_MULTIPLE" />-->
+<!--                &lt;!&ndash;<category android:name="android.intent.category.DEFAULT" />&ndash;&gt;-->
+<!--                <data android:mimeType="image/*" />-->
+<!--            </intent-filter>-->
+        </activity>
+
+
+        <!--  BELOW ADJUST PAN MIGHT BE A PROBLEM WHEN USING SCROLL VIEW -->
+        <!--  https://stackoverflow.com/questions/42051956/how-to-hide-the-bottomnavigationview-below-keyboard-with-adjustresize-set-->
+        <activity android:name=".HomePageActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".profile.uploadlisting.UploadListingAcitvity"
+            android:windowSoftInputMode="adjustPan"/>
+
+        <activity android:name=".rubbish.ForgotPasswordActivityOld" />
+        <activity android:name=".rubbish.LaunchPageActivity" />
+        <activity android:name=".rubbish.CreateAccountActivity" />
+        <activity android:name=".rubbish.GroupActivity" />
+        <activity android:name=".chat.activities.ChatActivity" />
+        <activity android:name=".chat.activities.ChatProfileActivity" />
+        <activity android:name=".rubbish.AddListingActivity"/>
+        <activity android:name=".groups.GroupProfileActivity" />
+        <activity android:name=".groups.UploadGroupPostActivity" />
+        <activity android:name=".chat.activities.ChatOrderActivity" />
+        <activity android:name=".chat.activities.ChatOrderReviewActivity" />
+        <activity android:name=".homepage.favorites.FavoritesActivity" />
+        <activity android:name=".settings.SettingsActivity" />
+        <activity android:name=".homepage.listing.ListingActivity"
+            android:parentActivityName=".HomePageActivity"/>
+        <activity android:name=".homepage.request.indiv.RequestActivity" />
+        <activity android:name=".homepage.request.upload.UploadRequestActivity"
+            android:windowSoftInputMode="adjustNothing"/>
+
+        <activity android:name=".login.CreateAccountEmailActivity"
+            android:parentActivityName=".login.LoginOptionsActivity"/>
+        <activity android:name=".login.CreateAccountUsernameActivity"
+            android:parentActivityName=".login.CreateAccountEmailActivity"/>
+        <activity android:name=".login.CreateAccountPasswordActivity"
+            android:parentActivityName=".login.CreateAccountUsernameActivity"/>
+        <activity android:name=".login.LoginActivity" />
+        <activity android:name=".login.ForgotPasswordActivity"
+            android:parentActivityName=".login.LoginActivity"/>
+
+        <activity android:name=".profile.people.PeopleActivity"/>
+
+
+        <!--        PUSH NOTIFICATIONS-->
+<!--        <service-->
+<!--            android:name="MyFirebaseMessagingService"-->
+<!--            android:exported="false">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="com.google.firebase.MESSAGING_EVENT" />-->
+<!--            </intent-filter>-->
+<!--        </service>-->
+<!--        <activity android:name=".LoginActivityUNUSED" />-->
+<!--        <activity android:name=".SignupActivityUNUSED" />-->
+
+        <activity android:name=".homepage.post.PostActivity"
+            android:parentActivityName=".HomePageActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <!--        Above is attempt to make comment bar move above keyboard when comment bar is pressed-->
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_application_id" />
+
+        <!-- Image Picker activity -->
+        <activity android:name=".profile.utils.ImagePickerActivity" />
+
+        <!-- uCrop cropping activity -->
+        <activity
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <!-- cache directory file provider paths -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_provider" />
+        </provider>
+
+    </application>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+</manifest>

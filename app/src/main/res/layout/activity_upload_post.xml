@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aztec="http://schemas.android.com/apk/res-auto">
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <org.wordpress.aztec.AztecText
+        android:id="@+id/visual"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:imeOptions="flagNoExtractUi"
+        android:scrollbars="vertical"
+        aztec:historyEnable="false"
+        aztec:layout_constraintBottom_toTopOf="@+id/formatting_toolbar"
+        aztec:layout_constraintEnd_toEndOf="parent"
+        aztec:layout_constraintStart_toStartOf="parent"
+        aztec:layout_constraintTop_toTopOf="parent" />
+
+<!--    <org.wordpress.aztec.source.SourceViewEditText-->
+<!--        android:id="@+id/source"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:imeOptions="flagNoExtractUi"-->
+<!--        android:inputType="textNoSuggestions|textMultiLine"-->
+<!--        android:scrollbars="vertical"-->
+<!--        aztec:codeBackgroundColor="@android:color/transparent"-->
+<!--        aztec:codeTextColor="@android:color/white"-->
+<!--        aztec:layout_constraintBottom_toTopOf="@id/formatting_toolbar"-->
+<!--        aztec:layout_constraintEnd_toEndOf="parent"-->
+<!--        aztec:layout_constraintHorizontal_bias="0.0"-->
+<!--        aztec:layout_constraintStart_toStartOf="parent"-->
+<!--        aztec:layout_constraintTop_toTopOf="parent" />-->
+
+    <org.wordpress.aztec.toolbar.AztecToolbar
+        android:id="@+id/formatting_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        aztec:layout_constraintBottom_toBottomOf="parent"
+        aztec:layout_constraintEnd_toEndOf="parent"
+        aztec:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

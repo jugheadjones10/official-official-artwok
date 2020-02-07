@@ -2,25 +2,24 @@ package com.example.artwokmabel.homepage.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.artwokmabel.R;
-import com.example.artwokmabel.databinding.ItemListingsBinding;
-import com.example.artwokmabel.homepage.Activities.IndivListingActivity;
-import com.example.artwokmabel.homepage.fragments.indivuser.IndivUserFragment;
-import com.example.artwokmabel.homepage.homepagestuff.HomePageActivity;
-import com.example.artwokmabel.homepage.models.Listing;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentSnapshot;
+import com.example.artwokmabel.databinding.ItemNormalListingBinding;
+import com.example.artwokmabel.homepage.listing.ListingActivity;
+import com.example.artwokmabel.models.Listing;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 import com.synnapps.carouselview.ImageClickListener;
@@ -33,25 +32,35 @@ public class ListingsAdapter extends RecyclerView.Adapter<ListingsAdapter.myHold
     private Context mContext;
     private List<Listing> listingsList;
     private FirebaseFirestore db;
+    private ListingsAdapterViewModel viewModel;
+    private FirebaseAuth mAuth;
+
 
     public ListingsAdapter(Context context){
         this.mContext = context;
+        this.mAuth = FirebaseAuth.getInstance();
+        viewModel = ViewModelProviders.of((FragmentActivity)context).get(ListingsAdapterViewModel.class);
     }
 
     @NonNull
     @Override
     public myHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
-        ItemListingsBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.item_listings, parent,false);
 
+        ItemNormalListingBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.item_normal_listing, parent,false);
         return new ListingsAdapter.myHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull myHolder myHolder, int i) {
         Listing data = listingsList.get(i);
+
         myHolder.binding.setListingclickcallback(new OnListingClicked());
-        myHolder.binding.setProfilecallback(new OnProfileClicked());
+        //myHolder.binding.setProfilecallback(new OnProfileClicked());
         myHolder.binding.setListing(data);
+
+        myHolder.binding.setFavorite(myHolder.binding.normalListingLike);
+
+        myHolder.binding.normalListingLike.bringToFront();
 
         ArrayList<String> images = data.getPhotos();
         ImageListener imageListener = new ImageListener() {
@@ -80,55 +89,83 @@ public class ListingsAdapter extends RecyclerView.Adapter<ListingsAdapter.myHold
         }
 
         //Todo: replace the below with view model next time
-        db = FirebaseFirestore.getInstance();
-        db.collection("Users")
-                .document(data.getUserid())
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
+//        db = FirebaseFirestore.getInstance();
+//        db.collection("Users")
+//                .document(data.getUserid())
+//                .get()
+//                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+//                        if (task.isSuccessful()) {
+//                            DocumentSnapshot document = task.getResult();
+//
+//                            Picasso.get()
+//                                    .load(document.getString("profile_url"))
+//                                    .placeholder(R.drawable.loading_image)
+//                                    .error(R.drawable.rick_and_morty)
+//                                    .into(myHolder.binding.profile);
+//                        } else {
+//
+//                        }
+//                    }
+//                });
 
-                            Picasso.get()
-                                    .load(document.getString("profile_url"))
-                                    .placeholder(R.drawable.loading_image)
-                                    .error(R.drawable.rick_and_morty)
-                                    .into(myHolder.binding.profile);
+        if(data.getUserid().equals(mAuth.getCurrentUser().getUid())){
+            myHolder.binding.normalListingLike.setImageResource(R.drawable.menu);
+        }else {
+            myHolder.binding.setOnfavlistingclicked(new OnFavListingClicked());
+            viewModel.getUserFavListingsObservable().observe((FragmentActivity) mContext, new Observer<List<String>>() {
+                @Override
+                public void onChanged(@Nullable List<String> favListings) {
+                    if (favListings != null) {
+                        if (favListings.contains(data.getPostid())) {
+                            myHolder.binding.normalListingLike.setImageResource(R.drawable.like);
                         } else {
-
+                            myHolder.binding.normalListingLike.setImageResource(R.drawable.favourite_post);
                         }
                     }
-                });
+                }
+            });
+        }
     }
 
 
     //Todo: might need to add on clicked to carousel view
     public class OnListingClicked{
         public void onListClicked(Listing data){
-            Intent intent = new Intent(mContext, IndivListingActivity.class);
-            intent.putExtra("username", data.getUsername());
-            intent.putExtra("postid", data.getPostid());
-            intent.putExtra("itemname", data.getName());
-            intent.putExtra("price", data.getPrice());
-            intent.putExtra("itemDesc", data.getDesc());
-            intent.putExtra("photos", data.getPhotos());
-            intent.putExtra("refund_exxhange", data.getReturn_exchange());
-            intent.putExtra("delivery", data.getDelivery());
-            intent.putExtra("userid", data.getUserid());
+            Intent intent = new Intent(mContext, ListingActivity.class);
+
+//            intent.putExtra("username", data.getUsername());
+//            intent.putExtra("postid", data.getPostid());
+//            intent.putExtra("itemname", data.getName());
+//            intent.putExtra("price", data.getPrice());
+//            intent.putExtra("itemDesc", data.getDesc());
+//            intent.putExtra("photos", data.getPhotos());
+//            intent.putExtra("refund_exxhange", data.getReturn_exchange());
+//            intent.putExtra("delivery", data.getDelivery());
+//            intent.putExtra("userid", data.getUserid());
+            intent.putExtra("listing", data);
+
             mContext.startActivity(intent);
         }
     }
 
-    public class OnProfileClicked{
-        public void onProfileClicked(Listing data){
-            IndivUserFragment indivUserFrag = new IndivUserFragment();
-            Bundle args = new Bundle();
-            args.putString("poster_username", data.getUsername());
-            indivUserFrag.setArguments(args);
-            HomePageActivity.getInstance().loadFragment(indivUserFrag);
+//    public class OnProfileClicked{
+//        public void onProfileClicked(Listing data){
+//            IndivUserFragment indivUserFrag = new IndivUserFragment();
+//            Bundle args = new Bundle();
+//            args.putString("poster_username", data.getUsername());
+//            indivUserFrag.setArguments(args);
+//            HomePageActivity.getInstance().loadFragment(indivUserFrag);
+//        }
+//    }
+
+    public class OnFavListingClicked{
+        public void onFavListingClicked(Listing listing, ImageView favorite){
+            viewModel.switchUserFavListingsNonObservable(listing, favorite);
         }
     }
+
 
 
     public void setListingsList(final List<Listing> listings) {
@@ -160,10 +197,10 @@ public class ListingsAdapter extends RecyclerView.Adapter<ListingsAdapter.myHold
                 }
             });
             this.listingsList = listings;
+            notifyDataSetChanged();
             result.dispatchUpdatesTo(this);
         }
     }
-
 
 
     @Override
@@ -172,9 +209,9 @@ public class ListingsAdapter extends RecyclerView.Adapter<ListingsAdapter.myHold
     }
 
     class myHolder extends RecyclerView.ViewHolder {
-        private ItemListingsBinding binding;
+        private ItemNormalListingBinding binding;
 
-        public myHolder(ItemListingsBinding binding) {
+        public myHolder(ItemNormalListingBinding binding) {
             super(binding.getRoot());
            this.binding = binding;
         }

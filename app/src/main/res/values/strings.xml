@@ -1,0 +1,112 @@
+<resources>
+    <string name="app_name">Artwok</string>
+    <string name="buy_sell_share">Buy. Sell. Share.</string>
+    <string name="login">Sign in</string>
+    <string name="artwok_logo">artwok_logo</string>
+    <string name="back_button">back_button</string>
+
+    <string name="facebook_button">facebook_button</string>
+    <string name="google_button">google_button</string>
+    <string name="facebook_application_id">237713850467910</string>
+    <string name="fb_login_protocol_scheme">fb237713850467910</string>
+
+    <string name="login_button">Login</string>
+    <string name="login_username_hint">Email</string>
+    <string name="login_password_hint">Password</string>
+    <string name="home">Home</string>
+    <string name="todo">TODO</string>
+    <string name="edit">edit</string>
+    <string name="listings">listings</string>
+    <string name="posts">posts</string>
+    <string name="dashboard">dashboard</string>
+    <string name="font">Font:</string>
+    <string name="category">Category</string>
+
+    <string name="font_size">Font Size:</string>
+    <string name="calibri">Calibri</string>
+    <string name="addDescription">add_description</string>
+    <string name="save">Save</string>
+    <string name="list">Upload</string>
+    <string name="search_hint">Search Listings, Posts, Users/Groups</string>
+    <string name="upload_post_add_description">Add description...</string>
+    <string name="upload_post_add_hashtags">Add #hashtags...</string>
+    <string name="upload_post_add_category">Add category...</string>
+
+    <string name="upload">Upload</string>
+    <string name="add_listing">Add Listing</string>
+    <string name="item">Item</string>
+    <string name="price">Price</string>
+    <string name="set_price">Set Price</string>
+    <string name="delivery">Delivery</string>
+    <string name="policies">Return/Exchange Policy</string>
+    <string name="loading">Loading...</string>
+    <string name="listings_caps">LISTINGS: </string>
+    <string name="type_here">Type Here</string>
+    <string name="browse">Browse</string>
+    <string name="play">play</string>
+    <string name="rc_color">splash_background</string>
+    <string name="tab_format">Tab: %1$d</string>
+    <string name="msg_token_fmt">Token value %s </string>
+    <string name="singapore_dollars"><u>S$</u></string>
+    <string name="set_delivery_policies"><u>Set Delivery Policies</u></string>
+    <string name="set_return_exchange_policies"><u>Set Return / Exchange Policies</u></string>
+    <string name="select_categories"><u>Select Categories</u></string>
+    <string name="follow"><u>Follow</u></string>
+    <string name="message"><u>Message</u></string>
+    <string name="postexample">Costco Executive Members receive a 2% Reward on qualified purchases (see calculation of 2% Reward below). Reward is capped at, and will not exceed $1,000 for any 12-month period. Only purchases made by the Primary and active Primary Household Cardholder on the account will apply toward the Reward.</string>
+
+    <string name="orderdelivery">"Delivery"</string>
+    <string name="orderrefund">"Refund\Exchange Policy"</string>
+    <string name="toast_image_intent_null">null</string>
+    <string name="lbl_set_profile_photo">Choose Option</string>
+    <string name="lbl_take_camera_picture">Take From Camera</string>
+    <string name="lbl_choose_from_gallery">Choose From Gallery</string>
+    <string name="Login_buy_sell_share">Buy Sell Share!</string>
+    <string name="Login_log_in">Log in</string>
+    <string name="Login_create_account">Create account</string>
+    <string name="Login_couple_image">Login_couple_image</string>
+
+    <string-array name="orderrefund">
+        <item>2 to 3 days on regular basis</item>
+    </string-array>
+
+    <string-array name="orderdelivery">
+        <item>2 to 3 days on regular basis</item>
+    </string-array>
+
+    <string-array name="refundpolicy">
+        <item>Costco Executive Members receive a 2% Reward on qualified purchases (see calculation of 2% Reward below). Reward is capped at, and will not exceed $1,000 for any 12-month period. Only purchases made by the Primary and active Primary Household Cardholder on the account will apply toward the Reward.</item>
+    </string-array>
+
+    <string-array name="font_name_array">
+        <item>Roboto</item>
+        <item>Open Sans</item>
+        <item>ZCOOL XiaoWei</item>
+        <item>Oswald</item>
+    </string-array>
+
+    <string-array name="font_size_array">
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+        <item>20</item>
+
+    </string-array>
+
+    <string name="editor_app_name">RichTextEditor</string>
+
+    <string name="toolbar_placement_top">Toolbar at top</string>
+    <string name="toolbar_placement_bottom">Toolbar at bottom</string>
+
+    <string name="toolbar_appearance_inline">Toolbar inline</string>
+    <string name="toolbar_appearance_grouped">Toolbar grouped</string>
+
+    <string name="add_html_from_web_page">Add HTML from web page</string>
+
+    <string name="dialog_add_html_from_web_page_url_label">Web site address</string>
+    <string name="dialog_add_html_from_web_page_url_hint">http://</string>
+    <string name="add_request">Add Request</string>
+</resources>
