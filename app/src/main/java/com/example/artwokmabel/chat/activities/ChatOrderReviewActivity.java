@@ -12,6 +12,6 @@ public class ChatOrderReviewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.z_activity_chat_order_review);
+        setContentView(R.layout.activity_chat_order_review);
     }
 }

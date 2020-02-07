@@ -5,7 +5,7 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.artwokmabel.repos.FirestoreRepo;
+import com.example.artwokmabel.Repositories.FirestoreRepo;
 import com.example.artwokmabel.chat.models.Comment;
 
 import java.util.List;

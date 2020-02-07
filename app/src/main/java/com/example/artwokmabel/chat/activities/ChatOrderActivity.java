@@ -28,7 +28,7 @@ public class ChatOrderActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.z_activity_chat_order);
+        setContentView(R.layout.activity_chat_order);
 
         reportbtn = findViewById(R.id.reportbtn);
 

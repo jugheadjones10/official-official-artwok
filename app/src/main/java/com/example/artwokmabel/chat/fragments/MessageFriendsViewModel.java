@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.artwokmabel.chat.models.UserUserModel;
-import com.example.artwokmabel.repos.FirestoreRepo;
+import com.example.artwokmabel.Repositories.FirestoreRepo;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;

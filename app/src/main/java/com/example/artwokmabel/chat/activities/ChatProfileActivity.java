@@ -16,7 +16,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.chat.models.UserUserModel;
-import com.example.artwokmabel.databinding.ZActivityChatprofileBinding;
+import com.example.artwokmabel.databinding.ActivityChatprofileBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
@@ -40,7 +40,7 @@ public class ChatProfileActivity extends AppCompatActivity {
     public Context context;
 
     private ChatProfileViewModel viewModel;
-    private ZActivityChatprofileBinding binding;
+    private ActivityChatprofileBinding binding;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,7 +57,7 @@ public class ChatProfileActivity extends AppCompatActivity {
         destinationUid = intentUser.getUid();
         otherChatRooms = intentUser.getChatrooms();
 
-        binding = DataBindingUtil.setContentView(this, R.layout.z_activity_chatprofile);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_chatprofile);
         binding.setUser(intentUser);
 
         Picasso.get().load(intentUser.getProfileImageUrl()).into(binding.chatprofileImageview);

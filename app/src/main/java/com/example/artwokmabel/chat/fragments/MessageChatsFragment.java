@@ -316,7 +316,7 @@ public class MessageChatsFragment extends Fragment {
 //        private ArrayList<String> destinationUsers = new ArrayList<>();
 //
 //        public MessageChatsFragmentRecyclerViewAdapter() {
-//            uid = LoginActivityOld.uid;
+//            uid = LoginActivity.uid;
 //            FirebaseDatabase.getInstance().getReference().child("chatrooms").orderByChild("users/"+uid).equalTo(true).addListenerForSingleValueEvent(new ValueEventListener() {
 //                @Override
 //                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

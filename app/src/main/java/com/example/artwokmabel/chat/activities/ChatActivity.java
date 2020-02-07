@@ -127,7 +127,7 @@ public class ChatActivity extends AppCompatActivity {
 //        super.onCreate(savedInstanceState);
 //        setContentView(R.layout.activity_chat);
 //
-//        uid = LoginActivityOld.uid;  //채팅을 요구 하는 아아디 즉 단말기에 로그인된 UID
+//        uid = LoginActivity.uid;  //채팅을 요구 하는 아아디 즉 단말기에 로그인된 UID
 //        destinationUid = getIntent().getStringExtra("destinationUid"); // 채팅을 당하는 아이디
 //        button = findViewById(R.id.btn_chat);
 //        editText = findViewById(R.id.et_chat);
