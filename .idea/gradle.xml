@@ -9,6 +9,11 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/chat-sdk-core" />
+            <option value="$PROJECT_DIR$/chat-sdk-firebase-adapter" />
+            <option value="$PROJECT_DIR$/chat-sdk-firebase-push" />
+            <option value="$PROJECT_DIR$/chat-sdk-firebase-ui" />
+            <option value="$PROJECT_DIR$/chat-sdk-ui" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
