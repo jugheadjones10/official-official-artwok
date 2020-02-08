@@ -158,11 +158,6 @@ dependencies {
     implementation 'com.yarolegovich:discrete-scrollview:1.4.9'
 
     api ('com.github.wordpress-mobile.WordPress-Aztec-Android:aztec:v1.3.36')
-
-    //ChatSDK
-
-    implementation project(path: ':chat-sdk-ui')
-
 //Facebook
 //    implementation 'com.facebook.android:facebook-android-sdk:5.0.1'
 }
