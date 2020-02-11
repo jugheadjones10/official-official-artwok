@@ -93,7 +93,7 @@ public class MessageChatsAdapter extends RecyclerView.Adapter<MessageChatsAdapte
             Intent chatIntent = new Intent(context, ChatActivity.class);
             chatIntent.putExtra("message_following_id", user.getUid());
             chatIntent.putExtra("message_following_username", user.getUsername());
-            chatIntent.putExtra("message_following_profile_img", user.profile_url);
+            chatIntent.putExtra("message_following_profile_img", user.getProfile_url());
             context.startActivity(chatIntent);
         }
     }
