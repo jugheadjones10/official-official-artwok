@@ -24,6 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -34,9 +35,11 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
     private DatabaseReference usersRef;
 
 
-    public MessageAdapter() {
-
+    public MessageAdapter (List<Message> userMessagesList)
+    {
+        this.userMessageList = userMessagesList;
     }
+
 
 
     public class MessageViewHolder extends RecyclerView.ViewHolder {
@@ -85,7 +88,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
                 if (dataSnapshot.hasChild("image")) {
                     String receiverImage = dataSnapshot.child("image").getValue().toString();
 
-                    Picasso.get().load(receiverImage).placeholder(R.drawable.profile_image).into(messageViewHolder.receiverProfileImage);
+                    Picasso.get().load(receiverImage).placeholder(R.drawable.ic_user).into(messageViewHolder.receiverProfileImage);
                 }
             }
 
@@ -120,52 +123,55 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         }
     }
 
-    public void addMessageToList(Message message){
-        List<Message> userMessageList = this.userMessageList;
-        userMessageList.add(message);
-        setUserMessageList(userMessageList);
-    }
-
-    public void setUserMessageList(final List<Message> messages) {
-        if (this.userMessageList == null) {
-            this.userMessageList = messages;
-            notifyItemRangeInserted(0, messages.size());
-        } else {
-            DiffUtil.DiffResult result = DiffUtil.calculateDiff(new DiffUtil.Callback() {
-                @Override
-                public int getOldListSize() {
-                    return MessageAdapter.this.userMessageList.size();
-                }
-
-                @Override
-                public int getNewListSize() {
-                    return messages.size();
-                }
-
-                @Override
-                public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-                    return MessageAdapter.this.userMessageList.get(oldItemPosition).getMessageID() ==
-                            messages.get(newItemPosition).getMessageID();
-                }
-
-                @Override
-                public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
-                    return MessageAdapter.this.userMessageList.get(oldItemPosition).getMessageID() ==
-                            messages.get(newItemPosition).getMessageID();
-                }
-            });
-            this.userMessageList = messages;
-            //notifyDataSetChanged();
-            //FollowingAdapter.getInstance().notifyDataSetChanged();
-            result.dispatchUpdatesTo(this);
-        }
-    }
+//    public void addMessageToList(Message message){
+//        List<Message> userMessageList = this.userMessageList;
+//        if(userMessageList == null){
+//            userMessageList = new ArrayList<>();
+//        }
+//        userMessageList.add(message);
+//        setUserMessageList(userMessageList);
+//    }
+//
+//    public void setUserMessageList(final List<Message> messages) {
+//        if (this.userMessageList == null) {
+//            this.userMessageList = messages;
+//            notifyItemRangeInserted(0, messages.size());
+//        } else {
+//            DiffUtil.DiffResult result = DiffUtil.calculateDiff(new DiffUtil.Callback() {
+//                @Override
+//                public int getOldListSize() {
+//                    return MessageAdapter.this.userMessageList.size();
+//                }
+//
+//                @Override
+//                public int getNewListSize() {
+//                    return messages.size();
+//                }
+//
+//                @Override
+//                public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
+//                    return MessageAdapter.this.userMessageList.get(oldItemPosition).getMessageID() ==
+//                            messages.get(newItemPosition).getMessageID();
+//                }
+//
+//                @Override
+//                public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
+//                    return MessageAdapter.this.userMessageList.get(oldItemPosition).getMessageID() ==
+//                            messages.get(newItemPosition).getMessageID();
+//                }
+//            });
+//            this.userMessageList = messages;
+//            //notifyDataSetChanged();
+//            //FollowingAdapter.getInstance().notifyDataSetChanged();
+//            result.dispatchUpdatesTo(this);
+//        }
+//    }
 
 
 
     @Override
     public int getItemCount() {
-        return userMessageList == null ? 0 : userMessageList.size();
+        return userMessageList.size();
     }
 
 }
