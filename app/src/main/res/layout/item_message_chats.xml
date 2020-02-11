@@ -1,15 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+        <variable
+            name="user"
+            type="com.example.artwokmabel.models.User" />
+
+        <variable
+            name="onchatclicked"
+            type="com.example.artwokmabel.chat.tabs.MessageChatsAdapter.OnChatClicked" />
+
+    </data>
+
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="80dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:onClick="@{() -> onchatclicked.onChatClicked(user)}">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/message_chats_imageview"
             android:layout_margin="10dp"
             android:layout_width="50dp"
@@ -28,7 +43,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginTop="10dp"
                 android:layout_marginHorizontal="10dp"
-                android:text="Chat Room"
+                android:text="@{user.username}"
                 android:textColor="@color/artwok_black"
                 android:textSize="18dp"/>
 
@@ -58,10 +73,5 @@
         </RelativeLayout>
 
     </LinearLayout>
-
-    <LinearLayout
-        android:background="@android:color/darker_gray"
-        android:layout_width="match_parent"
-        android:layout_height="1dp" />
-
 </LinearLayout>
+</layout>

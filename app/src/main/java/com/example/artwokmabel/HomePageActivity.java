@@ -6,8 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.artwokmabel.chat.fragments.MessageFragment;
-import com.example.artwokmabel.groups.GroupsFragment;
+import com.example.artwokmabel.chat.MessageFragment;
 import com.example.artwokmabel.homepage.homepagewrapper.HomeTabsFragment;
 import com.example.artwokmabel.notifs.NotifsFragment;
 import com.example.artwokmabel.profile.user.ProfileFragment;

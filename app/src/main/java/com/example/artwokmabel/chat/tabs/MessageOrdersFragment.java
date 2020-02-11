@@ -1,4 +1,4 @@
-package com.example.artwokmabel.chat.fragments;
+package com.example.artwokmabel.chat.tabs;
 
 import android.content.Intent;
 import android.os.Bundle;

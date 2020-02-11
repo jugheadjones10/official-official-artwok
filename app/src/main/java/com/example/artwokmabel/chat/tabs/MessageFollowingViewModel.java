@@ -1,24 +1,25 @@
-package com.example.artwokmabel.chat.fragments;
+package com.example.artwokmabel.chat.tabs;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.artwokmabel.chat.models.UserUserModel;
+import com.example.artwokmabel.models.User;
 import com.example.artwokmabel.repos.FirestoreRepo;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
 
-public class MessageFriendsViewModel extends ViewModel {
+public class MessageFollowingViewModel extends ViewModel {
     private FirebaseAuth mAuth;
-    private final LiveData<List<UserUserModel>> followingUsersObservable;
+    private final LiveData<List<User>> followingUsersObservable;
 
-    public MessageFriendsViewModel() {
+    public MessageFollowingViewModel() {
         mAuth = FirebaseAuth.getInstance();
         followingUsersObservable = FirestoreRepo.getInstance().getFollowings(mAuth.getCurrentUser().getUid());
     }
 
-    public LiveData<List<UserUserModel>> getFollowingUsersObservable() {
+    public LiveData<List<User>> getFollowingUsersObservable() {
         return followingUsersObservable;
     }
 }

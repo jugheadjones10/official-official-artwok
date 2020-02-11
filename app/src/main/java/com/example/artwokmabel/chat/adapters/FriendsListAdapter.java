@@ -15,7 +15,7 @@
 //import com.bumptech.glide.request.RequestOptions;
 //import com.example.artwokmabel.Chat.Activites.ChatActivity;
 //import com.example.artwokmabel.Chat.Activites.ChatProfileActivity;
-//import com.example.artwokmabel.Chat.Fragments.MessageFriendsFragment;
+//import com.example.artwokmabel.Chat.Fragments.MessageFollowingFragment;
 //import com.example.artwokmabel.Chat.Models.UserUserModel;
 //import com.example.artwokmabel.R;
 //
@@ -32,7 +32,7 @@
 //    @NonNull
 //    @Override
 //    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-//        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_message_friends, parent, false);
+//        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.z_item_message_friends, parent, false);
 //        return new ViewHolder(view);
 //    }
 //

@@ -26,6 +26,7 @@ import com.example.artwokmabel.models.Listing;
 import com.example.artwokmabel.models.MainPost;
 import com.example.artwokmabel.models.User;
 import com.example.artwokmabel.profile.uploadlisting.UploadListingAcitvity;
+import com.example.artwokmabel.settings.SettingsActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -34,6 +35,12 @@ import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -165,6 +172,7 @@ public class FirestoreRepo {
 
     public void createAccount(String email, String username,  String password){
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        DatabaseReference RootRef = FirebaseDatabase.getInstance().getReference();
 
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(CreateAccountPasswordActivity.getInstance(), new OnCompleteListener<AuthResult>() {
@@ -172,8 +180,23 @@ public class FirestoreRepo {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            FirebaseUser user = mAuth.getCurrentUser();
+                            //FirebaseUser user = mAuth.getCurrentUser();
                             String uid = task.getResult().getUser().getUid();
+
+                            //Below code adds new user to Firebase database
+//                            HashMap<String, Object> profileMap = new HashMap<>();
+//                            profileMap.put("uid", uid);
+//                            profileMap.put("name", username);
+//                            RootRef.child("Users").child(uid).setValue(profileMap)
+//                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+//                                        @Override
+//                                        public void onComplete(@NonNull Task<Void> task)
+//                                        {
+//                                            if (task.isSuccessful()) {
+//                                            } else {
+//                                            }
+//                                        }
+//                                    });
 
                             User userObject = new User(
                                     username,
@@ -1248,6 +1271,7 @@ public class FirestoreRepo {
     public LiveData<List<Listing>> getFeedListings(String userId){
         DocumentReference userRef = FirestoreRepo.getInstance().getUserRef(userId);
 
+
         final MutableLiveData<List<Listing>> data = new MutableLiveData<>();
         List<Listing> tempData = new ArrayList<>();
 
@@ -1287,33 +1311,94 @@ public class FirestoreRepo {
         return data;
     }
 
-    public LiveData<List<UserUserModel>> getFollowings(String userId){
+    public LiveData<List<User>> getChattingWith(String userId){
+        final MutableLiveData<List<User>> data = new MutableLiveData<>();
+        List<User> tempData = new ArrayList<>();
+
+        FirebaseDatabase.getInstance().getReference()
+                .child("Messages")
+                .child(userId)
+                .addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                tempData.clear();
+                List<Task> tasks = new ArrayList<>();
+                for (DataSnapshot childUserSnapshot: dataSnapshot.getChildren()) {
+                    Task task = FirestoreRepo.getInstance()
+                            .getUserRef(childUserSnapshot.getKey())
+                            .get()
+                            .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                @Override
+                                public void onSuccess(DocumentSnapshot snapshot) {
+                                    if (snapshot.exists()) {
+                                        User user = changeDocToUserModel(snapshot);
+                                        Log.d("chattingwith", user.getUsername());
+                                        tempData.add(user);
+                                    }
+                                }
+                            });
+                    tasks.add(task);
+                }
+
+                Tasks.whenAll(tasks.toArray(new Task[0]))
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d("thestuffreturnedREQUEST", "final resulting temp data" + tempData.toString());
+                                data.setValue(tempData);
+                            }
+                        });
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
+        return data;
+    }
+
+    public LiveData<List<User>> getFollowings(String userId){
         DocumentReference userRef = FirestoreRepo.getInstance().getUserRef(userId);
 
-        final MutableLiveData<List<UserUserModel>> data = new MutableLiveData<>();
-        List<UserUserModel> tempData = new ArrayList<>();
+        final MutableLiveData<List<User>> data = new MutableLiveData<>();
+        List<User> tempData = new ArrayList<>();
 
         userRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot snapshot, @Nullable FirebaseFirestoreException e) {
                 ArrayList<String> following = (ArrayList<String>) snapshot.get("following");
 
-                //Todo: find method of using diff util-like logic so that i don't need to rebuild the tempdata everytime the data changes
                 tempData.clear();
-                for(int i = 0; i < following.size(); i++){
-                    String oneFollowing = following.get(i);
+                List<Task> tasks = new ArrayList<>();
+                for(int i = 0; i < following.size(); i++) {
 
-                    DocumentReference followingUserRef = FirestoreRepo.getInstance().getUserRef(oneFollowing);
-                    followingUserRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-                        @Override
-                        public void onEvent(@Nullable DocumentSnapshot snapshot, @Nullable FirebaseFirestoreException e) {
-                            UserUserModel user = changeDocToUserUserModel(snapshot);
-                            Log.d("FOPE", user.getUserName());
-                            tempData.add(user);
-                        }
-                    });
+                    Task task = FirestoreRepo.getInstance()
+                            .getUserRef(following.get(i))
+                            .get()
+                            .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                @Override
+                                public void onSuccess(DocumentSnapshot snapshot) {
+                                    if(snapshot.exists()){
+                                        User user = changeDocToUserModel(snapshot);
+                                        tempData.add(user);
+                                    }
+                                }
+                            });
+                    tasks.add(task);
                 }
-                data.setValue(tempData);
+
+                Tasks.whenAll(tasks.toArray(new Task[0]))
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d("thestuffreturnedREQUEST", "final resulting temp data" + tempData.toString());
+                                data.setValue(tempData);
+                            }
+                        });
+
+                //Todo: find method of using diff util-like logic so that i don't need to rebuild the tempdata everytime the data changes
             }
         });
 
