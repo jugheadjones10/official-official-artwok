@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
     <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/darker_gray"
@@ -22,12 +21,9 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/private_messages_list_of_users"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/main_app_bar"
+            android:layout_height="50dp"
             android:layout_above="@+id/chat_linear_layout"
-            android:layout_marginBottom="6dp"
-            >
-        </androidx.recyclerview.widget.RecyclerView>
+            android:layout_marginBottom="6dp"></androidx.recyclerview.widget.RecyclerView>
 
         <RelativeLayout
             android:id="@+id/chat_linear_layout"
@@ -69,5 +65,12 @@
                 android:backgroundTint="@android:color/white"
                 />
         </RelativeLayout>
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Button" />
+
     </RelativeLayout>
 </layout>

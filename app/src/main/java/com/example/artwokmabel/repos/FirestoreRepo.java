@@ -28,6 +28,7 @@ import com.example.artwokmabel.models.Listing;
 import com.example.artwokmabel.models.MainPost;
 import com.example.artwokmabel.models.User;
 import com.example.artwokmabel.profile.uploadlisting.UploadListingAcitvity;
+import com.example.artwokmabel.profile.uploadpost.UploadPostActivity;
 import com.example.artwokmabel.settings.SettingsActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -95,7 +96,31 @@ public class FirestoreRepo {
         algoliaIndex.saveObjectAsync(newData, userid, null);
     }
 
+    public void uploadNewPost(String postText, String userId, Activity activity){
+        DocumentReference newPostRef = db.collection("Users").document(userId).collection("Posts").document();
 
+        ArrayList<String> photos = new ArrayList<>();
+        photos.add("https://firebasestorage.googleapis.com/v0/b/artwok-database.appspot.com/o/Rick%20and%20Morty%20white.png?alt=media&token=dd2a8310-6a36-43e4-8372-ff6f2d465f95");
+        MainPost newPost =  new MainPost(
+            userId,
+            "placeholder post",
+                "placeholder hashtags",
+                newPostRef.getId(),
+                "placeholder username",
+                photos,
+                "bla",
+                System.currentTimeMillis()
+        );
+
+        newPostRef.set(newPost)
+                .addOnSuccessListener(aVoid -> {
+                    Toast.makeText(activity, "Successfully uploaded ic_dm.", Toast.LENGTH_LONG).show();
+                    UploadPostActivity.getInstance().onPostUploaded();
+                })
+                .addOnFailureListener(e ->
+                        Toast.makeText(activity, "Failed to upload ic_dm. awd", Toast.LENGTH_LONG)
+                                .show());
+    }
 
     public void uploadNewListing(String postTitle, String postDesc, ArrayList<String> categories, Long price, String delivery, String refund, String currentUserId, ArrayList<String> postImageUris, Activity activity){
 
@@ -1302,6 +1327,7 @@ public class FirestoreRepo {
                                 for(DataSnapshot messageSnapshot : listingSnapshot.getChildren()){
                                         messages.add(messageSnapshot.getValue(Message.class));
                                 }
+                                //For some reason only my last seen messages appear and not the other person's
 
                                 Collections.sort(messages, new SortMessages());
                                 Message lastMessage = messages.get(messages.size() - 1);
