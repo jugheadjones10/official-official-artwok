@@ -103,7 +103,7 @@ public class FirestoreRepo {
         photos.add("https://firebasestorage.googleapis.com/v0/b/artwok-database.appspot.com/o/Rick%20and%20Morty%20white.png?alt=media&token=dd2a8310-6a36-43e4-8372-ff6f2d465f95");
         MainPost newPost =  new MainPost(
             userId,
-            "placeholder post",
+                postText,
                 "placeholder hashtags",
                 newPostRef.getId(),
                 "placeholder username",
