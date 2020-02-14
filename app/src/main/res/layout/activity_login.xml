@@ -30,7 +30,7 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="90dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="100dp"
@@ -41,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="270dp"
+            android:layout_marginTop="230dp"
             android:gravity="center_horizontal|center_vertical"
             android:orientation="vertical">
 
@@ -113,7 +113,7 @@
                     android:gravity="end|bottom"
                     android:text="@string/forgot_password"
                     android:onClick="@{() -> onforgotpasswordclicked.onForgotPasswordClicked()}"
-                    android:textSize="8sp" />
+                    android:textSize="10sp" />
 
             </LinearLayout>
 
@@ -133,12 +133,12 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/password_edit_text"
-                    android:textSize="13sp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
                     android:inputType="textPassword"
-                    android:textColor="@color/artwok_black"/>
+                    android:textColor="@color/artwok_black"
+                    android:textSize="13sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
