@@ -16,7 +16,8 @@
         android:roundIcon="@drawable/official_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".chat.inchat.ChatActivity"></activity>
+        <activity android:name=".chat.offerchat.OfferActivity"></activity>
+        <activity android:name=".chat.personalchat.ChatActivity" />
         <activity android:name=".login.LoginOptionsActivity" />
         <activity android:name=".login.SplashActivity">
             <intent-filter>

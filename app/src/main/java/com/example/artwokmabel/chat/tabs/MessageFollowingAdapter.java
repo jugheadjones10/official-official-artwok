@@ -13,7 +13,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.artwokmabel.chat.inchat.ChatActivity;
+import com.example.artwokmabel.chat.personalchat.ChatActivity;
 import com.example.artwokmabel.chat.models.UserUserModel;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.ItemMessageFollowingBinding;
@@ -132,7 +132,7 @@ public class MessageFollowingAdapter extends RecyclerView.Adapter<MessageFollowi
             Intent chatIntent = new Intent(context, ChatActivity.class);
             chatIntent.putExtra("message_following_id", user.getUid());
             chatIntent.putExtra("message_following_username", user.getUsername());
-            chatIntent.putExtra("messsage_following_profile_img", user.profile_url);
+            chatIntent.putExtra("message_following_profile_img", user.profile_url);
             context.startActivity(chatIntent);
         }
     }

@@ -2,50 +2,63 @@ package com.example.artwokmabel.chat.tabs;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 
+import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.artwokmabel.chat.activities.ChatOrderActivity;
 import com.example.artwokmabel.R;
+import com.example.artwokmabel.databinding.MessageChatsFragmentBinding;
+import com.example.artwokmabel.databinding.MessageOrdersFragmentBinding;
+import com.example.artwokmabel.models.OrderChat;
+import com.example.artwokmabel.models.User;
 import com.weiwangcn.betterspinner.library.BetterSpinner;
+
+import java.util.List;
 
 public class MessageOrdersFragment extends Fragment {
 
-    ViewPager viewPager;
-    View view;
-    Button testButton;
-
-    // Dropdown for categories selection
-    String[] filter = {"All", "Listings - Buying", "Listings - Selling", "Requests - Buying", "Requests - Selling"};
+    private MessageOrdersFragmentBinding binding;
+    private MessageOrdersAdapter adapter;
+    private MessageOrdersViewModel viewModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        view = inflater.inflate(R.layout.message_orders_fragment, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.message_orders_fragment, container, false);
 
-        testButton = view.findViewById(R.id.testbtn);
+        adapter = new MessageOrdersAdapter(getActivity());
+        binding.chatsFragmentRecyclerview.setAdapter(adapter);
 
-        testButton.setOnClickListener(new View.OnClickListener() {
+        viewModel = ViewModelProviders.of(this).get(MessageOrdersViewModel.class);
+        observeViewModel(viewModel);
+
+        return binding.getRoot();
+    }
+
+    private void observeViewModel(MessageOrdersViewModel viewModel) {
+        viewModel.getOrdersAndSellsObservable().observe(this, new Observer<List<OrderChat>>() {
             @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getActivity(), ChatOrderActivity.class);
-                startActivity(i);
+            public void onChanged(@Nullable List<OrderChat> orderChats) {
+                Log.d("chattingwith", Integer.toString(orderChats.size()));
+
+                if (orderChats != null) {
+                    Log.d("ordersandstuff", "Number of active from observeViewModel : " + orderChats.size());
+                    adapter.setOrderChatsList(orderChats);
+                }
+
             }
         });
-
-        // Dropdown for categories selection
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_dropdown_item_1line, filter);
-        BetterSpinner betterSpinner = view.findViewById(R.id.message_orders_betterspinner);
-        betterSpinner.setAdapter(arrayAdapter);
-
-        return view;
-
     }
 
 }

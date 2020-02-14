@@ -10,7 +10,7 @@
         <variable name="listing" type="com.example.artwokmabel.models.Listing"/>
         <variable name="user" type="com.example.artwokmabel.models.User"/>
         <variable name="sharecallback" type="com.example.artwokmabel.homepage.callbacks.ShareClickCallback"/>
-
+        <variable name="onofferclicked" type="com.example.artwokmabel.homepage.listing.ListingActivity.OnOfferClicked"/>
     </data>
 
 
@@ -20,6 +20,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="20dp"
+            android:backgroundTint="@color/artwok_background_blue"
+            android:contentDescription="Offer"
+            android:text="Offer"
+            android:onClick="@{() -> onofferclicked.onOfferClicked(listing)}"
+            android:textAllCaps="false" />
 
 
     <com.google.android.material.appbar.AppBarLayout

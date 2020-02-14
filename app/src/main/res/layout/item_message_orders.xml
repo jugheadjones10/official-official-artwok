@@ -1,6 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout>
 
-</LinearLayout>
+    <data>
+        <variable
+            name="orderchat"
+            type="com.example.artwokmabel.models.OrderChat" />
+
+        <variable
+            name="onchatclicked"
+            type="com.example.artwokmabel.chat.tabs.MessageOrdersAdapter.OnChatClicked" />
+
+    </data>
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:orientation="vertical"
+        android:onClick="@{() -> onchatclicked.onChatClicked(orderchat)}">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/message_chats_imageview"
+                android:layout_margin="10dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="left">
+
+                <TextView
+                    android:id="@+id/message_chats_textview_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:text="@{orderchat.name}"
+                    android:textColor="@color/artwok_black"
+                    android:textSize="18dp"/>
+
+                <TextView
+                    android:id="@+id/message_chats_textview_lastmessage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:text="@{orderchat.lastMessage.message}"
+                    android:layout_below="@+id/message_chats_textview_title"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="15dp"/>
+
+                <TextView
+                    android:id="@+id/message_chats_textview_timestamp"
+                    android:text="@{orderchat.lastMessage.time}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="12dp" />
+
+
+            </RelativeLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+</layout>

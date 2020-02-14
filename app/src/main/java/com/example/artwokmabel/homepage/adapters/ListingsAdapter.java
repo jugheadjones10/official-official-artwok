@@ -134,7 +134,6 @@ public class ListingsAdapter extends RecyclerView.Adapter<ListingsAdapter.myHold
     public class OnListingClicked{
         public void onListClicked(Listing data){
             Intent intent = new Intent(mContext, ListingActivity.class);
-
 //            intent.putExtra("username", data.getUsername());
 //            intent.putExtra("postid", data.getPostid());
 //            intent.putExtra("itemname", data.getName());

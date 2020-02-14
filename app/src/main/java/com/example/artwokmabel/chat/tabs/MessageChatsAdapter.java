@@ -1,26 +1,18 @@
 package com.example.artwokmabel.chat.tabs;
 
-import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.artwokmabel.R;
-import com.example.artwokmabel.chat.inchat.ChatActivity;
-import com.example.artwokmabel.chat.models.UserUserModel;
+import com.example.artwokmabel.chat.personalchat.ChatActivity;
 import com.example.artwokmabel.databinding.ItemMessageChatsBinding;
-import com.example.artwokmabel.databinding.ItemMessageFollowingBinding;
 import com.example.artwokmabel.models.User;
-import com.example.artwokmabel.profile.people.PeopleAdapterViewModel;
-import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;

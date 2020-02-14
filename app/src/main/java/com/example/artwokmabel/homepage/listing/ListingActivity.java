@@ -1,5 +1,6 @@
 package com.example.artwokmabel.homepage.listing;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -15,10 +16,14 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.artwokmabel.R;
+import com.example.artwokmabel.chat.offerchat.OfferActivity;
+import com.example.artwokmabel.chat.personalchat.ChatActivity;
 import com.example.artwokmabel.databinding.ActivityListingBinding;
 import com.example.artwokmabel.homepage.callbacks.ShareClickCallback;
 import com.example.artwokmabel.models.Listing;
+import com.example.artwokmabel.models.Message;
 import com.example.artwokmabel.models.User;
+import com.example.artwokmabel.repos.FirestoreRepo;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.auth.FirebaseAuth;
@@ -106,6 +111,7 @@ public class ListingActivity extends AppCompatActivity {
 
         binding.setListing(listing);
         binding.setSharecallback(new ShareClickCallback());
+        binding.setOnofferclicked(new OnOfferClicked());
 
 //        if(listing.getUserid().equals(mAuth.getCurrentUser().getUid())){
 //            binding.shareButton.setImageResource(R.drawable.menu);
@@ -210,6 +216,14 @@ public class ListingActivity extends AppCompatActivity {
                     }
                 }
         ).attach();
+    }
+
+    public class OnOfferClicked{
+        public void onOfferClicked(Listing listing){
+            Intent offerIntent = new Intent(ListingActivity.this, OfferActivity.class);
+            offerIntent.putExtra("orderchat", FirestoreRepo.getInstance().changeListingToMeBuy(listing, new Message("", "", "", "","","", "", "", 0)));
+            startActivity(offerIntent);
+        }
     }
 
     @Override

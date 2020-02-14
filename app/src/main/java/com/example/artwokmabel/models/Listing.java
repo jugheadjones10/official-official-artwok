@@ -18,6 +18,10 @@ public class Listing implements Serializable {
     private String postid;
     private ArrayList<String> categories;
 
+    public Listing(){
+
+    }
+
     public Listing(String userid, String return_exchange, long price, ArrayList<String> photos, String name, String hashtags, String desc, String delivery, String username, String postid, long nanopast, ArrayList<String> categories) {
         this.userid = userid;
         this.return_exchange = return_exchange;

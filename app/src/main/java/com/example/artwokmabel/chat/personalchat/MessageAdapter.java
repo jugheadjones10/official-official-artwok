@@ -1,4 +1,4 @@
-package com.example.artwokmabel.chat.inchat;
+package com.example.artwokmabel.chat.personalchat;
 
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -8,14 +8,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.models.Message;
-import com.example.artwokmabel.models.User;
-import com.example.artwokmabel.profile.people.FollowersAdapter;
-import com.example.artwokmabel.profile.people.FollowingAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,7 +20,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;

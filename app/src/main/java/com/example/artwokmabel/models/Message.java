@@ -1,14 +1,18 @@
 package com.example.artwokmabel.models;
-public class Message
+
+import java.io.Serializable;
+
+public class Message implements Serializable
 {
     private String from, message, type, to, messageID, time, date, name;
 
-    public Message()
-    {
+    private long nanopast;
+
+    public Message() {
 
     }
 
-    public Message(String from, String message, String type, String to, String messageID, String time, String date, String name) {
+    public Message(String from, String message, String type, String to, String messageID, String time, String date, String name, long nanopast) {
         this.from = from;
         this.message = message;
         this.type = type;
@@ -17,6 +21,7 @@ public class Message
         this.time = time;
         this.date = date;
         this.name = name;
+        this.nanopast = nanopast;
     }
 
     public String getFrom() {
@@ -82,4 +87,13 @@ public class Message
     public void setName(String name) {
         this.name = name;
     }
+
+    public long getNanopast() {
+        return nanopast;
+    }
+
+    public void setNanopast(long nanopast) {
+        this.nanopast = nanopast;
+    }
+
 }

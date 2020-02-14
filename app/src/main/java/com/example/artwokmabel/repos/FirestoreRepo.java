@@ -19,6 +19,8 @@ import com.example.artwokmabel.login.CreateAccountUsernameActivity;
 import com.example.artwokmabel.login.LoginActivity;
 import com.example.artwokmabel.chat.models.Comment;
 import com.example.artwokmabel.chat.models.UserUserModel;
+import com.example.artwokmabel.models.Message;
+import com.example.artwokmabel.models.OrderChat;
 import com.example.artwokmabel.models.Request;
 import com.example.artwokmabel.homepage.request.upload.UploadRequestActivity;
 import com.example.artwokmabel.models.Category;
@@ -92,6 +94,8 @@ public class FirestoreRepo {
         }
         algoliaIndex.saveObjectAsync(newData, userid, null);
     }
+
+
 
     public void uploadNewListing(String postTitle, String postDesc, ArrayList<String> categories, Long price, String delivery, String refund, String currentUserId, ArrayList<String> postImageUris, Activity activity){
 
@@ -511,68 +515,6 @@ public class FirestoreRepo {
                         }
                     }
                 });
-
-//                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
-//                    @Override
-//                    public void onEvent(@Nullable DocumentSnapshot snapshot,
-//                                        @Nullable FirebaseFirestoreException e) {
-//                        if (e != null) {
-//                            Log.w(TAG, "Listen failed.", e);
-//                            return;
-//                        }
-//
-//                        if (snapshot != null && snapshot.exists()) {
-//                            Log.d(TAG, " data: " + snapshot.getData());
-//
-//                            ArrayList<String> followingIds = (ArrayList<String>) snapshot.getData().get("followers");
-//                            //Get array list of user following
-//                            Log.d("thestuffreturnedREQUEST", "my user id  " + userId);
-//                            Log.d("thestuffreturnedREQUEST", "my listing_fav_ids  " + followingIds.toString());
-//
-//                            tempData.clear();
-//                            List<Task> tasks = new ArrayList<>();
-//                            for(int i = 0; i < followingIds.size(); i++) {
-//                                Log.d("thestuffreturnedREQUEST", "I'm inside the for loop now  " + followingIds.get(0));
-//
-//                                Task task =  db.collection("Users")
-//                                        .whereEqualTo("uid", followingIds.get(i))
-//                                        .get()
-//                                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-//                                            @Override
-//                                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-//                                                Log.d("thestuffreturnedREQUEST", "I'm below the query snapshot  " + Integer.toString(queryDocumentSnapshots.size()));
-//
-//                                                if(!queryDocumentSnapshots.isEmpty()){
-//                                                    for(DocumentSnapshot user: queryDocumentSnapshots){
-//                                                        User userObject = changeDocToUserModel(user);
-//                                                        Log.d("thestuffreturnedREQUEST", "middleman within the for loop" + userObject.getUid());
-//                                                        tempData.add(userObject);
-//                                                    }
-//                                                }
-//                                            }
-//                                        }).addOnFailureListener(new OnFailureListener() {
-//                                            @Override
-//                                            public void onFailure(@NonNull Exception e) {
-//                                                Log.d("thestuffreturnedREQUEST", "THE DB CALL FAILED");
-//                                            }
-//                                        });
-//                                tasks.add(task);
-//                            }
-//
-//                            Tasks.whenAll(tasks.toArray(new Task[0]))
-//                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                                        @Override
-//                                        public void onSuccess(Void aVoid) {
-//                                            Log.d("thestuffreturnedREQUEST", "final resulting temp data" + tempData.toString());
-//                                            data.setValue(tempData);
-//                                        }
-//                                    });
-//                        } else {
-//                            Log.d(TAG, " data: null");
-//                        }
-//                    }
-//                });
-
         return data;
     }
 
@@ -871,6 +813,26 @@ public class FirestoreRepo {
         return data;
     }
 
+    public void getListing(String listingId, ListingRetrieved callback){
+        //final MutableLiveData<Listing> data = new MutableLiveData<>();
+
+        db.collectionGroup("Listings")
+                .whereEqualTo("postid", listingId)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for(QueryDocumentSnapshot snapshot : queryDocumentSnapshots){
+                            Listing listing = snapshot.toObject(Listing.class);
+                            callback.onListingRetrieved(listing);
+                            //data.setValue(listing);
+                            //some possible error here : snapshot.toObject may not work; postid may be different in spelling;
+                        }
+                    }
+                });
+        //return data;
+    }
+
     public LiveData<List<Listing>> getUserListings(String uid){
         final MutableLiveData<List<Listing>> data = new MutableLiveData<>();
         List<Listing> tempData = new ArrayList<>();
@@ -1086,35 +1048,35 @@ public class FirestoreRepo {
         return newChatRoom.getId();
     }
 
-    public LiveData<List<Comment>> getChatRoomMessages(String chatRoomId){
-        final MutableLiveData<List<Comment>> data = new MutableLiveData<>();
-        List<Comment> tempData = new ArrayList<>();
-
-        db.collection("Chatrooms")
-                .document(chatRoomId)
-                .collection("Comments")
-                .orderBy("timestamp", Query.Direction.DESCENDING)
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                        if (e != null) {
-                            Log.w("TAG", "Listen failed.", e);
-                            return;
-                        }
-
-                        tempData.clear();
-                        for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
-                            Comment comment = changeDocToCommentModel(doc);
-                            Log.d("BUCK", comment.getMessage());
-                            tempData.add(comment);
-                        }
-
-                        Collections.sort(tempData, new SortMessages());
-                        data.setValue(tempData);
-                    }
-                });
-        return data;
-    }
+//    public LiveData<List<Comment>> getChatRoomMessages(String chatRoomId){
+//        final MutableLiveData<List<Comment>> data = new MutableLiveData<>();
+//        List<Comment> tempData = new ArrayList<>();
+//
+//        db.collection("Chatrooms")
+//                .document(chatRoomId)
+//                .collection("Comments")
+//                .orderBy("timestamp", Query.Direction.DESCENDING)
+//                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+//                        if (e != null) {
+//                            Log.w("TAG", "Listen failed.", e);
+//                            return;
+//                        }
+//
+//                        tempData.clear();
+//                        for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+//                            Comment comment = changeDocToCommentModel(doc);
+//                            Log.d("BUCK", comment.getMessage());
+//                            tempData.add(comment);
+//                        }
+//
+//                        Collections.sort(tempData, new SortMessages());
+//                        data.setValue(tempData);
+//                    }
+//                });
+//        return data;
+//    }
 
     public void addNewMessage(Comment comment, String chatRoomId){
 
@@ -1311,6 +1273,71 @@ public class FirestoreRepo {
         return data;
     }
 
+    public interface ListingRetrieved {
+        void onListingRetrieved (Listing listing);
+    }
+
+    public LiveData<List<OrderChat>> getOrdersAndSells(String userId){
+        final MutableLiveData<List<OrderChat>> data = new MutableLiveData<>();
+        List<OrderChat> tempData = new ArrayList<>();
+
+        FirebaseDatabase.getInstance().getReference()
+                .child("Offers")
+                .child(userId)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshotHighLevel) {
+                        tempData.clear();
+
+                        for (DataSnapshot childUserSnapshot: dataSnapshotHighLevel.getChildren()) {
+
+                            String otherUserId = childUserSnapshot.getKey();
+
+                            int[] i = {0};
+                            for(DataSnapshot listingSnapshot : childUserSnapshot.getChildren()){
+                                final ArrayList<OrderChat> orderChat = new ArrayList<>();
+
+                                String listingId = listingSnapshot.getKey();
+                                ArrayList<Message> messages = new ArrayList<>();
+                                for(DataSnapshot messageSnapshot : listingSnapshot.getChildren()){
+                                        messages.add(messageSnapshot.getValue(Message.class));
+                                }
+
+                                Collections.sort(messages, new SortMessages());
+                                Message lastMessage = messages.get(messages.size() - 1);
+
+                                class GetListingHandler implements ListingRetrieved{
+                                    public void onListingRetrieved (Listing listing){
+
+                                        if(listing.getUserid().equals(userId)){
+                                            orderChat.add(changeListingToMeSell(listing, otherUserId, lastMessage));
+                                        }else{
+                                            orderChat.add(changeListingToMeBuy(listing, lastMessage));
+                                        }
+
+                                        tempData.add(orderChat.get(0));
+                                        orderChat.clear();
+
+                                        if(i[0] ==  childUserSnapshot.getChildrenCount() - 1){
+                                            data.setValue(tempData);
+                                        }
+                                        i[0] = i[0] + 1;
+                                    }
+                                }
+                                getListing(listingId, new GetListingHandler());
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+        return data;
+    }
+
     public LiveData<List<User>> getChattingWith(String userId){
         final MutableLiveData<List<User>> data = new MutableLiveData<>();
         List<User> tempData = new ArrayList<>();
@@ -1428,6 +1455,12 @@ public class FirestoreRepo {
     }
 
     //Utils
+    class SortMessages implements Comparator<Message> {
+        public int compare(Message a, Message b){
+            return (int)b.getNanopast() - (int)a.getNanopast();
+        }
+    }
+
     class SortMain implements Comparator<MainPost> {
         public int compare(MainPost a, MainPost b){
             return (int)b.getNanopast() - (int)a.getNanopast();
@@ -1446,11 +1479,11 @@ public class FirestoreRepo {
         }
     }
 
-    class SortMessages implements Comparator<Comment> {
-        public int compare(Comment a, Comment b){
-            return Math.toIntExact(b.getTimestamp() - a.getTimestamp());
-        }
-    }
+//    class SortMessages implements Comparator<Comment> {
+//        public int compare(Comment a, Comment b){
+//            return Math.toIntExact(b.getTimestamp() - a.getTimestamp());
+//        }
+//    }
 
     private MainPost changeDocToMainPostModel(QueryDocumentSnapshot doc){
         MainPost post = new MainPost(
@@ -1530,6 +1563,45 @@ public class FirestoreRepo {
                 doc.getId(),
                 (long)doc.get("nanopast"),
                 doc.getString("categories")
+        );
+    }
+
+    private OrderChat changeListingToMeSell(Listing listing, String buyerId, Message lastMessage){
+        //TODO: find a more efficient way to do the below
+        return new OrderChat(
+            listing.getUserid(),
+            listing.getReturn_exchange(),
+            listing.getPrice(),
+            listing.getPhotos(),
+            listing.getName(),
+            listing.getHashtags(),
+            listing.getDesc(),
+            listing.getDelivery(),
+            listing.getUsername(),
+            listing.getPostid(),
+            listing.getNanopast(),
+            listing.getCategories(),
+            lastMessage,
+            buyerId
+        );
+    }
+
+    public OrderChat changeListingToMeBuy(Listing listing, Message lastMessage){
+        return new OrderChat(
+                listing.getUserid(),
+                listing.getReturn_exchange(),
+                listing.getPrice(),
+                listing.getPhotos(),
+                listing.getName(),
+                listing.getHashtags(),
+                listing.getDesc(),
+                listing.getDelivery(),
+                listing.getUsername(),
+                listing.getPostid(),
+                listing.getNanopast(),
+                listing.getCategories(),
+                lastMessage,
+                null
         );
     }
 }
