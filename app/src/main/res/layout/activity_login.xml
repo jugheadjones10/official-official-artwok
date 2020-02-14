@@ -55,6 +55,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/almost_black"
+                    android:textStyle="bold"
                     android:layout_marginLeft="30dp"
                     android:text="Email" />
 
@@ -76,6 +78,7 @@
                     android:id="@+id/email_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textSize="13sp"
                     android:layout_marginBottom="15dp"
                     android:textColor="@color/artwok_black"/>
             </com.google.android.material.textfield.TextInputLayout>
@@ -89,6 +92,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/almost_black"
+                    android:textStyle="bold"
                     android:layout_marginLeft="30dp"
                     android:text="Password" />
 
@@ -102,9 +107,11 @@
                     style="@style/Widget.MaterialComponents.Button.TextButton"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:textAllCaps="false"
+                    android:textStyle="bold"
                     android:layout_marginRight="30dp"
-                    android:gravity="right|center_vertical"
-                    android:text="Forgot password?"
+                    android:gravity="end|bottom"
+                    android:text="@string/forgot_password"
                     android:onClick="@{() -> onforgotpasswordclicked.onForgotPasswordClicked()}"
                     android:textSize="8sp" />
 
@@ -126,6 +133,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/password_edit_text"
+                    android:textSize="13sp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
@@ -137,6 +145,7 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/login_button_material"
                 style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:elevation="3dp"
                 android:layout_width="230dp"
                 android:layout_height="@dimen/zero_ui_login_blue_buttons"
                 android:text="Log In"
