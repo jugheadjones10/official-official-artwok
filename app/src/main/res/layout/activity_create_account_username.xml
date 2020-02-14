@@ -57,7 +57,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="@dimen/create_account_text_margin"
+                    android:layout_marginRight="20dp"
                     android:gravity="center_vertical"
                     android:text="Create Acccount"
                     android:textColor="@color/artwok_black"
@@ -93,6 +93,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/almost_black"
+                    android:textStyle="bold"
                     android:layout_marginLeft="30dp"
                     android:text="Username" />
 
@@ -112,6 +114,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/username_edit_text"
+                    android:textSize="13sp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
@@ -120,6 +123,7 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/login_button_material"
+                android:elevation="3dp"
                 style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="230dp"
                 android:layout_height="@dimen/zero_ui_login_blue_buttons"
@@ -152,6 +156,7 @@
                 style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
+                android:textStyle="bold"
                 android:text="Log In"
                 android:textAllCaps="false"
                 android:textColor="@color/zero_ui_log_in_text"
