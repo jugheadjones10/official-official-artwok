@@ -6,11 +6,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.artwokmabel.R;
@@ -22,6 +28,7 @@ import com.example.artwokmabel.databinding.CustomChatBarBinding;
 import com.example.artwokmabel.databinding.CustomOfferBarBinding;
 import com.example.artwokmabel.models.Listing;
 import com.example.artwokmabel.models.Message;
+import com.example.artwokmabel.models.OfferMessage;
 import com.example.artwokmabel.models.OrderChat;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -40,6 +47,8 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class OfferActivity extends AppCompatActivity {
 
@@ -61,9 +70,9 @@ public class OfferActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_offer);
+        binding.setOnofferclicked(new OnOfferClicked());
 
         inflateChatBar();
-        initializeControllers();
 
         mAuth = FirebaseAuth.getInstance();
         messageMeId = mAuth.getCurrentUser().getUid();
@@ -74,6 +83,7 @@ public class OfferActivity extends AppCompatActivity {
             buyerId = orderChat.getBuyerId();
             //Also might need to put in a check here to see if buyerId is null or not.
         }
+        initializeControllers();
 
         offerBarBinding.setOrderchat(orderChat);
         Picasso.get().load(orderChat.getPhotos().get(0)).into(offerBarBinding.customProfileImage);
@@ -88,8 +98,54 @@ public class OfferActivity extends AppCompatActivity {
 
     }
 
+    public class OnOfferClicked{
+        public void onOfferClicked(){
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(OfferActivity.this);
+
+            //builder.setTitle("Name");
+
+            class DecimalDigitsInputFilter implements InputFilter {
+
+                Pattern mPattern;
+
+                public DecimalDigitsInputFilter() {
+                    mPattern = Pattern.compile("[0-9]*+((\\.[0-9]?)?)||(\\.)?");
+                }
+
+                @Override
+                public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+                    Matcher matcher = mPattern.matcher(dest);
+                    if (!matcher.matches())
+                        return "";
+                    return null;
+                }
+            }
+
+            final View customLayout = getLayoutInflater().inflate(R.layout.layout_offer_price, null);
+
+            EditText priceEdit = customLayout.findViewById(R.id.price_edit);
+            Button offerButton = customLayout.findViewById(R.id.offer_button);
+
+            priceEdit.setFilters(new InputFilter[]{new DecimalDigitsInputFilter()});
+
+            builder.setView(customLayout);
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
+
+            offerButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    sendOfferMessage(priceEdit.getText().toString());
+                    dialog.dismiss();
+                }
+            });
+        }
+    }
+
     private void initializeControllers() {
-        messageAdapter = new MessageAdapter(messagesList);
+        messageAdapter = new MessageAdapter(messagesList, orderChat.getPostid());
         linearLayoutManager = new LinearLayoutManager(this);
         binding.privateMessagesListOfUsers.setLayoutManager(linearLayoutManager);
         binding.privateMessagesListOfUsers.setAdapter(messageAdapter);
@@ -124,73 +180,218 @@ public class OfferActivity extends AppCompatActivity {
         if(messageMeId.equals(orderChat.getUserid())){
 
             RootRef.child("Offers").child(messageMeId).child(buyerId).child(orderChat.getPostid())
-                    .addChildEventListener(new ChildEventListener() {
-                        @Override
-                        public void onChildAdded(DataSnapshot dataSnapshot, String s)
-                        {
-                            Message message = dataSnapshot.getValue(Message.class);
+                .addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s)
+                    {
+                        //String dataTypeSnapshot = (String)dataSnapshot.child("type").getValue();
 
-                            messagesList.add(message);
-                            messageAdapter.notifyDataSetChanged();
-                            binding.privateMessagesListOfUsers.smoothScrollToPosition(binding.privateMessagesListOfUsers.getAdapter().getItemCount());
+                        Message message;
+                        if(dataSnapshot.child("type").getValue().equals("null")){
+                            message = dataSnapshot.getValue(OfferMessage.class);
+                        }else{
+                            message = dataSnapshot.getValue(Message.class);
+                        }
+                        //Above might be a problem
+
+                        messagesList.add(message);
+                        messageAdapter.notifyDataSetChanged();
+                        binding.privateMessagesListOfUsers.smoothScrollToPosition(binding.privateMessagesListOfUsers.getAdapter().getItemCount());
+                    }
+
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                        for(int i = 0; i < messagesList.size(); i++){
+                            if(messagesList.get(i).getMessageID().equals(dataSnapshot.getKey())){
+
+                                Message message;
+                                if(dataSnapshot.child("type").getValue().equals("null")){
+                                    message = dataSnapshot.getValue(OfferMessage.class);
+                                }else{
+                                    message = dataSnapshot.getValue(Message.class);
+                                }
+
+                                messagesList.set(i, message);
+                            }
                         }
 
-                        @Override
-                        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                        messageAdapter.notifyDataSetChanged();
+                        binding.privateMessagesListOfUsers.smoothScrollToPosition(binding.privateMessagesListOfUsers.getAdapter().getItemCount());
+                    }
 
-                        }
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
 
-                        @Override
-                        public void onChildRemoved(DataSnapshot dataSnapshot) {
+                    }
 
-                        }
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
 
-                        @Override
-                        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                    }
 
-                        }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
 
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
+                    }
+                });
         }else{
 
             RootRef.child("Offers").child(messageMeId).child(orderChat.getUserid()).child(orderChat.getPostid())
-                    .addChildEventListener(new ChildEventListener() {
-                        @Override
-                        public void onChildAdded(DataSnapshot dataSnapshot, String s)
-                        {
-                            Message message = dataSnapshot.getValue(Message.class);
+                .addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s)
+                    {
+                        RootRef.child("Offers")
+                                .child(messageMeId)
+                                .child(orderChat.getUserid())
+                                .child(orderChat.getPostid())
+                                .child(dataSnapshot.getKey())
+                                .child("type")
+                                .addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataTypeSnapshot) {
+                                        Message message;
+                                        if(dataTypeSnapshot.getValue().equals("null")){
+                                            message = dataSnapshot.getValue(OfferMessage.class);
+                                        }else{
+                                            message = dataSnapshot.getValue(Message.class);
+                                        }
+                                        //Above might be a problem
 
-                            messagesList.add(message);
-                            messageAdapter.notifyDataSetChanged();
-                            binding.privateMessagesListOfUsers.smoothScrollToPosition(binding.privateMessagesListOfUsers.getAdapter().getItemCount());
+                                        messagesList.add(message);
+                                        messageAdapter.notifyDataSetChanged();
+                                        binding.privateMessagesListOfUsers.smoothScrollToPosition(binding.privateMessagesListOfUsers.getAdapter().getItemCount());
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                    }
+                                });
+
+//                            Message message = dataSnapshot.getValue(Message.class);
+//
+//                            messagesList.add(message);
+//                            messageAdapter.notifyDataSetChanged();
+//                            binding.privateMessagesListOfUsers.smoothScrollToPosition(binding.privateMessagesListOfUsers.getAdapter().getItemCount());
+                    }
+
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                        for(int i = 0; i < messagesList.size(); i++){
+                            if(messagesList.get(i).getMessageID().equals(dataSnapshot.getKey())){
+
+                                Message message;
+                                if(dataSnapshot.child("type").getValue().equals("null")){
+                                    message = dataSnapshot.getValue(OfferMessage.class);
+                                }else{
+                                    message = dataSnapshot.getValue(Message.class);
+                                }
+
+                                messagesList.set(i, message);
+                            }
                         }
 
-                        @Override
-                        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                        messageAdapter.notifyDataSetChanged();
+                        binding.privateMessagesListOfUsers.smoothScrollToPosition(binding.privateMessagesListOfUsers.getAdapter().getItemCount());
+                    }
 
-                        }
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
 
-                        @Override
-                        public void onChildRemoved(DataSnapshot dataSnapshot) {
+                    }
 
-                        }
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
 
-                        @Override
-                        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                    }
 
-                        }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
 
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
+                    }
+                });
 
         }
+
+    }
+
+    private void sendOfferMessage(String price){
+
+        Map messageBodyDetails = new HashMap();
+
+        if(messageMeId.equals(orderChat.getUserid())) {
+            String messageSenderRef = "Offers/" + messageMeId + "/" + buyerId + "/" + orderChat.getPostid();
+            String messageReceiverRef = "Offers/" + buyerId + "/" + messageMeId + "/" + orderChat.getPostid();
+
+            DatabaseReference userMessageKeyRef = RootRef.child("Offers")
+                    .child(messageMeId).child(buyerId).child(orderChat.getPostid()).push();
+
+            String messagePushID = userMessageKeyRef.getKey();
+
+            Map messageTextBody = new HashMap();
+            messageTextBody.put("price", price);
+            messageTextBody.put("acceptStatus", "pending");
+
+            messageTextBody.put("message", "null");
+            messageTextBody.put("type", "null");
+            messageTextBody.put("from", messageMeId);
+            messageTextBody.put("to", buyerId);
+            messageTextBody.put("messageID", messagePushID);
+            messageTextBody.put("time", saveCurrentTime);
+            messageTextBody.put("date", saveCurrentDate);
+            messageTextBody.put("nanopast", System.currentTimeMillis());
+
+            messageBodyDetails = new HashMap();
+            messageBodyDetails.put(messageSenderRef + "/" + messagePushID, messageTextBody);
+            messageBodyDetails.put( messageReceiverRef + "/" + messagePushID, messageTextBody);
+
+        }
+        else{
+            String messageSenderRef = "Offers/" + messageMeId + "/" + orderChat.getUserid() + "/" + orderChat.getPostid();
+            String messageReceiverRef = "Offers/" + orderChat.getUserid() + "/" + messageMeId + "/" + orderChat.getPostid();
+
+            DatabaseReference userMessageKeyRef = RootRef.child("Offers")
+                    .child(messageMeId).child(orderChat.getUserid()).child(orderChat.getPostid()).push();
+
+            String messagePushID = userMessageKeyRef.getKey();
+
+            Map messageTextBody = new HashMap();
+            messageTextBody.put("price", price);
+            messageTextBody.put("acceptStatus", "pending");
+
+            messageTextBody.put("message", "null");
+            messageTextBody.put("type", "null");
+            messageTextBody.put("from", messageMeId);
+            messageTextBody.put("to", orderChat.getUserid());
+            messageTextBody.put("messageID", messagePushID);
+            messageTextBody.put("time", saveCurrentTime);
+            messageTextBody.put("date", saveCurrentDate);
+            messageTextBody.put("nanopast", System.currentTimeMillis());
+
+
+            messageBodyDetails = new HashMap();
+            messageBodyDetails.put(messageSenderRef + "/" + messagePushID, messageTextBody);
+            messageBodyDetails.put( messageReceiverRef + "/" + messagePushID, messageTextBody);
+
+        }
+
+        RootRef.updateChildren(messageBodyDetails).addOnCompleteListener(new OnCompleteListener() {
+            @Override
+            public void onComplete(@NonNull Task task)
+            {
+                if (task.isSuccessful())
+                {
+                    Toast.makeText(OfferActivity.this, "Message Sent Successfully...", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    Toast.makeText(OfferActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                }
+                binding.inputMessage.setText("");
+            }
+        });
 
     }
 

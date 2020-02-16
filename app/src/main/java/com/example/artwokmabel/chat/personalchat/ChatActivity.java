@@ -81,7 +81,7 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void initializeControllers() {
-        messageAdapter = new MessageAdapter(messagesList);
+        messageAdapter = new MessageAdapter(messagesList, "");
         linearLayoutManager = new LinearLayoutManager(this);
         binding.privateMessagesListOfUsers.setLayoutManager(linearLayoutManager);
         binding.privateMessagesListOfUsers.setAdapter(messageAdapter);

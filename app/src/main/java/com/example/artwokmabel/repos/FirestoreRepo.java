@@ -20,6 +20,7 @@ import com.example.artwokmabel.login.LoginActivity;
 import com.example.artwokmabel.chat.models.Comment;
 import com.example.artwokmabel.chat.models.UserUserModel;
 import com.example.artwokmabel.models.Message;
+import com.example.artwokmabel.models.OfferMessage;
 import com.example.artwokmabel.models.OrderChat;
 import com.example.artwokmabel.models.Request;
 import com.example.artwokmabel.homepage.request.upload.UploadRequestActivity;
@@ -1199,8 +1200,8 @@ public class FirestoreRepo {
                         }
 
                         for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
-                            MainPost listdata = changeDocToMainPostModel(doc);
-                            tempData.add(listdata);
+                            MainPost postData = changeDocToMainPostModel(doc);
+                            tempData.add(postData);
                         }
 
                         //Below sorts posts according to date posted
@@ -1325,9 +1326,13 @@ public class FirestoreRepo {
                                 String listingId = listingSnapshot.getKey();
                                 ArrayList<Message> messages = new ArrayList<>();
                                 for(DataSnapshot messageSnapshot : listingSnapshot.getChildren()){
+                                    //Log.d("hellplz", messageSnapshot.getValue(Message.class).toString());
+                                    if(messageSnapshot.child("type").equals("null")){
+                                        messages.add(messageSnapshot.getValue(OfferMessage.class));
+                                    }else{
                                         messages.add(messageSnapshot.getValue(Message.class));
+                                    }
                                 }
-                                //For some reason only my last seen messages appear and not the other person's
 
                                 Collections.sort(messages, new SortMessages());
                                 Message lastMessage = messages.get(messages.size() - 1);
