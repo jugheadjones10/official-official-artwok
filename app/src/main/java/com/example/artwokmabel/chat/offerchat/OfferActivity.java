@@ -241,33 +241,18 @@ public class OfferActivity extends AppCompatActivity {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s)
                     {
-                        RootRef.child("Offers")
-                                .child(messageMeId)
-                                .child(orderChat.getUserid())
-                                .child(orderChat.getPostid())
-                                .child(dataSnapshot.getKey())
-                                .child("type")
-                                .addListenerForSingleValueEvent(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot dataTypeSnapshot) {
-                                        Message message;
-                                        if(dataTypeSnapshot.getValue().equals("null")){
-                                            message = dataSnapshot.getValue(OfferMessage.class);
-                                        }else{
-                                            message = dataSnapshot.getValue(Message.class);
-                                        }
-                                        //Above might be a problem
 
-                                        messagesList.add(message);
-                                        messageAdapter.notifyDataSetChanged();
-                                        binding.privateMessagesListOfUsers.smoothScrollToPosition(binding.privateMessagesListOfUsers.getAdapter().getItemCount());
-                                    }
+                        Message message;
+                        if(dataSnapshot.child("type").getValue().equals("null")){
+                            message = dataSnapshot.getValue(OfferMessage.class);
+                        }else{
+                            message = dataSnapshot.getValue(Message.class);
+                        }
+                        //Above might be a problem
 
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                    }
-                                });
+                        messagesList.add(message);
+                        messageAdapter.notifyDataSetChanged();
+                        binding.privateMessagesListOfUsers.smoothScrollToPosition(binding.privateMessagesListOfUsers.getAdapter().getItemCount());
 
 //                            Message message = dataSnapshot.getValue(Message.class);
 //
