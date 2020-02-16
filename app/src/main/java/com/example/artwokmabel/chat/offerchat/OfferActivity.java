@@ -201,6 +201,7 @@ public class OfferActivity extends AppCompatActivity {
 
                     @Override
                     public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
                         for(int i = 0; i < messagesList.size(); i++){
                             if(messagesList.get(i).getMessageID().equals(dataSnapshot.getKey())){
 
@@ -210,7 +211,6 @@ public class OfferActivity extends AppCompatActivity {
                                 }else{
                                     message = dataSnapshot.getValue(Message.class);
                                 }
-
                                 messagesList.set(i, message);
                             }
                         }
@@ -264,22 +264,22 @@ public class OfferActivity extends AppCompatActivity {
                     @Override
                     public void onChildChanged(DataSnapshot dataSnapshot, String s) {
 
-                        for(int i = 0; i < messagesList.size(); i++){
-                            if(messagesList.get(i).getMessageID().equals(dataSnapshot.getKey())){
-
-                                Message message;
-                                if(dataSnapshot.child("type").getValue().equals("null")){
-                                    message = dataSnapshot.getValue(OfferMessage.class);
-                                }else{
-                                    message = dataSnapshot.getValue(Message.class);
-                                }
-
-                                messagesList.set(i, message);
-                            }
-                        }
-
-                        messageAdapter.notifyDataSetChanged();
-                        binding.privateMessagesListOfUsers.smoothScrollToPosition(binding.privateMessagesListOfUsers.getAdapter().getItemCount());
+//                        for(int i = 0; i < messagesList.size(); i++){
+//                            if(messagesList.get(i).getMessageID().equals(dataSnapshot.getKey())){
+//
+//                                Message message;
+//                                if(dataSnapshot.child("type").getValue().equals("null")){
+//                                    message = dataSnapshot.getValue(OfferMessage.class);
+//                                }else{
+//                                    message = dataSnapshot.getValue(Message.class);
+//                                }
+//
+//                                messagesList.set(i, message);
+//                            }
+//                        }
+//
+//                        messageAdapter.notifyDataSetChanged();
+//                        binding.privateMessagesListOfUsers.smoothScrollToPosition(binding.privateMessagesListOfUsers.getAdapter().getItemCount());
                     }
 
                     @Override
@@ -297,7 +297,6 @@ public class OfferActivity extends AppCompatActivity {
 
                     }
                 });
-
         }
 
     }

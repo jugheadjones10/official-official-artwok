@@ -1,6 +1,7 @@
 package com.example.artwokmabel.chat.personalchat;
 
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -119,15 +120,23 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
                 offerViewHolder.priceText.setText(offerMessage.getPrice());
 
+                Log.d("seeformyself", offerMessage.getAcceptStatus());
+
                 if(offerMessage.getAcceptStatus().equals("accepted")){
+                    Log.d("seeformyself", "ACCEPTED RAN");
+
                     offerViewHolder.declineButton.setVisibility(View.GONE);
                     offerViewHolder.acceptButton.setText("Accepted");
                     offerViewHolder.acceptButton.setEnabled(false);
                 }else if(offerMessage.getAcceptStatus().equals("declined")){
+
+                    Log.d("seeformyself", "DECLINE RAN");
+
                     offerViewHolder.acceptButton.setVisibility(View.GONE);
                     offerViewHolder.declineButton.setText("Declined");
                     offerViewHolder.declineButton.setEnabled(false);
                 }else{
+                    Log.d("seeformyself", "PENDING RAN");
 
                     if(mAuth.getCurrentUser().getUid().equals(offerMessage.getFrom())){
                         offerViewHolder.acceptDeclineLayout.setVisibility(View.GONE);
