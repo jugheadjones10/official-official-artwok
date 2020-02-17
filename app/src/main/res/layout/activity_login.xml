@@ -109,6 +109,7 @@
                     android:layout_height="match_parent"
                     android:textAllCaps="false"
                     android:textStyle="bold"
+
                     android:layout_marginRight="30dp"
                     android:gravity="end|bottom"
                     android:text="@string/forgot_password"

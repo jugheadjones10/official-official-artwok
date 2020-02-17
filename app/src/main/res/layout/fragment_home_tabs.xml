@@ -54,19 +54,19 @@
                         <ImageView
                             android:id="@+id/mainsearchbar"
                             android:layout_width="25dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
+                            android:layout_height="35dp"
+                            android:layout_gravity="bottom"
                             android:src="@drawable/search_icon" />
 
                         <ImageButton
                             android:id="@+id/fav_btn"
                             android:layout_width="45dp"
-                            android:layout_height="wrap_content"
-
-                            android:layout_gravity="center_vertical"
+                            android:layout_height="35dp"
+                            android:layout_gravity="bottom"
+                            android:layout_marginRight="5dp"
                             android:adjustViewBounds="true"
+                            android:padding="5dp"
                             android:background="@null"
-                            android:padding="10dp"
                             android:scaleType="fitCenter"
                             android:src="@drawable/ic_heart" />
                     </LinearLayout>
