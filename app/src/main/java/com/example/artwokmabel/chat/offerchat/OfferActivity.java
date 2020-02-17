@@ -65,6 +65,7 @@ public class OfferActivity extends AppCompatActivity {
     private MessageAdapter messageAdapter;
     private final List<Message> messagesList = new ArrayList<>();
 
+
     private String saveCurrentTime, saveCurrentDate;
 
     @Override
@@ -150,7 +151,7 @@ public class OfferActivity extends AppCompatActivity {
     }
 
     private void initializeControllers() {
-        messageAdapter = new MessageAdapter(messagesList, orderChat.getPostid());
+        messageAdapter = new MessageAdapter(messagesList, orderChat);
         linearLayoutManager = new LinearLayoutManager(this);
         binding.privateMessagesListOfUsers.setLayoutManager(linearLayoutManager);
         binding.privateMessagesListOfUsers.setAdapter(messageAdapter);
@@ -182,8 +183,98 @@ public class OfferActivity extends AppCompatActivity {
     {
         super.onStart();
 
-
         //if(messageMeId.equals(orderChat.getUserid())){
+
+        RootRef.child("Offers").child(messageMeId).child(theOtherId).child(orderChat.getPostid())
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        ArrayList<OfferMessage> messages = new ArrayList<>();
+
+                        for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                            if(snapshot.child("type").getValue().equals("null")){
+                                messages.add(snapshot.getValue(OfferMessage.class));
+                            }
+                        }
+
+                        if(messages.size() != 0){
+                            OfferMessage lastMessage = messages.get(messages.size() - 1);
+
+                            if(lastMessage.getAcceptStatus().equals("accepted")){
+                                if(messageMeId.equals(orderChat.getUserid())) {
+                                    binding.offerButton.setText("Delivered");
+
+                                    binding.offerButton.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            RootRef.child("Offers")
+                                                    .child(messageMeId)
+                                                    .child(theOtherId)
+                                                    .child(orderChat.getPostid())
+                                                    .child(lastMessage.getMessageID())
+                                                    .child("acceptStatus")
+                                                    .setValue("delivered");
+
+                                            RootRef.child("Offers")
+                                                    .child(theOtherId)
+                                                    .child(messageMeId)
+                                                    .child(orderChat.getPostid())
+                                                    .child(lastMessage.getMessageID())
+                                                    .child("acceptStatus")
+                                                    .setValue("delivered");
+
+                                        }
+                                    });
+
+                                } else{
+                                    binding.offerButton.setText("Offered");
+                                    binding.offerButton.setEnabled(false);
+                                }
+
+                            }else if(lastMessage.getAcceptStatus().equals("delivered")){
+
+                                if(messageMeId.equals(orderChat.getUserid())) {
+                                    binding.offerButton.setText("Delivered 😜");
+                                    binding.offerButton.setEnabled(false);
+
+                                } else{
+                                    binding.offerButton.setText("Received");
+                                    binding.offerButton.setEnabled(true);
+
+                                    binding.offerButton.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            RootRef.child("Offers")
+                                                    .child(messageMeId)
+                                                    .child(theOtherId)
+                                                    .child(orderChat.getPostid())
+                                                    .child(lastMessage.getMessageID())
+                                                    .child("acceptStatus")
+                                                    .setValue("received");
+
+                                            RootRef.child("Offers")
+                                                    .child(theOtherId)
+                                                    .child(messageMeId)
+                                                    .child(orderChat.getPostid())
+                                                    .child(lastMessage.getMessageID())
+                                                    .child("acceptStatus")
+                                                    .setValue("received");
+                                        }
+                                    });
+                                }
+                            }else if(lastMessage.getAcceptStatus().equals("received")){
+                                binding.offerButton.setText("Received 🤩");
+                                binding.offerButton.setEnabled(false);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
 
             RootRef.child("Offers").child(messageMeId).child(theOtherId).child(orderChat.getPostid())
                 .addChildEventListener(new ChildEventListener() {

@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.models.Message;
 import com.example.artwokmabel.models.OfferMessage;
+import com.example.artwokmabel.models.OrderChat;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -32,14 +33,15 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private List<Message> userMessageList;
     private FirebaseAuth mAuth;
     private DatabaseReference usersRef;
-    private String listingId;
+    private OrderChat orderChat;
+    private Button offerButton;
 
     private final int OFFER = 0, TALK = 1;
 
-    public MessageAdapter (List<Message> userMessagesList, String listingId)
+    public MessageAdapter (List<Message> userMessagesList, OrderChat orderChat)
     {
         this.userMessageList = userMessagesList;
-        this.listingId = listingId;
+        this.orderChat = orderChat;
         mAuth = FirebaseAuth.getInstance();
     }
 
@@ -47,7 +49,6 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         public TextView senderMessageText, receiverMessageText;
         public CircleImageView receiverProfileImage;
         public ImageView messageSenderPicture, messageReceiverPicture;
-
 
         public MessageViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -122,7 +123,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
                 Log.d("seeformyself", offerMessage.getAcceptStatus());
 
-                if(offerMessage.getAcceptStatus().equals("accepted")){
+                if(offerMessage.getAcceptStatus().equals("accepted") || offerMessage.getAcceptStatus().equals("received") || offerMessage.getAcceptStatus().equals("delivered")){
                     Log.d("seeformyself", "ACCEPTED RAN");
                     offerViewHolder.acceptDeclineLayout.setVisibility(View.VISIBLE);
 
@@ -131,6 +132,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
                     offerViewHolder.acceptButton.setText("Accepted");
                     offerViewHolder.acceptButton.setEnabled(false);
+
                 }else if(offerMessage.getAcceptStatus().equals("declined")){
 
                     Log.d("seeformyself", "DECLINE RAN");
@@ -141,7 +143,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
                     offerViewHolder.declineButton.setText("Declined");
                     offerViewHolder.declineButton.setEnabled(false);
-                }else{
+                }else if(offerMessage.getAcceptStatus().equals("pending")){
                     Log.d("seeformyself", "PENDING RAN");
 
                     if(mAuth.getCurrentUser().getUid().equals(offerMessage.getFrom())){
@@ -162,6 +164,8 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                             public void onClick(View v) {
 
                                 setAcceptStaus(offerMessage, "accepted");
+
+
 //                                FirebaseDatabase.getInstance().getReference()
 //                                        .child("Offers")
 //                                        .child(offerMessage.getTo())
@@ -277,7 +281,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 .child("Offers")
                 .child(offerMessage.getTo())
                 .child(offerMessage.getFrom())
-                .child(listingId)
+                .child(orderChat.getPostid())
                 .child(offerMessage.getMessageID())
                 .child("acceptStatus")
                 .setValue(offerStatus);
@@ -286,7 +290,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 .child("Offers")
                 .child(offerMessage.getFrom())
                 .child(offerMessage.getTo())
-                .child(listingId)
+                .child(orderChat.getPostid())
                 .child(offerMessage.getMessageID())
                 .child("acceptStatus")
                 .setValue(offerStatus);

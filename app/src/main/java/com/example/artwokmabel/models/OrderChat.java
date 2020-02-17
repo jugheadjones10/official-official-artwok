@@ -19,6 +19,10 @@ public class OrderChat extends Listing implements Serializable {
         this.buyerId = buyerId;
     }
 
+    public OrderChat(){
+
+    }
+
     public Message getLastMessage() {
         return lastMessage;
     }

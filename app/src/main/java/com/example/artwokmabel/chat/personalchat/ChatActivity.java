@@ -17,6 +17,7 @@ import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.ActivityChatBinding;
 import com.example.artwokmabel.databinding.CustomChatBarBinding;
 import com.example.artwokmabel.models.Message;
+import com.example.artwokmabel.models.OrderChat;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -81,7 +82,7 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void initializeControllers() {
-        messageAdapter = new MessageAdapter(messagesList, "");
+        messageAdapter = new MessageAdapter(messagesList, new OrderChat());
         linearLayoutManager = new LinearLayoutManager(this);
         binding.privateMessagesListOfUsers.setLayoutManager(linearLayoutManager);
         binding.privateMessagesListOfUsers.setAdapter(messageAdapter);
