@@ -92,14 +92,14 @@
                 android:text="@string/list"
                 android:textColor="@color/artwok_black" />
 
-            <Button
+<!--            <Button
                 android:id="@+id/save_btnL"
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="@string/save"
-                android:textColor="@color/artwok_black" />
+                android:textColor="@color/artwok_black" />-->
         </LinearLayout>
 
 

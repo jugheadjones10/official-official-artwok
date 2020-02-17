@@ -54,8 +54,9 @@
                     <ImageView
                         android:id="@+id/mainsearchbar"
                         android:layout_width="25dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
+                        android:layout_height="35dp"
+                        android:layout_gravity="bottom"
+                        android:layout_marginRight="20dp"
                         android:src="@drawable/search_icon" />
                 </LinearLayout>
             </androidx.appcompat.widget.Toolbar>

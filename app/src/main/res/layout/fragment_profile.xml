@@ -71,6 +71,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="8dp"
                 android:src="@drawable/ic_user"
+                android:layout_marginBottom="5dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/linearLayout7"
                 app:layout_constraintHorizontal_chainStyle="spread_inside"
@@ -137,7 +138,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:textStyle="bold"
-                    android:gravity="center"
+                    android:gravity="center|bottom"
                     android:text="@{Integer.toString(numlistings)}" />
 
                 <TextView
@@ -145,9 +146,10 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:textColor="@color/artwok_white"
-                    android:gravity="center|center_vertical"
+                    android:gravity="top|center"
+                    android:paddingTop="3dp"
                     android:text="Listings"
-                    android:textSize="10sp" />
+                    android:textSize="11sp" />
 
             </LinearLayout>
 
@@ -171,17 +173,18 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:textStyle="bold"
-                    android:gravity="center"
+                    android:gravity="center|bottom"
                     android:text="@{Integer.toString(numposts)}" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
+                    android:paddingTop="3dp"
                     android:textColor="@color/artwok_white"
-                    android:gravity="center"
+                    android:gravity="center|top"
                     android:text="Posts"
-                    android:textSize="10sp" />
+                    android:textSize="11sp" />
 
             </LinearLayout>
 
