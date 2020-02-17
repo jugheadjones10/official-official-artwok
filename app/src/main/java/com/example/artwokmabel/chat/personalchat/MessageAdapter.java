@@ -71,7 +71,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
             acceptButton = itemView.findViewById(R.id.accept_button);
             declineButton = itemView.findViewById(R.id.decline_button);
-            receiverProfileImage = (CircleImageView) itemView.findViewById(R.id.message_profile_image);
+            receiverProfileImage = itemView.findViewById(R.id.message_profile_image);
             priceText = itemView.findViewById(R.id.offer_price);
             acceptDeclineLayout = itemView.findViewById(R.id.accept_decline_linear_layout);
         }
@@ -124,6 +124,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
                 if(offerMessage.getAcceptStatus().equals("accepted")){
                     Log.d("seeformyself", "ACCEPTED RAN");
+                    offerViewHolder.acceptDeclineLayout.setVisibility(View.VISIBLE);
 
                     offerViewHolder.declineButton.setVisibility(View.GONE);
                     offerViewHolder.acceptButton.setText("Accepted");
@@ -131,6 +132,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 }else if(offerMessage.getAcceptStatus().equals("declined")){
 
                     Log.d("seeformyself", "DECLINE RAN");
+                    offerViewHolder.acceptDeclineLayout.setVisibility(View.VISIBLE);
 
                     offerViewHolder.acceptButton.setVisibility(View.GONE);
                     offerViewHolder.declineButton.setText("Declined");
@@ -146,46 +148,50 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                             @Override
                             public void onClick(View v) {
 
-                                FirebaseDatabase.getInstance().getReference()
-                                        .child("Offers")
-                                        .child(offerMessage.getTo())
-                                        .child(offerMessage.getFrom())
-                                        .child(listingId)
-                                        .child(offerMessage.getMessageID())
-                                        .child("acceptStatus")
-                                        .setValue("accepted");
-
-                                FirebaseDatabase.getInstance().getReference()
-                                        .child("Offers")
-                                        .child(offerMessage.getFrom())
-                                        .child(offerMessage.getTo())
-                                        .child(listingId)
-                                        .child(offerMessage.getMessageID())
-                                        .child("acceptStatus")
-                                        .setValue("accepted");
+                                setAcceptStaus(offerMessage, "accepted");
+//                                FirebaseDatabase.getInstance().getReference()
+//                                        .child("Offers")
+//                                        .child(offerMessage.getTo())
+//                                        .child(offerMessage.getFrom())
+//                                        .child(listingId)
+//                                        .child(offerMessage.getMessageID())
+//                                        .child("acceptStatus")
+//                                        .setValue("accepted");
+//
+//                                FirebaseDatabase.getInstance().getReference()
+//                                        .child("Offers")
+//                                        .child(offerMessage.getFrom())
+//                                        .child(offerMessage.getTo())
+//                                        .child(listingId)
+//                                        .child(offerMessage.getMessageID())
+//                                        .child("acceptStatus")
+//                                        .setValue("accepted");
                             }
                         });
 
                         offerViewHolder.declineButton.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                FirebaseDatabase.getInstance().getReference()
-                                        .child("Offers")
-                                        .child(offerMessage.getTo())
-                                        .child(offerMessage.getFrom())
-                                        .child(listingId)
-                                        .child(offerMessage.getMessageID())
-                                        .child("acceptStatus")
-                                        .setValue("declined");
 
-                                FirebaseDatabase.getInstance().getReference()
-                                        .child("Offers")
-                                        .child(offerMessage.getFrom())
-                                        .child(offerMessage.getTo())
-                                        .child(listingId)
-                                        .child(offerMessage.getMessageID())
-                                        .child("acceptStatus")
-                                        .setValue("declined");
+                                setAcceptStaus(offerMessage, "declined");
+
+//                                FirebaseDatabase.getInstance().getReference()
+////                                        .child("Offers")
+////                                        .child(offerMessage.getTo())
+////                                        .child(offerMessage.getFrom())
+////                                        .child(listingId)
+////                                        .child(offerMessage.getMessageID())
+////                                        .child("acceptStatus")
+////                                        .setValue("declined");
+////
+////                                FirebaseDatabase.getInstance().getReference()
+////                                        .child("Offers")
+////                                        .child(offerMessage.getFrom())
+////                                        .child(offerMessage.getTo())
+////                                        .child(listingId)
+////                                        .child(offerMessage.getMessageID())
+////                                        .child("acceptStatus")
+////                                        .setValue("declined");
                             }
                         });
                     }
@@ -251,6 +257,26 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
 
 
+    }
+
+    private void setAcceptStaus(OfferMessage offerMessage, String offerStatus){
+        FirebaseDatabase.getInstance().getReference()
+                .child("Offers")
+                .child(offerMessage.getTo())
+                .child(offerMessage.getFrom())
+                .child(listingId)
+                .child(offerMessage.getMessageID())
+                .child("acceptStatus")
+                .setValue(offerStatus);
+
+        FirebaseDatabase.getInstance().getReference()
+                .child("Offers")
+                .child(offerMessage.getFrom())
+                .child(offerMessage.getTo())
+                .child(listingId)
+                .child(offerMessage.getMessageID())
+                .child("acceptStatus")
+                .setValue(offerStatus);
     }
 
     @Override

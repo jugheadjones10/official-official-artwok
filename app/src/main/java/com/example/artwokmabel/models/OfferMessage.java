@@ -5,9 +5,6 @@ public class OfferMessage extends Message{
     private String price;
     private String acceptStatus;
 
-
-    //public Message(String from, String message, String type, String to, String messageID, String time, String date, String name, long nanopast) {
-
     public OfferMessage(){
 
     }

@@ -55,6 +55,7 @@ public class OfferActivity extends AppCompatActivity {
     private ActivityOfferBinding binding;
     private CustomOfferBarBinding offerBarBinding;
     private String messageFollowingId, messageFollowingUsername, messageFollowingProfileImg, messageMeId, buyerId;
+    private String theOtherId;
     private OrderChat orderChat;
 
     private FirebaseAuth mAuth;
@@ -82,7 +83,11 @@ public class OfferActivity extends AppCompatActivity {
         if(messageMeId.equals(orderChat.getUserid())){
             buyerId = orderChat.getBuyerId();
             //Also might need to put in a check here to see if buyerId is null or not.
+            theOtherId = buyerId;
+        }else{
+            theOtherId = orderChat.getUserid();
         }
+
         initializeControllers();
 
         offerBarBinding.setOrderchat(orderChat);
@@ -177,9 +182,10 @@ public class OfferActivity extends AppCompatActivity {
     {
         super.onStart();
 
-        if(messageMeId.equals(orderChat.getUserid())){
 
-            RootRef.child("Offers").child(messageMeId).child(buyerId).child(orderChat.getPostid())
+        //if(messageMeId.equals(orderChat.getUserid())){
+
+            RootRef.child("Offers").child(messageMeId).child(theOtherId).child(orderChat.getPostid())
                 .addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s)
@@ -211,6 +217,8 @@ public class OfferActivity extends AppCompatActivity {
                                 }else{
                                     message = dataSnapshot.getValue(Message.class);
                                 }
+                                //Actually the above check is redundant
+
                                 messagesList.set(i, message);
                             }
                         }
@@ -234,70 +242,71 @@ public class OfferActivity extends AppCompatActivity {
 
                     }
                 });
-        }else{
-
-            RootRef.child("Offers").child(messageMeId).child(orderChat.getUserid()).child(orderChat.getPostid())
-                .addChildEventListener(new ChildEventListener() {
-                    @Override
-                    public void onChildAdded(DataSnapshot dataSnapshot, String s)
-                    {
-
-                        Message message;
-                        if(dataSnapshot.child("type").getValue().equals("null")){
-                            message = dataSnapshot.getValue(OfferMessage.class);
-                        }else{
-                            message = dataSnapshot.getValue(Message.class);
-                        }
-                        //Above might be a problem
-
-                        messagesList.add(message);
-                        messageAdapter.notifyDataSetChanged();
-                        binding.privateMessagesListOfUsers.smoothScrollToPosition(binding.privateMessagesListOfUsers.getAdapter().getItemCount());
-
-//                            Message message = dataSnapshot.getValue(Message.class);
+//        }
+//        else{
 //
-//                            messagesList.add(message);
-//                            messageAdapter.notifyDataSetChanged();
-//                            binding.privateMessagesListOfUsers.smoothScrollToPosition(binding.privateMessagesListOfUsers.getAdapter().getItemCount());
-                    }
-
-                    @Override
-                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                        for(int i = 0; i < messagesList.size(); i++){
-                            if(messagesList.get(i).getMessageID().equals(dataSnapshot.getKey())){
-
-                                Message message;
-                                if(dataSnapshot.child("type").getValue().equals("null")){
-                                    message = dataSnapshot.getValue(OfferMessage.class);
-                                }else{
-                                    message = dataSnapshot.getValue(Message.class);
-                                }
-
-                                messagesList.set(i, message);
-                            }
-                        }
-
-                        messageAdapter.notifyDataSetChanged();
-                        binding.privateMessagesListOfUsers.smoothScrollToPosition(binding.privateMessagesListOfUsers.getAdapter().getItemCount());
-                    }
-
-                    @Override
-                    public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                    }
-
-                    @Override
-                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-        }
+//            RootRef.child("Offers").child(messageMeId).child(orderChat.getUserid()).child(orderChat.getPostid())
+//                .addChildEventListener(new ChildEventListener() {
+//                    @Override
+//                    public void onChildAdded(DataSnapshot dataSnapshot, String s)
+//                    {
+//
+//                        Message message;
+//                        if(dataSnapshot.child("type").getValue().equals("null")){
+//                            message = dataSnapshot.getValue(OfferMessage.class);
+//                        }else{
+//                            message = dataSnapshot.getValue(Message.class);
+//                        }
+//                        //Above might be a problem
+//
+//                        messagesList.add(message);
+//                        messageAdapter.notifyDataSetChanged();
+//                        binding.privateMessagesListOfUsers.smoothScrollToPosition(binding.privateMessagesListOfUsers.getAdapter().getItemCount());
+//
+////                            Message message = dataSnapshot.getValue(Message.class);
+////
+////                            messagesList.add(message);
+////                            messageAdapter.notifyDataSetChanged();
+////                            binding.privateMessagesListOfUsers.smoothScrollToPosition(binding.privateMessagesListOfUsers.getAdapter().getItemCount());
+//                    }
+//
+//                    @Override
+//                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+//
+//                        for(int i = 0; i < messagesList.size(); i++){
+//                            if(messagesList.get(i).getMessageID().equals(dataSnapshot.getKey())){
+//
+//                                Message message;
+//                                if(dataSnapshot.child("type").getValue().equals("null")){
+//                                    message = dataSnapshot.getValue(OfferMessage.class);
+//                                }else{
+//                                    message = dataSnapshot.getValue(Message.class);
+//                                }
+//
+//                                messagesList.set(i, message);
+//                            }
+//                        }
+//
+//                        messageAdapter.notifyDataSetChanged();
+//                        binding.privateMessagesListOfUsers.smoothScrollToPosition(binding.privateMessagesListOfUsers.getAdapter().getItemCount());
+//                    }
+//
+//                    @Override
+//                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(DatabaseError databaseError) {
+//
+//                    }
+//                });
+//        }
 
     }
 
@@ -305,61 +314,94 @@ public class OfferActivity extends AppCompatActivity {
 
         Map messageBodyDetails = new HashMap();
 
-        if(messageMeId.equals(orderChat.getUserid())) {
-            String messageSenderRef = "Offers/" + messageMeId + "/" + buyerId + "/" + orderChat.getPostid();
-            String messageReceiverRef = "Offers/" + buyerId + "/" + messageMeId + "/" + orderChat.getPostid();
+//        String theOtherId;
+//        //The below, in other words, means "if I am the seller, or the poster of the listing in question"
+//        if(messageMeId.equals(orderChat.getUserid())) {
+//            theOtherId = buyerId;
+//        }else {
+//            theOtherId = orderChat.getUserid();
+//        }
 
-            DatabaseReference userMessageKeyRef = RootRef.child("Offers")
-                    .child(messageMeId).child(buyerId).child(orderChat.getPostid()).push();
+        String messageSenderRef = "Offers/" + messageMeId + "/" + theOtherId + "/" + orderChat.getPostid();
+        String messageReceiverRef = "Offers/" + theOtherId + "/" + messageMeId + "/" + orderChat.getPostid();
 
-            String messagePushID = userMessageKeyRef.getKey();
+        DatabaseReference userMessageKeyRef = RootRef.child("Offers")
+                .child(messageMeId).child(theOtherId).child(orderChat.getPostid()).push();
 
-            Map messageTextBody = new HashMap();
-            messageTextBody.put("price", price);
-            messageTextBody.put("acceptStatus", "pending");
+        String messagePushID = userMessageKeyRef.getKey();
 
-            messageTextBody.put("message", "null");
-            messageTextBody.put("type", "null");
-            messageTextBody.put("from", messageMeId);
-            messageTextBody.put("to", buyerId);
-            messageTextBody.put("messageID", messagePushID);
-            messageTextBody.put("time", saveCurrentTime);
-            messageTextBody.put("date", saveCurrentDate);
-            messageTextBody.put("nanopast", System.currentTimeMillis());
+        Map messageTextBody = new HashMap();
+        messageTextBody.put("price", price);
+        messageTextBody.put("acceptStatus", "pending");
 
-            messageBodyDetails = new HashMap();
-            messageBodyDetails.put(messageSenderRef + "/" + messagePushID, messageTextBody);
-            messageBodyDetails.put( messageReceiverRef + "/" + messagePushID, messageTextBody);
+        messageTextBody.put("message", "null");
+        messageTextBody.put("type", "null");
+        messageTextBody.put("from", messageMeId);
+        messageTextBody.put("to", theOtherId);
+        messageTextBody.put("messageID", messagePushID);
+        messageTextBody.put("time", saveCurrentTime);
+        messageTextBody.put("date", saveCurrentDate);
+        messageTextBody.put("nanopast", System.currentTimeMillis());
 
-        }
-        else{
-            String messageSenderRef = "Offers/" + messageMeId + "/" + orderChat.getUserid() + "/" + orderChat.getPostid();
-            String messageReceiverRef = "Offers/" + orderChat.getUserid() + "/" + messageMeId + "/" + orderChat.getPostid();
+        messageBodyDetails = new HashMap();
+        messageBodyDetails.put(messageSenderRef + "/" + messagePushID, messageTextBody);
+        messageBodyDetails.put( messageReceiverRef + "/" + messagePushID, messageTextBody);
 
-            DatabaseReference userMessageKeyRef = RootRef.child("Offers")
-                    .child(messageMeId).child(orderChat.getUserid()).child(orderChat.getPostid()).push();
-
-            String messagePushID = userMessageKeyRef.getKey();
-
-            Map messageTextBody = new HashMap();
-            messageTextBody.put("price", price);
-            messageTextBody.put("acceptStatus", "pending");
-
-            messageTextBody.put("message", "null");
-            messageTextBody.put("type", "null");
-            messageTextBody.put("from", messageMeId);
-            messageTextBody.put("to", orderChat.getUserid());
-            messageTextBody.put("messageID", messagePushID);
-            messageTextBody.put("time", saveCurrentTime);
-            messageTextBody.put("date", saveCurrentDate);
-            messageTextBody.put("nanopast", System.currentTimeMillis());
-
-
-            messageBodyDetails = new HashMap();
-            messageBodyDetails.put(messageSenderRef + "/" + messagePushID, messageTextBody);
-            messageBodyDetails.put( messageReceiverRef + "/" + messagePushID, messageTextBody);
-
-        }
+//        if(messageMeId.equals(orderChat.getUserid())) {
+//            String messageSenderRef = "Offers/" + messageMeId + "/" + buyerId + "/" + orderChat.getPostid();
+//            String messageReceiverRef = "Offers/" + buyerId + "/" + messageMeId + "/" + orderChat.getPostid();
+//
+//            DatabaseReference userMessageKeyRef = RootRef.child("Offers")
+//                    .child(messageMeId).child(buyerId).child(orderChat.getPostid()).push();
+//
+//            String messagePushID = userMessageKeyRef.getKey();
+//
+//            Map messageTextBody = new HashMap();
+//            messageTextBody.put("price", price);
+//            messageTextBody.put("acceptStatus", "pending");
+//
+//            messageTextBody.put("message", "null");
+//            messageTextBody.put("type", "null");
+//            messageTextBody.put("from", messageMeId);
+//            messageTextBody.put("to", buyerId);
+//            messageTextBody.put("messageID", messagePushID);
+//            messageTextBody.put("time", saveCurrentTime);
+//            messageTextBody.put("date", saveCurrentDate);
+//            messageTextBody.put("nanopast", System.currentTimeMillis());
+//
+//            messageBodyDetails = new HashMap();
+//            messageBodyDetails.put(messageSenderRef + "/" + messagePushID, messageTextBody);
+//            messageBodyDetails.put( messageReceiverRef + "/" + messagePushID, messageTextBody);
+//
+//        }
+//        else{
+//            String messageSenderRef = "Offers/" + messageMeId + "/" + orderChat.getUserid() + "/" + orderChat.getPostid();
+//            String messageReceiverRef = "Offers/" + orderChat.getUserid() + "/" + messageMeId + "/" + orderChat.getPostid();
+//
+//            DatabaseReference userMessageKeyRef = RootRef.child("Offers")
+//                    .child(messageMeId).child(orderChat.getUserid()).child(orderChat.getPostid()).push();
+//
+//            String messagePushID = userMessageKeyRef.getKey();
+//
+//            Map messageTextBody = new HashMap();
+//            messageTextBody.put("price", price);
+//            messageTextBody.put("acceptStatus", "pending");
+//
+//            messageTextBody.put("message", "null");
+//            messageTextBody.put("type", "null");
+//            messageTextBody.put("from", messageMeId);
+//            messageTextBody.put("to", orderChat.getUserid());
+//            messageTextBody.put("messageID", messagePushID);
+//            messageTextBody.put("time", saveCurrentTime);
+//            messageTextBody.put("date", saveCurrentDate);
+//            messageTextBody.put("nanopast", System.currentTimeMillis());
+//
+//
+//            messageBodyDetails = new HashMap();
+//            messageBodyDetails.put(messageSenderRef + "/" + messagePushID, messageTextBody);
+//            messageBodyDetails.put( messageReceiverRef + "/" + messagePushID, messageTextBody);
+//
+//        }
 
         RootRef.updateChildren(messageBodyDetails).addOnCompleteListener(new OnCompleteListener() {
             @Override
@@ -391,53 +433,87 @@ public class OfferActivity extends AppCompatActivity {
         }
         else
         {
+
             Map messageBodyDetails = new HashMap();
-            if(messageMeId.equals(orderChat.getUserid())) {
-                String messageSenderRef = "Offers/" + messageMeId + "/" + buyerId + "/" + orderChat.getPostid();
-                String messageReceiverRef = "Offers/" + buyerId + "/" + messageMeId + "/" + orderChat.getPostid();
 
-                DatabaseReference userMessageKeyRef = RootRef.child("Offers")
-                        .child(messageMeId).child(buyerId).child(orderChat.getPostid()).push();
+//            String theOtherId;
+//            //The below, in other words, means "if I am the seller, or the poster of the listing in question"
+//            if(messageMeId.equals(orderChat.getUserid())) {
+//                theOtherId = buyerId;
+//            }else {
+//                theOtherId = orderChat.getUserid();
+//            }
 
-                String messagePushID = userMessageKeyRef.getKey();
+            String messageSenderRef = "Offers/" + messageMeId + "/" + theOtherId + "/" + orderChat.getPostid();
+            String messageReceiverRef = "Offers/" + theOtherId + "/" + messageMeId + "/" + orderChat.getPostid();
 
-                Map messageTextBody = new HashMap();
-                messageTextBody.put("message", messageText);
-                messageTextBody.put("type", "text");
-                messageTextBody.put("from", messageMeId);
-                messageTextBody.put("to", buyerId);
-                messageTextBody.put("messageID", messagePushID);
-                messageTextBody.put("time", saveCurrentTime);
-                messageTextBody.put("date", saveCurrentDate);
-                messageTextBody.put("nanopast", System.currentTimeMillis());
+            DatabaseReference userMessageKeyRef = RootRef.child("Offers")
+                    .child(messageMeId).child(theOtherId).child(orderChat.getPostid()).push();
 
-                messageBodyDetails = new HashMap();
-                messageBodyDetails.put(messageSenderRef + "/" + messagePushID, messageTextBody);
-                messageBodyDetails.put( messageReceiverRef + "/" + messagePushID, messageTextBody);
+            String messagePushID = userMessageKeyRef.getKey();
 
-            }else{
-                String messageSenderRef = "Offers/" + messageMeId + "/" + orderChat.getUserid() + "/" + orderChat.getPostid();
-                String messageReceiverRef = "Offers/" + orderChat.getUserid() + "/" + messageMeId + "/" + orderChat.getPostid();
+            Map messageTextBody = new HashMap();
 
-                DatabaseReference userMessageKeyRef = RootRef.child("Offers")
-                        .child(messageMeId).child(orderChat.getUserid()).child(orderChat.getPostid()).push();
+            messageTextBody.put("message", "null");
+            messageTextBody.put("type", "null");
+            messageTextBody.put("from", messageMeId);
+            messageTextBody.put("to", theOtherId);
+            messageTextBody.put("messageID", messagePushID);
+            messageTextBody.put("time", saveCurrentTime);
+            messageTextBody.put("date", saveCurrentDate);
+            messageTextBody.put("nanopast", System.currentTimeMillis());
 
-                String messagePushID = userMessageKeyRef.getKey();
+            messageBodyDetails = new HashMap();
+            messageBodyDetails.put(messageSenderRef + "/" + messagePushID, messageTextBody);
+            messageBodyDetails.put( messageReceiverRef + "/" + messagePushID, messageTextBody);
 
-                Map messageTextBody = new HashMap();
-                messageTextBody.put("message", messageText);
-                messageTextBody.put("type", "text");
-                messageTextBody.put("from", messageMeId);
-                messageTextBody.put("to", orderChat.getUserid());
-                messageTextBody.put("messageID", messagePushID);
-                messageTextBody.put("time", saveCurrentTime);
-                messageTextBody.put("date", saveCurrentDate);
-
-                messageBodyDetails = new HashMap();
-                messageBodyDetails.put(messageSenderRef + "/" + messagePushID, messageTextBody);
-                messageBodyDetails.put( messageReceiverRef + "/" + messagePushID, messageTextBody);
-
-            }
+//            Map messageBodyDetails = new HashMap();
+//            if(messageMeId.equals(orderChat.getUserid())) {
+//                String messageSenderRef = "Offers/" + messageMeId + "/" + buyerId + "/" + orderChat.getPostid();
+//                String messageReceiverRef = "Offers/" + buyerId + "/" + messageMeId + "/" + orderChat.getPostid();
+//
+//                DatabaseReference userMessageKeyRef = RootRef.child("Offers")
+//                        .child(messageMeId).child(buyerId).child(orderChat.getPostid()).push();
+//
+//                String messagePushID = userMessageKeyRef.getKey();
+//
+//                Map messageTextBody = new HashMap();
+//                messageTextBody.put("message", messageText);
+//                messageTextBody.put("type", "text");
+//                messageTextBody.put("from", messageMeId);
+//                messageTextBody.put("to", buyerId);
+//                messageTextBody.put("messageID", messagePushID);
+//                messageTextBody.put("time", saveCurrentTime);
+//                messageTextBody.put("date", saveCurrentDate);
+//                messageTextBody.put("nanopast", System.currentTimeMillis());
+//
+//                messageBodyDetails = new HashMap();
+//                messageBodyDetails.put(messageSenderRef + "/" + messagePushID, messageTextBody);
+//                messageBodyDetails.put( messageReceiverRef + "/" + messagePushID, messageTextBody);
+//
+//            }else{
+//                String messageSenderRef = "Offers/" + messageMeId + "/" + orderChat.getUserid() + "/" + orderChat.getPostid();
+//                String messageReceiverRef = "Offers/" + orderChat.getUserid() + "/" + messageMeId + "/" + orderChat.getPostid();
+//
+//                DatabaseReference userMessageKeyRef = RootRef.child("Offers")
+//                        .child(messageMeId).child(orderChat.getUserid()).child(orderChat.getPostid()).push();
+//
+//                String messagePushID = userMessageKeyRef.getKey();
+//
+//                Map messageTextBody = new HashMap();
+//                messageTextBody.put("message", messageText);
+//                messageTextBody.put("type", "text");
+//                messageTextBody.put("from", messageMeId);
+//                messageTextBody.put("to", orderChat.getUserid());
+//                messageTextBody.put("messageID", messagePushID);
+//                messageTextBody.put("time", saveCurrentTime);
+//                messageTextBody.put("date", saveCurrentDate);
+//
+//                messageBodyDetails = new HashMap();
+//                messageBodyDetails.put(messageSenderRef + "/" + messagePushID, messageTextBody);
+//                messageBodyDetails.put( messageReceiverRef + "/" + messagePushID, messageTextBody);
+//
+//            }
 
             RootRef.updateChildren(messageBodyDetails).addOnCompleteListener(new OnCompleteListener() {
                 @Override
