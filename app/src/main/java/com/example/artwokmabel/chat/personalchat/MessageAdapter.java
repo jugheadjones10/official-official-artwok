@@ -127,6 +127,8 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     offerViewHolder.acceptDeclineLayout.setVisibility(View.VISIBLE);
 
                     offerViewHolder.declineButton.setVisibility(View.GONE);
+                    offerViewHolder.acceptButton.setVisibility(View.VISIBLE);
+
                     offerViewHolder.acceptButton.setText("Accepted");
                     offerViewHolder.acceptButton.setEnabled(false);
                 }else if(offerMessage.getAcceptStatus().equals("declined")){
@@ -135,6 +137,8 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     offerViewHolder.acceptDeclineLayout.setVisibility(View.VISIBLE);
 
                     offerViewHolder.acceptButton.setVisibility(View.GONE);
+                    offerViewHolder.declineButton.setVisibility(View.VISIBLE);
+
                     offerViewHolder.declineButton.setText("Declined");
                     offerViewHolder.declineButton.setEnabled(false);
                 }else{
@@ -143,6 +147,15 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     if(mAuth.getCurrentUser().getUid().equals(offerMessage.getFrom())){
                         offerViewHolder.acceptDeclineLayout.setVisibility(View.GONE);
                     }else{
+                        offerViewHolder.acceptButton.setEnabled(true);
+                        offerViewHolder.declineButton.setEnabled(true);
+
+                        offerViewHolder.acceptDeclineLayout.setVisibility(View.VISIBLE);
+                        offerViewHolder.acceptButton.setVisibility(View.VISIBLE);
+                        offerViewHolder.declineButton.setVisibility(View.VISIBLE);
+
+                        offerViewHolder.acceptButton.setText("Accept");
+                        offerViewHolder.declineButton.setText("Decline");
 
                         offerViewHolder.acceptButton.setOnClickListener(new View.OnClickListener() {
                             @Override

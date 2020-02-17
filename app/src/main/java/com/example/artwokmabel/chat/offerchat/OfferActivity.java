@@ -454,8 +454,8 @@ public class OfferActivity extends AppCompatActivity {
 
             Map messageTextBody = new HashMap();
 
-            messageTextBody.put("message", "null");
-            messageTextBody.put("type", "null");
+            messageTextBody.put("message", messageText);
+            messageTextBody.put("type", "text");
             messageTextBody.put("from", messageMeId);
             messageTextBody.put("to", theOtherId);
             messageTextBody.put("messageID", messagePushID);
