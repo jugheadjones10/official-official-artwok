@@ -110,7 +110,5 @@
     <string name="dialog_add_html_from_web_page_url_hint">http://</string>
     <string name="add_request">Add Request</string>
     <string name="forgot_password">Forgot Password</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="dollar_sign">$</string>
 </resources>
