@@ -183,235 +183,156 @@ public class OfferActivity extends AppCompatActivity {
     {
         super.onStart();
 
-        //if(messageMeId.equals(orderChat.getUserid())){
-
         RootRef.child("Offers").child(messageMeId).child(theOtherId).child(orderChat.getPostid())
-                .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            .addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                        ArrayList<OfferMessage> messages = new ArrayList<>();
+                    ArrayList<OfferMessage> messages = new ArrayList<>();
 
-                        for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                            if(snapshot.child("type").getValue().equals("null")){
-                                messages.add(snapshot.getValue(OfferMessage.class));
-                            }
+                    for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                        if(snapshot.child("type").getValue().equals("null")){
+                            messages.add(snapshot.getValue(OfferMessage.class));
                         }
+                    }
 
-                        if(messages.size() != 0){
-                            OfferMessage lastMessage = messages.get(messages.size() - 1);
+                    if(messages.size() != 0){
+                        OfferMessage lastMessage = messages.get(messages.size() - 1);
 
-                            if(lastMessage.getAcceptStatus().equals("accepted")){
-                                if(messageMeId.equals(orderChat.getUserid())) {
-                                    binding.offerButton.setText("Delivered");
+                        if(lastMessage.getAcceptStatus().equals("accepted")){
+                            if(messageMeId.equals(orderChat.getUserid())) {
+                                binding.offerButton.setText("Delivered");
 
-                                    binding.offerButton.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            RootRef.child("Offers")
-                                                    .child(messageMeId)
-                                                    .child(theOtherId)
-                                                    .child(orderChat.getPostid())
-                                                    .child(lastMessage.getMessageID())
-                                                    .child("acceptStatus")
-                                                    .setValue("delivered");
+                                binding.offerButton.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        RootRef.child("Offers")
+                                                .child(messageMeId)
+                                                .child(theOtherId)
+                                                .child(orderChat.getPostid())
+                                                .child(lastMessage.getMessageID())
+                                                .child("acceptStatus")
+                                                .setValue("delivered");
 
-                                            RootRef.child("Offers")
-                                                    .child(theOtherId)
-                                                    .child(messageMeId)
-                                                    .child(orderChat.getPostid())
-                                                    .child(lastMessage.getMessageID())
-                                                    .child("acceptStatus")
-                                                    .setValue("delivered");
+                                        RootRef.child("Offers")
+                                                .child(theOtherId)
+                                                .child(messageMeId)
+                                                .child(orderChat.getPostid())
+                                                .child(lastMessage.getMessageID())
+                                                .child("acceptStatus")
+                                                .setValue("delivered");
 
-                                        }
-                                    });
+                                    }
+                                });
 
-                                } else{
-                                    binding.offerButton.setText("Offered");
-                                    binding.offerButton.setEnabled(false);
-                                }
-
-                            }else if(lastMessage.getAcceptStatus().equals("delivered")){
-
-                                if(messageMeId.equals(orderChat.getUserid())) {
-                                    binding.offerButton.setText("Delivered 😜");
-                                    binding.offerButton.setEnabled(false);
-
-                                } else{
-                                    binding.offerButton.setText("Received");
-                                    binding.offerButton.setEnabled(true);
-
-                                    binding.offerButton.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            RootRef.child("Offers")
-                                                    .child(messageMeId)
-                                                    .child(theOtherId)
-                                                    .child(orderChat.getPostid())
-                                                    .child(lastMessage.getMessageID())
-                                                    .child("acceptStatus")
-                                                    .setValue("received");
-
-                                            RootRef.child("Offers")
-                                                    .child(theOtherId)
-                                                    .child(messageMeId)
-                                                    .child(orderChat.getPostid())
-                                                    .child(lastMessage.getMessageID())
-                                                    .child("acceptStatus")
-                                                    .setValue("received");
-                                        }
-                                    });
-                                }
-                            }else if(lastMessage.getAcceptStatus().equals("received")){
-                                binding.offerButton.setText("Received 🤩");
+                            } else{
+                                binding.offerButton.setText("Offered");
                                 binding.offerButton.setEnabled(false);
                             }
-                        }
-                    }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        }else if(lastMessage.getAcceptStatus().equals("delivered")){
 
-                    }
-                });
+                            if(messageMeId.equals(orderChat.getUserid())) {
+                                binding.offerButton.setText("Delivered 😜");
+                                binding.offerButton.setEnabled(false);
 
-            RootRef.child("Offers").child(messageMeId).child(theOtherId).child(orderChat.getPostid())
-                .addChildEventListener(new ChildEventListener() {
-                    @Override
-                    public void onChildAdded(DataSnapshot dataSnapshot, String s)
-                    {
-                        //String dataTypeSnapshot = (String)dataSnapshot.child("type").getValue();
+                            } else{
+                                binding.offerButton.setText("Received");
+                                binding.offerButton.setEnabled(true);
 
-                        Message message;
-                        if(dataSnapshot.child("type").getValue().equals("null")){
-                            message = dataSnapshot.getValue(OfferMessage.class);
-                        }else{
-                            message = dataSnapshot.getValue(Message.class);
-                        }
-                        //Above might be a problem
+                                binding.offerButton.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        RootRef.child("Offers")
+                                                .child(messageMeId)
+                                                .child(theOtherId)
+                                                .child(orderChat.getPostid())
+                                                .child(lastMessage.getMessageID())
+                                                .child("acceptStatus")
+                                                .setValue("received");
 
-                        messagesList.add(message);
-                        messageAdapter.notifyDataSetChanged();
-                        binding.privateMessagesListOfUsers.smoothScrollToPosition(binding.privateMessagesListOfUsers.getAdapter().getItemCount());
-                    }
-
-                    @Override
-                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                        for(int i = 0; i < messagesList.size(); i++){
-                            if(messagesList.get(i).getMessageID().equals(dataSnapshot.getKey())){
-
-                                Message message;
-                                if(dataSnapshot.child("type").getValue().equals("null")){
-                                    message = dataSnapshot.getValue(OfferMessage.class);
-                                }else{
-                                    message = dataSnapshot.getValue(Message.class);
-                                }
-                                //Actually the above check is redundant
-
-                                messagesList.set(i, message);
+                                        RootRef.child("Offers")
+                                                .child(theOtherId)
+                                                .child(messageMeId)
+                                                .child(orderChat.getPostid())
+                                                .child(lastMessage.getMessageID())
+                                                .child("acceptStatus")
+                                                .setValue("received");
+                                    }
+                                });
                             }
+                        }else if(lastMessage.getAcceptStatus().equals("received")){
+                            binding.offerButton.setText("Received 🤩");
+                            binding.offerButton.setEnabled(false);
                         }
+                    }
+                }
 
-                        messageAdapter.notifyDataSetChanged();
-                        binding.privateMessagesListOfUsers.smoothScrollToPosition(binding.privateMessagesListOfUsers.getAdapter().getItemCount());
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
+        RootRef.child("Offers").child(messageMeId).child(theOtherId).child(orderChat.getPostid())
+            .addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(DataSnapshot dataSnapshot, String s)
+                {
+                    Message message;
+                    if(dataSnapshot.child("type").getValue().equals("null")){
+                        message = dataSnapshot.getValue(OfferMessage.class);
+                    }else{
+                        message = dataSnapshot.getValue(Message.class);
                     }
 
-                    @Override
-                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+                    messagesList.add(message);
+                    messageAdapter.notifyDataSetChanged();
+                    binding.privateMessagesListOfUsers.smoothScrollToPosition(binding.privateMessagesListOfUsers.getAdapter().getItemCount());
+                }
 
+                @Override
+                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                    for(int i = 0; i < messagesList.size(); i++){
+                        if(messagesList.get(i).getMessageID().equals(dataSnapshot.getKey())){
+
+                            Message message;
+                            if(dataSnapshot.child("type").getValue().equals("null")){
+                                message = dataSnapshot.getValue(OfferMessage.class);
+                            }else{
+                                message = dataSnapshot.getValue(Message.class);
+                            }
+                            //Actually the above check is redundant
+
+                            messagesList.set(i, message);
+                        }
                     }
 
-                    @Override
-                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                    messageAdapter.notifyDataSetChanged();
+                    binding.privateMessagesListOfUsers.smoothScrollToPosition(binding.privateMessagesListOfUsers.getAdapter().getItemCount());
+                }
 
-                    }
+                @Override
+                public void onChildRemoved(DataSnapshot dataSnapshot) {
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
+                }
 
-                    }
-                });
-//        }
-//        else{
-//
-//            RootRef.child("Offers").child(messageMeId).child(orderChat.getUserid()).child(orderChat.getPostid())
-//                .addChildEventListener(new ChildEventListener() {
-//                    @Override
-//                    public void onChildAdded(DataSnapshot dataSnapshot, String s)
-//                    {
-//
-//                        Message message;
-//                        if(dataSnapshot.child("type").getValue().equals("null")){
-//                            message = dataSnapshot.getValue(OfferMessage.class);
-//                        }else{
-//                            message = dataSnapshot.getValue(Message.class);
-//                        }
-//                        //Above might be a problem
-//
-//                        messagesList.add(message);
-//                        messageAdapter.notifyDataSetChanged();
-//                        binding.privateMessagesListOfUsers.smoothScrollToPosition(binding.privateMessagesListOfUsers.getAdapter().getItemCount());
-//
-////                            Message message = dataSnapshot.getValue(Message.class);
-////
-////                            messagesList.add(message);
-////                            messageAdapter.notifyDataSetChanged();
-////                            binding.privateMessagesListOfUsers.smoothScrollToPosition(binding.privateMessagesListOfUsers.getAdapter().getItemCount());
-//                    }
-//
-//                    @Override
-//                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-//
-//                        for(int i = 0; i < messagesList.size(); i++){
-//                            if(messagesList.get(i).getMessageID().equals(dataSnapshot.getKey())){
-//
-//                                Message message;
-//                                if(dataSnapshot.child("type").getValue().equals("null")){
-//                                    message = dataSnapshot.getValue(OfferMessage.class);
-//                                }else{
-//                                    message = dataSnapshot.getValue(Message.class);
-//                                }
-//
-//                                messagesList.set(i, message);
-//                            }
-//                        }
-//
-//                        messageAdapter.notifyDataSetChanged();
-//                        binding.privateMessagesListOfUsers.smoothScrollToPosition(binding.privateMessagesListOfUsers.getAdapter().getItemCount());
-//                    }
-//
-//                    @Override
-//                    public void onChildRemoved(DataSnapshot dataSnapshot) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(DatabaseError databaseError) {
-//
-//                    }
-//                });
-//        }
+                @Override
+                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
 
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
     }
 
     private void sendOfferMessage(String price){
 
         Map messageBodyDetails = new HashMap();
-
-//        String theOtherId;
-//        //The below, in other words, means "if I am the seller, or the poster of the listing in question"
-//        if(messageMeId.equals(orderChat.getUserid())) {
-//            theOtherId = buyerId;
-//        }else {
-//            theOtherId = orderChat.getUserid();
-//        }
 
         String messageSenderRef = "Offers/" + messageMeId + "/" + theOtherId + "/" + orderChat.getPostid();
         String messageReceiverRef = "Offers/" + theOtherId + "/" + messageMeId + "/" + orderChat.getPostid();
@@ -437,62 +358,6 @@ public class OfferActivity extends AppCompatActivity {
         messageBodyDetails = new HashMap();
         messageBodyDetails.put(messageSenderRef + "/" + messagePushID, messageTextBody);
         messageBodyDetails.put( messageReceiverRef + "/" + messagePushID, messageTextBody);
-
-//        if(messageMeId.equals(orderChat.getUserid())) {
-//            String messageSenderRef = "Offers/" + messageMeId + "/" + buyerId + "/" + orderChat.getPostid();
-//            String messageReceiverRef = "Offers/" + buyerId + "/" + messageMeId + "/" + orderChat.getPostid();
-//
-//            DatabaseReference userMessageKeyRef = RootRef.child("Offers")
-//                    .child(messageMeId).child(buyerId).child(orderChat.getPostid()).push();
-//
-//            String messagePushID = userMessageKeyRef.getKey();
-//
-//            Map messageTextBody = new HashMap();
-//            messageTextBody.put("price", price);
-//            messageTextBody.put("acceptStatus", "pending");
-//
-//            messageTextBody.put("message", "null");
-//            messageTextBody.put("type", "null");
-//            messageTextBody.put("from", messageMeId);
-//            messageTextBody.put("to", buyerId);
-//            messageTextBody.put("messageID", messagePushID);
-//            messageTextBody.put("time", saveCurrentTime);
-//            messageTextBody.put("date", saveCurrentDate);
-//            messageTextBody.put("nanopast", System.currentTimeMillis());
-//
-//            messageBodyDetails = new HashMap();
-//            messageBodyDetails.put(messageSenderRef + "/" + messagePushID, messageTextBody);
-//            messageBodyDetails.put( messageReceiverRef + "/" + messagePushID, messageTextBody);
-//
-//        }
-//        else{
-//            String messageSenderRef = "Offers/" + messageMeId + "/" + orderChat.getUserid() + "/" + orderChat.getPostid();
-//            String messageReceiverRef = "Offers/" + orderChat.getUserid() + "/" + messageMeId + "/" + orderChat.getPostid();
-//
-//            DatabaseReference userMessageKeyRef = RootRef.child("Offers")
-//                    .child(messageMeId).child(orderChat.getUserid()).child(orderChat.getPostid()).push();
-//
-//            String messagePushID = userMessageKeyRef.getKey();
-//
-//            Map messageTextBody = new HashMap();
-//            messageTextBody.put("price", price);
-//            messageTextBody.put("acceptStatus", "pending");
-//
-//            messageTextBody.put("message", "null");
-//            messageTextBody.put("type", "null");
-//            messageTextBody.put("from", messageMeId);
-//            messageTextBody.put("to", orderChat.getUserid());
-//            messageTextBody.put("messageID", messagePushID);
-//            messageTextBody.put("time", saveCurrentTime);
-//            messageTextBody.put("date", saveCurrentDate);
-//            messageTextBody.put("nanopast", System.currentTimeMillis());
-//
-//
-//            messageBodyDetails = new HashMap();
-//            messageBodyDetails.put(messageSenderRef + "/" + messagePushID, messageTextBody);
-//            messageBodyDetails.put( messageReceiverRef + "/" + messagePushID, messageTextBody);
-//
-//        }
 
         RootRef.updateChildren(messageBodyDetails).addOnCompleteListener(new OnCompleteListener() {
             @Override
@@ -521,19 +386,9 @@ public class OfferActivity extends AppCompatActivity {
         if (TextUtils.isEmpty(messageText))
         {
             Toast.makeText(this, "first write your message...", Toast.LENGTH_SHORT).show();
-        }
-        else
-        {
+        }else{
 
             Map messageBodyDetails = new HashMap();
-
-//            String theOtherId;
-//            //The below, in other words, means "if I am the seller, or the poster of the listing in question"
-//            if(messageMeId.equals(orderChat.getUserid())) {
-//                theOtherId = buyerId;
-//            }else {
-//                theOtherId = orderChat.getUserid();
-//            }
 
             String messageSenderRef = "Offers/" + messageMeId + "/" + theOtherId + "/" + orderChat.getPostid();
             String messageReceiverRef = "Offers/" + theOtherId + "/" + messageMeId + "/" + orderChat.getPostid();
@@ -558,61 +413,12 @@ public class OfferActivity extends AppCompatActivity {
             messageBodyDetails.put(messageSenderRef + "/" + messagePushID, messageTextBody);
             messageBodyDetails.put( messageReceiverRef + "/" + messagePushID, messageTextBody);
 
-//            Map messageBodyDetails = new HashMap();
-//            if(messageMeId.equals(orderChat.getUserid())) {
-//                String messageSenderRef = "Offers/" + messageMeId + "/" + buyerId + "/" + orderChat.getPostid();
-//                String messageReceiverRef = "Offers/" + buyerId + "/" + messageMeId + "/" + orderChat.getPostid();
-//
-//                DatabaseReference userMessageKeyRef = RootRef.child("Offers")
-//                        .child(messageMeId).child(buyerId).child(orderChat.getPostid()).push();
-//
-//                String messagePushID = userMessageKeyRef.getKey();
-//
-//                Map messageTextBody = new HashMap();
-//                messageTextBody.put("message", messageText);
-//                messageTextBody.put("type", "text");
-//                messageTextBody.put("from", messageMeId);
-//                messageTextBody.put("to", buyerId);
-//                messageTextBody.put("messageID", messagePushID);
-//                messageTextBody.put("time", saveCurrentTime);
-//                messageTextBody.put("date", saveCurrentDate);
-//                messageTextBody.put("nanopast", System.currentTimeMillis());
-//
-//                messageBodyDetails = new HashMap();
-//                messageBodyDetails.put(messageSenderRef + "/" + messagePushID, messageTextBody);
-//                messageBodyDetails.put( messageReceiverRef + "/" + messagePushID, messageTextBody);
-//
-//            }else{
-//                String messageSenderRef = "Offers/" + messageMeId + "/" + orderChat.getUserid() + "/" + orderChat.getPostid();
-//                String messageReceiverRef = "Offers/" + orderChat.getUserid() + "/" + messageMeId + "/" + orderChat.getPostid();
-//
-//                DatabaseReference userMessageKeyRef = RootRef.child("Offers")
-//                        .child(messageMeId).child(orderChat.getUserid()).child(orderChat.getPostid()).push();
-//
-//                String messagePushID = userMessageKeyRef.getKey();
-//
-//                Map messageTextBody = new HashMap();
-//                messageTextBody.put("message", messageText);
-//                messageTextBody.put("type", "text");
-//                messageTextBody.put("from", messageMeId);
-//                messageTextBody.put("to", orderChat.getUserid());
-//                messageTextBody.put("messageID", messagePushID);
-//                messageTextBody.put("time", saveCurrentTime);
-//                messageTextBody.put("date", saveCurrentDate);
-//
-//                messageBodyDetails = new HashMap();
-//                messageBodyDetails.put(messageSenderRef + "/" + messagePushID, messageTextBody);
-//                messageBodyDetails.put( messageReceiverRef + "/" + messagePushID, messageTextBody);
-//
-//            }
-
             RootRef.updateChildren(messageBodyDetails).addOnCompleteListener(new OnCompleteListener() {
                 @Override
                 public void onComplete(@NonNull Task task)
                 {
                     if (task.isSuccessful())
                     {
-                        Toast.makeText(OfferActivity.this, "Message Sent Successfully...", Toast.LENGTH_SHORT).show();
                     }
                     else
                     {

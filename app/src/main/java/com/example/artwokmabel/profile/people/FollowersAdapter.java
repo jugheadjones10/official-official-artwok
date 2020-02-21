@@ -30,14 +30,17 @@ public class FollowersAdapter extends RecyclerView.Adapter<FollowersAdapter.myHo
     private PeopleAdapterViewModel viewModel;
     private static FollowersAdapter instance;
 
+    private String forWhat;
+
     public static FollowersAdapter getInstance(){
         return instance;
     }
 
 
-    public FollowersAdapter(Context context){
+    public FollowersAdapter(Context context, String forWhat){
         this.mAuth = FirebaseAuth.getInstance();
         this.mContext = context;
+        this.forWhat = forWhat;
         instance = this;
 
         viewModel = ViewModelProviders.of((FragmentActivity)context).get(PeopleAdapterViewModel.class);
@@ -118,8 +121,11 @@ public class FollowersAdapter extends RecyclerView.Adapter<FollowersAdapter.myHo
                 }
             });
             this.followersList = users;
+
+            if(forWhat.equals("peoplepage")){
+                FollowingAdapter.getInstance().notifyDataSetChanged();
+            }
             notifyDataSetChanged();
-            FollowingAdapter.getInstance().notifyDataSetChanged();
             result.dispatchUpdatesTo(this);
         }
     }

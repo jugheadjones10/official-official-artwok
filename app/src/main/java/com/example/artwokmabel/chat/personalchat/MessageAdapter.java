@@ -53,9 +53,9 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         public MessageViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            senderMessageText = (TextView) itemView.findViewById(R.id.sender_messsage_text);
-            receiverMessageText = (TextView) itemView.findViewById(R.id.receiver_message_text);
-            receiverProfileImage = (CircleImageView) itemView.findViewById(R.id.message_profile_image);
+            senderMessageText = itemView.findViewById(R.id.sender_messsage_text);
+            receiverMessageText = itemView.findViewById(R.id.receiver_message_text);
+            receiverProfileImage = itemView.findViewById(R.id.message_profile_image);
             messageReceiverPicture = itemView.findViewById(R.id.message_receiver_image_view);
             messageSenderPicture = itemView.findViewById(R.id.message_sender_image_view);
         }
@@ -99,15 +99,9 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 viewHolder = new MessageViewHolder(normal);
                 break;
         }
+
         return viewHolder;
 
-
-//        View view = LayoutInflater.from(viewGroup.getContext())
-//                .inflate(R.layout.custom_messages_layout, viewGroup, false);
-//
-//        mAuth = FirebaseAuth.getInstance();
-//
-//        return new MessageViewHolder(view);
     }
 
 
@@ -143,12 +137,16 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
                     offerViewHolder.declineButton.setText("Declined");
                     offerViewHolder.declineButton.setEnabled(false);
+
                 }else if(offerMessage.getAcceptStatus().equals("pending")){
                     Log.d("seeformyself", "PENDING RAN");
 
                     if(mAuth.getCurrentUser().getUid().equals(offerMessage.getFrom())){
+
                         offerViewHolder.acceptDeclineLayout.setVisibility(View.GONE);
+
                     }else{
+
                         offerViewHolder.acceptButton.setEnabled(true);
                         offerViewHolder.declineButton.setEnabled(true);
 
@@ -164,25 +162,6 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                             public void onClick(View v) {
 
                                 setAcceptStaus(offerMessage, "accepted");
-
-
-//                                FirebaseDatabase.getInstance().getReference()
-//                                        .child("Offers")
-//                                        .child(offerMessage.getTo())
-//                                        .child(offerMessage.getFrom())
-//                                        .child(listingId)
-//                                        .child(offerMessage.getMessageID())
-//                                        .child("acceptStatus")
-//                                        .setValue("accepted");
-//
-//                                FirebaseDatabase.getInstance().getReference()
-//                                        .child("Offers")
-//                                        .child(offerMessage.getFrom())
-//                                        .child(offerMessage.getTo())
-//                                        .child(listingId)
-//                                        .child(offerMessage.getMessageID())
-//                                        .child("acceptStatus")
-//                                        .setValue("accepted");
                             }
                         });
 
@@ -192,25 +171,9 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
                                 setAcceptStaus(offerMessage, "declined");
 
-//                                FirebaseDatabase.getInstance().getReference()
-////                                        .child("Offers")
-////                                        .child(offerMessage.getTo())
-////                                        .child(offerMessage.getFrom())
-////                                        .child(listingId)
-////                                        .child(offerMessage.getMessageID())
-////                                        .child("acceptStatus")
-////                                        .setValue("declined");
-////
-////                                FirebaseDatabase.getInstance().getReference()
-////                                        .child("Offers")
-////                                        .child(offerMessage.getFrom())
-////                                        .child(offerMessage.getTo())
-////                                        .child(listingId)
-////                                        .child(offerMessage.getMessageID())
-////                                        .child("acceptStatus")
-////                                        .setValue("declined");
                             }
                         });
+
                     }
                 }
 
@@ -268,8 +231,8 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 }
 
                 break;
-            default:
 
+            default:
                 break;
         }
 
@@ -305,53 +268,6 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
         return -1;
     }
-
-
-//    public void addMessageToList(Message message){
-//        List<Message> userMessageList = this.userMessageList;
-//        if(userMessageList == null){
-//            userMessageList = new ArrayList<>();
-//        }
-//        userMessageList.add(message);
-//        setUserMessageList(userMessageList);
-//    }
-//
-//    public void setUserMessageList(final List<Message> messages) {
-//        if (this.userMessageList == null) {
-//            this.userMessageList = messages;
-//            notifyItemRangeInserted(0, messages.size());
-//        } else {
-//            DiffUtil.DiffResult result = DiffUtil.calculateDiff(new DiffUtil.Callback() {
-//                @Override
-//                public int getOldListSize() {
-//                    return MessageAdapter.this.userMessageList.size();
-//                }
-//
-//                @Override
-//                public int getNewListSize() {
-//                    return messages.size();
-//                }
-//
-//                @Override
-//                public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-//                    return MessageAdapter.this.userMessageList.get(oldItemPosition).getMessageID() ==
-//                            messages.get(newItemPosition).getMessageID();
-//                }
-//
-//                @Override
-//                public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
-//                    return MessageAdapter.this.userMessageList.get(oldItemPosition).getMessageID() ==
-//                            messages.get(newItemPosition).getMessageID();
-//                }
-//            });
-//            this.userMessageList = messages;
-//            //notifyDataSetChanged();
-//            //FollowingAdapter.getInstance().notifyDataSetChanged();
-//            result.dispatchUpdatesTo(this);
-//        }
-//    }
-
-
 
     @Override
     public int getItemCount() {

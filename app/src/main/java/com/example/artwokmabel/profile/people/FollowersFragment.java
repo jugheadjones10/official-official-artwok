@@ -32,7 +32,7 @@ public class FollowersFragment  extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_following, container, false);
         binding.recyclerview.setHasFixedSize(true);
 
-        followersAdapter = new FollowersAdapter(getContext());
+        followersAdapter = new FollowersAdapter(getContext(), "peoplepage");
         binding.recyclerview.setAdapter(followersAdapter);
 
         viewModel = ViewModelProviders.of(this).get(PeopleViewModel.class);

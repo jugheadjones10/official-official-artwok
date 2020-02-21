@@ -212,22 +212,6 @@ public class FirestoreRepo {
                             // Sign in success, update UI with the signed-in user's information
                             //FirebaseUser user = mAuth.getCurrentUser();
                             String uid = task.getResult().getUser().getUid();
-
-                            //Below code adds new user to Firebase database
-//                            HashMap<String, Object> profileMap = new HashMap<>();
-//                            profileMap.put("uid", uid);
-//                            profileMap.put("name", username);
-//                            RootRef.child("Users").child(uid).setValue(profileMap)
-//                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-//                                        @Override
-//                                        public void onComplete(@NonNull Task<Void> task)
-//                                        {
-//                                            if (task.isSuccessful()) {
-//                                            } else {
-//                                            }
-//                                        }
-//                                    });
-
                             User userObject = new User(
                                     username,
                                     uid,
@@ -406,6 +390,65 @@ public class FirestoreRepo {
                 .document(myId)
                 .update("following", FieldValue.arrayRemove(otherUserId));
     }
+
+    public LiveData<List<Listing>> getSearchedListings(String query) {
+        final MutableLiveData<List<Listing>> data = new MutableLiveData<>();
+        List<Listing> tempData = new ArrayList<>();
+
+        FirebaseDatabase.getInstance().getReference()
+                .child("Listings")
+                .orderByChild("name")
+                .startAt(query.toUpperCase())
+                .endAt(query.toLowerCase() + "\uf8ff")
+                .addValueEventListener(new ValueEventListener() {
+
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        tempData.clear();
+                        for(DataSnapshot listing : dataSnapshot.getChildren()){
+                            tempData.add(listing.getValue(Listing.class));
+                        }
+                        data.setValue(tempData);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+        return data;
+    }
+
+    public LiveData<List<User>> getSearchedUsers(String query) {
+        final MutableLiveData<List<User>> data = new MutableLiveData<>();
+        List<User> tempData = new ArrayList<>();
+
+        FirebaseDatabase.getInstance().getReference()
+                .child("Users")
+                .orderByChild("username")
+                .startAt(query.toUpperCase())
+                .endAt(query.toLowerCase() + "\uf8ff")
+                .addValueEventListener(new ValueEventListener() {
+
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        tempData.clear();
+                        for(DataSnapshot user : dataSnapshot.getChildren()){
+                            tempData.add(user.getValue(User.class));
+                        }
+                        data.setValue(tempData);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+        return data;
+    }
+
 
 
     public LiveData<List<User>> getUserFollowings(String userId){
@@ -1288,7 +1331,7 @@ public class FirestoreRepo {
                                     }
 
                                     //Below sorts posts according to date posted
-                                    Collections.sort((ArrayList)tempData, new SortListings());
+                                    Collections.sort(tempData, new SortListings());
                                     data.setValue(tempData);
                                 }
                             });
@@ -1525,7 +1568,7 @@ public class FirestoreRepo {
                 doc.getString("username"),
                 (ArrayList<String>) doc.get("photos"),
                 doc.getString("timestamp"),
-                (long)doc.get("nanopast")
+                (long)(doc.get("nanopast") == null ? 0L : doc.get("nanopast"))
         );
         return post;
     }

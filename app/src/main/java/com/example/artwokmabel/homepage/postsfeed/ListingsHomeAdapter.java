@@ -3,6 +3,7 @@ package com.example.artwokmabel.homepage.postsfeed;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -49,10 +50,15 @@ public class ListingsHomeAdapter extends RecyclerView.Adapter<ListingsHomeAdapte
     @Override
     public void onBindViewHolder(@NonNull ListingsHomeAdapter.homeListingsHolder homeListingsHolder, int i) {
         Listing data = listingsList.get(i);
+        Log.d("checkinglistings", data.getName());
 
         homeListingsHolder.binding.setListingclickcallback(new ListingsHomeAdapter.OnListingClicked());
-        homeListingsHolder.binding.setProfilecallback(new ListingsHomeAdapter.OnProfileClicked());
+//        homeListingsHolder.binding.setProfilecallback(new ListingsHomeAdapter.OnProfileClicked());
+
         homeListingsHolder.binding.setListing(data);
+
+        homeListingsHolder.binding.textStuff.bringToFront();
+        homeListingsHolder.binding.listingFav.bringToFront();
 
         ArrayList<String> images = data.getPhotos();
         ImageListener imageListener = new ImageListener() {
@@ -81,26 +87,26 @@ public class ListingsHomeAdapter extends RecyclerView.Adapter<ListingsHomeAdapte
         }
 
         //Todo: replace the below with view model next time
-        db = FirebaseFirestore.getInstance();
-        db.collection("Users")
-                .document(data.getUserid())
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
-
-                            Picasso.get()
-                                    .load(document.getString("profile_url"))
-                                    .placeholder(R.drawable.loading_image)
-                                    .error(R.drawable.rick_and_morty)
-                                    .into(homeListingsHolder.binding.profile);
-                        } else {
-
-                        }
-                    }
-                });
+//        db = FirebaseFirestore.getInstance();
+//        db.collection("Users")
+//                .document(data.getUserid())
+//                .get()
+//                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+//                        if (task.isSuccessful()) {
+//                            DocumentSnapshot document = task.getResult();
+//
+//                            Picasso.get()
+//                                    .load(document.getString("profile_url"))
+//                                    .placeholder(R.drawable.loading_image)
+//                                    .error(R.drawable.rick_and_morty)
+//                                    .into(homeListingsHolder.binding.profile);
+//                        } else {
+//
+//                        }
+//                    }
+//                });
     }
 
 
@@ -113,15 +119,15 @@ public class ListingsHomeAdapter extends RecyclerView.Adapter<ListingsHomeAdapte
         }
     }
 
-    public class OnProfileClicked{
-        public void onProfileClicked(Listing data){
-            IndivUserFragment indivUserFrag = new IndivUserFragment();
-            Bundle args = new Bundle();
-            args.putString("poster_username", data.getUsername());
-            indivUserFrag.setArguments(args);
-            HomePageActivity.getInstance().loadFragment(indivUserFrag);
-        }
-    }
+//    public class OnProfileClicked{
+//        public void onProfileClicked(Listing data){
+//            IndivUserFragment indivUserFrag = new IndivUserFragment();
+//            Bundle args = new Bundle();
+//            args.putString("poster_username", data.getUsername());
+//            indivUserFrag.setArguments(args);
+//            HomePageActivity.getInstance().loadFragment(indivUserFrag);
+//        }
+//    }
 
 
     public void setListingsList(final List<Listing> listings) {

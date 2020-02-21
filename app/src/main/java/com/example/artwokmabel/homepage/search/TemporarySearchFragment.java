@@ -1,5 +1,6 @@
 package com.example.artwokmabel.homepage.search;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,7 +35,9 @@ public class TemporarySearchFragment extends Fragment {
         searchView.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                HomeTabsFragment.getInstance().loadFragment(new ProductFragment());
+                //HomeTabsFragment.getInstance().loadFragment(new ProductFragment());
+                Intent intent = new Intent(getActivity(), SearchActivity.class);
+                startActivity(intent);
             }
         });
 

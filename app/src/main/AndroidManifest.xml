@@ -99,6 +99,8 @@
             android:name=".login.ForgotPasswordActivity"
             android:parentActivityName=".login.LoginActivity" />
         <activity android:name=".profile.people.PeopleActivity" /> <!-- PUSH NOTIFICATIONS -->
+        <activity android:name=".homepage.search.SearchActivity" />
+
         <!-- <service -->
         <!-- android:name="MyFirebaseMessagingService" -->
         <!-- android:exported="false"> -->

@@ -33,7 +33,6 @@ public class ListingsTabFragment extends Fragment {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_listings_tab, container, false);
 
-
         binding.giftRecyclerview.setHasFixedSize(true);
         binding.giftRecyclerview.setLayoutManager(new GridLayoutManager(getContext(), 2));
 

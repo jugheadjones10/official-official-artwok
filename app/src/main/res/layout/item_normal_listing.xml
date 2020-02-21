@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools">
 
     <data>
 <!--        <variable name="profilecallback" type="com.example.artwokmabel.homepage.adapters.ListingsAdapter.OnProfileClicked"/>-->
@@ -16,9 +17,10 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/parent_layout_card"
         android:layout_width="match_parent"
-
         android:layout_height="wrap_content"
         android:layout_margin="2dp"
+        app:cardCornerRadius="10dp"
+        android:clipToPadding="true"
         android:onClick="@{() -> listingclickcallback.onListClicked(listing)}"
         app:cardBackgroundColor="@android:color/white">
 
@@ -26,9 +28,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-
-            <!--        -->
-
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -61,7 +60,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="49dp"
-                android:layout_weight="100"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -76,14 +74,14 @@
                         android:orientation="horizontal"
                         android:paddingStart="10dp">
 
-<!--                        <de.hdodenhof.circleimageview.CircleImageView-->
-<!--                            android:id="@+id/profile"-->
-<!--                            android:layout_width="20dp"-->
-<!--                            android:layout_height="match_parent"-->
-<!--                            android:layout_gravity="center"-->
-<!--                            android:onClick="@{() -> profilecallback.onProfileClicked(listing)}"-->
-<!--                            android:padding="0dp"-->
-<!--                            android:src="@drawable/rjha" />-->
+                        <!--                        <de.hdodenhof.circleimageview.CircleImageView-->
+                        <!--                            android:id="@+id/profile"-->
+                        <!--                            android:layout_width="20dp"-->
+                        <!--                            android:layout_height="match_parent"-->
+                        <!--                            android:layout_gravity="center"-->
+                        <!--                            android:onClick="@{() -> profilecallback.onProfileClicked(listing)}"-->
+                        <!--                            android:padding="0dp"-->
+                        <!--                            android:src="@drawable/rjha" />-->
 
                         <TextView
                             android:id="@+id/item_name"
