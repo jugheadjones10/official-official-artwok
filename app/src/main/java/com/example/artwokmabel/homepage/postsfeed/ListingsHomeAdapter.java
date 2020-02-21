@@ -58,7 +58,6 @@ public class ListingsHomeAdapter extends RecyclerView.Adapter<ListingsHomeAdapte
         homeListingsHolder.binding.setListing(data);
 
         homeListingsHolder.binding.textStuff.bringToFront();
-        homeListingsHolder.binding.listingFav.bringToFront();
 
         ArrayList<String> images = data.getPhotos();
         ImageListener imageListener = new ImageListener() {
