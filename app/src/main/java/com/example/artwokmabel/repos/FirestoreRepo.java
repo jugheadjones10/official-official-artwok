@@ -124,6 +124,7 @@ public class FirestoreRepo {
     }
 
     public void uploadNewListing(String postTitle, String postDesc, ArrayList<String> categories, Long price, String delivery, String refund, String currentUserId, ArrayList<String> postImageUris, Activity activity){
+        postTitle = postTitle.substring(0, 1).toUpperCase() + postTitle.substring(1);
 
         DocumentReference newListingRef = db.collection("Users").document(currentUserId).collection("Listings").document();
         Listing newListing = new Listing(
@@ -148,6 +149,11 @@ public class FirestoreRepo {
                 .addOnFailureListener(e ->
                         Toast.makeText(activity, "Failed to upload ic_dm. awd", Toast.LENGTH_LONG)
                                 .show());
+
+        FirebaseDatabase.getInstance().getReference()
+                .child("Listings")
+                .child(newListingRef.getId())
+                .setValue(newListing);
     }
 
     public void uploadNewRequest(String postTitle, String postDesc, String category, Long budget, String currentUserId, ArrayList<String> postImageUris, Activity activity){
@@ -213,7 +219,7 @@ public class FirestoreRepo {
                             //FirebaseUser user = mAuth.getCurrentUser();
                             String uid = task.getResult().getUser().getUid();
                             User userObject = new User(
-                                    username,
+                                    username.toLowerCase(),
                                     uid,
                                     "https://firebasestorage.googleapis.com/v0/b/artwok-database.appspot.com/o/Default_images%2Faccount.png?alt=media&token=8c34c02a-4c2c-4708-a802-73af4978b7d0",
                                     new ArrayList<String>(),
@@ -226,6 +232,11 @@ public class FirestoreRepo {
                                     email
                             );
 
+                            FirebaseDatabase.getInstance().getReference()
+                                    .child("Users")
+                                    .child(uid)
+                                    .setValue(userObject);
+
                             db.collection("Users")
                                     .document(uid)
                                     .set(userObject)
@@ -233,7 +244,7 @@ public class FirestoreRepo {
                                         @Override
                                         public void onSuccess(Void aVoid) {
                                             Log.d(TAG, "DocumentSnapshot successfully written!");
-                                            PushUserToAlgolia(username, uid);
+                                            //PushUserToAlgolia(username, uid);
                                             CreateAccountPasswordActivity.getInstance().createAccountCallback(true);
                                         }
                                     })
@@ -253,6 +264,7 @@ public class FirestoreRepo {
                         }
                     }
                 });
+
     }
 
     public void isEmailDuplicate(String email){
@@ -399,7 +411,7 @@ public class FirestoreRepo {
                 .child("Listings")
                 .orderByChild("name")
                 .startAt(query.toUpperCase())
-                .endAt(query.toLowerCase() + "\uf8ff")
+                .endAt(query.toUpperCase() + "\uf8ff")
                 .addValueEventListener(new ValueEventListener() {
 
                     @Override
@@ -427,7 +439,7 @@ public class FirestoreRepo {
         FirebaseDatabase.getInstance().getReference()
                 .child("Users")
                 .orderByChild("username")
-                .startAt(query.toUpperCase())
+                .startAt(query.toLowerCase())
                 .endAt(query.toLowerCase() + "\uf8ff")
                 .addValueEventListener(new ValueEventListener() {
 

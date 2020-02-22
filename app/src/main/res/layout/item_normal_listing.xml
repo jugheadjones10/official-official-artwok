@@ -12,19 +12,14 @@
         <variable name="favorite" type="android.widget.ImageView"/>
     </data>
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/parent_layout_card"
+        android:background="@drawable/listing_rounded_corners"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="10dp"
-        android:clipToPadding="true"
         android:layout_margin="5dp"
         android:onClick="@{() -> listingclickcallback.onListClicked(listing)}"
         app:cardBackgroundColor="@android:color/white">
-
-
-        <!--        -->
 
 
         <ImageView
@@ -38,22 +33,32 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.synnapps.carouselview.CarouselView
-            android:id="@+id/carouselView"
+<!--        app:cardCornerRadius="10dp"-->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/carousel_view_card"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:autoPlay="false"
-            app:indicatorVisibility="invisible"
-            app:layout_constraintBottom_toTopOf="@+id/item_name"
+            android:background="@drawable/listing_rounded_corners"
+                android:clipToPadding="true"
+        app:layout_constraintBottom_toTopOf="@+id/item_name"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:pageColor="#00000000"
-            app:strokeColor="#FF777777"
-            app:strokeWidth="0dp" >
+            app:layout_constraintTop_toTopOf="parent">
 
-        </com.synnapps.carouselview.CarouselView>
+            <com.synnapps.carouselview.CarouselView
+                android:id="@+id/carouselView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:autoPlay="false"
+                app:indicatorVisibility="invisible"
+                app:pageColor="#00000000"
+                app:strokeColor="#FF777777"
+                app:strokeWidth="0dp" >
+
+            </com.synnapps.carouselview.CarouselView>
+        </androidx.cardview.widget.CardView>
+
 
 
         <!--                        <de.hdodenhof.circleimageview.CircleImageView-->
@@ -72,6 +77,8 @@
             android:layout_width="0dp"
             android:layout_height="18dp"
             android:gravity="top"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:text="@{listing.name}"
             android:layout_marginTop="3dp"
             android:layout_marginStart="7dp"
@@ -79,7 +86,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/carouselView" />
+            app:layout_constraintTop_toBottomOf="@+id/carousel_view_card" />
 
         <TextView
             android:id="@+id/item_price"
