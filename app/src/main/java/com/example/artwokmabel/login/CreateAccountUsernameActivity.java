@@ -13,7 +13,7 @@ import com.example.artwokmabel.repos.FirestoreRepo;
 import com.example.artwokmabel.databinding.ActivityCreateAccountUsernameBinding;
 import com.example.artwokmabel.homepage.callbacks.LoginPageCallback;
 
-public class CreateAccountUsernameActivity extends AppCompatActivity {
+public class CreateAccountUsernameActivity extends AppCompatActivity implements DuplicateUsernameChecker{
     private ActivityCreateAccountUsernameBinding binding;
     private String username;
     private static CreateAccountUsernameActivity instance = null;
@@ -47,11 +47,12 @@ public class CreateAccountUsernameActivity extends AppCompatActivity {
                 binding.usernameEditText.setError("Please enter a username");
             }else{
                 binding.progressBar.setVisibility(View.VISIBLE);
-                FirestoreRepo.getInstance().isUsernameDuplicate(username);
+                FirestoreRepo.getInstance().isUsernameDuplicate(username, getInstance());
             }
         }
     }
 
+    @Override
     public void isUsernameDuplicateCallback(boolean isUsernameDuplicateDatabase){
         binding.progressBar.setVisibility(View.GONE);
 

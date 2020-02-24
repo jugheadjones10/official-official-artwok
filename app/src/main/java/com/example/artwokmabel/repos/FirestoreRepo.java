@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -16,6 +17,7 @@ import com.example.artwokmabel.R;
 import com.example.artwokmabel.login.CreateAccountEmailActivity;
 import com.example.artwokmabel.login.CreateAccountPasswordActivity;
 import com.example.artwokmabel.login.CreateAccountUsernameActivity;
+import com.example.artwokmabel.login.DuplicateUsernameChecker;
 import com.example.artwokmabel.login.LoginActivity;
 import com.example.artwokmabel.chat.models.Comment;
 import com.example.artwokmabel.chat.models.UserUserModel;
@@ -30,7 +32,6 @@ import com.example.artwokmabel.models.MainPost;
 import com.example.artwokmabel.models.User;
 import com.example.artwokmabel.profile.uploadlisting.UploadListingAcitvity;
 import com.example.artwokmabel.profile.uploadpost.UploadPostActivity;
-import com.example.artwokmabel.settings.SettingsActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -288,7 +289,7 @@ public class FirestoreRepo {
             });
     }
 
-    public void isUsernameDuplicate(String username){
+    public void isUsernameDuplicate(String username, DuplicateUsernameChecker checker){
         db.collection("Users")
                 .whereEqualTo("username", username)
                 .get()
@@ -298,9 +299,9 @@ public class FirestoreRepo {
                         if (task.isSuccessful()) {
                             Log.d(TAG, Integer.toString(task.getResult().size()));
                             if (task.getResult().size() != 0) {
-                                CreateAccountUsernameActivity.getInstance().isUsernameDuplicateCallback(true);
+                                checker.isUsernameDuplicateCallback(true);
                             }else{
-                                CreateAccountUsernameActivity.getInstance().isUsernameDuplicateCallback(false);
+                                checker.isUsernameDuplicateCallback(false);
                             }
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
@@ -412,15 +413,19 @@ public class FirestoreRepo {
                 .orderByChild("name")
                 .startAt(query.toUpperCase())
                 .endAt(query.toUpperCase() + "\uf8ff")
-                .addValueEventListener(new ValueEventListener() {
-
+                .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        tempData.clear();
-                        for(DataSnapshot listing : dataSnapshot.getChildren()){
-                            tempData.add(listing.getValue(Listing.class));
+                        if(query.contains(" ")){
+                            
+
+                        }else{
+                            tempData.clear();
+                            for(DataSnapshot listing : dataSnapshot.getChildren()){
+                                tempData.add(listing.getValue(Listing.class));
+                            }
+                            data.setValue(tempData);
                         }
-                        data.setValue(tempData);
                     }
 
                     @Override
@@ -428,6 +433,23 @@ public class FirestoreRepo {
 
                     }
                 });
+
+//                .addValueEventListener(new ValueEventListener() {
+//
+//                    @Override
+//                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                        tempData.clear();
+//                        for(DataSnapshot listing : dataSnapshot.getChildren()){
+//                            tempData.add(listing.getValue(Listing.class));
+//                        }
+//                        data.setValue(tempData);
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//                    }
+//                });
 
         return data;
     }
@@ -870,6 +892,88 @@ public class FirestoreRepo {
                     }
                 });
     }
+
+    public void updateUserEmail(String email, String userId){
+        db.collection("Users")
+                .document(userId)
+                .update("email", email);
+
+
+        FirebaseAuth.getInstance().getCurrentUser()
+            .updateEmail(email)
+            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()) {
+                        Log.d(TAG, "User email address updated.");
+                    }
+                }
+            });
+    }
+
+    public void sendResetPasswordEmail(String emailAddress){
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
+        mAuth.sendPasswordResetEmail(emailAddress.trim())
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "Email sent.");
+                        }
+                    }
+                });
+    }
+
+//    public void updateUserPassword(String password){
+//
+//        FirebaseAuth.getInstance().getCurrentUser()
+//                .updatePassword(password)
+//                .addOnCompleteListener(new OnCompleteListener<Void>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<Void> task) {
+//                        if (task.isSuccessful()) {
+//                            Log.d(TAG, "User email address updated.");
+//                        }
+//                    }
+//                });
+//    }
+
+//    public void updateUserIntro(String intro, String userId){
+//        db.collection("Users")
+//                .document(userId)
+//                .update("intro", intro);
+//    }
+
+    public void updateUserUsername(String username, String userId){
+        db.collection("Users")
+                .document(userId)
+                .update("username", username);
+    }
+
+    public void updateUserProfileUrl(String profile_url, String userId){
+        db.collection("Users")
+                .document(userId)
+                .update("profile_url", profile_url);
+    }
+
+//    public LiveData<User> getUserOnce(String uid){
+//
+//        final MutableLiveData<User> data = new MutableLiveData<>();
+//
+//        db.collection("Users")
+//                .document(uid)
+//                .get()
+//                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+//                    @Override
+//                    public void onSuccess(DocumentSnapshot snapshot) {
+//                        User user = snapshot.toObject(User.class);
+//                        data.setValue(user);
+//                    }
+//                });
+//
+//        return data;
+//    }
 
 
     public LiveData<User> getUser(String uid){

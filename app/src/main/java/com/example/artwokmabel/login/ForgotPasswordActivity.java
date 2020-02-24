@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil;
 
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.ActivityForgotPasswordBinding;
+import com.example.artwokmabel.repos.FirestoreRepo;
 
 public class ForgotPasswordActivity extends AppCompatActivity {
     ActivityForgotPasswordBinding binding;
@@ -26,6 +27,9 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
     public class OnResetPasswordClicked{
         public void onResetPasswordClicked(){
+
+            FirestoreRepo.getInstance().sendResetPasswordEmail(binding.emailForgotPassword.getText().toString());
+
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
             // create an animation effect sliding from left to right
             ActivityOptions activityOptions = null;

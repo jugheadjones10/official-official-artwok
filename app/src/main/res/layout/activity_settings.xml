@@ -1,45 +1,302 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable name="user" type="com.example.artwokmabel.models.User"/>
+        <variable name="onprofilepicchange" type="com.example.artwokmabel.profile.settings.SettingsActivity.OnProfilePicChange"/>
+        <variable name="onusernamechange" type="com.example.artwokmabel.profile.settings.SettingsActivity.OnUsernameChange"/>
+        <variable name="onintrochange" type="com.example.artwokmabel.profile.settings.SettingsActivity.OnIntroChange"/>
+    </data>
+
+
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".settings.SettingsActivity">
+    tools:context=".profile.settings.SettingsActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/settings_appbarlayout"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/settings_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/settings_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </com.google.android.material.appbar.AppBarLayout>
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </androidx.appcompat.widget.Toolbar>
 
     <LinearLayout
-        android:id="@+id/settings_layout1"
+        android:id="@+id/container_linear_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="10dp"
-        android:layout_below="@+id/settings_appbarlayout">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/settings_toolbar">
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="View History"
-            android:textSize="16dp"
-            android:textColor="@color/artwok_black"/>
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="wrap_content"
-            android:layout_height="100dp"
-            android:id="@+id/settings_recyclerview"
-            android:layout_marginTop="10dp" />
+            android:padding="8dp"
+            android:text="Account"
+            android:textSize="25sp" />
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/edit_profile"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:boxStrokeColor="@null"
+            app:boxStrokeErrorColor="@null"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp"
+            app:errorIconDrawable="@null">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profile_picture"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginStart="15dp"
+                    android:src="@drawable/ic_user" />
+
+                <TextView
+                    android:id="@+id/change_profile_pic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:onClick="@{() -> onprofilepicchange.onProfilePicChange()}"
+                    android:text="Change profile picture" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/cat_bar_grey" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="Username" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:onClick="@{() -> onusernamechange.onUsernameChange()}"
+                android:text="@{user.username}" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/cat_bar_grey" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="Introduction" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:onClick="@{() -> onintrochange.onIntroChange()}"
+                android:text="temporary intro" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="Email" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="@{user.email}" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="Password" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="********" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="********" />
+
+        </LinearLayout>
+
+
+
+
+<!--        <com.google.android.material.textfield.TextInputLayout-->
+<!--            android:id="@+id/edit_username"-->
+<!--            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:boxStrokeColor="@null"-->
+<!--            app:boxStrokeErrorColor="@null"-->
+<!--            app:boxStrokeWidth="0dp"-->
+<!--            app:boxStrokeWidthFocused="0dp"-->
+<!--            app:prefixText="Username     "-->
+<!--            app:prefixTextColor="@color/cat_bar_grey"-->
+<!--            android:focusable="false"-->
+<!--            android:onClick="@{() -> onusernamechange.onUsernameChange()}">-->
+
+<!--            <com.google.android.material.textfield.TextInputEditText-->
+<!--                android:id="@+id/username_edit_text"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:enabled="false"-->
+<!--                android:text="@{user.username}" />-->
+
+<!--            <View-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="1dp"-->
+<!--                android:background="@color/cat_bar_grey" />-->
+
+<!--        </com.google.android.material.textfield.TextInputLayout>-->
+
+
+
+<!--        <com.google.android.material.textfield.TextInputLayout-->
+<!--            android:id="@+id/edit_introduction"-->
+<!--            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:boxStrokeColor="@null"-->
+<!--            app:boxStrokeErrorColor="@null"-->
+<!--            app:boxStrokeWidth="0dp"-->
+<!--            app:boxStrokeWidthFocused="0dp"-->
+<!--            app:prefixText="Introduction  "-->
+<!--            app:prefixTextColor="@color/cat_bar_grey"-->
+<!--            android:focusable="false"-->
+<!--            android:onClick="@{() -> onintrochange.onIntroChange()}">-->
+
+<!--            <com.google.android.material.textfield.TextInputEditText-->
+<!--                android:id="@+id/intro_edit_text"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:enabled="false"-->
+<!--                android:text="fake intro"-->
+<!--              />-->
+
+<!--            <View-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="1dp"-->
+<!--                android:background="@color/cat_bar_grey" />-->
+
+<!--        </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--        <com.google.android.material.textfield.TextInputLayout-->
+<!--            android:id="@+id/edit_email"-->
+<!--            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:boxStrokeColor="@null"-->
+<!--            app:boxStrokeErrorColor="@null"-->
+<!--            app:boxStrokeWidth="0dp"-->
+<!--            app:boxStrokeWidthFocused="0dp"-->
+<!--            app:prefixText="Email       "-->
+<!--            app:prefixTextColor="@color/cat_bar_grey">-->
+
+<!--            <com.google.android.material.textfield.TextInputEditText-->
+<!--                android:id="@+id/email_edit_text"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:enabled="false"-->
+<!--                android:text="@{user.email}" />-->
+
+<!--            <View-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="1dp"-->
+<!--                android:background="@color/cat_bar_grey" />-->
+
+<!--        </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--        <com.google.android.material.textfield.TextInputLayout-->
+<!--            android:id="@+id/reset_password"-->
+<!--            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:boxStrokeColor="@null"-->
+<!--            app:boxStrokeErrorColor="@null"-->
+<!--            app:boxStrokeWidth="0dp"-->
+<!--            app:boxStrokeWidthFocused="0dp"-->
+<!--            app:prefixText="Password    "-->
+<!--            app:prefixTextColor="@color/cat_bar_grey">-->
+
+<!--            <com.google.android.material.textfield.TextInputEditText-->
+<!--                android:id="@+id/reset_password_button"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:enabled="false"-->
+<!--                android:text="**********" />-->
+
+<!--            <View-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="1dp"-->
+<!--                android:background="@color/cat_bar_grey" />-->
+
+<!--        </com.google.android.material.textfield.TextInputLayout>-->
+
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/settings_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/settings_layout1"/>
-
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -16,7 +16,16 @@
         android:roundIcon="@drawable/official_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".chat.offerchat.OfferActivity"></activity>
+        <activity android:name=".profile.settings.SettingsActivity"
+            android:parentActivityName=".HomePageActivity"></activity>
+
+        <activity android:name=".profile.settings.SetIntroActivity"
+            android:parentActivityName=".profile.settings.SettingsActivity"></activity>
+        <activity android:name=".profile.settings.SetUsernameActivity"
+            android:parentActivityName=".profile.settings.SettingsActivity"></activity>
+
+
+        <activity android:name=".chat.offerchat.OfferActivity" />
         <activity android:name=".chat.personalchat.ChatActivity" />
         <activity android:name=".login.LoginOptionsActivity" />
         <activity android:name=".login.SplashActivity">
@@ -77,7 +86,7 @@
         <activity android:name=".chat.activities.ChatOrderActivity" />
         <activity android:name=".chat.activities.ChatOrderReviewActivity" />
         <activity android:name=".homepage.favorites.FavoritesActivity" />
-        <activity android:name=".settings.SettingsActivity" />
+
         <activity
             android:name=".homepage.listing.ListingActivity"
             android:parentActivityName=".HomePageActivity" />
@@ -99,9 +108,7 @@
             android:name=".login.ForgotPasswordActivity"
             android:parentActivityName=".login.LoginActivity" />
         <activity android:name=".profile.people.PeopleActivity" /> <!-- PUSH NOTIFICATIONS -->
-        <activity android:name=".homepage.search.SearchActivity" />
-
-        <!-- <service -->
+        <activity android:name=".homepage.search.SearchActivity" /> <!-- <service -->
         <!-- android:name="MyFirebaseMessagingService" -->
         <!-- android:exported="false"> -->
         <!-- <intent-filter> -->
@@ -110,11 +117,8 @@
         <!-- </service> -->
         <!-- <activity android:name=".LoginActivityUNUSED" /> -->
         <!-- <activity android:name=".SignupActivityUNUSED" /> -->
-        <activity
-            android:name="com.onegravity.rteditor.media.choose.MediaChooserActivity"/>
-
-        <activity
-            android:name="com.onegravity.rteditor.media.crop.CropImageActivity"/>
+        <activity android:name="com.onegravity.rteditor.media.choose.MediaChooserActivity" />
+        <activity android:name="com.onegravity.rteditor.media.crop.CropImageActivity" />
         <activity
             android:name=".homepage.post.PostActivity"
             android:parentActivityName=".HomePageActivity"

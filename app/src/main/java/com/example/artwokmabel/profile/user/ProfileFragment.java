@@ -16,6 +16,7 @@ import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.FragmentProfileBinding;
 import com.example.artwokmabel.models.User;
 import com.example.artwokmabel.profile.people.PeopleActivity;
+import com.example.artwokmabel.profile.settings.SettingsActivity;
 import com.squareup.picasso.Picasso;
 
 public class ProfileFragment extends Fragment {
@@ -30,6 +31,7 @@ public class ProfileFragment extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false);
         binding.profileTab.bringToFront();
         binding.setOnpeopleclicked(new OnPeopleClicked());
+        binding.setOnsettingsclicked(new OnSettingsClicked());
 
         ProfileFragmentPagerAdapter adapter = new ProfileFragmentPagerAdapter(getChildFragmentManager());
         adapter.AddFragment(new ProfileListingsFragment(),"Listings");
@@ -69,6 +71,13 @@ public class ProfileFragment extends Fragment {
     public class OnPeopleClicked{
         public void onPeopleClicked(){
             Intent intent = new Intent(getContext(), PeopleActivity.class);
+            startActivity(intent);
+        }
+    }
+
+    public class OnSettingsClicked{
+        public void onSettingsClicked(){
+            Intent intent = new Intent(getContext(), SettingsActivity.class);
             startActivity(intent);
         }
     }

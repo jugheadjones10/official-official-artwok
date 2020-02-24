@@ -18,9 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:onClick="@{() -> listingclickcallback.onListClicked(listing)}"
-        app:cardBackgroundColor="@android:color/white">
-
+        android:onClick="@{() -> listingclickcallback.onListClicked(listing)}">
 
         <ImageView
             android:id="@+id/normal_listing_like"
@@ -33,14 +31,13 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+<!--        android:clipToPadding="true"-->
 <!--        app:cardCornerRadius="10dp"-->
         <androidx.cardview.widget.CardView
             android:id="@+id/carousel_view_card"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@drawable/listing_rounded_corners"
-                android:clipToPadding="true"
-        app:layout_constraintBottom_toTopOf="@+id/item_name"
+            app:layout_constraintBottom_toTopOf="@+id/item_name"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -54,7 +51,7 @@
                 app:indicatorVisibility="invisible"
                 app:pageColor="#00000000"
                 app:strokeColor="#FF777777"
-                app:strokeWidth="0dp" >
+                app:strokeWidth="0dp">
 
             </com.synnapps.carouselview.CarouselView>
         </androidx.cardview.widget.CardView>

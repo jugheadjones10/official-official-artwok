@@ -15,10 +15,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.artwokmabel.profile.settings.SettingsActivity;
 import com.example.artwokmabel.profile.user.ProfileListingsFragment;
 import com.example.artwokmabel.profile.user.ProfilePostsFragment;
 import com.example.artwokmabel.profile.user.DashboardFragment;
-import com.example.artwokmabel.settings.SettingsActivity;
 import com.example.artwokmabel.profile.user.ProfileFragmentPagerAdapter;
 import com.example.artwokmabel.R;
 import com.google.android.gms.tasks.OnCompleteListener;
