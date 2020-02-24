@@ -2,6 +2,7 @@ package com.example.artwokmabel.profile.settings;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.artwokmabel.HomePageActivity;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.ActivitySetIntroBinding;
 import com.example.artwokmabel.databinding.CustomSetProfileDetailsBarBinding;
@@ -57,7 +59,12 @@ public class SetIntroActivity extends AppCompatActivity {
                     binding.progressBar.setVisibility(View.VISIBLE);
                     SettingsActivity.getInstance().viewModel.updateUserIntroduction(binding.introEditText.getText().toString());
                     binding.progressBar.setVisibility(View.GONE);
+
                     Toast.makeText(SetIntroActivity.this, "Intro name change successful", Toast.LENGTH_SHORT).show();
+
+                    Intent intent = new Intent(SetIntroActivity.this, HomePageActivity.class);
+                    intent.putExtra("fromWho", "editProfile");
+                    startActivity(intent);
                 }
 
             }

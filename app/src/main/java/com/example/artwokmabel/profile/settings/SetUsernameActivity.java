@@ -1,6 +1,7 @@
 package com.example.artwokmabel.profile.settings;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,10 +12,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
+import com.example.artwokmabel.HomePageActivity;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.ActivitySetUsernameBinding;
 import com.example.artwokmabel.databinding.CustomSetProfileDetailsBarBinding;
 import com.example.artwokmabel.login.DuplicateUsernameChecker;
+import com.example.artwokmabel.login.LoginOptionsActivity;
 import com.example.artwokmabel.repos.FirestoreRepo;
 
 public class SetUsernameActivity extends AppCompatActivity implements DuplicateUsernameChecker {
@@ -67,6 +70,10 @@ public class SetUsernameActivity extends AppCompatActivity implements DuplicateU
         }else{
             SettingsActivity.getInstance().viewModel.updateUserUsername(username);
             Toast.makeText(this, "Username change successful", Toast.LENGTH_SHORT).show();
+
+            Intent intent = new Intent(SetUsernameActivity.this, HomePageActivity.class);
+            intent.putExtra("fromWho", "editProfile");
+            startActivity(intent);
         }
     }
 

@@ -16,6 +16,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class HomePageActivity extends AppCompatActivity {
 
     private static HomePageActivity instance = null;
+    public BottomNavigationView navView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,12 +24,23 @@ public class HomePageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home_page);
         instance = this;
 
-        BottomNavigationView navView = findViewById(R.id.nav_view);
+        navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navView.setSelectedItemId(R.id.main_home_fragment);
 
         if(savedInstanceState == null){
             loadFragment(new HomeTabsFragment());
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if(getIntent().getStringExtra("fromWho") != null) {
+            if (getIntent().getStringExtra("fromWho").equals("editProfile")){
+                navView.setSelectedItemId(R.id.main_profile_fragment);
+            }
         }
     }
 

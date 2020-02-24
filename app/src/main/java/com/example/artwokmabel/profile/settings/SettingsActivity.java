@@ -3,6 +3,7 @@ package com.example.artwokmabel.profile.settings;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
@@ -12,6 +13,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -26,6 +28,7 @@ import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.ActivitySettingsBinding;
 import com.example.artwokmabel.homepage.callbacks.ImagePickerCallback;
 import com.example.artwokmabel.login.ForgotPasswordActivity;
+import com.example.artwokmabel.login.LoginOptionsActivity;
 import com.example.artwokmabel.models.User;
 import com.example.artwokmabel.profile.uploadlisting.UploadListingAcitvity;
 import com.example.artwokmabel.profile.user.ProfileFragmentViewModel;
@@ -65,6 +68,7 @@ public class SettingsActivity extends AppCompatActivity {
         binding.setOnusernamechange(new OnUsernameChange());
         binding.setOnintrochange(new OnIntroChange());
         binding.setOnpasswordchange(new OnPasswordChange());
+        binding.setOndeactivate(new OnDeactivate());
 
         mAuth = FirebaseAuth.getInstance();
         storageReference = FirebaseStorage.getInstance().getReference();
@@ -74,27 +78,8 @@ public class SettingsActivity extends AppCompatActivity {
 
         viewModel = ViewModelProviders.of(this).get(SettingsActivityViewModel.class);
 
-        //setEditTextListeners();
         observeViewModel();
 
-
-//        binding.editUsername.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//
-//                new OnUsernameChange().onUsernameChange();
-//                return true;
-//            }
-//        });
-//
-//        binding.editIntroduction.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//
-//                new OnIntroChange().onIntroChange();
-//                return true;
-//            }
-//        });
     }
 
     private void observeViewModel(){
@@ -145,6 +130,43 @@ public class SettingsActivity extends AppCompatActivity {
             startActivity(intent);
         }
     }
+
+    public class OnLogout{
+        public void onLogout(){
+            FirebaseAuth.getInstance().signOut();
+            Intent intent = new Intent(SettingsActivity.this, LoginOptionsActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+        }
+    }
+
+    public class OnDeactivate{
+        public void onDeactivate(){
+            AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this);
+            builder.setMessage("This will delete every post, listing, comment, review, message by you and you will be unable to recover them! Deactive anyway?")
+                .setPositiveButton("Deactivate", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        viewModel.deleteUser();
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+            AlertDialog alertdialog = builder.create();
+
+            alertdialog.setOnShowListener( new DialogInterface.OnShowListener() {
+                @Override
+                public void onShow(DialogInterface arg0) {
+                    alertdialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.red));
+                }
+            });
+            alertdialog.show();
+
+        }
+    }
+
 
     @Override
     protected void onActivityResult (int requestCode, int resultCode, Intent data) {

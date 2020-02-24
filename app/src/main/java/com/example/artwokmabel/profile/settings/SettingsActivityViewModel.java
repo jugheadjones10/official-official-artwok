@@ -36,4 +36,9 @@ public class SettingsActivityViewModel extends ViewModel {
     public void updateUserEmail(String email){
         FirestoreRepo.getInstance().updateUserEmail(email, mAuth.getCurrentUser().getUid());
     }
+
+    public void deleteUser(){
+        FirestoreRepo.getInstance().deleteCurrentUser();
+
+    }
 }

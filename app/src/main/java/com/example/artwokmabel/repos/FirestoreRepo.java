@@ -949,12 +949,88 @@ public class FirestoreRepo {
         db.collection("Users")
                 .document(userId)
                 .update("username", username);
+
+        FirebaseDatabase.getInstance().getReference()
+                .child("Users")
+                .orderByChild("uid")
+                .equalTo(userId)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        for(DataSnapshot user : dataSnapshot.getChildren()){
+                            FirebaseDatabase.getInstance().getReference()
+                                    .child("Users")
+                                    .child(user.getKey())
+                                    .child("username")
+                                    .setValue(username);
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+
     }
 
     public void updateUserProfileUrl(String profile_url, String userId){
         db.collection("Users")
                 .document(userId)
                 .update("profile_url", profile_url);
+
+        FirebaseDatabase.getInstance().getReference()
+                .child("Users")
+                .orderByChild("uid")
+                .equalTo(userId)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        for(DataSnapshot user : dataSnapshot.getChildren()){
+                            FirebaseDatabase.getInstance().getReference()
+                                    .child("Users")
+                                    .child(user.getKey())
+                                    .child("profile_url")
+                                    .setValue(profile_url);
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+    }
+
+    public void deleteCurrentUser(){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        user.delete()
+            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()) {
+                        Log.d(TAG, "User account deleted.");
+                    }
+                }
+            });
+
+        db.collection("Users")
+                .document(user.getUid())
+                .delete();
+
+        FirebaseDatabase.getInstance().getReference()
+                .child("Users")
+                .orderByChild("uid")
+                .equalTo(user.getUid())
+                .getRef()
+                .removeValue();
     }
 
 //    public LiveData<User> getUserOnce(String uid){
