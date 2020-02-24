@@ -25,6 +25,7 @@ import com.example.artwokmabel.HomePageActivity;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.ActivitySettingsBinding;
 import com.example.artwokmabel.homepage.callbacks.ImagePickerCallback;
+import com.example.artwokmabel.login.ForgotPasswordActivity;
 import com.example.artwokmabel.models.User;
 import com.example.artwokmabel.profile.uploadlisting.UploadListingAcitvity;
 import com.example.artwokmabel.profile.user.ProfileFragmentViewModel;
@@ -63,6 +64,7 @@ public class SettingsActivity extends AppCompatActivity {
         binding.setOnprofilepicchange(new OnProfilePicChange());
         binding.setOnusernamechange(new OnUsernameChange());
         binding.setOnintrochange(new OnIntroChange());
+        binding.setOnpasswordchange(new OnPasswordChange());
 
         mAuth = FirebaseAuth.getInstance();
         storageReference = FirebaseStorage.getInstance().getReference();
@@ -131,6 +133,15 @@ public class SettingsActivity extends AppCompatActivity {
             Log.d("clicky", "intro clicked");
 
             Intent intent = new Intent(SettingsActivity.this, SetIntroActivity.class);
+            startActivity(intent);
+        }
+    }
+
+    public class OnPasswordChange{
+        public void onPasswordChange(){
+
+            Intent intent = new Intent(SettingsActivity.this, ForgotPasswordActivity.class);
+            intent.putExtra("email", user.getEmail());
             startActivity(intent);
         }
     }

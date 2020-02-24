@@ -18,8 +18,14 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_forgot_password);
-        binding.emailForgotPassword.requestFocus();
         binding.setOnresetpasswordclicked(new OnResetPasswordClicked());
+
+        if(getIntent().getStringExtra("email") != null){
+            binding.emailForgotPassword.setText(getIntent().getStringExtra("email"));
+            binding.emailForgotPassword.setEnabled(false);
+        }else{
+            binding.emailForgotPassword.requestFocus();
+        }
 
         setSupportActionBar(binding.zeroUiToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

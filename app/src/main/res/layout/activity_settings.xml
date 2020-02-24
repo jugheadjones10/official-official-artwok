@@ -8,6 +8,8 @@
         <variable name="onprofilepicchange" type="com.example.artwokmabel.profile.settings.SettingsActivity.OnProfilePicChange"/>
         <variable name="onusernamechange" type="com.example.artwokmabel.profile.settings.SettingsActivity.OnUsernameChange"/>
         <variable name="onintrochange" type="com.example.artwokmabel.profile.settings.SettingsActivity.OnIntroChange"/>
+        <variable name="onpasswordchange" type="com.example.artwokmabel.profile.settings.SettingsActivity.OnPasswordChange"/>
+
     </data>
 
 
@@ -177,8 +179,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:text="********" />
+                android:gravity="center|center_vertical"
+                android:text="reset password?"
+                android:onClick="@{() -> onpasswordchange.onPasswordChange()}"/>
 
         </LinearLayout>
 
