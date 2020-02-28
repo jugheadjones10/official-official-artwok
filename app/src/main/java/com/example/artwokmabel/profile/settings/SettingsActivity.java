@@ -68,6 +68,7 @@ public class SettingsActivity extends AppCompatActivity {
         binding.setOnusernamechange(new OnUsernameChange());
         binding.setOnintrochange(new OnIntroChange());
         binding.setOnpasswordchange(new OnPasswordChange());
+        binding.setOnlogout(new OnLogout());
         binding.setOndeactivate(new OnDeactivate());
 
         mAuth = FirebaseAuth.getInstance();

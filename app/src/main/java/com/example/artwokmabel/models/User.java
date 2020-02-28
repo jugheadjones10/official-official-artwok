@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class User {
 
-    public User(String username, String uid, String profile_url, ArrayList<String> following, ArrayList<String> followers, ArrayList<String> chatrooms, ArrayList<String> fav_listings, ArrayList<String> fav_posts, ArrayList<String> fav_requests, ArrayList<String> tab_categories, String email) {
+    public User(String username, String uid, String profile_url, ArrayList<String> following, ArrayList<String> followers, ArrayList<String> chatrooms, ArrayList<String> fav_listings, ArrayList<String> fav_posts, ArrayList<String> fav_requests, ArrayList<String> tab_categories, String email, String introduction, String token) {
         this.username = username;
         this.uid = uid;
         this.profile_url = profile_url;
@@ -16,6 +16,8 @@ public class User {
         this.fav_requests = fav_requests;
         this.tab_categories = tab_categories;
         this.email = email;
+        this.introduction = introduction;
+        this.token = token;
     }
 
     public String username;
@@ -29,9 +31,27 @@ public class User {
     public ArrayList<String> fav_requests;
     public ArrayList<String> tab_categories;
     public String email;
+    public String introduction;
+    public String token;
 
     public User(){
 
+    }
+
+    public String getIntroduction() {
+        return introduction;
+    }
+
+    public void setIntroduction(String introduction) {
+        this.introduction = introduction;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public String getProfile_url() {

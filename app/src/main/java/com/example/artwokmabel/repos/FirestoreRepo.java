@@ -13,6 +13,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.algolia.search.saas.Client;
 import com.algolia.search.saas.Index;
+import com.example.artwokmabel.HomePageActivity;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.login.CreateAccountEmailActivity;
 import com.example.artwokmabel.login.CreateAccountPasswordActivity;
@@ -55,6 +56,9 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -96,6 +100,27 @@ public class FirestoreRepo {
             e.printStackTrace();
         }
         algoliaIndex.saveObjectAsync(newData, userid, null);
+    }
+
+    public void addTokenToFirestore(String token){
+
+        //This here might be a problem - check if the token field is created or not
+        db.collection("Users")
+                .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .update("token", token)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("notives", "Notifnotif went right");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("notives", "Notifnotif went wrong", e);
+                    }
+                });
+
     }
 
     public void uploadNewPost(String postText, String userId, Activity activity){
@@ -219,43 +244,69 @@ public class FirestoreRepo {
                             // Sign in success, update UI with the signed-in user's information
                             //FirebaseUser user = mAuth.getCurrentUser();
                             String uid = task.getResult().getUser().getUid();
-                            User userObject = new User(
-                                    username.toLowerCase(),
-                                    uid,
-                                    "https://firebasestorage.googleapis.com/v0/b/artwok-database.appspot.com/o/Default_images%2Faccount.png?alt=media&token=8c34c02a-4c2c-4708-a802-73af4978b7d0",
-                                    new ArrayList<String>(),
-                                    new ArrayList<String>(),
-                                    new ArrayList<String>(),
-                                    new ArrayList<String>(),
-                                    new ArrayList<String>(),
-                                    new ArrayList<String>(),
-                                    new ArrayList<String>(),
-                                    email
-                            );
 
-                            FirebaseDatabase.getInstance().getReference()
-                                    .child("Users")
-                                    .child(uid)
-                                    .setValue(userObject);
+                            //This extra layer outside is to
+                            FirebaseInstanceId.getInstance().getInstanceId()
+                                    .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                                            if (!task.isSuccessful()) {
+                                                Log.w("notives", "getInstanceId failed", task.getException());
+                                                return;
+                                            }
 
-                            db.collection("Users")
-                                    .document(uid)
-                                    .set(userObject)
-                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            Log.d(TAG, "DocumentSnapshot successfully written!");
-                                            //PushUserToAlgolia(username, uid);
-                                            CreateAccountPasswordActivity.getInstance().createAccountCallback(true);
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Log.w(TAG, "Error writing document", e);
-                                            Toast.makeText(CreateAccountPasswordActivity.getInstance(), "Create account failed", Toast.LENGTH_SHORT).show();
+                                            // Get new Instance ID token
+                                            String token = task.getResult().getToken();
+
+                                            // Log and toast
+                                            Log.d("notives", token);
+
+
+                                            User userObject = new User(
+                                                    username.toLowerCase(),
+                                                    uid,
+                                                    "https://firebasestorage.googleapis.com/v0/b/artwok-database.appspot.com/o/Default_images%2Faccount.png?alt=media&token=8c34c02a-4c2c-4708-a802-73af4978b7d0",
+                                                    new ArrayList<String>(),
+                                                    new ArrayList<String>(),
+                                                    new ArrayList<String>(),
+                                                    new ArrayList<String>(),
+                                                    new ArrayList<String>(),
+                                                    new ArrayList<String>(),
+                                                    new ArrayList<String>(),
+                                                    email,
+                                                    "",
+                                                    token
+                                            );
+
+                                            FirebaseDatabase.getInstance().getReference()
+                                                    .child("Users")
+                                                    .child(uid)
+                                                    .setValue(userObject);
+
+                                            db.collection("Users")
+                                                    .document(uid)
+                                                    .set(userObject)
+                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void aVoid) {
+                                                            Log.d(TAG, "DocumentSnapshot successfully written!");
+                                                            //PushUserToAlgolia(username, uid);
+                                                            CreateAccountPasswordActivity.getInstance().createAccountCallback(true);
+                                                        }
+                                                    })
+                                                    .addOnFailureListener(new OnFailureListener() {
+                                                        @Override
+                                                        public void onFailure(@NonNull Exception e) {
+                                                            Log.w(TAG, "Error writing document", e);
+                                                            Toast.makeText(CreateAccountPasswordActivity.getInstance(), "Create account failed", Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    });
+
+
                                         }
                                     });
+
+
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
@@ -1786,7 +1837,9 @@ public class FirestoreRepo {
             (ArrayList<String>) doc.get("fav_posts"),
             (ArrayList<String>) doc.get("fav_requests"),
             (ArrayList<String>) doc.get("tab_categories"),
-            doc.getString("email")
+            doc.getString("email"),
+            doc.getString("introduction"),
+            doc.getString("token")
         );
     }
 
