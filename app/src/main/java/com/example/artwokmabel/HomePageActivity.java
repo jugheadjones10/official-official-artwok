@@ -48,6 +48,7 @@ public class HomePageActivity extends AppCompatActivity {
 
                         // Get new Instance ID token
                         String token = task.getResult().getToken();
+                        Log.d("westchester", token);
                         FirestoreRepo.getInstance().addTokenToFirestore(token);
                     }
                 });

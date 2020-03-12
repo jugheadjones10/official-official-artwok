@@ -19,10 +19,22 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
+import com.example.artwokmabel.databinding.ActivityPost2Binding;
+import com.example.artwokmabel.databinding.ActivityPostBinding;
+import com.example.artwokmabel.homepage.adapters.ListingsAdapter;
+import com.example.artwokmabel.homepage.callbacks.ShareClickCallback;
 import com.example.artwokmabel.homepage.homepagewrapper.HomeTabsFragment;
 import com.example.artwokmabel.R;
+import com.example.artwokmabel.homepage.listing.ListingActivityViewModel;
+import com.example.artwokmabel.models.Comment;
+import com.example.artwokmabel.models.Listing;
+import com.example.artwokmabel.models.MainPost;
+import com.example.artwokmabel.models.User;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
@@ -39,26 +51,27 @@ import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.ImageListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PostActivity extends AppCompatActivity {
 
-    private TextView post_desc;
-    private TextView post_hashtags;
-    private CarouselView carouselView;
-    private ImageButton favorite, share;
-    public NestedScrollView nestedScroll;
-    public AppBarLayout indivAppBar;
-    private FirebaseFirestore db;
     private FirebaseAuth mAuth;
-
-    public CollapsingToolbarLayout collapsingToolbarLayout;
-    TextInputLayout commentBar;
-    TextInputEditText commentEdit;
+//
+//    TextInputLayout commentBar;
+//    TextInputEditText commentEdit;
 
     private static PostActivity instance = null;
 
     int phoneHeight;
     Boolean heightSet;
+
+    public ActivityPost2Binding binding;
+    private PostActivityViewModel viewModel;
+    private MainPost post;
+    private CommentsAdapter commentsAdapter;
+
+    private String postId;
+    private String posterUserId;
 
     public static PostActivity getInstance(){
         return instance;
@@ -67,146 +80,158 @@ public class PostActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_post);
+
         instance = this;
-        post_desc = (TextView)findViewById(R.id.post_desc);
-        post_hashtags = (TextView)findViewById(R.id.post_hashtags);
-        carouselView = findViewById(R.id.post_image_me);
-        nestedScroll = findViewById(R.id.nested_scroll);
-        indivAppBar = findViewById(R.id.indiv_appbar);
-        collapsingToolbarLayout = findViewById(R.id.indiv_toolbar_collapse);
-        favorite = findViewById(R.id.favorite);
-        share = findViewById(R.id.share_button_indiv);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_post_2);
 
-        commentBar = findViewById(R.id.comment_bar);
-        commentEdit = findViewById(R.id.edit_comment);
+        mAuth = FirebaseAuth.getInstance();
+//        heightSet = false;
+//
+//        DisplayMetrics metrics = new DisplayMetrics();
+//        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+//        phoneHeight = metrics.heightPixels;
 
-        heightSet = false;
-
-        DisplayMetrics metrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        phoneHeight = metrics.heightPixels;
-
-        Toolbar toolbar = findViewById(R.id.indiv_toolbar);
-        setSupportActionBar(toolbar);
+        setSupportActionBar(binding.indivToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         getIncomingIntent();
 
-        commentBar.bringToFront();
+        commentsAdapter = new CommentsAdapter(this, postId, posterUserId);
+        binding.commentsRecyclerView.setAdapter(commentsAdapter);
+
+//        commentBar.bringToFront();
         //SET POSITION OF COMMENT BAR AND BRING TO FRONT
 
-        ViewTreeObserver vto = commentBar.getViewTreeObserver();
-        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+//        ViewTreeObserver vto = commentBar.getViewTreeObserver();
+//        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+//            @Override
+//            public void onGlobalLayout() {
+//                if(heightSet == false){
+//                    //SET POSITION OF COMMENT BAR AND BRING TO FRONT
+//                    ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) commentBar.getLayoutParams();
+//                    Log.d("FUCK", "THIS IS SCREEN HEIGHT" + phoneHeight);
+//                    params.topMargin = phoneHeight - commentBar.getHeight();
+//                    Log.d("FUCK", "Height of comment bar in pixels" + commentBar.getHeight());
+//                    heightSet = true;
+//                }
+//            }
+//
+//        });
+
+
+        //Add in share functionality to triple dot?
+//        binding.shareButtonIndiv.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                new ShareClickCallback().onClick();
+//                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+//                sharingIntent.setType("text/plain");
+//                String shareBody = "Here is the share content body";
+//                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Subject Here");
+//                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+//                HomeTabsFragment.getInstance().startActivity(Intent.createChooser(sharingIntent, "Share via"));
+//            }
+//        });
+
+
+        viewModel = ViewModelProviders.of(this).get(PostActivityViewModel.class);
+
+        viewModel.getUserObservable(mAuth.getCurrentUser().getUid()).observe(this, new Observer<User>() {
             @Override
-            public void onGlobalLayout() {
-                if(heightSet == false){
-                    //SET POSITION OF COMMENT BAR AND BRING TO FRONT
-                    ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) commentBar.getLayoutParams();
-                    Log.d("FUCK", "THIS IS SCREEN HEIGHT" + phoneHeight);
-                    params.topMargin = phoneHeight - commentBar.getHeight();
-                    Log.d("FUCK", "Height of comment bar in pixels" + commentBar.getHeight());
-                    heightSet = true;
-                }
-            }
+            public void onChanged(@Nullable User user) {
+                if (user != null) {
 
-        });
+                    if(posterUserId.equals(mAuth.getCurrentUser().getUid())){
+                        binding.favorite.setVisibility(View.GONE);
+                    }else{
+                        ArrayList<String> favs = user.getFav_posts();
+                        Log.d("favfav", favs.toString());
 
-
-        share.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
-                sharingIntent.setType("text/plain");
-                String shareBody = "Here is the share content body";
-                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Subject Here");
-                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
-                HomeTabsFragment.getInstance().startActivity(Intent.createChooser(sharingIntent, "Share via"));
-            }
-        });
-
-
-        db = FirebaseFirestore.getInstance();
-        mAuth = FirebaseAuth.getInstance();
-        if(getIntent().getStringExtra("userid").equals(mAuth.getCurrentUser().getUid())){
-            favorite.setImageResource(R.drawable.menu);
-        }else{
-            db = FirebaseFirestore.getInstance();
-            db.collection("Users")
-                    .document(mAuth.getCurrentUser().getUid())
-                    .addSnapshotListener(new EventListener<DocumentSnapshot>() {
-                        @Override
-                        public void onEvent(@Nullable DocumentSnapshot snapshot, @Nullable FirebaseFirestoreException e) {
-                            if (e != null) {
-                                Log.w("TAG", "Listen failed.", e);
-                                return;
-                            }
-
-                            if(snapshot.exists()){
-                                ArrayList<String> favs = (ArrayList<String>) snapshot.get("fav_posts");
-                                if(favs.contains(getIntent().getStringExtra("postid"))){
-                                    favorite.setImageResource(R.drawable.like);
-                                }else{
-                                    favorite.setImageResource(R.drawable.favourite_post);
-                                }
-                            }
+                        if(favs != null && favs.contains(postId)){
+                            binding.favorite.setImageResource(R.drawable.like);
+                        }else{
+                            binding.favorite.setImageResource(R.drawable.favourite_post);
                         }
-                    });
 
-            favorite.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    db.collection("Users")
-                            .document(mAuth.getCurrentUser().getUid())
-                            .get()
-                            .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                @Override
-                                public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                    ArrayList<String> favs = (ArrayList<String>) documentSnapshot.get("fav_posts");
-                                    if(favs.contains(getIntent().getStringExtra("postid"))){
-                                       favorite.setImageResource(R.drawable.favourite_post);
-                                        db.collection("Users")
-                                                .document( mAuth.getCurrentUser().getUid())
-                                                .update("fav_posts", FieldValue.arrayRemove(getIntent().getStringExtra("postid")));
-                                    }else{
-                                        favorite.setImageResource(R.drawable.like);
-                                        db.collection("Users")
-                                                .document( mAuth.getCurrentUser().getUid())
-                                                .update("fav_posts", FieldValue.arrayUnion(getIntent().getStringExtra("postid")));
-                                    }
+                        binding.favorite.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                if(favs != null && favs.contains(postId)){
+                                    viewModel.removeUserPostFavs(postId);
+                                }else{
+                                    viewModel.addUserPostFavs(postId);
                                 }
-                            });
+                            }
+                        });
+
+                    }
                 }
-            });
-        }
+            }
+        });
+
+        viewModel.getUserObservable(posterUserId).observe(this, new Observer<User>() {
+            @Override
+            public void onChanged(@Nullable User user) {
+                if (user != null) {
+                    binding.setUser(user);
+                    Picasso.get().load(user.getProfile_url()).into(binding.profilePicture);
+                }
+            }
+        });
 
 
-        CommentsFragment fragment = new CommentsFragment();
-        Bundle args = new Bundle();
-        args.putString("postid", getIntent().getStringExtra("postid"));
-        args.putString("userid", getIntent().getStringExtra("userid"));
-        fragment.setArguments(args);
+        viewModel.getCommentsObservable(postId, posterUserId).observe(this, new Observer<List<Comment>>() {
+            @Override
+            public void onChanged(@Nullable List<Comment> commentsList) {
+                if (commentsList != null) {
+                    commentsAdapter.setCommentsList(commentsList);
+                }
+            }
+        });
 
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.indiv_post_container, fragment);
-        transaction.commit();
-
-        //Add on click listener to send icon
-        commentBar.setEndIconOnClickListener(new View.OnClickListener() {
+        binding.addComment.setEndIconOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!commentEdit.getText().toString().equals("")){
-                    Log.d("FUCK", "onClick: attempting to submit new comment.");
-                    fragment.addNewComment(commentEdit.getText().toString());
+                if(!binding.commentEditText.getText().toString().equals("")){
 
-                    commentEdit.setText("");
+                    viewModel.addComment(binding.commentEditText.getText().toString(), mAuth.getCurrentUser().getUid(), posterUserId, postId);
 
+                    binding.commentEditText.setText("");
                     closeKeyboard();
                 }else{
                     Toast.makeText(getApplicationContext(), "you can't post a blank comment", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+
+//        CommentsFragment fragment = new CommentsFragment();
+//        Bundle args = new Bundle();
+//        args.putString("postid", postId);
+//        args.putString("userid", posterUserId);
+//        fragment.setArguments(args);
+//
+//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//        transaction.replace(R.id.indiv_post_container, fragment);
+//        transaction.commit();
+
+        //Add on click listener to send icon
+//        commentBar.setEndIconOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if(!commentEdit.getText().toString().equals("")){
+//                    Log.d("FUCK", "onClick: attempting to submit new comment.");
+//                    fragment.addNewComment(commentEdit.getText().toString());
+//
+//                    commentEdit.setText("");
+//
+//                    closeKeyboard();
+//                }else{
+//                    Toast.makeText(getApplicationContext(), "you can't post a blank comment", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
     }
 
     @Override
@@ -229,41 +254,71 @@ public class PostActivity extends AppCompatActivity {
     }
 
     private void getIncomingIntent(){
-        Log.d("TAG", "getIncomingIntent: checking for incoming intents.");
 
-        if(getIntent().hasExtra("description") && getIntent().hasExtra("hashtags")){
-            Log.d("TAG", "getIncomingIntent: found intent extras.");
+        post = (MainPost) getIntent().getSerializableExtra("post");
 
-            String descText = getIntent().getStringExtra("description");
-            String hashText = getIntent().getStringExtra("hashtags");
-            String userName = getIntent().getStringExtra("username");
+        postId = post.getPostId();
+        posterUserId = post.getUser_id();
 
-            ArrayList<String> images = getIntent().getStringArrayListExtra("photos");
-            ImageListener imageListener = new ImageListener() {
-                @Override
-                public void setImageForPosition(int position, ImageView imageView) {
-                    //imageView.setImageResource(sampleImages[position]);
-                    Picasso.get()
-                            .load(images.get(position))
-                            .placeholder(R.drawable.user)
-                            .error(R.drawable.rick_and_morty)
-                            .into(imageView);
-                }
-            };
-
-            if(images != null){
-                carouselView.setPageCount(images.size());
-                carouselView.setImageListener(imageListener);
-
-                if(images.size() == 1){
-                    carouselView.setRadius(0);
-                }
+        ArrayList<String> images = post.getPhotos();
+        ImageListener imageListener = new ImageListener() {
+            @Override
+            public void setImageForPosition(int position, ImageView imageView) {
+                Picasso.get()
+                        .load(images.get(position))
+                        .placeholder(R.drawable.user)
+                        .error(R.drawable.rick_and_morty)
+                        .into(imageView);
             }
+        };
 
+        if(images != null){
+            binding.postCarousel.setPageCount(images.size());
+            binding.postCarousel.setImageListener(imageListener);
 
-            post_desc.setText(descText);
-            post_hashtags.setText(userName);
-            //NOTICE :  natively set icons, title, and subtitle on toolbar next time
+            if(images.size() == 1){
+                binding.postCarousel.setRadius(0);
+            }
         }
+
+//
+//
+//        if(getIntent().hasExtra("description") && getIntent().hasExtra("hashtags")){
+//            Log.d("TAG", "getIncomingIntent: found intent extras.");
+//
+//            String descText = getIntent().getStringExtra("description");
+//            String hashText = getIntent().getStringExtra("hashtags");
+//            String userName = getIntent().getStringExtra("username");
+//
+//            postId = getIntent().getStringExtra("postid");
+//            posterUserId = getIntent().getStringExtra("userid");
+//
+//            ArrayList<String> images = getIntent().getStringArrayListExtra("photos");
+//            ImageListener imageListener = new ImageListener() {
+//                @Override
+//                public void setImageForPosition(int position, ImageView imageView) {
+//                    //imageView.setImageResource(sampleImages[position]);
+//                    Picasso.get()
+//                            .load(images.get(position))
+//                            .placeholder(R.drawable.user)
+//                            .error(R.drawable.rick_and_morty)
+//                            .into(imageView);
+//                }
+//            };
+//
+//            if(images != null){
+//                binding.postCarousel.setPageCount(images.size());
+//                binding.postCarousel.setImageListener(imageListener);
+//
+//                if(images.size() == 1){
+//                    binding.postCarousel.setRadius(0);
+//                }
+//            }
+//
+//
+//            binding.postDesc.setText(descText);
+//            binding.postHashtags.setText(userName);
+//            //NOTICE :  natively set icons, title, and subtitle on toolbar next time
+//        }
     }
 }

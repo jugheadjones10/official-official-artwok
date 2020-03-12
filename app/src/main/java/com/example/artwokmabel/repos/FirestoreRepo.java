@@ -20,8 +20,8 @@ import com.example.artwokmabel.login.CreateAccountPasswordActivity;
 import com.example.artwokmabel.login.CreateAccountUsernameActivity;
 import com.example.artwokmabel.login.DuplicateUsernameChecker;
 import com.example.artwokmabel.login.LoginActivity;
-import com.example.artwokmabel.chat.models.Comment;
 import com.example.artwokmabel.chat.models.UserUserModel;
+import com.example.artwokmabel.models.Comment;
 import com.example.artwokmabel.models.Message;
 import com.example.artwokmabel.models.OfferMessage;
 import com.example.artwokmabel.models.OrderChat;
@@ -447,12 +447,20 @@ public class FirestoreRepo {
         db.collection("Users")
                 .document(myId)
                 .update("following", FieldValue.arrayUnion(otherUserId));
+
+        db.collection("Users")
+                .document(otherUserId)
+                .update("followers", FieldValue.arrayUnion(myId));
     }
 
     public void removeUserFollowing(String myId, String otherUserId){
         db.collection("Users")
                 .document(myId)
                 .update("following", FieldValue.arrayRemove(otherUserId));
+
+        db.collection("Users")
+                .document(otherUserId)
+                .update("followers", FieldValue.arrayRemove(myId));
     }
 
     public LiveData<List<Listing>> getSearchedListings(String query) {
@@ -533,8 +541,6 @@ public class FirestoreRepo {
 
         return data;
     }
-
-
 
     public LiveData<List<User>> getUserFollowings(String userId){
         final MutableLiveData<List<User>> data = new MutableLiveData<>();
@@ -1125,9 +1131,27 @@ public class FirestoreRepo {
         return data;
     }
 
-    public void getListing(String listingId, ListingRetrieved callback){
-        //final MutableLiveData<Listing> data = new MutableLiveData<>();
+    public interface PostRetrieved {
+        void onPostRetrieved(MainPost post);
+    }
 
+    //Todo: make all filed names like "postId" below into static final string variables
+    public void getPost(String postId, PostRetrieved callback){
+        db.collectionGroup("Posts")
+                .whereEqualTo("postId", postId)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for(QueryDocumentSnapshot snapshot : queryDocumentSnapshots){
+                            MainPost post = snapshot.toObject(MainPost.class);
+                            callback.onPostRetrieved(post);
+                        }
+                    }
+                });
+    }
+
+    public void getListing(String listingId, ListingRetrieved callback){
         db.collectionGroup("Listings")
                 .whereEqualTo("postid", listingId)
                 .get()
@@ -1142,7 +1166,6 @@ public class FirestoreRepo {
                         }
                     }
                 });
-        //return data;
     }
 
     public LiveData<List<Listing>> getUserListings(String uid){
@@ -1392,7 +1415,7 @@ public class FirestoreRepo {
 
     public void addNewMessage(Comment comment, String chatRoomId){
 
-        Log.d("HUCK", "FIRESTORE REPO : " +  comment.getMessage());
+        Log.d("HUCK", "FIRESTORE REPO : " +  comment.getComment());
 
         db.collection("Chatrooms")
             .document(chatRoomId)
@@ -1440,6 +1463,80 @@ public class FirestoreRepo {
                     }
                 });
         return data;
+    }
+
+    public void addPostComment(String commentText, String commenterId, String posterUserId, String postId){
+
+        DocumentReference newCommentRef = db.collection("Users")
+                .document(posterUserId)
+                .collection("Posts")
+                .document(postId)
+                .collection("Comments")
+                .document();
+
+        db.collection("Users")
+                .document(commenterId)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot snapshot) {
+                        Comment newComment = new Comment(
+                                commentText,
+                                commenterId,
+                                System.currentTimeMillis(),
+                                snapshot.getString("username"),
+                                snapshot.getString("profile_url"),
+                                newCommentRef.getId()
+                        );
+
+                        newCommentRef.set(newComment);
+                    }
+                });
+    }
+
+    public LiveData<List<Comment>> getPostComments(String postId, String posterId) {
+        final MutableLiveData<List<Comment>> data = new MutableLiveData<>();
+        ArrayList<Comment> tempData = new ArrayList<>();
+
+        db.collection("Users")
+                .document(posterId)
+                .collection("Posts")
+                .document(postId)
+                .collection("Comments")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.w("TAG", "Listen failed.", e);
+                            return;
+                        }
+
+                        tempData.clear();
+                        for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                            //HERE might be a bit of a probem
+                            Comment comment = doc.toObject(Comment.class);
+                            tempData.add(comment);
+                        }
+
+                        //Below sorts posts according to date posted
+                        Collections.sort(tempData, new SortComments());
+
+                        data.setValue(tempData);
+                    }
+                });
+
+        return data;
+    }
+
+
+    public void deleteUserComment(String commentId, String postId, String userId){
+        db.collection("Users")
+                .document(userId)
+                .collection("Posts")
+                .document(postId)
+                .collection("Comments")
+                .document(commentId)
+                .delete();
     }
 
     //Todo: replace below with getting UserUserModel
@@ -1796,6 +1893,12 @@ public class FirestoreRepo {
         }
     }
 
+    class SortComments implements Comparator<Comment> {
+        public int compare(Comment a, Comment b){
+            return (int)a.getDate_created() - (int)b.getDate_created();
+        }
+    }
+
 //    class SortMessages implements Comparator<Comment> {
 //        public int compare(Comment a, Comment b){
 //            return Math.toIntExact(b.getTimestamp() - a.getTimestamp());
@@ -1844,14 +1947,14 @@ public class FirestoreRepo {
     }
 
 
-    private Comment changeDocToCommentModel(QueryDocumentSnapshot doc){
-        return new Comment(
-                doc.getString("senderId"),
-                doc.getString("message"),
-                doc.getLong("timestamp"),
-                doc.getString("otherUserPic")
-        );
-    }
+//    private Comment changeDocToCommentModel(QueryDocumentSnapshot doc){
+//        return new Comment(
+//                doc.getString("senderId"),
+//                doc.getString("message"),
+//                doc.getLong("timestamp"),
+//                doc.getString("otherUserPic")
+//        );
+//    }
 
     private Listing changeDocToListingModel(DocumentSnapshot doc){
         return new Listing(

@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<layout>
+
+    <data>
+        <variable name="comment" type="com.example.artwokmabel.models.Comment"/>
+        <variable name="ondeleteclicked" type="com.example.artwokmabel.homepage.post.CommentsAdapter.OnDeleteClicked"/>
+    </data>
+
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -35,7 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
-                android:text="mitch.tabian"
+                android:text="@{comment.username}"
                 android:textColor="@color/artwok_black"
                 android:textSize="15sp"
                 android:textStyle="bold" />
@@ -46,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@+id/comment_username"
-                android:text="this is a comment"
+                android:text="@{comment.comment}"
                 android:textColor="@color/artwok_black"
                 android:textSize="15sp" />
 
@@ -92,15 +101,18 @@
         </RelativeLayout>
 
         <ImageView
-            android:id="@+id/comment_like"
+            android:id="@+id/delete_comment"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="20dp"
-            android:padding="0dp" />
+            android:padding="0dp"
+            android:onClick="@{() -> ondeleteclicked.onDeleteClicked(comment)}"/>
 
 
     </RelativeLayout>
 
 </RelativeLayout>
+
+</layout>

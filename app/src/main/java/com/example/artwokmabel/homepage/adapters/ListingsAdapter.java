@@ -212,7 +212,7 @@ public class ListingsAdapter extends RecyclerView.Adapter<ListingsAdapter.myHold
 
         public myHolder(ItemNormalListingBinding binding) {
             super(binding.getRoot());
-           this.binding = binding;
+            this.binding = binding;
         }
     }
 }

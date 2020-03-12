@@ -9,10 +9,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.artwokmabel.databinding.ItemCommentBinding;
+import com.example.artwokmabel.databinding.ItemNormalListingBinding;
 import com.example.artwokmabel.models.Comment;
 import com.example.artwokmabel.R;
+import com.example.artwokmabel.models.Listing;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,105 +32,144 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.commentHolder> {
+public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.CommentHolder> {
 
     private static final String TAG = "CommentListAdapter";
 
-    private Context mContext;
-    private List<Comment> list;
+    private List<Comment> commentsList;
+    private CommentsViewModel viewModel;
+    private String postId;
+    private String postPosterId;
 
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
 
-
-    public CommentsAdapter(Context context, List<Comment> comments) {
-        this.mContext = context;
-        this.list = comments;
+    public CommentsAdapter(Context context, String postId, String postPosterId) {
+        this.mAuth = FirebaseAuth.getInstance();
+        this.viewModel = ViewModelProviders.of((FragmentActivity)context).get(CommentsViewModel.class);
+        this.postId = postId;
+        this.postPosterId = postPosterId;
     }
 
     @NonNull
     @Override
-    public CommentsAdapter.commentHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_comment,viewGroup,false);
+    public CommentsAdapter.CommentHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
+        ItemCommentBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.item_comment, parent,false);
 
-        CommentsAdapter.commentHolder myHolder = new CommentsAdapter.commentHolder(view);
-        return myHolder;
+        return new CommentHolder(binding);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CommentsAdapter.commentHolder myHolder, int i) {
-        Comment data = list.get(i);
+    public void onBindViewHolder(@NonNull CommentHolder holder, int i) {
+        Comment data = commentsList.get(i);
+        holder.binding.setComment(data);
+        Picasso.get().load(data.getPoster_url()).into(holder.binding.commentProfileImage);
 
-        Log.d("DIC", data.toString());
-        myHolder.comment.setText(data.getComment());
-        myHolder.username.setText(data.getUsername());
-        Picasso.get().load(data.getPoster_url()).into(myHolder.profileImg);
-
-        myHolder.reply.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });
-
-        mAuth = FirebaseAuth.getInstance();
-        if(mAuth.getCurrentUser().getUid().equals(data.getUser_id())){
-            myHolder.rubbish.setImageResource(R.drawable.garbage);
-            myHolder.rubbish.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    list.remove(i); // remove the item from the data list
-                    //CommentsFragment.getInstance().mComments.remove(i);
-                    CommentsFragment.getInstance().adapter.notifyDataSetChanged();
-
-                    db = FirebaseFirestore.getInstance();
-                    mAuth = FirebaseAuth.getInstance();
-                    db.collection("Users")
-                            .document(mAuth.getCurrentUser().getUid())
-                            .collection("Posts")
-                            .document(CommentsFragment.getInstance().postid)
-                            .collection("Comments")
-                            .document(data.getComment_id())
-                            .delete()
-                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    Log.d(TAG, "DocumentSnapshot successfully written!");
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Log.w(TAG, "Error writing document", e);
-                                }
-                            });
-                }
-            });
-
+        if(data.getUser_id().equals(mAuth.getCurrentUser().getUid())){
+            holder.binding.deleteComment.setImageResource(R.drawable.garbage);
+            holder.binding.setOndeleteclicked(new OnDeleteClicked());
+            Log.d("commentshenan", "you and the comment poster are the same");
         }else{
-            myHolder.rubbish.setImageResource(0);
+            holder.binding.deleteComment.setVisibility(View.GONE);
+            Log.d("commentshenan", "you and the comment poster are different so rubbish bin should not be there");
         }
+
+
+//        mAuth = FirebaseAuth.getInstance();
+//        if(mAuth.getCurrentUser().getUid().equals(data.getUser_id())){
+//            holder.rubbish.setImageResource(R.drawable.garbage);
+//            holder.rubbish.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    commenstList.remove(i); // remove the item from the data commenstList
+//                    //CommentsFragment.getInstance().mComments.remove(i);
+//                    CommentsFragment.getInstance().adapter.notifyDataSetChanged();
+//
+//                    db = FirebaseFirestore.getInstance();
+//                    mAuth = FirebaseAuth.getInstance();
+//                    db.collection("Users")
+//                            .document(mAuth.getCurrentUser().getUid())
+//                            .collection("Posts")
+//                            .document(CommentsFragment.getInstance().postid)
+//                            .collection("Comments")
+//                            .document(data.getComment_id())
+//                            .delete()
+//                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                                @Override
+//                                public void onSuccess(Void aVoid) {
+//                                    Log.d(TAG, "DocumentSnapshot successfully written!");
+//                                }
+//                            })
+//                            .addOnFailureListener(new OnFailureListener() {
+//                                @Override
+//                                public void onFailure(@NonNull Exception e) {
+//                                    Log.w(TAG, "Error writing document", e);
+//                                }
+//                            });
+//                }
+//            });
+//
+//        }else{
+//            holder.rubbish.setImageResource(0);
+//        }
 
     }
 
+    public void setCommentsList(final List<Comment> comments) {
+        if (this.commentsList == null) {
+            this.commentsList = comments;
+            notifyItemRangeInserted(0, comments.size());
+        } else {
+            DiffUtil.DiffResult result = DiffUtil.calculateDiff(new DiffUtil.Callback() {
+                @Override
+                public int getOldListSize() {
+                    return CommentsAdapter.this.commentsList.size();
+                }
 
-    class commentHolder extends RecyclerView.ViewHolder {
-        TextView comment, username, reply;
-        CircleImageView profileImg;
-        ImageView rubbish;
+                @Override
+                public int getNewListSize() {
+                    return comments.size();
+                }
+
+                @Override
+                public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
+                    return CommentsAdapter.this.commentsList.get(oldItemPosition).getComment_id().equals(
+                            comments.get(newItemPosition).getComment_id());
+                }
+
+                @Override
+                public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
+                    return CommentsAdapter.this.commentsList.get(oldItemPosition).getComment_id().equals(
+                            comments.get(newItemPosition).getComment_id());
+                }
+            });
+            this.commentsList = comments;
+            notifyDataSetChanged();
+            result.dispatchUpdatesTo(this);
+        }
+    }
+    
+    
+    public class OnDeleteClicked{
+        public void onDeleteClicked(Comment comment){
+            Log.d("commentshenan", "Does delete comment run");
+
+            viewModel.deleteComment(comment.getComment_id(), postId, postPosterId);
+        }
+    }
 
 
-        public commentHolder(@NonNull View itemView) {
-            super(itemView);
-            comment = itemView.findViewById(R.id.comment);
-            username = itemView.findViewById(R.id.comment_username);
-            reply = itemView.findViewById(R.id.comment_reply);
-            profileImg = itemView.findViewById(R.id.comment_profile_image);
-            rubbish = itemView.findViewById(R.id.comment_like);
+    class CommentHolder extends RecyclerView.ViewHolder {
+        private ItemCommentBinding binding;
+
+        public CommentHolder(@NonNull ItemCommentBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
         }
     }
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return commentsList == null ? 0 : commentsList.size();
     }
 }

@@ -76,7 +76,7 @@ public class CommentsFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         mListView.setLayoutManager(layoutManager);
 
-        adapter = new CommentsAdapter(mContext, mComments);
+        adapter = new CommentsAdapter(getContext(), "", "");
         mListView.setAdapter(adapter);
 
         setHasOptionsMenu(true);
@@ -97,14 +97,14 @@ public class CommentsFragment extends Fragment {
         if(adapter.getItemCount() > 5){
             //Todo: collapsing toolbar doesn't collapse when i first enter a post with moe than 5 comments
         }else{
-            ViewCompat.setNestedScrollingEnabled(PostActivity.getInstance().nestedScroll, false);
-            PostActivity.getInstance().indivAppBar.setExpanded(true,true);
+            ViewCompat.setNestedScrollingEnabled(PostActivity.getInstance().binding.nestedScroll, false);
+            PostActivity.getInstance().binding.indivAppbar.setExpanded(true,true);
 
             //Changing layout params prevents scrolling when the user swipes by touching the carouselView (collapsing toolbar)
             AppBarLayout.LayoutParams layoutParams= (AppBarLayout.LayoutParams)
-                    PostActivity.getInstance().collapsingToolbarLayout.getLayoutParams();
+                    PostActivity.getInstance().binding.indivToolbarCollapse.getLayoutParams();
             layoutParams.setScrollFlags(0);
-            PostActivity.getInstance().collapsingToolbarLayout.setLayoutParams(layoutParams);
+            PostActivity.getInstance().binding.indivToolbarCollapse.setLayoutParams(layoutParams);
         }
 
         //ListViewHeightExpander.setListViewHeightBasedOnChildren(mListView);
@@ -173,17 +173,17 @@ public class CommentsFragment extends Fragment {
     public void addNewComment(String userComment){
 
         if(adapter.getItemCount() > 5){
-            ViewCompat.setNestedScrollingEnabled(PostActivity.getInstance().nestedScroll, true);
+            ViewCompat.setNestedScrollingEnabled(PostActivity.getInstance().binding.nestedScroll, true);
 
             AppBarLayout.LayoutParams layoutParams= (AppBarLayout.LayoutParams)
-                    PostActivity.getInstance().collapsingToolbarLayout.getLayoutParams();
+                    PostActivity.getInstance().binding.indivToolbarCollapse.getLayoutParams();
             layoutParams.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL | AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
-            PostActivity.getInstance().collapsingToolbarLayout.setLayoutParams(layoutParams);
+            PostActivity.getInstance().binding.indivToolbarCollapse.setLayoutParams(layoutParams);
 
             //One small problem - currently it scrolls to the last post minus one. Include the last post.
             Integer listHeight = mListView.getHeight();//Height is in pixels
-            PostActivity.getInstance().indivAppBar.setExpanded(false, true);
-            PostActivity.getInstance().nestedScroll.smoothScrollTo(0, listHeight);
+            PostActivity.getInstance().binding.indivAppbar.setExpanded(false, true);
+            PostActivity.getInstance().binding.nestedScroll.smoothScrollTo(0, listHeight);
         }else{
 
         }

@@ -86,7 +86,7 @@ public class CommentListAdapter extends ArrayAdapter<Comment> {
             holder.profileImage = (CircleImageView) convertView.findViewById(R.id.comment_profile_image);
 
             if(mAuth.getCurrentUser().getUid().equals(CommentsFragment.getInstance().userid)){
-                holder.like = (ImageView) convertView.findViewById(R.id.comment_like);
+                holder.like = (ImageView) convertView.findViewById(R.id.delete_comment);
 
                 holder.like.setOnClickListener(new View.OnClickListener() {
                     @Override

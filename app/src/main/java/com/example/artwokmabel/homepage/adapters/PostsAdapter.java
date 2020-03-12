@@ -256,12 +256,14 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.myHolder> {
         @Override
         public void onClick(MainPost post) {
             Intent intent = new Intent(mContext, PostActivity.class);
-            intent.putExtra("description", post.getDesc());
-            intent.putExtra("hashtags", post.getHashtags());
-            intent.putExtra("postid", post.getPostId());
-            intent.putExtra("userid", post.getUser_id());
-            intent.putExtra("username", post.getUsername());
-            intent.putExtra("photos", post.getPhotos());
+//            intent.putExtra("description", post.getDesc());
+//            intent.putExtra("hashtags", post.getHashtags());
+//            intent.putExtra("postid", post.getPostId());
+//            intent.putExtra("userid", post.getUser_id());
+//            intent.putExtra("username", post.getUsername());
+//            intent.putExtra("photos", post.getPhotos());
+
+            intent.putExtra("post", post);
             mContext.startActivity(intent);
         }
     };

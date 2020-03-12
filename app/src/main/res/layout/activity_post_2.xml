@@ -1,24 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    android:id="@+id/indiv_post"
-    tools:context="com.example.artwokmabel.homepage.post.PostActivity"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-<!--    android:theme="@style/AppTheme.AppBarOverlay"-->
-<!--    android:background="?attr/colorPrimary"-->
+    <data>
+        <variable name="user" type="com.example.artwokmabel.models.User"/>
+    </data>
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/indiv_appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-<!--        android:background="?attr/colorPrimary"-->
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/indiv_toolbar_collapse"
             android:layout_width="match_parent"
@@ -67,11 +65,11 @@
                         android:id="@+id/poster_username"
                         android:layout_width="fill_parent"
                         android:layout_height="?attr/actionBarSize"
-                        android:layout_gravity="center_horizontal"
                         android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="Yo wassup"
-                        android:textSize="20dp" />
+                        android:gravity="center_vertical"
+                        android:paddingLeft="5dp"
+                        android:text="@{user.username}"
+                        android:textSize="18sp" />
 
                     <ImageButton
                         android:layout_width="50dp"
@@ -83,17 +81,6 @@
                         android:scaleType="fitCenter"
                         android:src="@drawable/favourite"
                         android:id="@+id/favorite"/>
-
-<!--                    <ImageButton-->
-<!--                        android:id="@+id/share_button_indiv"-->
-<!--                        android:layout_width="50dp"-->
-<!--                        android:layout_height="?attr/actionBarSize"-->
-<!--                        android:adjustViewBounds="true"-->
-<!--                        android:background="@null"-->
-<!--                        android:padding="10dp"-->
-<!--                        android:scaleType="fitCenter"-->
-<!--                        app:srcCompat="@drawable/ic_share_black_24dp" />-->
-
                 </LinearLayout>
 
             </androidx.appcompat.widget.Toolbar>
@@ -102,28 +89,6 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/comment_bar"
-        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100px"
-        android:hint="Comment"
-        app:endIconContentDescription="Send"
-        app:endIconDrawable="@drawable/ic_send_24px"
-        app:endIconMode="custom">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_comment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/artwok_white"
-            android:textColorHint="@color/artwok_white" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nested_scroll"
         android:layout_width="match_parent"
@@ -131,46 +96,36 @@
         android:fillViewport="false"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Comments"
-            android:textSize="13sp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/comments_recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
 
         </androidx.recyclerview.widget.RecyclerView>
 
-<!--        <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:orientation="vertical"-->
-<!--            app:layout_behavior="@string/appbar_scrolling_view_behavior">-->
-
-<!--            <TextView-->
-<!--                android:id="@+id/post_desc"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginTop="10dp"-->
-<!--                android:layout_marginBottom="10dp"-->
-<!--                android:paddingLeft="10dp"-->
-<!--                android:text="TextView" />-->
-
-<!--            <FrameLayout-->
-<!--                android:id="@+id/indiv_post_container"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content">-->
-
-<!--            </FrameLayout>-->
-
-<!--        </LinearLayout>-->
-
-
     </androidx.core.widget.NestedScrollView>
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/add_comment"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        app:boxBackgroundColor="@android:color/transparent"
+        app:boxStrokeWidth="0dp"
+        app:boxStrokeWidthFocused="0dp"
+        android:hint="Comment..."
+        app:endIconDrawable="@drawable/ic_send_24px"
+        app:endIconMode="custom">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/comment_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

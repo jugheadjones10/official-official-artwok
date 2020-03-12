@@ -1,11 +1,12 @@
 package com.example.artwokmabel.models;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.annotation.Nullable;
 
-public class MainPost{
+public class MainPost implements Serializable {
     private String user_id;
     private String desc;
     private String hashtags;

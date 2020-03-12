@@ -15,6 +15,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.artwokmabel.BuildConfig;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.chat.personalchat.ChatActivity;
+import com.example.artwokmabel.homepage.listing.ListingActivity;
+import com.example.artwokmabel.homepage.post.PostActivity;
+import com.example.artwokmabel.models.Listing;
+import com.example.artwokmabel.models.MainPost;
+import com.example.artwokmabel.repos.FirestoreRepo;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
@@ -47,6 +52,41 @@ public class SplashActivity extends AppCompatActivity {
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
                         finish();
+
+                    }else if(value.equals("newListing")){
+                        Intent intent = new Intent(this, ListingActivity.class);
+
+                        class OnListingRetrieved implements FirestoreRepo.ListingRetrieved {
+                            public void onListingRetrieved (Listing listing){
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                intent.putExtra("listing", listing);
+                                startActivity(intent);
+                                finish();
+                            }
+                        }
+
+                        FirestoreRepo.getInstance().getListing(getIntent().getStringExtra("listingId"),
+                                new OnListingRetrieved()
+                        );
+
+                    } else if(value.equals("newComment")){
+
+                        Intent intent = new Intent(this, PostActivity.class);
+
+                        class OnPostRetrieved implements FirestoreRepo.PostRetrieved {
+                            public void onPostRetrieved (MainPost post){
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                intent.putExtra("post", post);
+                                startActivity(intent);
+                                finish();
+                            }
+                        }
+
+                        Log.d("getlistingconfusion", getIntent().getStringExtra("postId"));
+
+                        FirestoreRepo.getInstance().getPost(getIntent().getStringExtra("postId"),
+                                new OnPostRetrieved()
+                        );
                     }
                 }
             }

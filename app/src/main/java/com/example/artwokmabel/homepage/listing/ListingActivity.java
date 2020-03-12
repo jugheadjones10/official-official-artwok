@@ -39,7 +39,6 @@ public class ListingActivity extends AppCompatActivity {
     private Listing listing;
     private ListingPagerAdapter adapter;
     private ListingActivityViewModel viewModel;
-    private User me;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,9 +59,9 @@ public class ListingActivity extends AppCompatActivity {
 
         viewModel.getUserObservable(mAuth.getCurrentUser().getUid()).observe(this, new Observer<User>() {
             @Override
-            public void onChanged(@Nullable User user) {
-                if (user != null) {
-                    me = user;
+            public void onChanged(@Nullable User me) {
+                if (me != null) {
+//                    me = user;
 
                     if(listing.getUserid().equals(mAuth.getCurrentUser().getUid())){
                         binding.favoriteButton.setVisibility(View.GONE);
