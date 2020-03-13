@@ -23,6 +23,7 @@ import com.example.artwokmabel.login.LoginActivity;
 import com.example.artwokmabel.chat.models.UserUserModel;
 import com.example.artwokmabel.models.Comment;
 import com.example.artwokmabel.models.Message;
+import com.example.artwokmabel.models.Notification;
 import com.example.artwokmabel.models.OfferMessage;
 import com.example.artwokmabel.models.OrderChat;
 import com.example.artwokmabel.models.Request;
@@ -1168,7 +1169,38 @@ public class FirestoreRepo {
                 });
     }
 
-    public LiveData<List<Listing>> getUserListings(String uid){
+    public LiveData<List<Notification>> getUserNotifications(String uid) {
+        final MutableLiveData<List<Notification>> data = new MutableLiveData<>();
+        List<Notification> tempData = new ArrayList<>();
+
+        db.collection("Users")
+                .document(uid)
+                .collection("Notifications")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.w("TAG", "Listen failed.", e);
+                            return;
+                        }
+
+                        tempData.clear();
+                        for(DocumentSnapshot single: queryDocumentSnapshots){
+                            Notification notifData = single.toObject(Notification.class);
+                            Log.d("doirun", notifData.getProtagUsername());
+                            tempData.add(notifData);
+                        }
+
+                        Collections.sort(tempData, new SortNotifications());
+                        data.setValue(tempData);
+                    }
+                });
+
+        return data;
+    }
+
+
+        public LiveData<List<Listing>> getUserListings(String uid){
         final MutableLiveData<List<Listing>> data = new MutableLiveData<>();
         List<Listing> tempData = new ArrayList<>();
 
@@ -1869,6 +1901,12 @@ public class FirestoreRepo {
     }
 
     //Utils
+    class SortNotifications implements Comparator<Notification> {
+        public int compare(Notification a, Notification b){
+            return (int)b.getTimeInMillis() - (int)a.getTimeInMillis();
+        }
+    }
+
     class SortMessages implements Comparator<Message> {
         public int compare(Message a, Message b){
             return (int)b.getNanopast() - (int)a.getNanopast();

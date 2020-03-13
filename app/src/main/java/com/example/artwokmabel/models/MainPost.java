@@ -74,6 +74,10 @@ public class MainPost implements Serializable {
     }
 
 
+    public MainPost(){
+
+    }
+
     public MainPost(String user_id, String desc, String hashtags, String postid, String username, ArrayList<String> photos, String timestamp, @Nullable long nanopast) {
         this.user_id = user_id;
         this.desc = desc;
