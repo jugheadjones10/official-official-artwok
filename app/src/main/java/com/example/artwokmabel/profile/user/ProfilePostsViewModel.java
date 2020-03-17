@@ -12,15 +12,16 @@ import java.util.List;
 public class ProfilePostsViewModel extends ViewModel {
 
     private FirebaseAuth mAuth;
-    private final LiveData<List<MainPost>> userPostsObeservable;
+    //private final LiveData<List<MainPost>> userPostsObeservable;
 
     public ProfilePostsViewModel() {
 
         mAuth = FirebaseAuth.getInstance();
-        userPostsObeservable = FirestoreRepo.getInstance().getUserPosts(mAuth.getCurrentUser().getUid());
+        //userPostsObeservable = FirestoreRepo.getInstance().getUserPosts(mAuth.getCurrentUser().getUid());
     }
 
-    public LiveData<List<MainPost>> getUserPostsObeservable() {
-        return userPostsObeservable;
+    public LiveData<List<MainPost>> getUserPostsObeservable(String userId) {
+        //return userPostsObeservable;
+        return FirestoreRepo.getInstance().getUserPosts(userId);
     }
 }

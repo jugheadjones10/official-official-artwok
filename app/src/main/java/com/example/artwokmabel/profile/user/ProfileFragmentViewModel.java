@@ -12,24 +12,31 @@ public class ProfileFragmentViewModel extends ViewModel {
     private LiveData<User> userObservable;
     private LiveData<Integer> numUserPosts;
     private LiveData<Integer> numUserListings;
-    private FirebaseAuth mAuth;
 
     public ProfileFragmentViewModel() {
-        mAuth = FirebaseAuth.getInstance();
-        userObservable = FirestoreRepo.getInstance().getUser(mAuth.getCurrentUser().getUid());
-        numUserPosts = FirestoreRepo.getInstance().getUserNumPosts(mAuth.getCurrentUser().getUid());
-        numUserListings = FirestoreRepo.getInstance().getUserNumListings(mAuth.getCurrentUser().getUid());
     }
 
-    public LiveData<User> getUserObservable() {
+    public LiveData<User> getUserObservable(String userId) {
+        userObservable = FirestoreRepo.getInstance().getUser(userId);
         return userObservable;
     }
 
-    public LiveData<Integer> getNumUserPosts() {
+    public LiveData<Integer> getNumUserPosts(String userId) {
+        numUserPosts = FirestoreRepo.getInstance().getUserNumPosts(userId);
         return numUserPosts;
     }
-    public LiveData<Integer> getNumUserListings() {
+    public LiveData<Integer> getNumUserListings(String userId) {
+        numUserListings = FirestoreRepo.getInstance().getUserNumListings(userId);
         return numUserListings;
     }
+
+    public void removeUserFollowing(String myId, String otherUserId) {
+        FirestoreRepo.getInstance().removeUserFollowing(myId, otherUserId);
+    }
+
+    public void addUserFollowing(String myId, String otherUserId) {
+        FirestoreRepo.getInstance().addUserFollowing(myId, otherUserId);
+    }
+
 
 }

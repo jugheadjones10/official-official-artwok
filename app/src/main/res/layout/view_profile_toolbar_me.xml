@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable name="onpeopleclicked" type="com.example.artwokmabel.profile.user.ProfileFragment.OnPeopleClicked"/>
+        <variable name="onsettingsclicked" type="com.example.artwokmabel.profile.user.ProfileFragment.OnSettingsClicked"/>
+    </data>
+
+<LinearLayout
+    android:id="@+id/inflated_profile_toolbar"
+    android:background="@color/artwok_background_blue"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="right"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <ImageButton
+        android:id="@+id/profile_group"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginRight="5dp"
+        android:adjustViewBounds="true"
+        android:layout_gravity="center_vertical"
+        android:background="@null"
+        android:padding="5dp"
+        android:scaleType="fitCenter"
+        android:onClick="@{() -> onpeopleclicked.onPeopleClicked()}"
+        app:srcCompat="@drawable/ic_group" />
+
+
+    <ImageButton
+        android:id="@+id/profile_settings"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginRight="5dp"
+        android:adjustViewBounds="true"
+        android:background="@null"
+        android:padding="5dp"
+        android:scaleType="fitCenter"
+        android:onClick="@{() -> onsettingsclicked.onSettingsClicked()}"
+        app:srcCompat="@drawable/ic_settings" />
+</LinearLayout>
+</layout>

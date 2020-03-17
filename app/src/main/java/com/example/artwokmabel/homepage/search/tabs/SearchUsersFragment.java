@@ -1,5 +1,6 @@
 package com.example.artwokmabel.homepage.search.tabs;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,10 +10,13 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.example.artwokmabel.HomePageActivity;
 import com.example.artwokmabel.R;
+import com.example.artwokmabel.Utils.TransactFragment;
 import com.example.artwokmabel.databinding.FragmentSearchUsersBinding;
 import com.example.artwokmabel.homepage.search.SearchActivity;
 import com.example.artwokmabel.profile.people.FollowersAdapter;
+import com.example.artwokmabel.profile.people.ViewOtherUserActivity;
 
 public class SearchUsersFragment extends Fragment {
 

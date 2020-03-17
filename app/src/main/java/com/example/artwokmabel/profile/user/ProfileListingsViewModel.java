@@ -10,15 +10,16 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.List;
 
 public class ProfileListingsViewModel extends ViewModel {
-    private final LiveData<List<Listing>> listingsObeservable;
+    // final LiveData<List<Listing>> listingsObeservable;
     private FirebaseAuth mAuth;
 
     public ProfileListingsViewModel() {
         mAuth = FirebaseAuth.getInstance();
-        listingsObeservable = FirestoreRepo.getInstance().getUserListings(mAuth.getCurrentUser().getUid());
+        //listingsObeservable = FirestoreRepo.getInstance().getUserListings(mAuth.getCurrentUser().getUid());
     }
 
-    public LiveData<List<Listing>> getListingsObeservable() {
-        return listingsObeservable;
+    public LiveData<List<Listing>> getListingsObeservable(String userId) {
+        //return listingsObeservable;
+        return FirestoreRepo.getInstance().getUserListings(userId);
     }
 }

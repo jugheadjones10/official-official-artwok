@@ -18,6 +18,7 @@ import com.example.artwokmabel.databinding.FragmentProfileListingsBinding;
 import com.example.artwokmabel.homepage.adapters.ListingsAdapter;
 import com.example.artwokmabel.models.Listing;
 import com.example.artwokmabel.profile.uploadlisting.UploadListingAcitvity;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
 
@@ -28,9 +29,12 @@ public class ProfileListingsFragment extends Fragment {
     private FragmentProfileListingsBinding binding;
     private ListingsAdapter adapter;
     private ProfileListingsViewModel viewModel;
+    private String userId;
+    private FirebaseAuth mAuth;
 
-    public ProfileListingsFragment() {
-
+    public ProfileListingsFragment(String userId) {
+        this.userId = userId;
+        this.mAuth = FirebaseAuth.getInstance();
     }
 
     @Override
@@ -38,7 +42,12 @@ public class ProfileListingsFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile_listings, container, false);
-        binding.setAddlistingcallback(new OnAddListingClicked());
+
+        if(mAuth.getCurrentUser().getUid().equals(userId)){
+            binding.setAddlistingcallback(new OnAddListingClicked());
+        }else{
+            binding.addListingsButton.setVisibility(View.GONE);
+        }
 
         binding.profileListingsRecyclerview.setHasFixedSize(true);
         binding.profileListingsRecyclerview.setLayoutManager(new GridLayoutManager(getContext(), 2));
@@ -61,7 +70,7 @@ public class ProfileListingsFragment extends Fragment {
 
     private void observeViewModel(ProfileListingsViewModel viewModel) {
         // Update the list when the data changes
-        viewModel.getListingsObeservable().observe(this, new Observer<List<Listing>>() {
+        viewModel.getListingsObeservable(userId).observe(this, new Observer<List<Listing>>() {
             @Override
             public void onChanged(@Nullable List<Listing> listings) {
                 if (listings != null) {

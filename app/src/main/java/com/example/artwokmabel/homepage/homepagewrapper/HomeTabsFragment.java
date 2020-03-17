@@ -127,9 +127,10 @@ public class HomeTabsFragment extends Fragment {
     public void loadFragment(Fragment fragment) {
         // load fragment
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        //transaction.add(R.id.container, fragment);
         transaction.replace(R.id.container, fragment);
         transaction.addToBackStack(null);
-        transaction.commit();
+        transaction.commitAllowingStateLoss();
     }
 
     private void setUpClickListeners(){

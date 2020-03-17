@@ -19,6 +19,9 @@
         <variable
             name="followbutton"
             type="android.widget.Button" />
+        <variable
+            name="onuserclicked"
+            type="com.example.artwokmabel.profile.people.FollowingAdapter.OnUserClicked" />
     </data>
 
     <LinearLayout
@@ -32,6 +35,7 @@
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_marginLeft="16dp"
+            android:onClick="@{() -> onuserclicked.onUserClicked(user)}"
             android:src="@drawable/budget_details_lady" />
 
 <!--        <FrameLayout-->

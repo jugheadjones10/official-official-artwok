@@ -110,7 +110,7 @@ public class IndivUserFragment extends Fragment {
 
                             myPostsFragment.setArguments(args);
                             adapter.AddFragment(myPostsFragment, "Posts");
-                            adapter.AddFragment(new DashboardFragment(),"Dashboard");
+                            adapter.AddFragment(new DashboardFragment("WA"),"Dashboard");
 
                             // Adapter setup
                             viewPager.setAdapter(adapter);

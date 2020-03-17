@@ -50,9 +50,6 @@ public class NotifsFragment extends Fragment {
             @Override
             public void onChanged(@Nullable List<Notification> notifs) {
                 if (notifs != null) {
-//                    for(Notification notif : notifs){
-//                            Log.d("notifhey", notif.getProtagUsername());
-//                    }
                     adapter.setNotifsList(notifs);
                 }
             }

@@ -2,6 +2,7 @@ package com.example.artwokmabel.notifs;
 
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,17 +10,27 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.artwokmabel.Utils.TransactFragment;
 import com.example.artwokmabel.databinding.ItemFollowerBinding;
 import com.example.artwokmabel.databinding.ItemNotifBinding;
 import com.example.artwokmabel.homepage.adapters.ListingsAdapter;
+import com.example.artwokmabel.homepage.adapters.ListingsAdapterViewModel;
+import com.example.artwokmabel.homepage.listing.ListingActivity;
+import com.example.artwokmabel.homepage.post.PostActivity;
 import com.example.artwokmabel.models.Listing;
+import com.example.artwokmabel.models.MainPost;
 import com.example.artwokmabel.models.Notification;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.profile.people.FollowersAdapter;
+import com.example.artwokmabel.repos.FirestoreRepo;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -29,9 +40,11 @@ public class NotifsAdapter extends RecyclerView.Adapter<NotifsAdapter.NotifViewH
 
     private Context mContext;
     private List<Notification> notifsList;
+    private NotifsViewModel viewModel;
 
     public NotifsAdapter(Context context){
         this.mContext =  context;
+        this.viewModel = ViewModelProviders.of((FragmentActivity)context).get(NotifsViewModel.class);
     }
 
     @Override
@@ -49,8 +62,41 @@ public class NotifsAdapter extends RecyclerView.Adapter<NotifsAdapter.NotifViewH
     public void onBindViewHolder(@NonNull NotifViewHolder holder, int position) {
         Notification data = notifsList.get(position);
 
+        holder.binding.setOnnotifclicked(new OnNotifcationClicked());
         holder.binding.setNotification(data);
         Picasso.get().load(data.getProtagPic()).into(holder.binding.notifProtagImg);
+    }
+
+    public class OnNotifcationClicked{
+        public void onNotificationClicked(Notification notif){
+
+            Intent intent;
+            if(notif.getAction() == Notification.COMMENT){
+                intent = new Intent(mContext, PostActivity.class);
+                FirestoreRepo.getInstance().getPost(notif.getProtagId(), new FirestoreRepo.PostRetrieved() {
+                    @Override
+                    public void onPostRetrieved(MainPost post) {
+                        intent.putExtra("post", post);
+                        mContext.startActivity(intent);
+                    }
+                });
+            }else if (notif.getAction() == Notification.FOLLOWED){
+
+                new TransactFragment().loadFragment(mContext, notif.getNotifId());
+
+            }else if(notif.getAction() == Notification.OTHERS_UPLOAD_LISTING){
+                intent = new Intent(mContext, ListingActivity.class);
+                FirestoreRepo.getInstance().getListing(notif.getProtagId(), new FirestoreRepo.ListingRetrieved() {
+                    @Override
+                    public void onListingRetrieved(Listing listing) {
+                        intent.putExtra("listing", listing);
+                        mContext.startActivity(intent);
+                    }
+                });
+            }else{
+
+            }
+        }
     }
 
 

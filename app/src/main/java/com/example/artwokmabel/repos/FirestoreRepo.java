@@ -1139,17 +1139,17 @@ public class FirestoreRepo {
     //Todo: make all filed names like "postId" below into static final string variables
     public void getPost(String postId, PostRetrieved callback){
         db.collectionGroup("Posts")
-                .whereEqualTo("postId", postId)
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        for(QueryDocumentSnapshot snapshot : queryDocumentSnapshots){
-                            MainPost post = snapshot.toObject(MainPost.class);
-                            callback.onPostRetrieved(post);
-                        }
+            .whereEqualTo("postId", postId)
+            .get()
+            .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                @Override
+                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                    for(QueryDocumentSnapshot snapshot : queryDocumentSnapshots){
+                        MainPost post = snapshot.toObject(MainPost.class);
+                        callback.onPostRetrieved(post);
                     }
-                });
+                }
+            });
     }
 
     public void getListing(String listingId, ListingRetrieved callback){
@@ -1170,12 +1170,13 @@ public class FirestoreRepo {
     }
 
     public LiveData<List<Notification>> getUserNotifications(String uid) {
-        final MutableLiveData<List<Notification>> data = new MutableLiveData<>();
-        List<Notification> tempData = new ArrayList<>();
+            final MutableLiveData<List<Notification>> data = new MutableLiveData<>();
+            List<Notification> tempData = new ArrayList<>();
 
         db.collection("Users")
                 .document(uid)
                 .collection("Notifications")
+                .orderBy("timeInMillis", Query.Direction.DESCENDING)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
@@ -1187,11 +1188,10 @@ public class FirestoreRepo {
                         tempData.clear();
                         for(DocumentSnapshot single: queryDocumentSnapshots){
                             Notification notifData = single.toObject(Notification.class);
-                            Log.d("doirun", notifData.getProtagUsername());
                             tempData.add(notifData);
                         }
 
-                        Collections.sort(tempData, new SortNotifications());
+                        //Collections.sort(tempData, new SortNotifications());
                         data.setValue(tempData);
                     }
                 });
@@ -1644,6 +1644,7 @@ public class FirestoreRepo {
                 for(int i = 0; i < following.size(); i++){
                     String oneFollowing = following.get(i);
                     FirestoreRepo.getInstance().getUserPostsQuery(oneFollowing)
+                        .orderBy("nanopast", Query.Direction.DESCENDING)
                         .addSnapshotListener(new EventListener<QuerySnapshot>() {
                             @Override
                             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException e) {
@@ -1659,7 +1660,7 @@ public class FirestoreRepo {
                                 }
 
                                 //Below sorts posts according to date posted
-                                Collections.sort((ArrayList)tempData, new SortMain());
+                                //Collections.sort((ArrayList)tempData, new SortMain());
                                 data.setValue(tempData);
 
                             }
@@ -1673,7 +1674,6 @@ public class FirestoreRepo {
 
     public LiveData<List<Listing>> getFeedListings(String userId){
         DocumentReference userRef = FirestoreRepo.getInstance().getUserRef(userId);
-
 
         final MutableLiveData<List<Listing>> data = new MutableLiveData<>();
         List<Listing> tempData = new ArrayList<>();

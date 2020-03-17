@@ -17,15 +17,23 @@ import com.example.artwokmabel.databinding.FragmentProfilePostsBinding;
 import com.example.artwokmabel.homepage.adapters.PostsAdapter;
 import com.example.artwokmabel.models.MainPost;
 import com.example.artwokmabel.profile.uploadpost.UploadPostActivity;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class ProfilePostsFragment extends Fragment {
-    FragmentProfilePostsBinding binding;
-    ProfilePostsViewModel viewModel;
-    PostsAdapter adapter;
+    private FragmentProfilePostsBinding binding;
+    private ProfilePostsViewModel viewModel;
+    private PostsAdapter adapter;
+    private String userId;
+    private FirebaseAuth mAuth;
+
+    public ProfilePostsFragment(String userId){
+        this.userId = userId;
+        this.mAuth = FirebaseAuth.getInstance();
+    }
 
     @Nullable
     @Override
@@ -33,7 +41,12 @@ public class ProfilePostsFragment extends Fragment {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile_posts, container, false);
 
-        binding.setCallback(new OnUploadButtonClicked());
+        if(mAuth.getCurrentUser().getUid().equals(userId)){
+            binding.setCallback(new OnUploadButtonClicked());
+        }else{
+            binding.postUploadBut.setVisibility(View.GONE);
+        }
+
         binding.recyclerview.setHasFixedSize(true);
 
         adapter = new PostsAdapter(getContext());
@@ -52,7 +65,7 @@ public class ProfilePostsFragment extends Fragment {
 
     private void observeViewModel(ProfilePostsViewModel viewModel) {
         // Update the list when the data changes
-        viewModel.getUserPostsObeservable().observe(this, new Observer<List<MainPost>>() {
+        viewModel.getUserPostsObeservable(userId).observe(this, new Observer<List<MainPost>>() {
             @Override
             public void onChanged(@Nullable List<MainPost> categories) {
                 if (categories != null) {

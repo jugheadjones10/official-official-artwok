@@ -7,8 +7,10 @@
         <variable name="user" type="com.example.artwokmabel.models.User"/>
         <variable name="numposts" type="Integer"/>
         <variable name="numlistings" type="Integer"/>
-        <variable name="onpeopleclicked" type="com.example.artwokmabel.profile.user.ProfileFragment.OnPeopleClicked"/>
-        <variable name="onsettingsclicked" type="com.example.artwokmabel.profile.user.ProfileFragment.OnSettingsClicked"/>
+<!--        <variable name="onpeopleclicked" type="com.example.artwokmabel.profile.user.ProfileFragment.OnPeopleClicked"/>-->
+<!--        <variable name="onsettingsclicked" type="com.example.artwokmabel.profile.user.ProfileFragment.OnSettingsClicked"/>-->
+<!--        <variable name="onmenuclicked" type="com.example.artwokmabel.profile.user.ProfileFragment.OnMenuClicked" />-->
+<!--        <variable name="onfollclicked" type="com.example.artwokmabel.profile.user.ProfileFragment.OnFollClicked" />-->
 
     </data>
 
@@ -17,42 +19,47 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
-            android:id="@+id/linearLayout5"
-            android:background="@color/artwok_background_blue"
+        <ViewStub
+            android:id="@+id/profile_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="wrap_content" />
 
-            <ImageButton
-                android:id="@+id/profile_group"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_marginRight="5dp"
-                android:adjustViewBounds="true"
-                android:layout_gravity="center_vertical"
-                android:background="@null"
-                android:padding="5dp"
-                android:scaleType="fitCenter"
-                android:onClick="@{() -> onpeopleclicked.onPeopleClicked()}"
-                app:srcCompat="@drawable/ic_group" />
+        <!--        <LinearLayout-->
+<!--            android:id="@+id/linearLayout5"-->
+<!--            android:background="@color/artwok_background_blue"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:gravity="right"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent">-->
+
+<!--            <ImageButton-->
+<!--                android:id="@+id/profile_group"-->
+<!--                android:layout_width="32dp"-->
+<!--                android:layout_height="32dp"-->
+<!--                android:layout_marginRight="5dp"-->
+<!--                android:adjustViewBounds="true"-->
+<!--                android:layout_gravity="center_vertical"-->
+<!--                android:background="@null"-->
+<!--                android:padding="5dp"-->
+<!--                android:scaleType="fitCenter"-->
+<!--                android:onClick="@{() -> onpeopleclicked.onPeopleClicked()}"-->
+<!--                app:srcCompat="@drawable/ic_group" />-->
 
 
-            <ImageButton
-                android:id="@+id/profile_settings"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_marginRight="5dp"
-                android:adjustViewBounds="true"
-                android:background="@null"
-                android:padding="5dp"
-                android:scaleType="fitCenter"
-                android:onClick="@{() -> onsettingsclicked.onSettingsClicked()}"
-                app:srcCompat="@drawable/ic_settings" />
-        </LinearLayout>
+<!--            <ImageButton-->
+<!--                android:id="@+id/profile_settings"-->
+<!--                android:layout_width="32dp"-->
+<!--                android:layout_height="32dp"-->
+<!--                android:layout_marginRight="5dp"-->
+<!--                android:adjustViewBounds="true"-->
+<!--                android:background="@null"-->
+<!--                android:padding="5dp"-->
+<!--                android:scaleType="fitCenter"-->
+<!--                android:onClick="@{() -> onsettingsclicked.onSettingsClicked()}"-->
+<!--                app:srcCompat="@drawable/ic_settings" />-->
+<!--        </LinearLayout>-->
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout2"
@@ -65,7 +72,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
+            app:layout_constraintTop_toBottomOf="@+id/inflated_profile_toolbar">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profile_picture"

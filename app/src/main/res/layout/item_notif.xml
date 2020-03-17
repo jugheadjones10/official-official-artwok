@@ -5,59 +5,61 @@
 
     <data>
         <variable name="notification" type="com.example.artwokmabel.models.Notification"/>
+        <variable name="onnotifclicked" type="com.example.artwokmabel.notifs.NotifsAdapter.OnNotifcationClicked"/>
     </data>
 
 
     <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="80dp"
-    android:orientation="vertical">
-
-    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        android:onClick="@{() -> onnotifclicked.onNotificationClicked(notification)}">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/notif_protag_img"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_margin="10dp"
-            android:src="@drawable/budget_details_lady" />
-
-<!--        <ImageView-->
-<!--            android:id="@+id/notif_protag_img"-->
-<!--            android:layout_margin="10dp"-->
-<!--            android:layout_width="50dp"-->
-<!--            android:layout_height="50dp" />-->
-
-        <TextView
-            android:id="@+id/notif_protag_text"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dp"
-            android:text="@{notification.protagUsername}"
-            android:textColor="@color/artwok_black"
-            android:textSize="12sp"
-            android:textStyle="bold" />
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/notif_action"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dp"
-            android:text="@{notification.actionText}"
-            android:textColor="@color/artwok_black"
-            android:textSize="12sp" />
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/notif_protag_img"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_margin="10dp"
+                android:src="@drawable/budget_details_lady" />
 
+            <!--        <ImageView-->
+            <!--            android:id="@+id/notif_protag_img"-->
+            <!--            android:layout_margin="10dp"-->
+            <!--            android:layout_width="50dp"-->
+            <!--            android:layout_height="50dp" />-->
+
+            <TextView
+                android:id="@+id/notif_protag_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:text="@{notification.protagUsername}"
+                android:textColor="@color/artwok_black"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/notif_action"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:text="@{notification.actionText}"
+                android:textColor="@color/artwok_black"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray" />
     </LinearLayout>
-
-    <LinearLayout
-        android:background="@android:color/darker_gray"
-        android:layout_width="match_parent"
-        android:layout_height="1dp" />
-</LinearLayout>
 
 </layout>

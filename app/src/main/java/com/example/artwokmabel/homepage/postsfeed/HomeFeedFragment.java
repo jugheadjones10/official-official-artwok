@@ -47,8 +47,10 @@ public class HomeFeedFragment extends Fragment {
         //Todo: bring back listings recycler view
         listingsAdapter = new ListingsHomeAdapter(getContext());
 
-        InfiniteScrollAdapter wrapper = InfiniteScrollAdapter.wrap(listingsAdapter);
-        binding.horizontalRecyclerViewListings.setAdapter(wrapper);
+        //InfiniteScrollAdapter wrapper = InfiniteScrollAdapter.wrap(listingsAdapter);
+        //binding.horizontalRecyclerViewListings.setAdapter(wrapper);
+        binding.horizontalRecyclerViewListings.setAdapter(listingsAdapter);
+
         binding.horizontalRecyclerViewListings.setItemTransformer(new ScaleTransformer.Builder()
                 .setMaxScale(1.05f)
                 .setMinScale(0.8f)

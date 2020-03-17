@@ -16,6 +16,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.artwokmabel.R;
+import com.example.artwokmabel.Utils.TransactFragment;
 import com.example.artwokmabel.chat.offerchat.OfferActivity;
 import com.example.artwokmabel.chat.personalchat.ChatActivity;
 import com.example.artwokmabel.databinding.ActivityListingBinding;
@@ -31,6 +32,7 @@ import com.squareup.picasso.Picasso;
 import com.synnapps.carouselview.ImageListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ListingActivity extends AppCompatActivity {
 
@@ -111,6 +113,7 @@ public class ListingActivity extends AppCompatActivity {
         binding.setListing(listing);
         binding.setSharecallback(new ShareClickCallback());
         binding.setOnofferclicked(new OnOfferClicked());
+        binding.setOnprofileclicked(new OnProfileClicked());
 
 //        if(listing.getUserid().equals(mAuth.getCurrentUser().getUid())){
 //            binding.shareButton.setImageResource(R.drawable.menu);
@@ -222,6 +225,12 @@ public class ListingActivity extends AppCompatActivity {
             Intent offerIntent = new Intent(ListingActivity.this, OfferActivity.class);
             offerIntent.putExtra("orderchat", FirestoreRepo.getInstance().changeListingToMeBuy(listing, new Message("", "", "", "","","", "", "", 0)));
             startActivity(offerIntent);
+        }
+    }
+
+    public class OnProfileClicked{
+        public void onProfileClicked(User user){
+            new TransactFragment().loadFragment(ListingActivity.this, user.getUid());
         }
     }
 

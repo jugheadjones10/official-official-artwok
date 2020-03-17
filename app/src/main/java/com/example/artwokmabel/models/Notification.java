@@ -11,6 +11,7 @@ public class Notification implements Serializable {
 
     private String protagPic;
     private String protagUsername;
+    private String protagId;
     private int action;
     private double timeInMillis;
     private String notifId;
@@ -19,12 +20,13 @@ public class Notification implements Serializable {
 
     }
 
-    public Notification(String protagPic, String protagUsername, int action, double timeInMillis, String notifId) {
+    public Notification(String protagPic, String protagUsername, int action, double timeInMillis, String notifId, String protagId) {
         this.protagPic = protagPic;
         this.protagUsername = protagUsername;
         this.action = action;
         this.timeInMillis = timeInMillis;
         this.notifId = notifId;
+        this.protagId = protagId;
     }
 
     public String getActionText() {
@@ -39,6 +41,14 @@ public class Notification implements Serializable {
         }else{
             return "error!!!!";
         }
+    }
+
+    public String getProtagId() {
+        return protagId;
+    }
+
+    public void setProtagId(String protagId) {
+        this.protagId = protagId;
     }
 
     public String getNotifId() {

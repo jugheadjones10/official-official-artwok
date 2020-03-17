@@ -7,7 +7,7 @@
         <item name="colorPrimaryDark">@color/artwok_background_blue</item>
         <item name="colorAccent">@color/artwok_background_blue</item>
 
-<!--        Material themes-->
+        <!--        Material themes-->
         <item name="colorPrimaryVariant">@color/artwok_white</item>
         <item name="colorSecondaryVariant">@color/artwok_red</item>
         <item name="colorSurface">@color/artwok_background_blue</item>
@@ -17,14 +17,22 @@
         <item name="colorOnError">@color/artwok_red</item>
         <item name="colorOnSurface">@color/artwok_white</item>
         <item name="scrimBackground">@color/mtrl_scrim_color</item>
-        <item name="textAppearanceHeadline1">@style/TextAppearance.MaterialComponents.Headline1</item>
-        <item name="textAppearanceHeadline2">@style/TextAppearance.MaterialComponents.Headline2</item>
-        <item name="textAppearanceHeadline3">@style/TextAppearance.MaterialComponents.Headline3</item>
-        <item name="textAppearanceHeadline4">@style/TextAppearance.MaterialComponents.Headline4</item>
-        <item name="textAppearanceHeadline5">@style/TextAppearance.MaterialComponents.Headline5</item>
-        <item name="textAppearanceHeadline6">@style/TextAppearance.MaterialComponents.Headline6</item>
-        <item name="textAppearanceSubtitle1">@style/TextAppearance.MaterialComponents.Subtitle1</item>
-        <item name="textAppearanceSubtitle2">@style/TextAppearance.MaterialComponents.Subtitle2</item>
+        <item name="textAppearanceHeadline1">@style/TextAppearance.MaterialComponents.Headline1
+        </item>
+        <item name="textAppearanceHeadline2">@style/TextAppearance.MaterialComponents.Headline2
+        </item>
+        <item name="textAppearanceHeadline3">@style/TextAppearance.MaterialComponents.Headline3
+        </item>
+        <item name="textAppearanceHeadline4">@style/TextAppearance.MaterialComponents.Headline4
+        </item>
+        <item name="textAppearanceHeadline5">@style/TextAppearance.MaterialComponents.Headline5
+        </item>
+        <item name="textAppearanceHeadline6">@style/TextAppearance.MaterialComponents.Headline6
+        </item>
+        <item name="textAppearanceSubtitle1">@style/TextAppearance.MaterialComponents.Subtitle1
+        </item>
+        <item name="textAppearanceSubtitle2">@style/TextAppearance.MaterialComponents.Subtitle2
+        </item>
         <item name="textAppearanceBody1">@style/TextAppearance.MaterialComponents.Body1</item>
         <item name="textAppearanceBody2">@style/TextAppearance.MaterialComponents.Body2</item>
         <item name="textAppearanceCaption">@style/TextAppearance.MaterialComponents.Caption</item>
@@ -61,7 +69,9 @@
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
     <style name="spinner_style">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">match_parent</item>
@@ -77,23 +87,22 @@
     </style>
 
 
-
-<!--Algolia-->
-<!--    <style name="InstantSearchShowcase" parent="Theme.MaterialComponents.Light.NoActionBar">-->
-<!--        <item name="colorAccent">@color/artwok_blue</item>-->
-<!--        <item name="colorPrimary">@color/artwok_blue</item>-->
-<!--        <item name="colorSecondary">@color/artwok_white</item>-->
-<!--        <item name="colorOnPrimary">@color/artwok_white</item>-->
-<!--        <item name="colorOnSecondary">@color/artwok_black</item>-->
-<!--        <item name="android:textColorPrimary">@color/artwok_black</item>-->
-<!--        <item name="colorControlNormal">@color/artwok_black</item>-->
-<!--        <item name="android:windowLightStatusBar">true</item>-->
-<!--        <item name="android:statusBarColor">@color/artwok_white</item>-->
-<!--        <item name="android:windowBackground">@color/artwok_white</item>-->
-<!--        <item name="searchViewStyle">@style/SearchView</item>-->
-<!--        <item name="toolbarStyle">@style/Toolbar</item>-->
-<!--        <item name="actionBarTheme">@style/Toolbar</item>-->
-<!--    </style>-->
+    <!--Algolia-->
+    <!--    <style name="InstantSearchShowcase" parent="Theme.MaterialComponents.Light.NoActionBar">-->
+    <!--        <item name="colorAccent">@color/artwok_blue</item>-->
+    <!--        <item name="colorPrimary">@color/artwok_blue</item>-->
+    <!--        <item name="colorSecondary">@color/artwok_white</item>-->
+    <!--        <item name="colorOnPrimary">@color/artwok_white</item>-->
+    <!--        <item name="colorOnSecondary">@color/artwok_black</item>-->
+    <!--        <item name="android:textColorPrimary">@color/artwok_black</item>-->
+    <!--        <item name="colorControlNormal">@color/artwok_black</item>-->
+    <!--        <item name="android:windowLightStatusBar">true</item>-->
+    <!--        <item name="android:statusBarColor">@color/artwok_white</item>-->
+    <!--        <item name="android:windowBackground">@color/artwok_white</item>-->
+    <!--        <item name="searchViewStyle">@style/SearchView</item>-->
+    <!--        <item name="toolbarStyle">@style/Toolbar</item>-->
+    <!--        <item name="actionBarTheme">@style/Toolbar</item>-->
+    <!--    </style>-->
 
     <style name="Toolbar" parent="Widget.AppCompat.Toolbar">
         <item name="android:elevation">6dp</item>
@@ -123,5 +132,14 @@
         <item name="android:textSize">15dp</item>
         <item name="textAllCaps">false</item>
     </style>
+
+    <style name="AppTheme.NoActionBar.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.NoActionBar.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>

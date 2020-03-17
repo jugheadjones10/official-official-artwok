@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.artwokmabel.R;
+import com.example.artwokmabel.Utils.TransactFragment;
 import com.example.artwokmabel.databinding.ItemFollowingBinding;
 import com.example.artwokmabel.models.User;
 import com.google.firebase.auth.FirebaseAuth;
@@ -56,6 +57,7 @@ public class FollowingAdapter extends RecyclerView.Adapter<FollowingAdapter.myHo
 
         holder.binding.followingButton.setText("Following");
 
+        holder.binding.setOnuserclicked(new OnUserClicked());
         holder.binding.setFollowbutton(holder.binding.followingButton);
         holder.binding.setUser(data);
         Picasso.get()
@@ -101,7 +103,9 @@ public class FollowingAdapter extends RecyclerView.Adapter<FollowingAdapter.myHo
             });
             this.followingsList = users;
             notifyDataSetChanged();
-            FollowersAdapter.getInstance().notifyDataSetChanged();
+            if(FollowersAdapter.getInstance() != null){
+                FollowersAdapter.getInstance().notifyDataSetChanged();
+            }
             result.dispatchUpdatesTo(this);
         }
     }
@@ -125,6 +129,12 @@ public class FollowingAdapter extends RecyclerView.Adapter<FollowingAdapter.myHo
     public class OnChatClicked{
         public void onChatClicked(){
 
+        }
+    }
+
+    public class OnUserClicked{
+        public void onUserClicked(User user){
+            new TransactFragment().loadFragment(mContext, user.getUid());
         }
     }
 

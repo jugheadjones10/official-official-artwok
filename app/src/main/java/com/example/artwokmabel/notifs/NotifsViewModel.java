@@ -3,6 +3,7 @@ package com.example.artwokmabel.notifs;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.artwokmabel.models.MainPost;
 import com.example.artwokmabel.models.Notification;
 import com.example.artwokmabel.models.User;
 import com.example.artwokmabel.repos.FirestoreRepo;
@@ -23,4 +24,5 @@ public class NotifsViewModel extends ViewModel {
     public LiveData<List<Notification>> getUserNotificationsObservable() {
         return userNotificationsObservable;
     }
+
 }

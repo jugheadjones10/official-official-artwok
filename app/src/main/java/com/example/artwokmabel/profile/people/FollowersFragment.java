@@ -1,5 +1,6 @@
 package com.example.artwokmabel.profile.people;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,10 +10,13 @@ import android.view.ViewGroup;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.artwokmabel.HomePageActivity;
 import com.example.artwokmabel.R;
+import com.example.artwokmabel.Utils.TransactFragment;
 import com.example.artwokmabel.databinding.FragmentFollowingBinding;
 import com.example.artwokmabel.models.User;
 
@@ -33,6 +37,7 @@ public class FollowersFragment  extends Fragment {
         binding.recyclerview.setHasFixedSize(true);
 
         followersAdapter = new FollowersAdapter(getContext(), "peoplepage");
+
         binding.recyclerview.setAdapter(followersAdapter);
 
         viewModel = ViewModelProviders.of(this).get(PeopleViewModel.class);

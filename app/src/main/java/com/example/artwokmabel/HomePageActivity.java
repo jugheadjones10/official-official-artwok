@@ -17,6 +17,7 @@ import com.example.artwokmabel.repos.FirestoreRepo;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 import com.google.firestore.v1.FirestoreGrpc;
@@ -26,12 +27,14 @@ public class HomePageActivity extends AppCompatActivity {
 
     private static HomePageActivity instance = null;
     public BottomNavigationView navView;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
         instance = this;
+        mAuth = FirebaseAuth.getInstance();
 
         navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -90,7 +93,7 @@ public class HomePageActivity extends AppCompatActivity {
                         loadFragment(fragment);
                         return true;
                     case R.id.main_profile_fragment:
-                        fragment = new ProfileFragment();
+                        fragment = new ProfileFragment(mAuth.getCurrentUser().getUid());
                         loadFragment(fragment);
                         return true;
                 }

@@ -5,24 +5,40 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewStub;
 
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.FragmentProfileBinding;
+import com.example.artwokmabel.databinding.ViewProfileToolbarMeBinding;
+import com.example.artwokmabel.databinding.ViewProfileToolbarOthersBinding;
 import com.example.artwokmabel.models.User;
 import com.example.artwokmabel.profile.people.PeopleActivity;
 import com.example.artwokmabel.profile.settings.SettingsActivity;
+import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
 
 public class ProfileFragment extends Fragment {
 
     private ProfileFragmentViewModel viewModel;
     private FragmentProfileBinding binding;
+    private FirebaseAuth mAuth;
+    private String userId;
+
+    private ViewProfileToolbarMeBinding toolbarMeBinding;
+    private ViewProfileToolbarOthersBinding toolbarOthersBinding;
+
+
+    public ProfileFragment(String userId){
+        this.mAuth = FirebaseAuth.getInstance();
+        this.userId = userId;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -30,35 +46,75 @@ public class ProfileFragment extends Fragment {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false);
         binding.profileTab.bringToFront();
-        binding.setOnpeopleclicked(new OnPeopleClicked());
-        binding.setOnsettingsclicked(new OnSettingsClicked());
+
+        if(mAuth.getCurrentUser().getUid().equals(userId)){
+            binding.profileToolbar.setOnInflateListener(new ViewStub.OnInflateListener() {
+                @Override
+                public void onInflate(ViewStub stub, View inflated) {
+                    toolbarMeBinding = DataBindingUtil.bind(inflated);
+                    toolbarMeBinding.setOnpeopleclicked(new OnPeopleClicked());
+                    toolbarMeBinding.setOnsettingsclicked(new OnSettingsClicked());
+                }
+            });
+
+            binding.profileToolbar.getViewStub().setLayoutResource(R.layout.view_profile_toolbar_me);
+        }else {
+            binding.profileToolbar.setOnInflateListener(new ViewStub.OnInflateListener() {
+                @Override
+                public void onInflate(ViewStub stub, View inflated) {
+                    toolbarOthersBinding = DataBindingUtil.bind(inflated);
+                    toolbarOthersBinding.setOnfollclicked(new OnFollClicked());
+                    toolbarOthersBinding.setOnmenuclicked(new OnMenuClicked());
+                }
+            });
+
+            binding.profileToolbar.getViewStub().setLayoutResource(R.layout.view_profile_toolbar_others);
+        }
+
+        if (!binding.profileToolbar.isInflated()) {
+            binding.profileToolbar.getViewStub().inflate();
+        }
+
 
         ProfileFragmentPagerAdapter adapter = new ProfileFragmentPagerAdapter(getChildFragmentManager());
-        adapter.AddFragment(new ProfileListingsFragment(),"Listings");
-        adapter.AddFragment(new ProfilePostsFragment(),"Posts");
-        adapter.AddFragment(new DashboardFragment(),"Dashboard");
+        adapter.AddFragment(new ProfileListingsFragment(userId),"Listings");
+        adapter.AddFragment(new ProfilePostsFragment(userId),"Posts");
+        adapter.AddFragment(new DashboardFragment(userId),"Dashboard");
 
         // Adapter setup
         binding.profileViewpager.setAdapter(adapter);
         binding.profileTab.setupWithViewPager(binding.profileViewpager);
 
         viewModel = ViewModelProviders.of(this).get(ProfileFragmentViewModel.class);
-        viewModel.getUserObservable().observe(this, new Observer<User>() {
+        viewModel.getUserObservable(userId).observe(this, new Observer<User>() {
             @Override
             public void onChanged(@Nullable User user) {
                 binding.setUser(user);
                 Picasso.get().load(user.getProfile_url()).into(binding.profilePicture);
+
+                if(!mAuth.getCurrentUser().getUid().equals(userId)){
+                    viewModel.getUserObservable(mAuth.getCurrentUser().getUid()).observe(getViewLifecycleOwner(), new Observer<User>() {
+                        @Override
+                        public void onChanged(User me) {
+                            if(me.getFollowing().contains(user.getUid())){
+                                toolbarOthersBinding.follButton.setText("Following");
+                            }else{
+                                toolbarOthersBinding.follButton.setText("Follow");
+                            }
+                        }
+                    });
+                }
             }
         });
 
-        viewModel.getNumUserListings().observe(this, new Observer<Integer>() {
+        viewModel.getNumUserListings(userId).observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(@Nullable Integer numListings) {
                 binding.setNumlistings(numListings);
             }
         });
 
-        viewModel.getNumUserPosts().observe(this, new Observer<Integer>() {
+        viewModel.getNumUserPosts(userId).observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(@Nullable Integer numPosts) {
                 binding.setNumposts(numPosts);
@@ -79,6 +135,26 @@ public class ProfileFragment extends Fragment {
         public void onSettingsClicked(){
             Intent intent = new Intent(getContext(), SettingsActivity.class);
             startActivity(intent);
+        }
+    }
+
+    public class OnMenuClicked{
+        public void onMenuClicked(){
+
+        }
+    }
+
+    public class OnFollClicked{
+        public void onFollClicked(){
+            if(toolbarOthersBinding.follButton.getText().toString().equals("Following")){
+                toolbarOthersBinding.follButton.setText("Follow");
+
+                viewModel.removeUserFollowing(mAuth.getCurrentUser().getUid(), userId);
+            }else{
+                toolbarOthersBinding.follButton.setText("Following");
+
+                viewModel.addUserFollowing(mAuth.getCurrentUser().getUid(), userId);
+            }
         }
     }
 }

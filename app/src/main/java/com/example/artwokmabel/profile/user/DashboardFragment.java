@@ -12,9 +12,10 @@ import com.example.artwokmabel.R;
 
 public class DashboardFragment extends Fragment {
     View view;
+    private String userId;
 
-    public DashboardFragment() {
-
+    public DashboardFragment(String userId) {
+        this.userId = userId;
     }
 
     @Nullable

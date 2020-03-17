@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable name="onmenuclicked" type="com.example.artwokmabel.profile.user.ProfileFragment.OnMenuClicked" />
+        <variable name="onfollclicked" type="com.example.artwokmabel.profile.user.ProfileFragment.OnFollClicked" />
+    </data>
+
+<LinearLayout
+    android:id="@+id/inflated_profile_toolbar"
+    android:background="@color/artwok_background_blue"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="right"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginRight="5dp"
+        android:gravity="center_vertical"
+        android:text="Follow"
+        android:id="@+id/foll_button"
+        android:onClick="@{() -> onfollclicked.onFollClicked()}"/>
+
+    <ImageButton
+        android:id="@+id/profile_settings"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginRight="5dp"
+        android:adjustViewBounds="true"
+        android:background="@null"
+        android:padding="8dp"
+        android:scaleType="fitCenter"
+        android:onClick="@{() -> onmenuclicked.onMenuClicked()}"
+        app:srcCompat="@drawable/menu" />
+
+</LinearLayout>
+</layout>
