@@ -7,6 +7,10 @@
             type="com.example.artwokmabel.models.User" />
 
         <variable
+            name="normalchat"
+            type="com.example.artwokmabel.models.NormalChat" />
+
+        <variable
             name="onchatclicked"
             type="com.example.artwokmabel.chat.tabs.MessageChatsAdapter.OnChatClicked" />
 
@@ -53,14 +57,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginHorizontal="10dp"
-                android:text="Latest Conversation"
+                android:text="@{normalchat.lastMessage}"
                 android:layout_below="@+id/message_chats_textview_title"
                 android:textColor="@android:color/darker_gray"
                 android:textSize="15dp"/>
 
             <TextView
                 android:id="@+id/message_chats_textview_timestamp"
-                android:text="2011.11.11 11:11"
+                android:text="@{normalchat.lastInteractionTime}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"

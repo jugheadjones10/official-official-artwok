@@ -82,7 +82,7 @@ public class NotifsAdapter extends RecyclerView.Adapter<NotifsAdapter.NotifViewH
                 });
             }else if (notif.getAction() == Notification.FOLLOWED){
 
-                new TransactFragment().loadFragment(mContext, notif.getNotifId());
+                new TransactFragment().loadFragment(mContext, notif.getProtagId());
 
             }else if(notif.getAction() == Notification.OTHERS_UPLOAD_LISTING){
                 intent = new Intent(mContext, ListingActivity.class);

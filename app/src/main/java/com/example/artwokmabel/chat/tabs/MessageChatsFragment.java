@@ -20,6 +20,7 @@ import com.example.artwokmabel.chat.models.ChatChatModel;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.MessageChatsFragmentBinding;
 import com.example.artwokmabel.databinding.MessageFollowingFragmentBinding;
+import com.example.artwokmabel.models.NormalChat;
 import com.example.artwokmabel.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -55,13 +56,13 @@ public class MessageChatsFragment extends Fragment {
     }
 
     private void observeViewModel(MessageChatsViewModel viewModel) {
-        viewModel.getChattingWithObservable().observe(this, new Observer<List<User>>() {
+        viewModel.getChattingWithObservable().observe(this, new Observer<List<NormalChat>>() {
             @Override
-            public void onChanged(@Nullable List<User> users) {
-                Log.d("chattingwith", Integer.toString(users.size()));
+            public void onChanged(@Nullable List<NormalChat> chatHeads) {
+                Log.d("chattingwith", Integer.toString(chatHeads.size()));
 
-                if (users != null) {
-                    adapter.setUsersList(users);
+                if (chatHeads != null) {
+                    adapter.setNormalChatsList(chatHeads);
                 }
 
             }

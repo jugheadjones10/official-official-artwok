@@ -24,12 +24,14 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.artwokmabel.Utils.TransactFragment;
 import com.example.artwokmabel.databinding.ActivityPost2Binding;
 import com.example.artwokmabel.databinding.ActivityPostBinding;
 import com.example.artwokmabel.homepage.adapters.ListingsAdapter;
 import com.example.artwokmabel.homepage.callbacks.ShareClickCallback;
 import com.example.artwokmabel.homepage.homepagewrapper.HomeTabsFragment;
 import com.example.artwokmabel.R;
+import com.example.artwokmabel.homepage.listing.ListingActivity;
 import com.example.artwokmabel.homepage.listing.ListingActivityViewModel;
 import com.example.artwokmabel.models.Comment;
 import com.example.artwokmabel.models.Listing;
@@ -83,6 +85,7 @@ public class PostActivity extends AppCompatActivity {
 
         instance = this;
         binding = DataBindingUtil.setContentView(this, R.layout.activity_post_2);
+        binding.setOnprofileclicked(new OnProfileClicked());
 
         mAuth = FirebaseAuth.getInstance();
 //        heightSet = false;
@@ -320,5 +323,12 @@ public class PostActivity extends AppCompatActivity {
 //            binding.postHashtags.setText(userName);
 //            //NOTICE :  natively set icons, title, and subtitle on toolbar next time
 //        }
+    }
+
+
+    public class OnProfileClicked{
+        public void onProfileClicked(User user){
+            new TransactFragment().loadFragment(PostActivity.this, user.getUid());
+        }
     }
 }

@@ -17,11 +17,13 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.artwokmabel.Utils.TransactFragment;
 import com.example.artwokmabel.databinding.ItemCommentBinding;
 import com.example.artwokmabel.databinding.ItemNormalListingBinding;
 import com.example.artwokmabel.models.Comment;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.models.Listing;
+import com.example.artwokmabel.models.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -40,11 +42,13 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
     private CommentsViewModel viewModel;
     private String postId;
     private String postPosterId;
+    private Context mContext;
 
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
 
     public CommentsAdapter(Context context, String postId, String postPosterId) {
+        this.mContext = context;
         this.mAuth = FirebaseAuth.getInstance();
         this.viewModel = ViewModelProviders.of((FragmentActivity)context).get(CommentsViewModel.class);
         this.postId = postId;
@@ -63,6 +67,8 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
     public void onBindViewHolder(@NonNull CommentHolder holder, int i) {
         Comment data = commentsList.get(i);
         holder.binding.setComment(data);
+        holder.binding.setOnprofileclicked(new OnProfileClicked());
+
         Picasso.get().load(data.getPoster_url()).into(holder.binding.commentProfileImage);
 
         if(data.getUser_id().equals(mAuth.getCurrentUser().getUid())){
@@ -158,6 +164,11 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
         }
     }
 
+    public class OnProfileClicked{
+        public void onProfileClicked(Comment comment){
+            new TransactFragment().loadFragment(mContext, comment.getUser_id());
+        }
+    }
 
     class CommentHolder extends RecyclerView.ViewHolder {
         private ItemCommentBinding binding;

@@ -5,11 +5,11 @@
         android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Search Here..."
-        android:id="@+id/message_friends_edittext" />
+<!--    <EditText-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:hint="Search Here..."-->
+<!--        android:id="@+id/message_friends_edittext" />-->
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/friends_fragment_recyclerview"

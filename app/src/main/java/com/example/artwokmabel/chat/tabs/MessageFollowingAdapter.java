@@ -13,10 +13,12 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.artwokmabel.Utils.TransactFragment;
 import com.example.artwokmabel.chat.personalchat.ChatActivity;
 import com.example.artwokmabel.chat.models.UserUserModel;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.ItemMessageFollowingBinding;
+import com.example.artwokmabel.models.MainPost;
 import com.example.artwokmabel.models.User;
 import com.example.artwokmabel.profile.people.PeopleAdapterViewModel;
 import com.google.firebase.auth.FirebaseAuth;
@@ -42,7 +44,6 @@ public class MessageFollowingAdapter extends RecyclerView.Adapter<MessageFollowi
         ItemMessageFollowingBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.item_message_following, parent, false);
         return new CustomViewHolder(binding);
     }
-
 
     public void setUsersList(final List<User> users) {
         if (this.usersList == null) {
@@ -87,7 +88,7 @@ public class MessageFollowingAdapter extends RecyclerView.Adapter<MessageFollowi
         holder.binding.setFollowbutton(holder.binding.followingButton);
         holder.binding.setOnfollowingclicked(new OnFollowingClicked());
         holder.binding.setOnchatclicked(new OnChatClicked());
-        //holder.binding.setUsercallback(new OnUserClicked());
+        holder.binding.setOnprofileclicked(new OnProfileClicked());
 
         Picasso.get().load(user.getProfile_url()).into(holder.binding.contactPicture);
     }
@@ -124,6 +125,12 @@ public class MessageFollowingAdapter extends RecyclerView.Adapter<MessageFollowi
                 viewModel.addUserFollowing(mAuth.getCurrentUser().getUid(), user.getUid());
             }
 
+        }
+    }
+
+    public class OnProfileClicked{
+        public void onProfileClicked(User user){
+            new TransactFragment().loadFragment(context, user.getUid());
         }
     }
 

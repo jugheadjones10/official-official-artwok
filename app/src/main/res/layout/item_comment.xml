@@ -5,14 +5,15 @@
     <data>
         <variable name="comment" type="com.example.artwokmabel.models.Comment"/>
         <variable name="ondeleteclicked" type="com.example.artwokmabel.homepage.post.CommentsAdapter.OnDeleteClicked"/>
+        <variable name="onprofileclicked" type="com.example.artwokmabel.homepage.post.CommentsAdapter.OnProfileClicked"/>
     </data>
 
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:background="@color/artwok_white">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:background="@color/artwok_white">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/comment_profile_image"
@@ -22,7 +23,8 @@
         android:layout_marginTop="15dp"
         android:src="@drawable/ic_android"
         app:civ_border_color="@color/artwok_black"
-        app:civ_border_width="0.5dp" />
+        app:civ_border_width="0.5dp"
+        android:onClick="@{() -> onprofileclicked.onProfileClicked(comment)}"/>
 
     <RelativeLayout
         android:layout_width="match_parent"

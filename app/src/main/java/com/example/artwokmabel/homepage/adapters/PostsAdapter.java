@@ -18,11 +18,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.artwokmabel.HomePageActivity;
 import com.example.artwokmabel.R;
+import com.example.artwokmabel.Utils.TransactFragment;
 import com.example.artwokmabel.databinding.ItemPostBinding;
 import com.example.artwokmabel.homepage.callbacks.MainPostClickCallback;
 import com.example.artwokmabel.homepage.homepagewrapper.HomeTabsFragment;
 import com.example.artwokmabel.homepage.post.PostActivity;
 import com.example.artwokmabel.homepage.user.IndivUserFragment;
+import com.example.artwokmabel.models.Comment;
 import com.example.artwokmabel.models.MainPost;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -69,7 +71,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.myHolder> {
         MainPost data = postList.get(i);
         holder.binding.setPost(data);
         holder.binding.setPostclickcallback(postClickCallback);
-        holder.binding.setProfilecallback(profileImageClickCallback);
+        holder.binding.setProfilecallback(new OnProfileClicked());
         holder.binding.setSharecallback(shareClickCallback);
         holder.binding.setOnfavpostclicked(new OnFavPostClicked());
         holder.binding.setFavorite(holder.binding.favorite);
@@ -229,16 +231,16 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.myHolder> {
     }
 
 
-    public final MainPostClickCallback profileImageClickCallback = new MainPostClickCallback() {
-        @Override
-        public void onClick(MainPost post) {
-            IndivUserFragment indivUserFrag = new IndivUserFragment();
-            Bundle args = new Bundle();
-            args.putString("poster_username", post.getUsername());
-            indivUserFrag.setArguments(args);
-            HomePageActivity.getInstance().loadFragment(indivUserFrag);
-        }
-    };
+//    public final MainPostClickCallback profileImageClickCallback = new MainPostClickCallback() {
+//        @Override
+//        public void onClick(MainPost post) {
+//            IndivUserFragment indivUserFrag = new IndivUserFragment();
+//            Bundle args = new Bundle();
+//            args.putString("poster_username", post.getUsername());
+//            indivUserFrag.setArguments(args);
+//            HomePageActivity.getInstance().loadFragment(indivUserFrag);
+//        }
+//    };
 
     public final MainPostClickCallback shareClickCallback = new MainPostClickCallback() {
         @Override
@@ -264,6 +266,12 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.myHolder> {
     public class OnFavPostClicked{
         public void onFavPostClicked(MainPost post, ImageView favorite){
             viewModel.switchUserFavPostsNonObservable(post, favorite);
+        }
+    }
+
+    public class OnProfileClicked{
+        public void onProfileClicked(MainPost post){
+            new TransactFragment().loadFragment(mContext, post.getUser_id());
         }
     }
 

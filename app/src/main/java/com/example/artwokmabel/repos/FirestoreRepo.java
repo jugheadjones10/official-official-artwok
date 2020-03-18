@@ -23,6 +23,7 @@ import com.example.artwokmabel.login.LoginActivity;
 import com.example.artwokmabel.chat.models.UserUserModel;
 import com.example.artwokmabel.models.Comment;
 import com.example.artwokmabel.models.Message;
+import com.example.artwokmabel.models.NormalChat;
 import com.example.artwokmabel.models.Notification;
 import com.example.artwokmabel.models.OfferMessage;
 import com.example.artwokmabel.models.OrderChat;
@@ -38,6 +39,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.TaskCompletionSource;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -1784,9 +1786,10 @@ public class FirestoreRepo {
         return data;
     }
 
-    public LiveData<List<User>> getChattingWith(String userId){
-        final MutableLiveData<List<User>> data = new MutableLiveData<>();
-        List<User> tempData = new ArrayList<>();
+
+    public LiveData<List<NormalChat>> getChattingWith(String userId){
+        final MutableLiveData<List<NormalChat>> data = new MutableLiveData<>();
+        List<NormalChat> tempData = new ArrayList<>();
 
         FirebaseDatabase.getInstance().getReference()
                 .child("Messages")
@@ -1797,6 +1800,7 @@ public class FirestoreRepo {
 
                 tempData.clear();
                 List<Task> tasks = new ArrayList<>();
+                List<Task> nestedTasks = new ArrayList<>();
                 for (DataSnapshot childUserSnapshot: dataSnapshot.getChildren()) {
                     Task task = FirestoreRepo.getInstance()
                             .getUserRef(childUserSnapshot.getKey())
@@ -1805,9 +1809,39 @@ public class FirestoreRepo {
                                 @Override
                                 public void onSuccess(DocumentSnapshot snapshot) {
                                     if (snapshot.exists()) {
-                                        User user = changeDocToUserModel(snapshot);
-                                        Log.d("chattingwith", user.getUsername());
-                                        tempData.add(user);
+
+                                        TaskCompletionSource<DataSnapshot> dbSource = new TaskCompletionSource<>();
+                                        Task dbTask = dbSource.getTask();
+
+                                        FirebaseDatabase.getInstance().getReference()
+                                                .child("Messages")
+                                                .child(userId)
+                                                .child(childUserSnapshot.getKey())
+                                                .orderByChild("nanopast")
+                                                .limitToLast(1)
+                                                .addListenerForSingleValueEvent(new ValueEventListener() {
+                                                    @Override
+                                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                                                        Message message = dataSnapshot.getValue(Message.class);
+                                                        User user = changeDocToUserModel(snapshot);
+
+                                                        NormalChat normalChat = new NormalChat(
+                                                                user,
+                                                                message
+                                                        );
+
+                                                        Log.d("chattingwith", user.getUsername());
+                                                        tempData.add(normalChat);
+
+                                                        dbSource.setResult(dataSnapshot);
+                                                    }
+
+                                                    @Override
+                                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                                    }
+                                                });
                                     }
                                 }
                             });
@@ -1819,7 +1853,12 @@ public class FirestoreRepo {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 Log.d("thestuffreturnedREQUEST", "final resulting temp data" + tempData.toString());
-                                data.setValue(tempData);
+                                Tasks.whenAll(nestedTasks.toArray(new Task[0])).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        data.setValue(tempData);
+                                    }
+                                });
                             }
                         });
             }

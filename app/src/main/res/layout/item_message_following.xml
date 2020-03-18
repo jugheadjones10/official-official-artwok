@@ -18,6 +18,11 @@
             type="com.example.artwokmabel.chat.tabs.MessageFollowingAdapter.OnChatClicked" />
 
         <variable
+            name="onprofileclicked"
+            type="com.example.artwokmabel.chat.tabs.MessageFollowingAdapter.OnProfileClicked" />
+
+
+        <variable
             name="followbutton"
             type="android.widget.Button" />
     </data>
@@ -33,7 +38,8 @@
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_marginLeft="16dp"
-            android:src="@drawable/budget_details_lady" />
+            android:src="@drawable/budget_details_lady"
+            android:onClick="@{() -> onprofileclicked.onProfileClicked(user)}"/>
 
         <LinearLayout
             android:layout_width="wrap_content"

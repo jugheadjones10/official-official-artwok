@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.chat.personalchat.ChatActivity;
 import com.example.artwokmabel.databinding.ItemMessageChatsBinding;
+import com.example.artwokmabel.models.NormalChat;
 import com.example.artwokmabel.models.User;
 import com.squareup.picasso.Picasso;
 
@@ -19,7 +20,7 @@ import java.util.List;
 
 public class MessageChatsAdapter extends RecyclerView.Adapter<MessageChatsAdapter.CustomViewHolder>{
 
-    private List<User> usersList;
+    private List<NormalChat> chatsList;
     private Context context;
 
     public MessageChatsAdapter(Context context) {
@@ -33,35 +34,35 @@ public class MessageChatsAdapter extends RecyclerView.Adapter<MessageChatsAdapte
     }
 
 
-    public void setUsersList(final List<User> users) {
-        if (this.usersList == null) {
-            this.usersList = users;
-            notifyItemRangeInserted(0, users.size());
+    public void setNormalChatsList(final List<NormalChat> chatHeads) {
+        if (this.chatsList == null) {
+            this.chatsList = chatHeads;
+            notifyItemRangeInserted(0, chatHeads.size());
         } else {
             DiffUtil.DiffResult result = DiffUtil.calculateDiff(new DiffUtil.Callback() {
                 @Override
                 public int getOldListSize() {
-                    return MessageChatsAdapter.this.usersList.size();
+                    return MessageChatsAdapter.this.chatsList.size();
                 }
 
                 @Override
                 public int getNewListSize() {
-                    return users.size();
+                    return chatHeads.size();
                 }
 
                 @Override
                 public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-                    return MessageChatsAdapter.this.usersList.get(oldItemPosition).getUid() ==
-                            users.get(newItemPosition).getUid();
+                    return MessageChatsAdapter.this.chatsList.get(oldItemPosition).getUser().getUid() ==
+                            chatHeads.get(newItemPosition).getUser().getUid();
                 }
 
                 @Override
                 public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
-                    return MessageChatsAdapter.this.usersList.get(oldItemPosition).getUid() ==
-                            users.get(newItemPosition).getUid();
+                    return MessageChatsAdapter.this.chatsList.get(oldItemPosition).getUser().getUid() ==
+                            chatHeads.get(newItemPosition).getUser().getUid();
                 }
             });
-            this.usersList = users;
+            this.chatsList = chatHeads;
             notifyDataSetChanged();
             result.dispatchUpdatesTo(this);
         }
@@ -70,13 +71,14 @@ public class MessageChatsAdapter extends RecyclerView.Adapter<MessageChatsAdapte
 
     @Override
     public void onBindViewHolder(MessageChatsAdapter.CustomViewHolder holder, int position) {
-        User user = usersList.get(position);
+        NormalChat chatHead = chatsList.get(position);
 
-        holder.binding.setUser(user);
+        holder.binding.setUser(chatHead.getUser());
+        holder.binding.setNormalchat(chatHead);
         holder.binding.setOnchatclicked(new MessageChatsAdapter.OnChatClicked());
         //holder.binding.setUsercallback(new OnUserClicked());
 
-        Picasso.get().load(user.getProfile_url()).into(holder.binding.messageChatsImageview);
+        Picasso.get().load(chatHead.getUser().getProfile_url()).into(holder.binding.messageChatsImageview);
     }
 
 
@@ -93,7 +95,7 @@ public class MessageChatsAdapter extends RecyclerView.Adapter<MessageChatsAdapte
 
     @Override
     public int getItemCount() {
-        return usersList == null ? 0 : usersList.size();
+        return chatsList == null ? 0 : chatsList.size();
     }
 
     class CustomViewHolder extends RecyclerView.ViewHolder {

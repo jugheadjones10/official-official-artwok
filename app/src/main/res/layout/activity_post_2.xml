@@ -5,6 +5,7 @@
 
     <data>
         <variable name="user" type="com.example.artwokmabel.models.User"/>
+        <variable name="onprofileclicked" type="com.example.artwokmabel.homepage.post.PostActivity.OnProfileClicked"/>
     </data>
 
 <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -59,6 +60,7 @@
                         android:layout_width="55dp"
                         android:layout_height="match_parent"
                         android:layout_gravity="left|center_vertical"
+                        android:onClick="@{() -> onprofileclicked.onProfileClicked(user)}"
                         android:padding="8dp" />
 
                     <TextView
