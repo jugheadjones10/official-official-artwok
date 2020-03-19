@@ -21,6 +21,7 @@ public class NormalChat{
 
         String finalString;
         SimpleDateFormat sdf = new SimpleDateFormat("MM dd");
+
         long diff = System.currentTimeMillis() - nanopast;
 
         if(diff < 86400000 ){

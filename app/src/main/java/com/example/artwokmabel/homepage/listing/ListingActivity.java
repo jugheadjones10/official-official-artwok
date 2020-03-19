@@ -223,7 +223,7 @@ public class ListingActivity extends AppCompatActivity {
     public class OnOfferClicked{
         public void onOfferClicked(Listing listing){
             Intent offerIntent = new Intent(ListingActivity.this, OfferActivity.class);
-            offerIntent.putExtra("orderchat", FirestoreRepo.getInstance().changeListingToMeBuy(listing, new Message("", "", "", "","","", "", "", 0)));
+            offerIntent.putExtra("orderchat", FirestoreRepo.getInstance().changeListingToMeBuy(listing, new Message("", "", "", "","","", "", 0)));
             startActivity(offerIntent);
         }
     }

@@ -22,4 +22,5 @@ public class MessageChatsViewModel extends ViewModel {
     public LiveData<List<NormalChat>> getChattingWithObservable() {
         return chattingWithObservable;
     }
+
 }

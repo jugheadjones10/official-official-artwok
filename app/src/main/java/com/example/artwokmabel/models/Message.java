@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class Message implements Serializable
 {
-    private String from, message, type, to, messageID, time, date, name;
+    private String from, message, type, to, messageID, time, date;
 
     private long nanopast;
 
@@ -12,7 +12,8 @@ public class Message implements Serializable
 
     }
 
-    public Message(String from, String message, String type, String to, String messageID, String time, String date, String name, long nanopast) {
+//    String name,
+    public Message(String from, String message, String type, String to, String messageID, String time, String date, long nanopast) {
         this.from = from;
         this.message = message;
         this.type = type;
@@ -20,7 +21,7 @@ public class Message implements Serializable
         this.messageID = messageID;
         this.time = time;
         this.date = date;
-        this.name = name;
+        //this.name = name;
         this.nanopast = nanopast;
     }
 
@@ -80,13 +81,13 @@ public class Message implements Serializable
         this.date = date;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+//    public String getName() {
+//        return name;
+//    }
+//
+//    public void setName(String name) {
+//        this.name = name;
+//    }
 
     public long getNanopast() {
         return nanopast;

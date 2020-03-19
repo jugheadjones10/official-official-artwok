@@ -13,10 +13,17 @@ import java.util.List;
 public class MessageFollowingViewModel extends ViewModel {
     private FirebaseAuth mAuth;
     private final LiveData<List<User>> followingUsersObservable;
+    private LiveData<User> userObservable;
+
 
     public MessageFollowingViewModel() {
         mAuth = FirebaseAuth.getInstance();
         followingUsersObservable = FirestoreRepo.getInstance().getFollowings(mAuth.getCurrentUser().getUid());
+        userObservable = FirestoreRepo.getInstance().getUser(mAuth.getCurrentUser().getUid());
+    }
+
+    public LiveData<User> getUserObservable() {
+        return userObservable;
     }
 
     public LiveData<List<User>> getFollowingUsersObservable() {

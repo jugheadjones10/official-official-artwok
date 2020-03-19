@@ -12,8 +12,10 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.artwokmabel.R;
+import com.example.artwokmabel.Utils.TransactFragment;
 import com.example.artwokmabel.databinding.MessageFollowingFragmentBinding;
 import com.example.artwokmabel.models.User;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -31,6 +33,7 @@ public class MessageFollowingFragment extends Fragment {
 
         adapter = new MessageFollowingAdapter(getActivity());
         binding.friendsFragmentRecyclerview.setAdapter(adapter);
+        binding.setOnprofileclicked(new OnProfileClicked());
 
         viewModel = ViewModelProviders.of(this).get(MessageFollowingViewModel.class);
         observeViewModel(viewModel);
@@ -48,5 +51,19 @@ public class MessageFollowingFragment extends Fragment {
                 }
             }
         });
+
+        viewModel.getUserObservable().observe(this, new Observer<User>() {
+            @Override
+            public void onChanged(@Nullable User user) {
+                binding.setUser(user);
+                Picasso.get().load(user.getProfile_url()).into(binding.contactPicture);
+            }
+        });
+    }
+
+    public class OnProfileClicked{
+        public void onProfileClicked(User user){
+            new TransactFragment().loadFragment(getContext(), user.getUid());
+        }
     }
 }
