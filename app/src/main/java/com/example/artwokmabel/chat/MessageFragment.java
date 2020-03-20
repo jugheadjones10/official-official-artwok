@@ -2,36 +2,42 @@ package com.example.artwokmabel.chat;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.chat.tabs.MessageChatsFragment;
+import com.example.artwokmabel.chat.tabs.MessageFollowingAdapter;
 import com.example.artwokmabel.chat.tabs.MessageOrdersFragment;
 import com.example.artwokmabel.chat.tabs.MessageFollowingFragment;
 import com.example.artwokmabel.databinding.MainMessageFragmentBinding;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.oshi.libsearchtoolbar.SearchAnimationToolbar;
 
-public class MessageFragment extends Fragment {
+public class MessageFragment extends Fragment implements SearchAnimationToolbar.OnSearchQueryChangedListener{
 
     private MainMessageFragmentBinding binding;
+    private MessageFragmentPagerAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.main_message_fragment, container, false);
 
-        MessageFragmentPagerAdapter adapter = new MessageFragmentPagerAdapter(this);
+        setHasOptionsMenu(true);
 
-        // Adding Fragments
-//        adapter.addFragment(new MessageFollowingFragment(),"Following");
-//        adapter.addFragment(new MessageChatsFragment(),"Chats");
-//        adapter.addFragment(new MessageOrdersFragment(),"Orders");
+        adapter = new MessageFragmentPagerAdapter(this);
 
         // Adapter Setup
         binding.messageViewpager.setAdapter(adapter);
@@ -53,4 +59,75 @@ public class MessageFragment extends Fragment {
 
         return binding.getRoot();
     }
+
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        binding.toolbar.setSupportActionBar((AppCompatActivity) getActivity());
+        binding.toolbar.setTitle("");
+        binding.toolbar.setOnSearchQueryChangedListener(MessageFragment.this);
+
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_search, menu);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int itemId = item.getItemId();
+
+        if (itemId == R.id.action_search) {
+            binding.toolbar.onSearchIconClick();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onSearchCollapsed() {
+        binding.artwokIcon.setVisibility(View.VISIBLE);
+        binding.messageTabs.setVisibility(View.VISIBLE);
+        binding.messageViewpager.setUserInputEnabled(true);
+
+        int i = binding.messageViewpager.getCurrentItem();
+        if(i == 0){
+            MessageFollowingAdapter.getInstance().getFilter().filter("");
+            MessageFollowingFragment.getInstance().binding.myProfile.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void onSearchQueryChanged(String query) {
+        int i = binding.messageViewpager.getCurrentItem();
+        if(i == 0){
+            MessageFollowingAdapter.getInstance().getFilter().filter(query);
+        }
+    }
+
+    @Override
+    public void onSearchExpanded() {
+        binding.artwokIcon.setVisibility(View.GONE);
+        binding.messageTabs.setVisibility(View.GONE);
+        binding.messageViewpager.setUserInputEnabled(false);
+
+        int i = binding.messageViewpager.getCurrentItem();
+        if(i == 0){
+            MessageFollowingFragment.getInstance().binding.myProfile.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void onSearchSubmitted(String query) {
+        //Make keyboard go down
+    }
+
+
 }

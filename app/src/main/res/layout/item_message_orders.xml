@@ -10,6 +10,10 @@
             name="onchatclicked"
             type="com.example.artwokmabel.chat.tabs.MessageOrdersAdapter.OnChatClicked" />
 
+        <variable
+            name="onprofileclicked"
+            type="com.example.artwokmabel.chat.tabs.MessageOrdersAdapter.OnProfileClicked" />
+
     </data>
 
 
@@ -28,7 +32,9 @@
                 android:id="@+id/message_chats_imageview"
                 android:layout_margin="10dp"
                 android:layout_width="50dp"
-                android:layout_height="50dp" />
+                android:layout_height="50dp"
+                android:onClick="@{() -> onprofileclicked.onProfileClicked(orderchat)}"
+                />
 
             <RelativeLayout
                 android:layout_width="match_parent"

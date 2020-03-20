@@ -23,14 +23,21 @@ public class MessageFollowingFragment extends Fragment {
 
     private MessageFollowingAdapter adapter;
 
-    private MessageFollowingFragmentBinding binding;
+    public MessageFollowingFragmentBinding binding;
     private MessageFollowingViewModel viewModel;
+
+    private static MessageFollowingFragment instance;
+
+    public static MessageFollowingFragment getInstance(){
+        return instance;
+    }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.message_following_fragment, container, false);
 
+        instance = this;
         adapter = new MessageFollowingAdapter(getActivity());
         binding.friendsFragmentRecyclerview.setAdapter(adapter);
         binding.setOnprofileclicked(new OnProfileClicked());

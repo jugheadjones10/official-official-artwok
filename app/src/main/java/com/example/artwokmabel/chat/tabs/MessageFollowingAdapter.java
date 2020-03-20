@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Filter;
+import android.widget.Filterable;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentActivity;
@@ -18,22 +20,33 @@ import com.example.artwokmabel.chat.personalchat.ChatActivity;
 import com.example.artwokmabel.chat.models.UserUserModel;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.ItemMessageFollowingBinding;
+import com.example.artwokmabel.databinding.MessageFollowingFragmentBinding;
 import com.example.artwokmabel.models.MainPost;
 import com.example.artwokmabel.models.User;
 import com.example.artwokmabel.profile.people.PeopleAdapterViewModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class MessageFollowingAdapter extends RecyclerView.Adapter<MessageFollowingAdapter.CustomViewHolder>{
+public class MessageFollowingAdapter extends RecyclerView.Adapter<MessageFollowingAdapter.CustomViewHolder> implements Filterable {
 
     private List<User> usersList;
+    private List<User> usersListFiltered;
+
     private Context context;
     private PeopleAdapterViewModel viewModel;
     private FirebaseAuth mAuth;
 
+    private static MessageFollowingAdapter instance;
+
+    public static MessageFollowingAdapter getInstance(){
+        return instance;
+    }
+
     public MessageFollowingAdapter(Context context) {
+        this.instance = this;
         this.context = context;
         this.mAuth = FirebaseAuth.getInstance();
         viewModel = ViewModelProviders.of((FragmentActivity)context).get(PeopleAdapterViewModel.class);
@@ -48,6 +61,7 @@ public class MessageFollowingAdapter extends RecyclerView.Adapter<MessageFollowi
     public void setUsersList(final List<User> users) {
         if (this.usersList == null) {
             this.usersList = users;
+            this.usersListFiltered = users;
             notifyItemRangeInserted(0, users.size());
         } else {
             DiffUtil.DiffResult result = DiffUtil.calculateDiff(new DiffUtil.Callback() {
@@ -74,6 +88,7 @@ public class MessageFollowingAdapter extends RecyclerView.Adapter<MessageFollowi
                 }
             });
             this.usersList = users;
+            //this.usersListFiltered = users;
             notifyDataSetChanged();
             result.dispatchUpdatesTo(this);
         }
@@ -82,7 +97,7 @@ public class MessageFollowingAdapter extends RecyclerView.Adapter<MessageFollowi
 
     @Override
     public void onBindViewHolder(CustomViewHolder holder, int position) {
-        User user = usersList.get(position);
+        User user = usersListFiltered.get(position);
         
         holder.binding.setUser(user);
         holder.binding.setFollowbutton(holder.binding.followingButton);
@@ -91,26 +106,6 @@ public class MessageFollowingAdapter extends RecyclerView.Adapter<MessageFollowi
         holder.binding.setOnprofileclicked(new OnProfileClicked());
 
         Picasso.get().load(user.getProfile_url()).into(holder.binding.contactPicture);
-    }
-
-    public class OnUserClicked{
-        public void onUserClicked(UserUserModel user){
-            // when the user presses on one of the items from friend list, a profile activity pops up
-            Intent intent = new Intent(context, ChatActivity.class);
-            intent.putExtra("destinationUid", user.getUid());
-            intent.putExtra("destinationProfileUrl", user.getProfileImageUrl());
-            intent.putExtra("destinationUsername", user.getUserName());
-            intent.putExtra("destinationChatrooms", user.getChatrooms());
-
-            // create an animation effect sliding from left to right
-            ActivityOptions activityOptions = null;
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                activityOptions = ActivityOptions.makeCustomAnimation(context, R.anim.fromtop, R.anim.tobottom);
-                context.startActivity(intent, activityOptions.toBundle());
-            } else {
-                context.startActivity(intent);
-            }
-        }
     }
 
     public class OnFollowingClicked{
@@ -124,7 +119,6 @@ public class MessageFollowingAdapter extends RecyclerView.Adapter<MessageFollowi
 
                 viewModel.addUserFollowing(mAuth.getCurrentUser().getUid(), user.getUid());
             }
-
         }
     }
 
@@ -147,7 +141,7 @@ public class MessageFollowingAdapter extends RecyclerView.Adapter<MessageFollowi
 
     @Override
     public int getItemCount() {
-        return usersList == null ? 0 : usersList.size();
+        return usersListFiltered == null ? 0 : usersListFiltered.size();
     }
 
     class CustomViewHolder extends RecyclerView.ViewHolder {
@@ -157,5 +151,44 @@ public class MessageFollowingAdapter extends RecyclerView.Adapter<MessageFollowi
             super(binding.getRoot());
             this.binding = binding;
         }
+    }
+
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String charString = charSequence.toString();
+                if (charString.isEmpty()) {
+                    usersListFiltered = usersList;
+                } else {
+                    List<User> filteredList = new ArrayList<>();
+                    for (User user : usersList) {
+                        // name match condition. this might differ depending on your requirement
+                        // here we are looking for name or phone number match
+
+                        //|| user.getPhone().contains(charSequence
+                        //Might need to add an or operator below to search for other things like intro
+                        if (user.getUsername().toLowerCase().contains(charString.toLowerCase())) {
+                            filteredList.add(user);
+                        }
+                    }
+
+                    usersListFiltered = filteredList;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = usersListFiltered;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                usersListFiltered = (ArrayList<User>) filterResults.values;
+
+                notifyDataSetChanged();
+            }
+        };
     }
 }

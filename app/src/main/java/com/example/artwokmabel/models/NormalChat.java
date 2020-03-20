@@ -9,13 +9,8 @@ public class NormalChat{
 
     private String lastMessage;
     private String lastInteractionTime;
+    private long rawLastInteractionTime;
     private User user;
-
-//    public NormalChat(String username, String uid, String profile_url, ArrayList<String> following, ArrayList<String> followers, ArrayList<String> chatrooms, ArrayList<String> fav_listings, ArrayList<String> fav_posts, ArrayList<String> fav_requests, ArrayList<String> tab_categories, String email, String introduction, String token, String lastMessage, String lastInteractionTime) {
-//        super(username, uid, profile_url, following, followers, chatrooms, fav_listings, fav_posts, fav_requests, tab_categories, email, introduction, token);
-//        this.lastMessage = lastMessage;
-//        this.lastInteractionTime = lastInteractionTime;
-//    }
 
     private String changeNanopastToReadableDate(long nanopast){
 
@@ -42,7 +37,16 @@ public class NormalChat{
     public NormalChat(User user, Message message){
         this.user = user;
         this.lastMessage = message.getMessage();
+        this.rawLastInteractionTime = message.getNanopast();
         this.lastInteractionTime = changeNanopastToReadableDate(message.getNanopast());
+    }
+
+    public long getRawLastInteractionTime() {
+        return rawLastInteractionTime;
+    }
+
+    public void setRawLastInteractionTime(long rawLastInteractionTime) {
+        this.rawLastInteractionTime = rawLastInteractionTime;
     }
 
     public String getLastMessage() {

@@ -1816,44 +1816,8 @@ public class FirestoreRepo {
                                 @Override
                                 public void onSuccess(DocumentSnapshot snapshot) {
                                     if (snapshot.exists()) {
-
                                         User user = changeDocToUserModel(snapshot);
                                         usersList.add(user);
-
-//                                        TaskCompletionSource<DataSnapshot> dbSource = new TaskCompletionSource<>();
-//                                        Task dbTask = dbSource.getTask();
-//                                        nestedTasks.add(dbTask);
-//
-//                                        //Get the latest Messaage that I had with this user
-//                                        FirebaseDatabase.getInstance().getReference()
-//                                                .child("Messages")
-//                                                .child(userId)
-//                                                .child(childUserSnapshot.getKey())
-//                                                .orderByChild("nanopast")
-//                                                .limitToLast(1)
-//                                                .addListenerForSingleValueEvent(new ValueEventListener() {
-//                                                    @Override
-//                                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//
-//                                                        //Message message = dataSnapshot.getValue(Message.class);
-//                                                        //User user = changeDocToUserModel(snapshot);
-//
-//                                                        //NormalChat normalChat = new NormalChat(
-//                                                        //        user,
-//                                                        //        message
-//                                                        //);
-//
-//                                                        //Log.d("chattingwith", user.getUsername());
-//                                                        //tempData.add(normalChat);
-//
-//                                                        dbSource.setResult(dataSnapshot);
-//                                                    }
-//
-//                                                    @Override
-//                                                    public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//                                                    }
-//                                                });
                                     }
                                 }
                             });
@@ -1882,17 +1846,6 @@ public class FirestoreRepo {
                                         .addListenerForSingleValueEvent(new ValueEventListener() {
                                             @Override
                                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                                                //Message message = dataSnapshot.getValue(Message.class);
-                                                //User user = changeDocToUserModel(snapshot);
-
-                                                //NormalChat normalChat = new NormalChat(
-                                                //        user,
-                                                //        message
-                                                //);
-
-                                                //Log.d("chattingwith", user.getUsername());
-                                                //tempData.add(normalChat);
 
                                                 Log.d("messagestuckpoint", "Is there even a data snapshot? : " + dataSnapshot.toString());
                                                 Log.d("messagestuckpoint", "Maybe it's my querying that's wrong? : " + dataSnapshot.getValue(Message.class).getMessage());
@@ -1943,47 +1896,10 @@ public class FirestoreRepo {
                                             tempData.add(normalChat);
                                         }
 
+                                        Collections.sort(tempData, new SortNormalChats());
                                         data.setValue(tempData);
-
                                     }
                                 });
-
-
-//                                Tasks.whenAll(nestedTasks.toArray(new Task[0])).addOnSuccessListener(new OnSuccessListener<Void>() {
-//                                    @Override
-//                                    public void onSuccess(Void aVoid) {
-//
-//                                        for(int i = 0; i < nestedTasks.size(); i++){
-//                                        //for(Task oneDbTask : nestedTasks){
-//                                            DataSnapshot messageSnapshot = (DataSnapshot)nestedTasks.get(i).getResult();
-//                                            Message message = messageSnapshot.getValue(Message.class);
-//
-//                                            Log.d("messagestuckpoint", "The message nanopast : " + Long.toString(message.getNanopast()));
-//                                            Log.d("messagestuckpoint", "The message text : " + message.getMessage());
-//
-//                                            User user = usersList.get(i);
-//
-//                                            NormalChat normalChat = new NormalChat(
-//                                                    user,
-//                                                    message
-//                                            );
-//
-//                                            Log.d("messagestuckpoint", "Normal chat object username : " + normalChat.getUser().getUsername());
-//                                            Log.d("messagestuckpoint", "Normal chat object last message : " + normalChat.getLastMessage());
-//
-//                                            tempData.add(normalChat);
-//
-//                                        }
-//
-//                                        data.setValue(tempData);
-//                                    }
-//
-//                                }).addOnFailureListener(new OnFailureListener() {
-//                                    @Override
-//                                    public void onFailure(@NonNull Exception e) {
-//                                        Log.d("messagestuckpoint", "Failed to complete all of nestedTasks");
-//                                    }
-//                                });
                             }
                         });
             }
@@ -2068,6 +1984,12 @@ public class FirestoreRepo {
     class SortNotifications implements Comparator<Notification> {
         public int compare(Notification a, Notification b){
             return (int)b.getTimeInMillis() - (int)a.getTimeInMillis();
+        }
+    }
+
+    class SortNormalChats implements Comparator<NormalChat> {
+        public int compare(NormalChat a, NormalChat b){
+            return (int)b.getRawLastInteractionTime() - (int)a.getRawLastInteractionTime();
         }
     }
 

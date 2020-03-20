@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.artwokmabel.R;
+import com.example.artwokmabel.Utils.TransactFragment;
 import com.example.artwokmabel.chat.personalchat.ChatActivity;
 import com.example.artwokmabel.databinding.ItemMessageChatsBinding;
 import com.example.artwokmabel.models.NormalChat;
@@ -76,6 +77,7 @@ public class MessageChatsAdapter extends RecyclerView.Adapter<MessageChatsAdapte
         holder.binding.setUser(chatHead.getUser());
         holder.binding.setNormalchat(chatHead);
         holder.binding.setOnchatclicked(new MessageChatsAdapter.OnChatClicked());
+        holder.binding.setOnprofileclicked(new OnProfileClicked());
         //holder.binding.setUsercallback(new OnUserClicked());
 
         Picasso.get().load(chatHead.getUser().getProfile_url()).into(holder.binding.messageChatsImageview);
@@ -92,6 +94,11 @@ public class MessageChatsAdapter extends RecyclerView.Adapter<MessageChatsAdapte
         }
     }
 
+    public class OnProfileClicked{
+        public void onProfileClicked(User user){
+            new TransactFragment().loadFragment(context, user.getUid());
+        }
+    }
 
     @Override
     public int getItemCount() {

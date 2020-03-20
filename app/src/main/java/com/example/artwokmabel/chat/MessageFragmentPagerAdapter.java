@@ -51,6 +51,8 @@ public class MessageFragmentPagerAdapter extends FragmentStateAdapter {
     public int getItemCount() {
         return 3;
     }
+
+
 }
 
 //        extends FragmentPagerAdapter {

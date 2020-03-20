@@ -10,11 +10,13 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.artwokmabel.R;
+import com.example.artwokmabel.Utils.TransactFragment;
 import com.example.artwokmabel.chat.offerchat.OfferActivity;
 import com.example.artwokmabel.chat.personalchat.ChatActivity;
 import com.example.artwokmabel.databinding.ItemMessageChatsBinding;
 import com.example.artwokmabel.databinding.ItemMessageOrdersBinding;
 import com.example.artwokmabel.models.OrderChat;
+import com.example.artwokmabel.models.User;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -74,6 +76,7 @@ public class MessageOrdersAdapter extends RecyclerView.Adapter<MessageOrdersAdap
     public void onBindViewHolder(MessageOrdersAdapter.CustomViewHolder holder, int position) {
         OrderChat orderChat = orderChatsList.get(position);
 
+        holder.binding.setOnprofileclicked(new OnProfileClicked());
         holder.binding.setOrderchat(orderChat);
         holder.binding.setOnchatclicked(new MessageOrdersAdapter.OnChatClicked());
         //holder.binding.setOrderChatcallback(new OnOrderChatClicked());
@@ -92,6 +95,12 @@ public class MessageOrdersAdapter extends RecyclerView.Adapter<MessageOrdersAdap
         }
     }
 
+    public class OnProfileClicked{
+        public void onProfileClicked(OrderChat orderChat){
+            //Not sure if buyer id is the correct id to go to - check this part again when doing latest msg and time for orders
+            new TransactFragment().loadFragment(context, orderChat.getBuyerId());
+        }
+    }
 
     @Override
     public int getItemCount() {
