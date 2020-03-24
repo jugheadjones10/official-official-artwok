@@ -1,5 +1,6 @@
 package com.example.artwokmabel.chat;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -70,6 +71,7 @@ public class MessageFragment extends Fragment implements SearchAnimationToolbar.
         binding.toolbar.setSupportActionBar((AppCompatActivity) getActivity());
         binding.toolbar.setTitle("");
         binding.toolbar.setOnSearchQueryChangedListener(MessageFragment.this);
+        binding.toolbar.setSearchTextColor(Color.BLACK);
 
     }
 

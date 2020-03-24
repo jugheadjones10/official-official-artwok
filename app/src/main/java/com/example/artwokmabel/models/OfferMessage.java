@@ -8,6 +8,7 @@ public class OfferMessage extends Message{
     public OfferMessage(){
 
     }
+
     public OfferMessage(String price, String acceptStatus, String from, String to, String messageID) {
 
         super(from, "null", "null", to, messageID, "null", "null", 0);

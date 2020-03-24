@@ -47,7 +47,6 @@ public class SettingsActivity extends AppCompatActivity {
 
     private StorageReference storageReference;
     private FirebaseAuth mAuth;
-    public static final int REQUEST_IMAGE = 100;
     public ActivitySettingsBinding binding;
     public SettingsActivityViewModel viewModel;
     public User user;
@@ -99,7 +98,7 @@ public class SettingsActivity extends AppCompatActivity {
     public class OnProfilePicChange{
         public void onProfilePicChange(){
 
-            new ImagePickerCallback(SettingsActivity.this, REQUEST_IMAGE).onImagePickerClicked();
+            new ImagePickerCallback(SettingsActivity.this, UploadListingAcitvity.REQUEST_IMAGE).onImagePickerClicked();
 
         }
     }
@@ -172,7 +171,7 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult (int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_IMAGE) {
+        if (requestCode == UploadListingAcitvity.REQUEST_IMAGE) {
             if (resultCode == RESULT_OK) {
 
                 if (data != null) {

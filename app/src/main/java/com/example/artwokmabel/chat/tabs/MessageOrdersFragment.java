@@ -60,5 +60,4 @@ public class MessageOrdersFragment extends Fragment {
             }
         });
     }
-
 }

@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -17,6 +18,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.artwokmabel.R;
+import com.example.artwokmabel.models.ImageMessage;
 import com.example.artwokmabel.models.Message;
 import com.example.artwokmabel.models.OfferMessage;
 import com.example.artwokmabel.models.OrderChat;
@@ -41,7 +43,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private OrderChat orderChat;
     private Button offerButton;
 
-    private final int OFFER = 0, TALK = 1;
+    private final int OFFER = 0, TALK = 1, IMAGE = 2;
 
     public MessageAdapter (List<Message> userMessagesList, OrderChat orderChat)
     {
@@ -95,6 +97,23 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
     }
 
+    public class ImageMessageViewHolder extends RecyclerView.ViewHolder{
+
+        public ImageView myImage, friendImage;
+        public CircleImageView receiverProfileImage;
+        public FrameLayout myImageFrame, friendImageFrame;
+
+        public ImageMessageViewHolder(@NonNull View itemView){
+            super(itemView);
+            myImage = itemView.findViewById(R.id.my_image);
+            friendImage = itemView.findViewById(R.id.friend_image);
+            receiverProfileImage = itemView.findViewById(R.id.message_profile_image);
+            myImageFrame = itemView.findViewById(R.id.my_image_frame);
+            friendImageFrame = itemView.findViewById(R.id.friend_image_frame);
+        }
+
+    }
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
@@ -110,6 +129,10 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             case TALK:
                 View talk = inflater.inflate(R.layout.custom_messages_layout, viewGroup, false);
                 viewHolder = new MessageViewHolder(talk);
+                break;
+            case IMAGE:
+                View image = inflater.inflate(R.layout.layout_image_message, viewGroup, false);
+                viewHolder = new ImageMessageViewHolder(image);
                 break;
             default:
                 View normal = inflater.inflate(R.layout.custom_messages_layout, viewGroup, false);
@@ -210,9 +233,10 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 linearParams.setMargins(0, 0, 0, 0);
                 messageViewHolder.dateDividerLayout.setLayoutParams(linearParams);
 
-                RecyclerView.LayoutParams relativeParams = (RecyclerView.LayoutParams)messageViewHolder.relativeLayout.getLayoutParams();
-                relativeParams.setMargins(0, 0, 0, 0);
-                messageViewHolder.relativeLayout.setLayoutParams(relativeParams);
+                messageViewHolder.relativeLayout.setPadding(0,0,0,0);
+//                RecyclerView.LayoutParams relativeParams = (RecyclerView.LayoutParams)messageViewHolder.relativeLayout.getLayoutParams();
+//                relativeParams.setMargins(0, 0, 0, 0);
+//                messageViewHolder.relativeLayout.setLayoutParams(relativeParams);
 
                 if(i != 0){
                     Message previousMessage = userMessageList.get(i - 1);
@@ -224,30 +248,13 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                         messageViewHolder.dateDividerLayout.setVisibility(View.VISIBLE);
                         messageViewHolder.dateText.setText(sdf.format(new Date(messages.getNanopast())));
 
-
                         RelativeLayout.LayoutParams insideLinearParams = (RelativeLayout.LayoutParams) messageViewHolder.dateDividerLayout.getLayoutParams();
                         insideLinearParams.setMargins(0, -30, 0, 0);
                         messageViewHolder.dateDividerLayout.setLayoutParams(insideLinearParams);
 
-                        RecyclerView.LayoutParams insideRelativeParams = (RecyclerView.LayoutParams)messageViewHolder.relativeLayout.getLayoutParams();
-                        insideRelativeParams.setMargins(0, 40, 0, 0);
-                        messageViewHolder.relativeLayout.setLayoutParams(insideRelativeParams);
+                        messageViewHolder.relativeLayout.setPadding(0,60,0,0);
 
-//                        messageViewHolder.dateDivider.setLayoutResource(R.layout.view_date_divider);
-//                        messageViewHolder.dateDivider.setOnInflateListener(new ViewStub.OnInflateListener() {
-//                            @Override
-//                            public void onInflate(ViewStub stub, View inflated) {
-//                                TextView date = inflated.findViewById(R.id.dateText);
-//                                date.setText(sdf.format(new Date(messages.getNanopast())));
-//                            }
-//                        });
-//
-//                        if (messageViewHolder.dateDivider.getParent() != null) {
-//                            messageViewHolder.dateDivider.inflate();
-//                        } else {
-//                            messageViewHolder.dateDivider.setVisibility(View.GONE);
-//                        }
-
+                        messageViewHolder.dateDividerLayout.bringToFront();
                     }
                 }
 
@@ -308,6 +315,49 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
                 break;
 
+            case IMAGE:
+
+                String myId = mAuth.getCurrentUser().getUid();
+
+                ImageMessage imageMessage = (ImageMessage) userMessageList.get(i);
+                ImageMessageViewHolder imageMessageViewHolder = (ImageMessageViewHolder) viewHolder;
+
+                imageMessageViewHolder.friendImageFrame.setVisibility(View.GONE);
+                imageMessageViewHolder.myImageFrame.setVisibility(View.GONE);
+
+                imageMessageViewHolder.receiverProfileImage.setVisibility(View.GONE);
+
+                String imageFromUserId = imageMessage.getFrom();
+
+                if (imageFromUserId.equals(myId)) {
+                    imageMessageViewHolder.myImageFrame.setVisibility(View.VISIBLE);
+                    Picasso.get().load(imageMessage.getImageUrl()).into(imageMessageViewHolder.myImage);
+
+                } else {
+                    imageMessageViewHolder.receiverProfileImage.setVisibility(View.VISIBLE);
+                    imageMessageViewHolder.friendImageFrame.setVisibility(View.VISIBLE);
+
+                    Picasso.get().load(imageMessage.getImageUrl()).into(imageMessageViewHolder.friendImage);
+
+                    usersRef = FirebaseDatabase.getInstance().getReference().child("Users").child(imageFromUserId);
+                    usersRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.hasChild("image")) {
+                                String receiverImage = dataSnapshot.child("image").getValue().toString();
+
+                                Picasso.get().load(receiverImage).placeholder(R.drawable.ic_user).into(imageMessageViewHolder.receiverProfileImage);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+
+                break;
             default:
                 break;
         }
@@ -337,12 +387,14 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public int getItemViewType(int position) {
-        if (userMessageList.get(position) instanceof OfferMessage) {
+        Message message = userMessageList.get(position);
+        if (message instanceof OfferMessage) {
             return OFFER;
-        } else if (userMessageList.get(position) instanceof Message) {
+        }else if(message instanceof ImageMessage){
+            return IMAGE;
+        }  else {
             return TALK;
         }
-        return -1;
     }
 
     @Override
