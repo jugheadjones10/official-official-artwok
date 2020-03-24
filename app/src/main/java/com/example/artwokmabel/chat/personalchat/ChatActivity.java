@@ -5,6 +5,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -84,6 +85,7 @@ public class ChatActivity extends AppCompatActivity {
     private void initializeControllers() {
         messageAdapter = new MessageAdapter(messagesList, new OrderChat());
         linearLayoutManager = new LinearLayoutManager(this);
+
         binding.privateMessagesListOfUsers.setLayoutManager(linearLayoutManager);
         binding.privateMessagesListOfUsers.setAdapter(messageAdapter);
 
@@ -158,7 +160,7 @@ public class ChatActivity extends AppCompatActivity {
 
                         messagesList.add(message);
                         messageAdapter.notifyDataSetChanged();
-                        binding.privateMessagesListOfUsers.smoothScrollToPosition(binding.privateMessagesListOfUsers.getAdapter().getItemCount());
+                        binding.privateMessagesListOfUsers.scrollToPosition(binding.privateMessagesListOfUsers.getAdapter().getItemCount() - 1);
                     }
 
                     @Override
@@ -223,7 +225,7 @@ public class ChatActivity extends AppCompatActivity {
                 {
                     if (task.isSuccessful())
                     {
-                        Toast.makeText(ChatActivity.this, "Message Sent Successfully...", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(ChatActivity.this, "Message Sent Successfully...", Toast.LENGTH_SHORT).show();
                     }
                     else
                     {

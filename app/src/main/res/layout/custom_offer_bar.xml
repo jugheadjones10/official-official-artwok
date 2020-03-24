@@ -28,7 +28,7 @@
             android:layout_alignParentStart="false"
             android:layout_alignParentTop="true"
             android:layout_toEndOf="@id/custom_profile_image"
-            android:text="@{orderchat.name}"
+            android:text="@{orderchat.listing.name}"
             android:textColor="@android:color/background_light"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -41,7 +41,7 @@
             android:layout_alignParentStart="false"
             android:layout_toEndOf="@id/custom_profile_image"
             android:layout_marginTop="3dp"
-            android:text="@{Long.toString(orderchat.price)}"
+            android:text="@{Long.toString(orderchat.listing.price)}"
             android:textColor="@android:color/background_light"
             android:textSize="14sp"
             android:textStyle="bold" />

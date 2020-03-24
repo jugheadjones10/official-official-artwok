@@ -24,4 +24,8 @@ public class MessageOrdersViewModel extends ViewModel {
     public LiveData<List<OrderChat>> getOrdersAndSellsObservable() {
         return ordersAndSellsObservable;
     }
+
+    public LiveData<User> getUserObservable(String userId){
+        return FirestoreRepo.getInstance().getUser(userId);
+    }
 }

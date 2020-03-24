@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
         <variable
@@ -17,67 +19,151 @@
     </data>
 
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!--    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="80dp"-->
+<!--        android:orientation="vertical"-->
+<!--        android:onClick="@{() -> onchatclicked.onChatClicked(orderchat)}">-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal">-->
+
+<!--            <de.hdodenhof.circleimageview.CircleImageView-->
+<!--                android:id="@+id/message_chats_imageview"-->
+<!--                android:layout_margin="10dp"-->
+<!--                android:layout_width="50dp"-->
+<!--                android:layout_height="50dp"-->
+<!--                android:onClick="@{() -> onprofileclicked.onProfileClicked(orderchat)}"-->
+<!--                />-->
+
+<!--            <RelativeLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="vertical"-->
+<!--                android:layout_gravity="left">-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/message_chats_textview_title"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_gravity="center_vertical"-->
+<!--                    android:layout_marginTop="10dp"-->
+<!--                    android:layout_marginHorizontal="10dp"-->
+<!--                    android:text="@{orderchat.name}"-->
+<!--                    android:textColor="@color/artwok_black"-->
+<!--                    android:textSize="18dp"/>-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/message_chats_textview_lastmessage"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginTop="5dp"-->
+<!--                    android:layout_marginHorizontal="10dp"-->
+<!--                    android:text="@{orderchat.lastMessage.message}"-->
+<!--                    android:layout_below="@+id/message_chats_textview_title"-->
+<!--                    android:textColor="@android:color/darker_gray"-->
+<!--                    android:textSize="15dp"/>-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/message_chats_textview_timestamp"-->
+<!--                    android:text="@{orderchat.lastMessage.time}"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_margin="10dp"-->
+<!--                    android:layout_alignParentRight="true"-->
+<!--                    android:layout_alignParentTop="true"-->
+<!--                    android:textColor="@android:color/darker_gray"-->
+<!--                    android:textSize="12dp" />-->
+
+
+<!--            </RelativeLayout>-->
+
+<!--        </LinearLayout>-->
+<!--    </LinearLayout>-->
+
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:orientation="vertical"
-        android:onClick="@{() -> onchatclicked.onChatClicked(orderchat)}">
+        android:gravity="center_vertical"
+        android:onClick="@{() -> onchatclicked.onChatClicked(orderchat)}"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <de.hdodenhof.circleimageview.CircleImageView
+            <ImageView
                 android:id="@+id/message_chats_imageview"
-                android:layout_margin="10dp"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:layout_margin="10dp"
                 android:onClick="@{() -> onprofileclicked.onProfileClicked(orderchat)}"
-                />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/message_chats_person"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="42dp"
+                app:layout_constraintStart_toStartOf="@+id/message_chats_imageview"
+                app:layout_constraintTop_toTopOf="@+id/message_chats_imageview">
+
+
+            </de.hdodenhof.circleimageview.CircleImageView>
 
             <RelativeLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginStart="16dp"
                 android:orientation="vertical"
-                android:layout_gravity="left">
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/message_chats_imageview"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
                     android:id="@+id/message_chats_textview_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginTop="10dp"
                     android:layout_marginHorizontal="10dp"
-                    android:text="@{orderchat.name}"
+                    android:layout_marginTop="10dp"
+                    android:text="@{orderchat.listing.name}"
                     android:textColor="@color/artwok_black"
-                    android:textSize="18dp"/>
+                    android:textSize="18dp" />
 
                 <TextView
                     android:id="@+id/message_chats_textview_lastmessage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginHorizontal="10dp"
-                    android:text="@{orderchat.lastMessage.message}"
                     android:layout_below="@+id/message_chats_textview_title"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginTop="5dp"
+                    android:text="@{orderchat.lastMessage.message}"
                     android:textColor="@android:color/darker_gray"
-                    android:textSize="15dp"/>
+                    android:textSize="15dp" />
 
                 <TextView
                     android:id="@+id/message_chats_textview_timestamp"
-                    android:text="@{orderchat.lastMessage.time}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:layout_alignParentRight="true"
                     android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_margin="10dp"
                     android:textColor="@android:color/darker_gray"
                     android:textSize="12dp" />
 
 
             </RelativeLayout>
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 </layout>

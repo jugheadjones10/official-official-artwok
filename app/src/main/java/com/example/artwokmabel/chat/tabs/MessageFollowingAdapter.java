@@ -165,8 +165,6 @@ public class MessageFollowingAdapter extends RecyclerView.Adapter<MessageFollowi
                 } else {
                     List<User> filteredList = new ArrayList<>();
                     for (User user : usersList) {
-                        // name match condition. this might differ depending on your requirement
-                        // here we are looking for name or phone number match
 
                         //|| user.getPhone().contains(charSequence
                         //Might need to add an or operator below to search for other things like intro

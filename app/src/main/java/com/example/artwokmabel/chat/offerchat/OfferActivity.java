@@ -81,18 +81,18 @@ public class OfferActivity extends AppCompatActivity {
         RootRef = FirebaseDatabase.getInstance().getReference();
 
         orderChat = (OrderChat) getIntent().getSerializableExtra("orderchat");
-        if(messageMeId.equals(orderChat.getUserid())){
+        if(messageMeId.equals(orderChat.getListing().getUserid())){
             buyerId = orderChat.getBuyerId();
             //Also might need to put in a check here to see if buyerId is null or not.
             theOtherId = buyerId;
         }else{
-            theOtherId = orderChat.getUserid();
+            theOtherId = orderChat.getListing().getUserid();
         }
 
         initializeControllers();
 
         offerBarBinding.setOrderchat(orderChat);
-        Picasso.get().load(orderChat.getPhotos().get(0)).into(offerBarBinding.customProfileImage);
+        Picasso.get().load(orderChat.getListing().getPhotos().get(0)).into(offerBarBinding.customProfileImage);
 
         binding.sendMessageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -166,6 +166,7 @@ public class OfferActivity extends AppCompatActivity {
     }
 
     private void inflateChatBar(){
+
         setSupportActionBar(binding.mainAppBar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -183,7 +184,7 @@ public class OfferActivity extends AppCompatActivity {
     {
         super.onStart();
 
-        RootRef.child("Offers").child(messageMeId).child(theOtherId).child(orderChat.getPostid())
+        RootRef.child("Offers").child(messageMeId).child(theOtherId).child(orderChat.getListing().getPostid())
             .addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -200,7 +201,7 @@ public class OfferActivity extends AppCompatActivity {
                         OfferMessage lastMessage = messages.get(messages.size() - 1);
 
                         if(lastMessage.getAcceptStatus().equals("accepted")){
-                            if(messageMeId.equals(orderChat.getUserid())) {
+                            if(messageMeId.equals(orderChat.getListing().getUserid())) {
                                 binding.offerButton.setText("Delivered");
 
                                 binding.offerButton.setOnClickListener(new View.OnClickListener() {
@@ -209,7 +210,7 @@ public class OfferActivity extends AppCompatActivity {
                                         RootRef.child("Offers")
                                                 .child(messageMeId)
                                                 .child(theOtherId)
-                                                .child(orderChat.getPostid())
+                                                .child(orderChat.getListing().getPostid())
                                                 .child(lastMessage.getMessageID())
                                                 .child("acceptStatus")
                                                 .setValue("delivered");
@@ -217,7 +218,7 @@ public class OfferActivity extends AppCompatActivity {
                                         RootRef.child("Offers")
                                                 .child(theOtherId)
                                                 .child(messageMeId)
-                                                .child(orderChat.getPostid())
+                                                .child(orderChat.getListing().getPostid())
                                                 .child(lastMessage.getMessageID())
                                                 .child("acceptStatus")
                                                 .setValue("delivered");
@@ -232,7 +233,7 @@ public class OfferActivity extends AppCompatActivity {
 
                         }else if(lastMessage.getAcceptStatus().equals("delivered")){
 
-                            if(messageMeId.equals(orderChat.getUserid())) {
+                            if(messageMeId.equals(orderChat.getListing().getUserid())) {
                                 binding.offerButton.setText("Delivered 😜");
                                 binding.offerButton.setEnabled(false);
 
@@ -246,7 +247,7 @@ public class OfferActivity extends AppCompatActivity {
                                         RootRef.child("Offers")
                                                 .child(messageMeId)
                                                 .child(theOtherId)
-                                                .child(orderChat.getPostid())
+                                                .child(orderChat.getListing().getPostid())
                                                 .child(lastMessage.getMessageID())
                                                 .child("acceptStatus")
                                                 .setValue("received");
@@ -254,7 +255,7 @@ public class OfferActivity extends AppCompatActivity {
                                         RootRef.child("Offers")
                                                 .child(theOtherId)
                                                 .child(messageMeId)
-                                                .child(orderChat.getPostid())
+                                                .child(orderChat.getListing().getPostid())
                                                 .child(lastMessage.getMessageID())
                                                 .child("acceptStatus")
                                                 .setValue("received");
@@ -274,7 +275,7 @@ public class OfferActivity extends AppCompatActivity {
                 }
             });
 
-        RootRef.child("Offers").child(messageMeId).child(theOtherId).child(orderChat.getPostid())
+        RootRef.child("Offers").child(messageMeId).child(theOtherId).child(orderChat.getListing().getPostid())
             .addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(DataSnapshot dataSnapshot, String s)
@@ -334,11 +335,11 @@ public class OfferActivity extends AppCompatActivity {
 
         Map messageBodyDetails = new HashMap();
 
-        String messageSenderRef = "Offers/" + messageMeId + "/" + theOtherId + "/" + orderChat.getPostid();
-        String messageReceiverRef = "Offers/" + theOtherId + "/" + messageMeId + "/" + orderChat.getPostid();
+        String messageSenderRef = "Offers/" + messageMeId + "/" + theOtherId + "/" + orderChat.getListing().getPostid();
+        String messageReceiverRef = "Offers/" + theOtherId + "/" + messageMeId + "/" + orderChat.getListing().getPostid();
 
         DatabaseReference userMessageKeyRef = RootRef.child("Offers")
-                .child(messageMeId).child(theOtherId).child(orderChat.getPostid()).push();
+                .child(messageMeId).child(theOtherId).child(orderChat.getListing().getPostid()).push();
 
         String messagePushID = userMessageKeyRef.getKey();
 
@@ -365,7 +366,7 @@ public class OfferActivity extends AppCompatActivity {
             {
                 if (task.isSuccessful())
                 {
-                    Toast.makeText(OfferActivity.this, "Message Sent Successfully...", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(OfferActivity.this, "Message Sent Successfully...", Toast.LENGTH_SHORT).show();
                 }
                 else
                 {
@@ -390,11 +391,11 @@ public class OfferActivity extends AppCompatActivity {
 
             Map messageBodyDetails = new HashMap();
 
-            String messageSenderRef = "Offers/" + messageMeId + "/" + theOtherId + "/" + orderChat.getPostid();
-            String messageReceiverRef = "Offers/" + theOtherId + "/" + messageMeId + "/" + orderChat.getPostid();
+            String messageSenderRef = "Offers/" + messageMeId + "/" + theOtherId + "/" + orderChat.getListing().getPostid();
+            String messageReceiverRef = "Offers/" + theOtherId + "/" + messageMeId + "/" + orderChat.getListing().getPostid();
 
             DatabaseReference userMessageKeyRef = RootRef.child("Offers")
-                    .child(messageMeId).child(theOtherId).child(orderChat.getPostid()).push();
+                    .child(messageMeId).child(theOtherId).child(orderChat.getListing().getPostid()).push();
 
             String messagePushID = userMessageKeyRef.getKey();
 

@@ -4,8 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,19 +20,33 @@ import com.example.artwokmabel.chat.offerchat.OfferActivity;
 import com.example.artwokmabel.chat.personalchat.ChatActivity;
 import com.example.artwokmabel.databinding.ItemMessageChatsBinding;
 import com.example.artwokmabel.databinding.ItemMessageOrdersBinding;
+import com.example.artwokmabel.models.NormalChat;
 import com.example.artwokmabel.models.OrderChat;
 import com.example.artwokmabel.models.User;
+import com.example.artwokmabel.profile.people.PeopleAdapterViewModel;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class MessageOrdersAdapter extends RecyclerView.Adapter<MessageOrdersAdapter.CustomViewHolder>{
+public class MessageOrdersAdapter extends RecyclerView.Adapter<MessageOrdersAdapter.CustomViewHolder> implements Filterable {
 
     private List<OrderChat> orderChatsList;
+    private List<OrderChat> orderChatsListFiltered;
+
     private Context context;
+    private MessageOrdersViewModel viewModel;
+
+    private static MessageOrdersAdapter instance;
+
+    public static MessageOrdersAdapter getInstance(){
+        return instance;
+    }
 
     public MessageOrdersAdapter(Context context) {
+        this.instance = this;
         this.context = context;
+        viewModel = ViewModelProviders.of((FragmentActivity)context).get(MessageOrdersViewModel.class);
     }
 
     @Override
@@ -40,6 +59,7 @@ public class MessageOrdersAdapter extends RecyclerView.Adapter<MessageOrdersAdap
     public void setOrderChatsList(final List<OrderChat> orderChatsList) {
         if (this.orderChatsList == null) {
             this.orderChatsList = orderChatsList;
+            this.orderChatsListFiltered = orderChatsList;
             notifyItemRangeInserted(0, orderChatsList.size());
         } else {
             DiffUtil.DiffResult result = DiffUtil.calculateDiff(new DiffUtil.Callback() {
@@ -55,14 +75,14 @@ public class MessageOrdersAdapter extends RecyclerView.Adapter<MessageOrdersAdap
 
                 @Override
                 public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-                    return MessageOrdersAdapter.this.orderChatsList.get(oldItemPosition).getPostid() ==
-                            orderChatsList.get(newItemPosition).getPostid();
+                    return MessageOrdersAdapter.this.orderChatsList.get(oldItemPosition).getListing().getPostid() ==
+                            orderChatsList.get(newItemPosition).getListing().getPostid();
                 }
 
                 @Override
                 public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
-                    return MessageOrdersAdapter.this.orderChatsList.get(oldItemPosition).getPostid() ==
-                            orderChatsList.get(newItemPosition).getPostid();
+                    return MessageOrdersAdapter.this.orderChatsList.get(oldItemPosition).getListing().getPostid() ==
+                            orderChatsList.get(newItemPosition).getListing().getPostid();
                 }
             });
             this.orderChatsList = orderChatsList;
@@ -74,14 +94,22 @@ public class MessageOrdersAdapter extends RecyclerView.Adapter<MessageOrdersAdap
 
     @Override
     public void onBindViewHolder(MessageOrdersAdapter.CustomViewHolder holder, int position) {
-        OrderChat orderChat = orderChatsList.get(position);
+        OrderChat orderChat = orderChatsListFiltered.get(position);
 
         holder.binding.setOnprofileclicked(new OnProfileClicked());
         holder.binding.setOrderchat(orderChat);
         holder.binding.setOnchatclicked(new MessageOrdersAdapter.OnChatClicked());
+        holder.binding.messageChatsTextviewTimestamp.setText(orderChat.getLastInteractionTime());
         //holder.binding.setOrderChatcallback(new OnOrderChatClicked());
 
-        Picasso.get().load(orderChat.getPhotos().get(0)).into(holder.binding.messageChatsImageview);
+        viewModel.getUserObservable(orderChat.getListing().getUserid()).observe((FragmentActivity)context, new Observer<User>() {
+            @Override
+            public void onChanged(User user) {
+                Picasso.get().load(user.getProfile_url()).into(holder.binding.messageChatsPerson);
+            }
+        });
+
+        Picasso.get().load(orderChat.getListing().getPhotos().get(0)).into(holder.binding.messageChatsImageview);
     }
 
 
@@ -104,7 +132,7 @@ public class MessageOrdersAdapter extends RecyclerView.Adapter<MessageOrdersAdap
 
     @Override
     public int getItemCount() {
-        return orderChatsList == null ? 0 : orderChatsList.size();
+        return orderChatsListFiltered == null ? 0 : orderChatsListFiltered.size();
     }
 
     class CustomViewHolder extends RecyclerView.ViewHolder {
@@ -114,5 +142,40 @@ public class MessageOrdersAdapter extends RecyclerView.Adapter<MessageOrdersAdap
             super(binding.getRoot());
             this.binding = binding;
         }
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String charString = charSequence.toString();
+                if (charString.isEmpty()) {
+                    orderChatsListFiltered = orderChatsList;
+                } else {
+                    List<OrderChat> filteredList = new ArrayList<>();
+                    for (OrderChat chathead : orderChatsList) {
+                        //|| user.getPhone().contains(charSequence
+                        //Might need to add an or operator below to search for other things like intro
+                        if (chathead.getListing().getName().toLowerCase().contains(charString.toLowerCase())) {
+                            filteredList.add(chathead);
+                        }
+                    }
+
+                    orderChatsListFiltered = filteredList;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = orderChatsListFiltered;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                orderChatsListFiltered = (ArrayList<OrderChat>) filterResults.values;
+
+                notifyDataSetChanged();
+            }
+        };
     }
 }

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.DiffUtil;
@@ -17,15 +19,25 @@ import com.example.artwokmabel.models.NormalChat;
 import com.example.artwokmabel.models.User;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class MessageChatsAdapter extends RecyclerView.Adapter<MessageChatsAdapter.CustomViewHolder>{
+public class MessageChatsAdapter extends RecyclerView.Adapter<MessageChatsAdapter.CustomViewHolder> implements Filterable {
 
     private List<NormalChat> chatsList;
+    private List<NormalChat> chatsListFiltered;
     private Context context;
 
+    private static MessageChatsAdapter instance;
+
+    public static MessageChatsAdapter getInstance(){
+        return instance;
+    }
+
     public MessageChatsAdapter(Context context) {
+        this.instance = this;
         this.context = context;
+
     }
 
     @Override
@@ -38,6 +50,7 @@ public class MessageChatsAdapter extends RecyclerView.Adapter<MessageChatsAdapte
     public void setNormalChatsList(final List<NormalChat> chatHeads) {
         if (this.chatsList == null) {
             this.chatsList = chatHeads;
+            this.chatsListFiltered = chatHeads;
             notifyItemRangeInserted(0, chatHeads.size());
         } else {
             DiffUtil.DiffResult result = DiffUtil.calculateDiff(new DiffUtil.Callback() {
@@ -72,7 +85,7 @@ public class MessageChatsAdapter extends RecyclerView.Adapter<MessageChatsAdapte
 
     @Override
     public void onBindViewHolder(MessageChatsAdapter.CustomViewHolder holder, int position) {
-        NormalChat chatHead = chatsList.get(position);
+        NormalChat chatHead = chatsListFiltered.get(position);
 
         holder.binding.setUser(chatHead.getUser());
         holder.binding.setNormalchat(chatHead);
@@ -102,7 +115,7 @@ public class MessageChatsAdapter extends RecyclerView.Adapter<MessageChatsAdapte
 
     @Override
     public int getItemCount() {
-        return chatsList == null ? 0 : chatsList.size();
+        return chatsListFiltered == null ? 0 : chatsListFiltered.size();
     }
 
     class CustomViewHolder extends RecyclerView.ViewHolder {
@@ -112,5 +125,40 @@ public class MessageChatsAdapter extends RecyclerView.Adapter<MessageChatsAdapte
             super(binding.getRoot());
             this.binding = binding;
         }
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String charString = charSequence.toString();
+                if (charString.isEmpty()) {
+                    chatsListFiltered = chatsList;
+                } else {
+                    List<NormalChat> filteredList = new ArrayList<>();
+                    for (NormalChat chathead : chatsList) {
+                        //|| user.getPhone().contains(charSequence
+                        //Might need to add an or operator below to search for other things like intro
+                        if (chathead.getUser().getUsername().toLowerCase().contains(charString.toLowerCase())) {
+                            filteredList.add(chathead);
+                        }
+                    }
+
+                    chatsListFiltered = filteredList;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = chatsListFiltered;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                chatsListFiltered = (ArrayList<NormalChat>) filterResults.values;
+
+                notifyDataSetChanged();
+            }
+        };
     }
 }

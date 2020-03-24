@@ -16,8 +16,10 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
 import com.example.artwokmabel.R;
+import com.example.artwokmabel.chat.tabs.MessageChatsAdapter;
 import com.example.artwokmabel.chat.tabs.MessageChatsFragment;
 import com.example.artwokmabel.chat.tabs.MessageFollowingAdapter;
+import com.example.artwokmabel.chat.tabs.MessageOrdersAdapter;
 import com.example.artwokmabel.chat.tabs.MessageOrdersFragment;
 import com.example.artwokmabel.chat.tabs.MessageFollowingFragment;
 import com.example.artwokmabel.databinding.MainMessageFragmentBinding;
@@ -101,6 +103,10 @@ public class MessageFragment extends Fragment implements SearchAnimationToolbar.
         if(i == 0){
             MessageFollowingAdapter.getInstance().getFilter().filter("");
             MessageFollowingFragment.getInstance().binding.myProfile.setVisibility(View.VISIBLE);
+        }else if (i == 1){
+            MessageChatsAdapter.getInstance().getFilter().filter("");
+        }else{
+            MessageOrdersAdapter.getInstance().getFilter().filter("");
         }
     }
 
@@ -109,6 +115,10 @@ public class MessageFragment extends Fragment implements SearchAnimationToolbar.
         int i = binding.messageViewpager.getCurrentItem();
         if(i == 0){
             MessageFollowingAdapter.getInstance().getFilter().filter(query);
+        }else if(i == 1){
+            MessageChatsAdapter.getInstance().getFilter().filter(query);
+        }else{
+            MessageOrdersAdapter.getInstance().getFilter().filter(query);
         }
     }
 

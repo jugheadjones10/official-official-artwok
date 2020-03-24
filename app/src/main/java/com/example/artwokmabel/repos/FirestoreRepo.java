@@ -1724,69 +1724,105 @@ public class FirestoreRepo {
         final MutableLiveData<List<OrderChat>> data = new MutableLiveData<>();
         List<OrderChat> tempData = new ArrayList<>();
 
+        Log.d("seroi", "What is going on");
+
         FirebaseDatabase.getInstance().getReference()
-                .child("Offers")
-                .child(userId)
-                .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshotHighLevel) {
-                        tempData.clear();
+            .child("Offers")
+            .child(userId)
+            .addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshotHighLevel) {
+                    tempData.clear();
 
-                        for (DataSnapshot childUserSnapshot: dataSnapshotHighLevel.getChildren()) {
+                    Log.d("seroi", "Orders and Sells : on data change got called on listener to single user path");
 
-                            String otherUserId = childUserSnapshot.getKey();
+                    List<Task> tasks = new ArrayList<>();
+                    for (DataSnapshot childUserSnapshot: dataSnapshotHighLevel.getChildren()) {
 
-                            int[] i = {0};
-                            for(DataSnapshot listingSnapshot : childUserSnapshot.getChildren()){
-                                final ArrayList<OrderChat> orderChat = new ArrayList<>();
+                        String otherUserId = childUserSnapshot.getKey();
 
-                                String listingId = listingSnapshot.getKey();
-                                ArrayList<Message> messages = new ArrayList<>();
-                                for(DataSnapshot messageSnapshot : listingSnapshot.getChildren()){
-                                    //Log.d("hellplz", messageSnapshot.getValue(Message.class).toString());
-                                    if(messageSnapshot.child("type").equals("null")){
-                                        messages.add(messageSnapshot.getValue(OfferMessage.class));
-                                    }else{
-                                        messages.add(messageSnapshot.getValue(Message.class));
-                                    }
+                        int[] i = {0};
+                        for(DataSnapshot listingSnapshot : childUserSnapshot.getChildren()){
+                            final ArrayList<OrderChat> orderChat = new ArrayList<>();
+
+                            String listingId = listingSnapshot.getKey();
+                            ArrayList<Message> messages = new ArrayList<>();
+                            for(DataSnapshot messageSnapshot : listingSnapshot.getChildren()){
+                                //Log.d("hellplz", messageSnapshot.getValue(Message.class).toString());
+                                if(messageSnapshot.child("type").equals("null")){
+                                    messages.add(messageSnapshot.getValue(OfferMessage.class));
+                                }else{
+                                    messages.add(messageSnapshot.getValue(Message.class));
                                 }
-
-                                Collections.sort(messages, new SortMessages());
-                                Message lastMessage = messages.get(messages.size() - 1);
-
-                                class GetListingHandler implements ListingRetrieved{
-                                    public void onListingRetrieved (Listing listing){
-
-                                        if(listing.getUserid().equals(userId)){
-                                            orderChat.add(changeListingToMeSell(listing, otherUserId, lastMessage));
-                                        }else{
-                                            orderChat.add(changeListingToMeBuy(listing, lastMessage));
-                                        }
-
-                                        tempData.add(orderChat.get(0));
-                                        orderChat.clear();
-
-                                        if(i[0] ==  childUserSnapshot.getChildrenCount() - 1){
-                                            data.setValue(tempData);
-                                        }
-                                        i[0] = i[0] + 1;
-                                    }
-                                }
-                                getListing(listingId, new GetListingHandler());
                             }
+
+                            Collections.sort(messages, new SortMessages());
+                            Message lastMessage = messages.get(messages.size() - 1);
+                            Log.d("seroi", "Orders and Sells : This is the current last message" + lastMessage.getMessage());
+
+
+                            Task task = db.collectionGroup("Listings")
+                                .whereEqualTo("postid", listingId)
+                                .get()
+                                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                        for(QueryDocumentSnapshot snapshot : queryDocumentSnapshots){
+                                            Listing listing = snapshot.toObject(Listing.class);
+
+                                            if(listing.getUserid().equals(userId)){
+                                                orderChat.add(changeListingToMeSell(listing, otherUserId, lastMessage));
+                                            }else{
+                                                orderChat.add(changeListingToMeBuy(listing, lastMessage));
+                                            }
+
+                                            tempData.add(orderChat.get(0));
+                                            orderChat.clear();
+                                        }
+                                    }
+                                });
+                            tasks.add(task);
+
+//                                class GetListingHandler implements ListingRetrieved{
+//                                    public void onListingRetrieved (Listing listing){
+//
+//                                        if(listing.getUserid().equals(userId)){
+//                                            orderChat.add(changeListingToMeSell(listing, otherUserId, lastMessage));
+//                                        }else{
+//                                            orderChat.add(changeListingToMeBuy(listing, lastMessage));
+//                                        }
+//
+//                                        tempData.add(orderChat.get(0));
+//                                        orderChat.clear();
+//
+//                                        if(i[0] ==  childUserSnapshot.getChildrenCount() - 1){
+//                                            data.setValue(tempData);
+//                                        }
+//                                        i[0] = i[0] + 1;
+//                                    }
+//                                }
+//                                getListing(listingId, new GetListingHandler());
                         }
                     }
+                    Tasks.whenAll(tasks.toArray(new Task[0])).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            data.setValue(tempData);
+                        }
+                    });
+                }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                    }
-                });
+                }
+            });
 
         return data;
     }
 
 
+    //Compare this solution with the getOrdersAndSells solution
     public LiveData<List<NormalChat>> getChattingWith(String userId){
         final MutableLiveData<List<NormalChat>> data = new MutableLiveData<>();
         List<NormalChat> tempData = new ArrayList<>();
@@ -1868,7 +1904,6 @@ public class FirestoreRepo {
                                         for(int i = 0; i < messageTasks.size(); i++) {
                                             DataSnapshot messageSnapshot = (DataSnapshot) messageTasks.get(i).getResult();
                                             Log.d("messagestuckpoint", "This is what's in messagesnapshot, without tampering by getValue : " + messageSnapshot.toString());
-
 
                                             Message message = new Message();
                                             //WHAT kind of devilish data retrieval API is this? But actually it makes sense.
@@ -2115,18 +2150,19 @@ public class FirestoreRepo {
     private OrderChat changeListingToMeSell(Listing listing, String buyerId, Message lastMessage){
         //TODO: find a more efficient way to do the below
         return new OrderChat(
-            listing.getUserid(),
-            listing.getReturn_exchange(),
-            listing.getPrice(),
-            listing.getPhotos(),
-            listing.getName(),
-            listing.getHashtags(),
-            listing.getDesc(),
-            listing.getDelivery(),
-            listing.getUsername(),
-            listing.getPostid(),
-            listing.getNanopast(),
-            listing.getCategories(),
+//            listing.getUserid(),
+//            listing.getReturn_exchange(),
+//            listing.getPrice(),
+//            listing.getPhotos(),
+//            listing.getName(),
+//            listing.getHashtags(),
+//            listing.getDesc(),
+//            listing.getDelivery(),
+//            listing.getUsername(),
+//            listing.getPostid(),
+//            listing.getNanopast(),
+//            listing.getCategories(),
+            listing,
             lastMessage,
             buyerId
         );
@@ -2134,18 +2170,19 @@ public class FirestoreRepo {
 
     public OrderChat changeListingToMeBuy(Listing listing, Message lastMessage){
         return new OrderChat(
-                listing.getUserid(),
-                listing.getReturn_exchange(),
-                listing.getPrice(),
-                listing.getPhotos(),
-                listing.getName(),
-                listing.getHashtags(),
-                listing.getDesc(),
-                listing.getDelivery(),
-                listing.getUsername(),
-                listing.getPostid(),
-                listing.getNanopast(),
-                listing.getCategories(),
+//                listing.getUserid(),
+//                listing.getReturn_exchange(),
+//                listing.getPrice(),
+//                listing.getPhotos(),
+//                listing.getName(),
+//                listing.getHashtags(),
+//                listing.getDesc(),
+//                listing.getDelivery(),
+//                listing.getUsername(),
+//                listing.getPostid(),
+//                listing.getNanopast(),
+//                listing.getCategories(),
+                listing,
                 lastMessage,
                 null
         );

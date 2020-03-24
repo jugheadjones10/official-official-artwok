@@ -5,12 +5,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewStub;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.artwokmabel.R;
@@ -25,6 +28,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -49,6 +54,11 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         public TextView senderMessageText, receiverMessageText;
         public CircleImageView receiverProfileImage;
         public ImageView messageSenderPicture, messageReceiverPicture;
+        public TextView myTime, friendTime;
+//        public ViewStub dateDivider;
+        public TextView dateText;
+        public LinearLayout dateDividerLayout;
+        public RelativeLayout relativeLayout;
 
         public MessageViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -58,6 +68,13 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             receiverProfileImage = itemView.findViewById(R.id.message_profile_image);
             messageReceiverPicture = itemView.findViewById(R.id.message_receiver_image_view);
             messageSenderPicture = itemView.findViewById(R.id.message_sender_image_view);
+            myTime = itemView.findViewById(R.id.my_time);
+            friendTime = itemView.findViewById(R.id.friend_time);
+            dateDividerLayout = itemView.findViewById(R.id.date_divider_layout);
+            dateText = itemView.findViewById(R.id.dateText);
+            relativeLayout = itemView.findViewById(R.id.chat_relative_layout);
+//            dateDivider = itemView.findViewById(R.id.date_divider);
+//            dateDivider = itemView.findViewById(R.id.text_date_divider);
         }
     }
 
@@ -181,10 +198,58 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 break;
             case TALK:
                 String messageSenderId = mAuth.getCurrentUser().getUid();
-                //Message messages = userMessageList.get(i);
 
                 Message messages = (Message) userMessageList.get(i);
+
                 MessageViewHolder messageViewHolder = (MessageViewHolder) viewHolder;
+
+                //Insert date dividers
+                messageViewHolder.dateDividerLayout.setVisibility(View.GONE);
+
+                RelativeLayout.LayoutParams linearParams = (RelativeLayout.LayoutParams) messageViewHolder.dateDividerLayout.getLayoutParams();
+                linearParams.setMargins(0, 0, 0, 0);
+                messageViewHolder.dateDividerLayout.setLayoutParams(linearParams);
+
+                RecyclerView.LayoutParams relativeParams = (RecyclerView.LayoutParams)messageViewHolder.relativeLayout.getLayoutParams();
+                relativeParams.setMargins(0, 0, 0, 0);
+                messageViewHolder.relativeLayout.setLayoutParams(relativeParams);
+
+                if(i != 0){
+                    Message previousMessage = userMessageList.get(i - 1);
+
+                    SimpleDateFormat sdf = new SimpleDateFormat("E, dd MMMM yyyy");
+
+                    if(!sdf.format(new Date(messages.getNanopast())).equals(sdf.format(new Date(previousMessage.getNanopast())))) {
+
+                        messageViewHolder.dateDividerLayout.setVisibility(View.VISIBLE);
+                        messageViewHolder.dateText.setText(sdf.format(new Date(messages.getNanopast())));
+
+
+                        RelativeLayout.LayoutParams insideLinearParams = (RelativeLayout.LayoutParams) messageViewHolder.dateDividerLayout.getLayoutParams();
+                        insideLinearParams.setMargins(0, -30, 0, 0);
+                        messageViewHolder.dateDividerLayout.setLayoutParams(insideLinearParams);
+
+                        RecyclerView.LayoutParams insideRelativeParams = (RecyclerView.LayoutParams)messageViewHolder.relativeLayout.getLayoutParams();
+                        insideRelativeParams.setMargins(0, 40, 0, 0);
+                        messageViewHolder.relativeLayout.setLayoutParams(insideRelativeParams);
+
+//                        messageViewHolder.dateDivider.setLayoutResource(R.layout.view_date_divider);
+//                        messageViewHolder.dateDivider.setOnInflateListener(new ViewStub.OnInflateListener() {
+//                            @Override
+//                            public void onInflate(ViewStub stub, View inflated) {
+//                                TextView date = inflated.findViewById(R.id.dateText);
+//                                date.setText(sdf.format(new Date(messages.getNanopast())));
+//                            }
+//                        });
+//
+//                        if (messageViewHolder.dateDivider.getParent() != null) {
+//                            messageViewHolder.dateDivider.inflate();
+//                        } else {
+//                            messageViewHolder.dateDivider.setVisibility(View.GONE);
+//                        }
+
+                    }
+                }
 
                 String fromUserID = messages.getFrom();
                 String fromMessageType = messages.getType();
@@ -208,25 +273,36 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 });
 
                 messageViewHolder.receiverMessageText.setVisibility(View.GONE);
-                messageViewHolder.receiverProfileImage.setVisibility(View.GONE);
                 messageViewHolder.senderMessageText.setVisibility(View.GONE);
+
+                messageViewHolder.myTime.setVisibility(View.GONE);
+                messageViewHolder.friendTime.setVisibility(View.GONE);
+
+                messageViewHolder.receiverProfileImage.setVisibility(View.GONE);
+
                 messageViewHolder.messageSenderPicture.setVisibility(View.GONE);
                 messageViewHolder.messageReceiverPicture.setVisibility(View.GONE);
 
                 if (fromMessageType.equals("text")) {
                     if (fromUserID.equals(messageSenderId)) {
                         messageViewHolder.senderMessageText.setVisibility(View.VISIBLE);
+                        messageViewHolder.myTime.setVisibility(View.VISIBLE);
 
                         messageViewHolder.senderMessageText.setBackgroundResource(R.drawable.sender_messages_layout);
                         messageViewHolder.senderMessageText.setTextColor(Color.BLACK);
-                        messageViewHolder.senderMessageText.setText(messages.getMessage() + "\n \n" + messages.getTime() + " - " + messages.getDate());
+                        messageViewHolder.senderMessageText.setText(messages.getMessage());
+                        messageViewHolder.myTime.setText(messages.getReadableNanopastDate());
+                        // + "\n \n" + messages.getReadableNanopastDate()
                     } else {
                         messageViewHolder.receiverProfileImage.setVisibility(View.VISIBLE);
                         messageViewHolder.receiverMessageText.setVisibility(View.VISIBLE);
+                        messageViewHolder.friendTime.setVisibility(View.VISIBLE);
 
                         messageViewHolder.receiverMessageText.setBackgroundResource(R.drawable.receiver_messages_layout);
                         messageViewHolder.receiverMessageText.setTextColor(Color.BLACK);
-                        messageViewHolder.receiverMessageText.setText(messages.getMessage() + "\n \n" + messages.getTime() + " - " + messages.getDate());
+                        messageViewHolder.receiverMessageText.setText(messages.getMessage());
+                        messageViewHolder.friendTime.setText(messages.getReadableNanopastDate());
+                        //+ "\n \n" + messages.getReadableNanopastDate()
                     }
                 }
 
@@ -244,7 +320,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 .child("Offers")
                 .child(offerMessage.getTo())
                 .child(offerMessage.getFrom())
-                .child(orderChat.getPostid())
+                .child(orderChat.getListing().getPostid())
                 .child(offerMessage.getMessageID())
                 .child("acceptStatus")
                 .setValue(offerStatus);
@@ -253,7 +329,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 .child("Offers")
                 .child(offerMessage.getFrom())
                 .child(offerMessage.getTo())
-                .child(orderChat.getPostid())
+                .child(orderChat.getListing().getPostid())
                 .child(offerMessage.getMessageID())
                 .child("acceptStatus")
                 .setValue(offerStatus);
