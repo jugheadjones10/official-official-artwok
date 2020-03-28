@@ -161,6 +161,22 @@
                     android:textColor="@android:color/darker_gray"
                     android:textSize="12dp" />
 
+                <TextView
+                    android:id="@+id/message_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="5dp"
+                    android:width="20dp"
+                    android:height="20dp"
+                    android:background="@drawable/circle"
+                    android:gravity="center"
+                    android:text="9"
+                    android:textColor="@color/artwok_white"
+                    android:textSize="9sp" />
+
 
             </RelativeLayout>
 

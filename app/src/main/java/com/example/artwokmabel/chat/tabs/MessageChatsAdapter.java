@@ -112,6 +112,7 @@ public class MessageChatsAdapter extends RecyclerView.Adapter<MessageChatsAdapte
                 }
             }
         }
+
         FirestoreRepo.getInstance().getNumberOfUnreadMessages(mAuth.getCurrentUser().getUid(), chatHead.getUser().getUid(), new OnNumUnreads());
 
         Picasso.get().load(chatHead.getUser().getProfile_url()).into(holder.binding.messageChatsImageview);

@@ -19,7 +19,6 @@ import androidx.fragment.app.Fragment;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.chat.tabs.MessageChatsAdapter;
 import com.example.artwokmabel.chat.tabs.MessageChatsFragment;
-import com.example.artwokmabel.chat.tabs.MessageChatsViewModel;
 import com.example.artwokmabel.chat.tabs.MessageFollowingAdapter;
 import com.example.artwokmabel.chat.tabs.MessageOrdersAdapter;
 import com.example.artwokmabel.chat.tabs.MessageOrdersFragment;
@@ -31,12 +30,19 @@ import com.oshi.libsearchtoolbar.SearchAnimationToolbar;
 
 public class MessageFragment extends Fragment implements SearchAnimationToolbar.OnSearchQueryChangedListener{
 
-    private MainMessageFragmentBinding binding;
+    public MainMessageFragmentBinding binding;
     private MessageFragmentPagerAdapter adapter;
+
+    private static MessageFragment instance;
+
+    public static MessageFragment getInstance(){
+        return instance;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+        instance = this;
         binding = DataBindingUtil.inflate(inflater, R.layout.main_message_fragment, container, false);
 
         setHasOptionsMenu(true);

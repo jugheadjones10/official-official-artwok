@@ -1,6 +1,7 @@
 package com.example.artwokmabel.chat.tabs;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,12 +17,14 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.artwokmabel.chat.MessageFragment;
 import com.example.artwokmabel.chat.activities.ChatOrderActivity;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.MessageChatsFragmentBinding;
 import com.example.artwokmabel.databinding.MessageOrdersFragmentBinding;
 import com.example.artwokmabel.models.OrderChat;
 import com.example.artwokmabel.models.User;
+import com.google.android.material.badge.BadgeDrawable;
 import com.weiwangcn.betterspinner.library.BetterSpinner;
 
 import java.util.List;
@@ -57,6 +60,20 @@ public class MessageOrdersFragment extends Fragment {
                     adapter.setOrderChatsList(orderChats);
                 }
 
+            }
+        });
+
+        viewModel.getNumOfUnreadInOffersTab().observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                BadgeDrawable badge = MessageFragment.getInstance().binding.messageTabs.getTabAt(2).getOrCreateBadge();
+                badge.setBadgeTextColor(Color.WHITE);
+                if(integer > 0){
+                    badge.setVisible(true);
+                    badge.setNumber(integer);
+                }else{
+                    badge.setVisible(false);
+                }
             }
         });
     }

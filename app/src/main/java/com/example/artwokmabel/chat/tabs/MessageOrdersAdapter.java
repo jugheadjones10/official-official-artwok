@@ -3,6 +3,7 @@ package com.example.artwokmabel.chat.tabs;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
@@ -24,6 +25,8 @@ import com.example.artwokmabel.models.NormalChat;
 import com.example.artwokmabel.models.OrderChat;
 import com.example.artwokmabel.models.User;
 import com.example.artwokmabel.profile.people.PeopleAdapterViewModel;
+import com.example.artwokmabel.repos.FirestoreRepo;
+import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -36,6 +39,7 @@ public class MessageOrdersAdapter extends RecyclerView.Adapter<MessageOrdersAdap
 
     private Context context;
     private MessageOrdersViewModel viewModel;
+    private FirebaseAuth mAuth;
 
     private static MessageOrdersAdapter instance;
 
@@ -46,6 +50,7 @@ public class MessageOrdersAdapter extends RecyclerView.Adapter<MessageOrdersAdap
     public MessageOrdersAdapter(Context context) {
         this.instance = this;
         this.context = context;
+        this.mAuth = FirebaseAuth.getInstance();
         viewModel = ViewModelProviders.of((FragmentActivity)context).get(MessageOrdersViewModel.class);
     }
 
@@ -100,6 +105,7 @@ public class MessageOrdersAdapter extends RecyclerView.Adapter<MessageOrdersAdap
         holder.binding.setOrderchat(orderChat);
         holder.binding.setOnchatclicked(new MessageOrdersAdapter.OnChatClicked());
         holder.binding.messageChatsTextviewTimestamp.setText(orderChat.getLastInteractionTime());
+        holder.binding.messageCount.setVisibility(View.GONE);
         //holder.binding.setOrderChatcallback(new OnOrderChatClicked());
 
         viewModel.getUserObservable(orderChat.getListing().getUserid()).observe((FragmentActivity)context, new Observer<User>() {
@@ -108,6 +114,17 @@ public class MessageOrdersAdapter extends RecyclerView.Adapter<MessageOrdersAdap
                 Picasso.get().load(user.getProfile_url()).into(holder.binding.messageChatsPerson);
             }
         });
+
+        class OnNumUnreads implements FirestoreRepo.OnNumUnreadsGotten{
+            public void onNumUnreadsGotten(int numUnreads){
+                if(numUnreads > 0) {
+                    holder.binding.messageCount.setText(String.format("%d", numUnreads));
+                    holder.binding.messageCount.setVisibility(View.VISIBLE);
+                }
+            }
+        }
+
+        FirestoreRepo.getInstance().getNumberOfUnreadOfferMessages(mAuth.getCurrentUser().getUid(), orderChat.getBuyerId(), orderChat.getListing().getPostid(), new OnNumUnreads());
 
         Picasso.get().load(orderChat.getListing().getPhotos().get(0)).into(holder.binding.messageChatsImageview);
     }

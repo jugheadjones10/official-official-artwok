@@ -1720,6 +1720,7 @@ public class FirestoreRepo {
         void onListingRetrieved (Listing listing);
     }
 
+
     public LiveData<List<OrderChat>> getOrdersAndSells(String userId){
         final MutableLiveData<List<OrderChat>> data = new MutableLiveData<>();
         List<OrderChat> tempData = new ArrayList<>();
@@ -1732,18 +1733,17 @@ public class FirestoreRepo {
             .addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshotHighLevel) {
-                    tempData.clear();
 
                     Log.d("seroi", "Orders and Sells : on data change got called on listener to single user path");
 
                     List<Task> tasks = new ArrayList<>();
+                    List<OrderChat> orderChats = new ArrayList<>();
+
                     for (DataSnapshot childUserSnapshot: dataSnapshotHighLevel.getChildren()) {
 
                         String otherUserId = childUserSnapshot.getKey();
 
-                        int[] i = {0};
                         for(DataSnapshot listingSnapshot : childUserSnapshot.getChildren()){
-                            final ArrayList<OrderChat> orderChat = new ArrayList<>();
 
                             String listingId = listingSnapshot.getKey();
                             ArrayList<Message> messages = new ArrayList<>();
@@ -1758,8 +1758,8 @@ public class FirestoreRepo {
 
                             Collections.sort(messages, new SortMessages());
                             Message lastMessage = messages.get(messages.size() - 1);
-                            Log.d("seroi", "Orders and Sells : This is the current last message" + lastMessage.getMessage());
 
+                            Log.d("seroi", "Orders and Sells : This is the current last message" + lastMessage.getMessage());
 
                             Task task = db.collectionGroup("Listings")
                                 .whereEqualTo("postid", listingId)
@@ -1767,46 +1767,32 @@ public class FirestoreRepo {
                                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                                     @Override
                                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+
                                         for(QueryDocumentSnapshot snapshot : queryDocumentSnapshots){
                                             Listing listing = snapshot.toObject(Listing.class);
 
                                             if(listing.getUserid().equals(userId)){
-                                                orderChat.add(changeListingToMeSell(listing, otherUserId, lastMessage));
+                                                orderChats.add(changeListingToMeSell(listing, otherUserId, lastMessage));
                                             }else{
-                                                orderChat.add(changeListingToMeBuy(listing, lastMessage));
+                                                orderChats.add(changeListingToMeBuy(listing, lastMessage));
                                             }
-
-                                            tempData.add(orderChat.get(0));
-                                            orderChat.clear();
                                         }
                                     }
                                 });
                             tasks.add(task);
 
-//                                class GetListingHandler implements ListingRetrieved{
-//                                    public void onListingRetrieved (Listing listing){
-//
-//                                        if(listing.getUserid().equals(userId)){
-//                                            orderChat.add(changeListingToMeSell(listing, otherUserId, lastMessage));
-//                                        }else{
-//                                            orderChat.add(changeListingToMeBuy(listing, lastMessage));
-//                                        }
-//
-//                                        tempData.add(orderChat.get(0));
-//                                        orderChat.clear();
-//
-//                                        if(i[0] ==  childUserSnapshot.getChildrenCount() - 1){
-//                                            data.setValue(tempData);
-//                                        }
-//                                        i[0] = i[0] + 1;
-//                                    }
-//                                }
-//                                getListing(listingId, new GetListingHandler());
                         }
+
                     }
                     Tasks.whenAll(tasks.toArray(new Task[0])).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
+
+                            tempData.clear();
+                            for(int i = 0; i < orderChats.size(); i++) {
+                                tempData.add(orderChats.get(i));
+                            }
+
                             data.setValue(tempData);
                         }
                     });
@@ -1819,6 +1805,101 @@ public class FirestoreRepo {
             });
 
         return data;
+    }
+
+
+    public LiveData<Integer> getNumOfUnreadInOffersTab(String userId){
+        final MutableLiveData<Integer> data = new MutableLiveData<>();
+
+        //TODO: this is horrible - can you somehow clean this up?
+        FirebaseDatabase.getInstance().getReference()
+                .child("Offers")
+                .child(userId)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        int totalUnread = 0;
+                        for(DataSnapshot otherUsers : dataSnapshot.getChildren()){
+                            for(DataSnapshot otherListings : otherUsers.getChildren()){
+                                for(DataSnapshot otherUserMessages : otherListings.getChildren()){
+                                    Message message = otherUserMessages.getValue(Message.class);
+                                    if(message.getRead() != null){
+                                        if(message.getRead().equals("false")){
+                                            totalUnread++;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        data.setValue(totalUnread);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+        return data;
+    }
+
+    public LiveData<Integer> getNumOfUnreadInChatsTab(String userId){
+        final MutableLiveData<Integer> data = new MutableLiveData<>();
+
+        FirebaseDatabase.getInstance().getReference()
+                .child("Messages")
+                .child(userId)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        int totalUnread = 0;
+                        for(DataSnapshot otherUsers : dataSnapshot.getChildren()){
+                            for(DataSnapshot otherUserMessages : otherUsers.getChildren()){
+                                Message message = otherUserMessages.getValue(Message.class);
+                                if(message.getRead() != null){
+                                    if(message.getRead().equals("false")){
+                                        totalUnread++;
+                                    }
+                                }
+                            }
+                        }
+                        data.setValue(totalUnread);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+        return data;
+    }
+
+    public void getNumberOfUnreadOfferMessages(String myId, String otherUserId, String listingId, OnNumUnreadsGotten callback){
+        FirebaseDatabase.getInstance().getReference()
+                .child("Offers")
+                .child(myId)
+                .child(otherUserId)
+                .child(listingId)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        int numOfUnreadMessages = 0;
+                        for (DataSnapshot childMessageSnapshot : dataSnapshot.getChildren()) {
+                            Message message = childMessageSnapshot.getValue(Message.class);
+                            if(message.getRead() != null){
+                                if(message.getRead().equals("false")){
+                                    numOfUnreadMessages++;
+                                }
+                            }
+
+                        }
+                        callback.onNumUnreadsGotten(numOfUnreadMessages);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
     }
 
     public interface OnNumUnreadsGotten{
@@ -1844,7 +1925,6 @@ public class FirestoreRepo {
 
                         }
                         callback.onNumUnreadsGotten(numOfUnreadMessages);
-//                        data.setValue(numOfUnreadMessages);
                     }
 
                     @Override
@@ -1852,8 +1932,6 @@ public class FirestoreRepo {
 
                     }
                 });
-
-        //return data;
     }
 
 
@@ -2217,7 +2295,7 @@ public class FirestoreRepo {
 //                listing.getCategories(),
                 listing,
                 lastMessage,
-                null
+                listing.getUserid()
         );
     }
 }

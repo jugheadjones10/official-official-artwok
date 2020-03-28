@@ -1,5 +1,6 @@
 package com.example.artwokmabel.chat.tabs;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.artwokmabel.chat.MessageFragment;
 import com.example.artwokmabel.chat.models.ChatChatModel;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.MessageChatsFragmentBinding;
@@ -24,6 +26,7 @@ import com.example.artwokmabel.models.NormalChat;
 import com.example.artwokmabel.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.badge.BadgeDrawable;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -65,9 +68,23 @@ public class MessageChatsFragment extends Fragment {
                 if (chatHeads != null) {
                     adapter.setNormalChatsList(chatHeads);
                 }
-
             }
         });
+
+        viewModel.getNumOfUnreadInChatsTab().observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                BadgeDrawable badge = MessageFragment.getInstance().binding.messageTabs.getTabAt(1).getOrCreateBadge();
+                badge.setBadgeTextColor(Color.WHITE);
+                if(integer > 0){
+                    badge.setVisible(true);
+                    badge.setNumber(integer);
+                }else{
+                    badge.setVisible(false);
+                }
+            }
+        });
+
     }
 
 }

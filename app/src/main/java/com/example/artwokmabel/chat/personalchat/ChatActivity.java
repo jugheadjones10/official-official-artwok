@@ -191,13 +191,14 @@ public class ChatActivity extends AppCompatActivity {
                         message = dataSnapshot.getValue(Message.class);
                     }
 
+                    //If not this listener(because it runs in the background even though this activity isn't in the foreground)
+                    //will keep marking messages as read even though I'm outside the chat activity
                     if(getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.RESUMED)){
                         if(message.getRead().equals("false")){
                             Map<String, Object> childUpdates = new HashMap<>();
                             childUpdates.put("/Messages/" + messageMeId + "/" + messageFollowingId + "/" + message.getMessageID() + "/" + "read", "true");
                             RootRef.updateChildren(childUpdates);
                         }
-
                     }
 
                     messagesList.add(message);

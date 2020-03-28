@@ -28,4 +28,9 @@ public class MessageOrdersViewModel extends ViewModel {
     public LiveData<User> getUserObservable(String userId){
         return FirestoreRepo.getInstance().getUser(userId);
     }
+
+    public LiveData<Integer> getNumOfUnreadInOffersTab(){
+        return FirestoreRepo.getInstance().getNumOfUnreadInOffersTab(mAuth.getCurrentUser().getUid());
+    }
+
 }
