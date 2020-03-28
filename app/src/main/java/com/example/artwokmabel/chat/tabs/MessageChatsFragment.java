@@ -38,7 +38,7 @@ import java.util.List;
 
 public class MessageChatsFragment extends Fragment {
 
-    private MessageChatsFragmentBinding binding;
+    public MessageChatsFragmentBinding binding;
     private MessageChatsAdapter adapter;
     private MessageChatsViewModel viewModel;
 

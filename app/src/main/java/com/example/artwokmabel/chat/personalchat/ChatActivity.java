@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Lifecycle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -190,12 +191,13 @@ public class ChatActivity extends AppCompatActivity {
                         message = dataSnapshot.getValue(Message.class);
                     }
 
-                    if(message.getRead() != null){
+                    if(getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.RESUMED)){
                         if(message.getRead().equals("false")){
                             Map<String, Object> childUpdates = new HashMap<>();
                             childUpdates.put("/Messages/" + messageMeId + "/" + messageFollowingId + "/" + message.getMessageID() + "/" + "read", "true");
                             RootRef.updateChildren(childUpdates);
                         }
+
                     }
 
                     messagesList.add(message);

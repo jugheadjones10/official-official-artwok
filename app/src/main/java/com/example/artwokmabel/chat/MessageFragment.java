@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.chat.tabs.MessageChatsAdapter;
 import com.example.artwokmabel.chat.tabs.MessageChatsFragment;
+import com.example.artwokmabel.chat.tabs.MessageChatsViewModel;
 import com.example.artwokmabel.chat.tabs.MessageFollowingAdapter;
 import com.example.artwokmabel.chat.tabs.MessageOrdersAdapter;
 import com.example.artwokmabel.chat.tabs.MessageOrdersFragment;
