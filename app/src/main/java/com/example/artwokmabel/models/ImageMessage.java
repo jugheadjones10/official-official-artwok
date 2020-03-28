@@ -10,7 +10,8 @@ public class ImageMessage extends Message {
 
     public ImageMessage(String price, String acceptStatus, String from, String to, String messageID) {
 
-        super(from, "null", "image", to, messageID, "null", "null", 0);
+        //TODO: potential set read to false problem here too
+        super(from, "null", "image", to, messageID, "null", "null", 0, "false");
         this.imageUrl = imageUrl;
     }
 

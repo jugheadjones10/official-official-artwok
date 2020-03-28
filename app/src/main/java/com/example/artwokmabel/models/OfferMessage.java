@@ -11,7 +11,8 @@ public class OfferMessage extends Message{
 
     public OfferMessage(String price, String acceptStatus, String from, String to, String messageID) {
 
-        super(from, "null", "null", to, messageID, "null", "null", 0);
+        //TODO: This might become a problem
+        super(from, "null", "null", to, messageID, "null", "null", 0, "false");
         this.price = price;
         this.acceptStatus = acceptStatus;
     }

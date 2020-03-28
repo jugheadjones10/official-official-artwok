@@ -1821,6 +1821,41 @@ public class FirestoreRepo {
         return data;
     }
 
+    public interface OnNumUnreadsGotten{
+        void onNumUnreadsGotten(int numUnreads);
+    }
+
+    public void getNumberOfUnreadMessages(String myId, String otherUserId, OnNumUnreadsGotten callback){
+        FirebaseDatabase.getInstance().getReference()
+                .child("Messages")
+                .child(myId)
+                .child(otherUserId)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        int numOfUnreadMessages = 0;
+                        for (DataSnapshot childMessageSnapshot : dataSnapshot.getChildren()) {
+                            Message message = childMessageSnapshot.getValue(Message.class);
+                            if(message.getRead() != null){
+                                if(message.getRead().equals("false")){
+                                    numOfUnreadMessages++;
+                                }
+                            }
+
+                        }
+                        callback.onNumUnreadsGotten(numOfUnreadMessages);
+//                        data.setValue(numOfUnreadMessages);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+        //return data;
+    }
+
 
     //Compare this solution with the getOrdersAndSells solution
     public LiveData<List<NormalChat>> getChattingWith(String userId){
@@ -1834,10 +1869,7 @@ public class FirestoreRepo {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                //dataSnapshot includes all users that the userId argument is interacting with
-                tempData.clear();
                 List<Task> getUserTasks = new ArrayList<>();
-                //List<Task> nestedTasks = new ArrayList<>();
 
                 List<User> usersList = new ArrayList<>();
 
@@ -1901,6 +1933,7 @@ public class FirestoreRepo {
                                     @Override
                                     public void onSuccess(Void aVoid) {
 
+                                        tempData.clear();
                                         for(int i = 0; i < messageTasks.size(); i++) {
                                             DataSnapshot messageSnapshot = (DataSnapshot) messageTasks.get(i).getResult();
                                             Log.d("messagestuckpoint", "This is what's in messagesnapshot, without tampering by getValue : " + messageSnapshot.toString());

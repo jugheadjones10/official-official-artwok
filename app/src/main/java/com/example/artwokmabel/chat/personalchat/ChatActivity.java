@@ -190,6 +190,14 @@ public class ChatActivity extends AppCompatActivity {
                         message = dataSnapshot.getValue(Message.class);
                     }
 
+                    if(message.getRead() != null){
+                        if(message.getRead().equals("false")){
+                            Map<String, Object> childUpdates = new HashMap<>();
+                            childUpdates.put("/Messages/" + messageMeId + "/" + messageFollowingId + "/" + message.getMessageID() + "/" + "read", "true");
+                            RootRef.updateChildren(childUpdates);
+                        }
+                    }
+
                     messagesList.add(message);
                     messageAdapter.notifyDataSetChanged();
                     binding.privateMessagesListOfUsers.scrollToPosition(binding.privateMessagesListOfUsers.getAdapter().getItemCount() - 1);
@@ -246,6 +254,7 @@ public class ChatActivity extends AppCompatActivity {
             messageTextBody.put("time", saveCurrentTime);
             messageTextBody.put("date", saveCurrentDate);
             messageTextBody.put("nanopast", System.currentTimeMillis());
+            messageTextBody.put("read", "false");
 
             Map messageBodyDetails = new HashMap();
             messageBodyDetails.put(messageSenderRef + "/" + messagePushID, messageTextBody);
@@ -333,6 +342,7 @@ public class ChatActivity extends AppCompatActivity {
         messageTextBody.put("date", saveCurrentDate);
         messageTextBody.put("imageUrl", imageUrl);
         messageTextBody.put("nanopast", System.currentTimeMillis());
+        messageTextBody.put("read", "false");
 
         Map messageBodyDetails = new HashMap();
         messageBodyDetails.put(messageSenderRef + "/" + messagePushID, messageTextBody);

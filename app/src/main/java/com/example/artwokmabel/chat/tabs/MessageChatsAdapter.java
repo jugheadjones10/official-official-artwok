@@ -3,11 +3,15 @@ package com.example.artwokmabel.chat.tabs;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,6 +21,9 @@ import com.example.artwokmabel.chat.personalchat.ChatActivity;
 import com.example.artwokmabel.databinding.ItemMessageChatsBinding;
 import com.example.artwokmabel.models.NormalChat;
 import com.example.artwokmabel.models.User;
+import com.example.artwokmabel.repos.FirestoreRepo;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -27,8 +34,10 @@ public class MessageChatsAdapter extends RecyclerView.Adapter<MessageChatsAdapte
     private List<NormalChat> chatsList;
     private List<NormalChat> chatsListFiltered;
     private Context context;
+    private MessageChatsViewModel viewModel;
 
     private static MessageChatsAdapter instance;
+    private FirebaseAuth mAuth;
 
     public static MessageChatsAdapter getInstance(){
         return instance;
@@ -37,6 +46,8 @@ public class MessageChatsAdapter extends RecyclerView.Adapter<MessageChatsAdapte
     public MessageChatsAdapter(Context context) {
         this.instance = this;
         this.context = context;
+        this.viewModel = ViewModelProviders.of((FragmentActivity)context).get(MessageChatsViewModel.class);
+        this.mAuth = FirebaseAuth.getInstance();
 
     }
 
@@ -91,7 +102,17 @@ public class MessageChatsAdapter extends RecyclerView.Adapter<MessageChatsAdapte
         holder.binding.setNormalchat(chatHead);
         holder.binding.setOnchatclicked(new MessageChatsAdapter.OnChatClicked());
         holder.binding.setOnprofileclicked(new OnProfileClicked());
-        //holder.binding.setUsercallback(new OnUserClicked());
+        holder.binding.messageCount.setVisibility(View.GONE);
+
+        class OnNumUnreads implements FirestoreRepo.OnNumUnreadsGotten{
+            public void onNumUnreadsGotten(int numUnreads){
+                if(numUnreads > 0) {
+                    holder.binding.messageCount.setText(String.format("%d", numUnreads));
+                    holder.binding.messageCount.setVisibility(View.VISIBLE);
+                }
+            }
+        }
+        FirestoreRepo.getInstance().getNumberOfUnreadMessages(mAuth.getCurrentUser().getUid(), chatHead.getUser().getUid(), new OnNumUnreads());
 
         Picasso.get().load(chatHead.getUser().getProfile_url()).into(holder.binding.messageChatsImageview);
     }

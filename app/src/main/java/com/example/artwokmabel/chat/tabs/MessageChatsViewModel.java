@@ -23,4 +23,8 @@ public class MessageChatsViewModel extends ViewModel {
         return chattingWithObservable;
     }
 
+//    public LiveData<Integer> getNumberOfUnreadMessages(String otherUserId){
+//        return FirestoreRepo.getInstance().getNumberOfUnreadMessages(mAuth.getCurrentUser().getUid(), otherUserId);
+//    }
+
 }

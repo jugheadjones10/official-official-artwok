@@ -6,16 +6,15 @@ import java.util.Date;
 
 public class Message implements Serializable
 {
-    private String from, message, type, to, messageID, time, date;
-
+    private String from, message, type, to, messageID, time, date, read;
     private long nanopast;
 
     public Message() {
 
     }
 
-//    String name,
-    public Message(String from, String message, String type, String to, String messageID, String time, String date, long nanopast) {
+    //    String name,
+    public Message(String from, String message, String type, String to, String messageID, String time, String date, long nanopast, String read) {
         this.from = from;
         this.message = message;
         this.type = type;
@@ -25,6 +24,7 @@ public class Message implements Serializable
         this.date = date;
         //this.name = name;
         this.nanopast = nanopast;
+        this.read = read;
     }
 
     public String getReadableNanopastDate(){
@@ -116,6 +116,15 @@ public class Message implements Serializable
 //    public void setName(String name) {
 //        this.name = name;
 //    }
+
+    public String getRead() {
+        return read;
+    }
+
+    public void setRead(String read) {
+        this.read = read;
+    }
+
 
     public long getNanopast() {
         return nanopast;
