@@ -1,14 +1,25 @@
 package com.example.artwokmabel.homepage.listing;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.artwokmabel.Utils.TransactFragment;
+import com.example.artwokmabel.databinding.ItemCommentBinding;
+import com.example.artwokmabel.databinding.ItemReviewBinding;
+import com.example.artwokmabel.homepage.post.CommentsAdapter;
+import com.example.artwokmabel.homepage.post.CommentsViewModel;
+import com.example.artwokmabel.models.Comment;
 import com.example.artwokmabel.models.Review;
 import com.example.artwokmabel.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -19,64 +30,102 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class ListingReviewsAdapter extends RecyclerView.Adapter<ListingReviewsAdapter.reviewHolder> {
-
+public class ListingReviewsAdapter extends RecyclerView.Adapter<ListingReviewsAdapter.ReviewHolder> {
     private static final String TAG = "CommentListAdapter";
 
+    private List<Review> reviewsList;
     private Context mContext;
-    private List<Review> list;
 
-    private FirebaseFirestore DB;
-    private FirebaseAuth mAuth;
-
-
-    public ListingReviewsAdapter(Context context, List<Review> reviews) {
-        mContext = context;
-        list = reviews;
+    public ListingReviewsAdapter(Context context) {
+        this.mContext = context;
     }
 
     @NonNull
     @Override
-    public ListingReviewsAdapter.reviewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_review,viewGroup,false);
+    public ReviewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
+        ItemReviewBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.item_review, parent,false);
 
-        ListingReviewsAdapter.reviewHolder myHolder = new ListingReviewsAdapter.reviewHolder(view);
-        return myHolder;
+        return new ReviewHolder(binding);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ListingReviewsAdapter.reviewHolder myHolder, int i) {
-        Review data = list.get(i);
+    public void onBindViewHolder(@NonNull ReviewHolder holder, int i) {
+        Review data = reviewsList.get(i);
+        holder.binding.setReview(data);
+        //holder.binding.setOnprofileclicked(new CommentsAdapter.OnProfileClicked());
 
-        myHolder.review.setText(data.getReview());
-        myHolder.username.setText(data.getUsername());
-        Picasso.get().load(data.getPosterurl()).into(myHolder.profileImg);
+        Picasso.get().load(data.getPosterurl()).into(holder.binding.reviewProfileImage);
 
-        myHolder.reply.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+//        if(data.getUser_id().equals(mAuth.getCurrentUser().getUid())){
+//            holder.binding.deleteComment.setImageResource(R.drawable.garbage);
+//            holder.binding.setOndeleteclicked(new CommentsAdapter.OnDeleteClicked());
+//            Log.d("commentshenan", "you and the comment poster are the same");
+//        }else{
+//            holder.binding.deleteComment.setVisibility(View.GONE);
+//            Log.d("commentshenan", "you and the comment poster are different so rubbish bin should not be there");
+//        }
+    }
 
-            }
-        });
+    public void setReviewsList(final List<Review> reviews) {
+        if (this.reviewsList == null) {
+            this.reviewsList = reviews;
+            notifyItemRangeInserted(0, reviews.size());
+        } else {
+            DiffUtil.DiffResult result = DiffUtil.calculateDiff(new DiffUtil.Callback() {
+                @Override
+                public int getOldListSize() {
+                    return ListingReviewsAdapter.this.reviewsList.size();
+                }
 
+                @Override
+                public int getNewListSize() {
+                    return reviews.size();
+                }
+
+                @Override
+                public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
+                    return ListingReviewsAdapter.this.reviewsList.get(oldItemPosition).getReviewId().equals(
+                            reviews.get(newItemPosition).getReviewId());
+                }
+
+                @Override
+                public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
+                    return ListingReviewsAdapter.this.reviewsList.get(oldItemPosition).getReviewId().equals(
+                            reviews.get(newItemPosition).getReviewId());
+                }
+            });
+            this.reviewsList = reviews;
+            notifyDataSetChanged();
+            result.dispatchUpdatesTo(this);
+        }
     }
 
 
-    class reviewHolder extends RecyclerView.ViewHolder {
-        TextView review, username, reply;
-        CircleImageView profileImg;
+    public class OnDeleteClicked{
+        public void onDeleteClicked(Comment comment){
+            Log.d("commentshenan", "Does delete comment run");
 
-        public reviewHolder(@NonNull View itemView) {
-            super(itemView);
-            review = itemView.findViewById(R.id.comment);
-            username = itemView.findViewById(R.id.comment_username);
-            reply = itemView.findViewById(R.id.comment_reply);
-            profileImg = itemView.findViewById(R.id.comment_profile_image);
+            //viewModel.deleteComment(comment.getComment_id(), postId, postPosterId);
+        }
+    }
+
+    public class OnProfileClicked{
+        public void onProfileClicked(Comment comment){
+            new TransactFragment().loadFragment(mContext, comment.getUser_id());
+        }
+    }
+
+    class ReviewHolder extends RecyclerView.ViewHolder {
+        private ItemReviewBinding binding;
+
+        public ReviewHolder(@NonNull ItemReviewBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
         }
     }
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return reviewsList == null ? 0 : reviewsList.size();
     }
 }

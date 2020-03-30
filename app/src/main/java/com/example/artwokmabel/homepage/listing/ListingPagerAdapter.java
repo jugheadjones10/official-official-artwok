@@ -37,7 +37,7 @@ public class ListingPagerAdapter extends FragmentStateAdapter {
             Fragment fragment = new ListingReviewsFragment();
 
             Bundle args = new Bundle();
-            args.putString("review", "reviews. Make reviews xml");
+            args.putSerializable("listing", listing);
             fragment.setArguments(args);
 
             return fragment;

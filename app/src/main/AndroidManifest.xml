@@ -19,7 +19,7 @@
         <activity
             android:name=".profile.people.ViewOtherUserActivity"
             android:label="@string/title_activity_view_other_user"
-            android:theme="@style/AppTheme.NoActionBar.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar.NoActionBar" />
 
         <service
             android:name=".MyFirebaseMessagingService"

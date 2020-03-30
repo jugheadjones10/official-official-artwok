@@ -3,9 +3,13 @@ package com.example.artwokmabel.homepage.listing;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.artwokmabel.models.Listing;
+import com.example.artwokmabel.models.Review;
 import com.example.artwokmabel.repos.FirestoreRepo;
 import com.example.artwokmabel.models.User;
 import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.List;
 
 public class ListingActivityViewModel extends ViewModel {
 
@@ -35,5 +39,9 @@ public class ListingActivityViewModel extends ViewModel {
 
     public void removeUserRequestFavs(String requestId){
         FirestoreRepo.getInstance().removeUserRequestFavs(requestId, mAuth.getCurrentUser().getUid());
+    }
+
+    public LiveData<List<Review>> getListingReviews(Listing listing){
+        return FirestoreRepo.getInstance().getListingReviews(listing);
     }
 }

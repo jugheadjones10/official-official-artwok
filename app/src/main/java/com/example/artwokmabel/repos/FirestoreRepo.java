@@ -32,6 +32,7 @@ import com.example.artwokmabel.homepage.request.upload.UploadRequestActivity;
 import com.example.artwokmabel.models.Category;
 import com.example.artwokmabel.models.Listing;
 import com.example.artwokmabel.models.MainPost;
+import com.example.artwokmabel.models.Review;
 import com.example.artwokmabel.models.User;
 import com.example.artwokmabel.profile.uploadlisting.UploadListingAcitvity;
 import com.example.artwokmabel.profile.uploadpost.UploadPostActivity;
@@ -126,6 +127,82 @@ public class FirestoreRepo {
 
     }
 
+
+    public LiveData<List<Review>> getListingReviews(Listing listing){
+        final MutableLiveData<List<Review>> data = new MutableLiveData<>();
+        List<Review> tempData = new ArrayList<>();
+
+        db.collection("Users")
+                .document(listing.getUserid())
+                .collection("Listings")
+                .document(listing.getPostid())
+                .collection("Reviews")
+                .orderBy("nanopast", Query.Direction.DESCENDING)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                        tempData.clear();
+                        for(DocumentSnapshot snapshot : queryDocumentSnapshots){
+                            tempData.add(snapshot.toObject(Review.class));
+                        }
+                        data.setValue(tempData);
+                    }
+                });
+        return  data;
+    }
+
+    public void uploadNewReview(float rating, String listingId, String reviewerId, String publicReview, String privateReview){
+        db.collectionGroup("Listings")
+                .whereEqualTo("postid", listingId)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for(DocumentSnapshot snapshot : queryDocumentSnapshots){
+
+                            Listing listing = snapshot.toObject(Listing.class);
+                            DocumentReference newReviewRef = db.collection("Users")
+                                    .document(listing.getUserid())
+                                    .collection("Listings")
+                                    .document(listingId)
+                                    .collection("Reviews")
+                                    .document();
+
+
+                            db.collection("Users")
+                                    .document(reviewerId)
+                                    .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onEvent(@Nullable DocumentSnapshot snapshot, @Nullable FirebaseFirestoreException e) {
+                                            if (e != null) {
+                                                Log.w("TAG", "Listen failed.", e);
+                                                return;
+                                            }
+
+                                            User user = snapshot.toObject(User.class);
+
+                                            Review newReview =  new Review(
+                                                publicReview,
+                                                user.getUsername(),
+                                                user.getUid(),
+                                                user.getProfile_url(),
+                                                listingId,
+                                                privateReview,
+                                                rating,
+                                                newReviewRef.getId(),
+                                                System.currentTimeMillis()
+                                            );
+
+                                            newReviewRef.set(newReview);
+                                        }
+                                    });
+
+
+                        }
+                    }
+                });
+    }
+
     public void uploadNewPost(String postText, String userId, Activity activity){
         DocumentReference newPostRef = db.collection("Users").document(userId).collection("Posts").document();
 
@@ -133,13 +210,13 @@ public class FirestoreRepo {
         photos.add("https://firebasestorage.googleapis.com/v0/b/artwok-database.appspot.com/o/Rick%20and%20Morty%20white.png?alt=media&token=dd2a8310-6a36-43e4-8372-ff6f2d465f95");
         MainPost newPost =  new MainPost(
             userId,
-                postText,
-                "placeholder hashtags",
-                newPostRef.getId(),
-                "placeholder username",
-                photos,
-                "bla",
-                System.currentTimeMillis()
+            postText,
+            "placeholder hashtags",
+            newPostRef.getId(),
+            "placeholder username",
+            photos,
+            "bla",
+            System.currentTimeMillis()
         );
 
         newPostRef.set(newPost)
