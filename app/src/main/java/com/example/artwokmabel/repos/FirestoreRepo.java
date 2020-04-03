@@ -8,6 +8,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -15,6 +16,7 @@ import com.algolia.search.saas.Client;
 import com.algolia.search.saas.Index;
 import com.example.artwokmabel.HomePageActivity;
 import com.example.artwokmabel.R;
+import com.example.artwokmabel.chat.personalchat.ChatActivity;
 import com.example.artwokmabel.login.CreateAccountEmailActivity;
 import com.example.artwokmabel.login.CreateAccountPasswordActivity;
 import com.example.artwokmabel.login.CreateAccountUsernameActivity;
@@ -22,6 +24,7 @@ import com.example.artwokmabel.login.DuplicateUsernameChecker;
 import com.example.artwokmabel.login.LoginActivity;
 import com.example.artwokmabel.chat.models.UserUserModel;
 import com.example.artwokmabel.models.Comment;
+import com.example.artwokmabel.models.ImageMessage;
 import com.example.artwokmabel.models.Message;
 import com.example.artwokmabel.models.NormalChat;
 import com.example.artwokmabel.models.Notification;
@@ -1680,7 +1683,71 @@ public class FirestoreRepo {
         return data;
     }
 
-    public LiveData<List<MainPost>> getUserPosts(String userId){
+    public void addDashboardMessage(String from, String to, String message){
+
+        DatabaseReference RootRef = FirebaseDatabase.getInstance().getReference();
+
+        String messageSenderRef = "Dashboard/" + to;
+
+        DatabaseReference userMessageKeyRef = RootRef.child("Dashboard")
+                .child(to).push();
+
+        String messagePushID = userMessageKeyRef.getKey();
+
+        Message messageObject = new Message(
+            from,
+            message,
+            "dashboard",
+            to,
+            messagePushID,
+            "",
+            "",
+            System.currentTimeMillis(),
+            "false"
+        );
+
+        Map messageBodyDetails = new HashMap();
+        messageBodyDetails.put(messageSenderRef + "/" + messagePushID, messageObject);
+
+        RootRef.updateChildren(messageBodyDetails).addOnCompleteListener(new OnCompleteListener() {
+            @Override
+            public void onComplete(@NonNull Task task)
+            {
+                if(!task.isSuccessful()) {
+                    //Toast.makeText(ChatActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+     public LiveData<List<Message>> getUserDashboardMessages(String userId) {
+         final MutableLiveData<List<Message>> data = new MutableLiveData<>();
+         List<Message> tempData = new ArrayList<>();
+
+         FirebaseDatabase.getInstance().getReference()
+             .child("Dashboards")
+             .child(userId)
+             .addValueEventListener(new ValueEventListener() {
+                 @Override
+                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                     tempData.clear();
+                     for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                         tempData.add(snapshot.getValue(Message.class));
+                     }
+                     data.setValue(tempData);
+                 }
+
+                 @Override
+                 public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                 }
+             });
+
+         return data;
+     }
+
+
+        public LiveData<List<MainPost>> getUserPosts(String userId){
         final MutableLiveData<List<MainPost>> data = new MutableLiveData<>();
         List<MainPost> tempData = new ArrayList<>();
 

@@ -311,6 +311,27 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                         messageViewHolder.friendTime.setText(messages.getReadableNanopastDate());
                         //+ "\n \n" + messages.getReadableNanopastDate()
                     }
+                }else{
+                    //Checks if the user looking at the thing is the admin or not
+                    if((messages.getFrom().equals(messages.getTo()) && messageSenderId.equals(messages.getFrom()))
+                        || (!messages.getFrom().equals(messages.getTo()) && !messageSenderId.equals(messages.getTo()))){
+                        messageViewHolder.senderMessageText.setVisibility(View.VISIBLE);
+                        messageViewHolder.myTime.setVisibility(View.VISIBLE);
+
+                        messageViewHolder.senderMessageText.setBackgroundResource(R.drawable.sender_messages_layout);
+                        messageViewHolder.senderMessageText.setTextColor(Color.BLACK);
+                        messageViewHolder.senderMessageText.setText(messages.getMessage());
+                        messageViewHolder.myTime.setText(messages.getReadableNanopastDate());
+                    }else{
+                        messageViewHolder.receiverProfileImage.setVisibility(View.VISIBLE);
+                        messageViewHolder.receiverMessageText.setVisibility(View.VISIBLE);
+                        messageViewHolder.friendTime.setVisibility(View.VISIBLE);
+
+                        messageViewHolder.receiverMessageText.setBackgroundResource(R.drawable.receiver_messages_layout);
+                        messageViewHolder.receiverMessageText.setTextColor(Color.BLACK);
+                        messageViewHolder.receiverMessageText.setText(messages.getMessage());
+                        messageViewHolder.friendTime.setText(messages.getReadableNanopastDate());
+                    }
                 }
 
                 break;
