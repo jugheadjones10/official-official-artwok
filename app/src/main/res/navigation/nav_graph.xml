@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_graph">
-
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homePageActivity">
+    <activity
+        android:id="@+id/homePageActivity"
+        android:name="com.example.artwokmabel.HomePageActivity"
+        android:label="HomePageActivity" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.artwokmabel.profile.user.ProfileFragment"
+        android:label="ProfileFragment" />
 </navigation>

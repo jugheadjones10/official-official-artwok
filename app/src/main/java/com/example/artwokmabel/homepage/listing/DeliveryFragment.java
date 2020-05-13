@@ -24,7 +24,6 @@ public class DeliveryFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_listing_delivery, container, false);
-
         delivery = view.findViewById(R.id.delivery_text);
         refund = view.findViewById(R.id.refund_text);
 

@@ -67,12 +67,38 @@ public class DashboardFragment extends Fragment {
 //                }
 //            }
 //        });
+        setUpMessageBar();
+
+        return binding.getRoot();
+    }
+
+    private void setUpMessageBar() {
+        binding.sendMessageBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String messageText = binding.inputMessage.getText().toString();
+
+                if (TextUtils.isEmpty(messageText)) {
+                    Toast.makeText(getActivity(), "first write your message...", Toast.LENGTH_SHORT).show();
+                } else {
+                    viewModel.addDashboardMessage(mAuth.getCurrentUser().getUid(), userId, messageText);
+                }
+
+                binding.inputMessage.setText("");
+            }
+        });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
         DatabaseReference RootRef = FirebaseDatabase.getInstance().getReference();
         RootRef.child("Dashboard").child(userId)
                 .addChildEventListener(new ChildEventListener() {
                     @Override
-                    public void onChildAdded(DataSnapshot dataSnapshot, String s)
-                    {
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
                         Message message = dataSnapshot.getValue(Message.class);
 
@@ -100,29 +126,6 @@ public class DashboardFragment extends Fragment {
 
                     }
                 });
-
-
-
-        setUpMessageBar();
-
-        return binding.getRoot();
     }
 
-    private void setUpMessageBar(){
-        binding.sendMessageBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                String messageText = binding.inputMessage.getText().toString();
-
-                if (TextUtils.isEmpty(messageText)) {
-                    Toast.makeText(getActivity(), "first write your message...", Toast.LENGTH_SHORT).show();
-                }else{
-                    viewModel.addDashboardMessage(mAuth.getCurrentUser().getUid(), userId, messageText);
-                }
-
-                binding.inputMessage.setText("");
-            }
-        });
-    }
 }
