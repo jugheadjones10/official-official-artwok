@@ -28,6 +28,8 @@ public class LoginOptionsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login_options);
+
+
         binding.setOncreateacctclicked(new OnCreateAccountClicked());
         binding.setOnloginclicked(new OnLoginClicked());
         binding.setOngoogleloginclicked(new OnGoogleLoginClicked());

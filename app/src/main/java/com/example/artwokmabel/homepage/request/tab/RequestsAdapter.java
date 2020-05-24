@@ -155,7 +155,8 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.myHold
             Bundle args = new Bundle();
             args.putString("poster_username", data.getUsername());
             indivUserFrag.setArguments(args);
-            HomePageActivity.getInstance().loadFragment(indivUserFrag);
+            //TODO navigate from requests to indiv user
+            //HomePageActivity.getInstance().loadFragment(indivUserFrag);
         }
     }
 

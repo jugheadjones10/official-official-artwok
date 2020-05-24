@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<layout>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
@@ -9,9 +11,10 @@
     android:layout_height="match_parent"
     tools:context=".login.SplashActivity">
 
-<ImageView
-    android:src="@drawable/official_logo"
-    android:layout_width="100dp"
-    android:layout_height="100dp" />
+    <ImageView
+        android:src="@drawable/official_logo"
+        android:layout_width="100dp"
+        android:layout_height="100dp" />
 
 </LinearLayout>
+</layout>

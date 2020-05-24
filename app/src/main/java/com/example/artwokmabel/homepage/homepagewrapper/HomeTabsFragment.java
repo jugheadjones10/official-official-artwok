@@ -2,10 +2,12 @@ package com.example.artwokmabel.homepage.homepagewrapper;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -25,8 +27,9 @@ import java.util.ArrayList;
 
 public class HomeTabsFragment extends Fragment {
 
-    private HomeTabsPagerAdapter adapter;
     private FragmentHomeTabsBinding binding;
+    private HomeTabsPagerAdapter adapter;
+
     private ArrayList<String> tabCategories;
     private static HomeTabsFragment instance = null;
 
@@ -35,42 +38,26 @@ public class HomeTabsFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home_tabs, container, false);
-        instance = this;
-        ((AppCompatActivity)getActivity()).setSupportActionBar(binding.toolbar);
-
-        adapter = new HomeTabsPagerAdapter(this);
-        binding.viewPager.setAdapter(adapter);
-
-
-        new TabLayoutMediator(binding.tabs, binding.viewPager,
-                (tab, position) -> tab.setText(tabCategories.get(position))
-        ).attach();
-
-//        new TabLayoutMediator(binding.tabs, binding.viewPager,
-//                new TabLayoutMediator.TabConfigurationStrategy() {
-//                    @Override
-//                    public void onConfigureTab(TabLayout.Tab tab, int position) {
-//                        if(position == 0){
-//                            tab.setText("Following");
-//                        }else{
-//                            tab.setText("Followers");
-//                        }
-//                    }
-//                }
-//        ).attach();
-//        new TabLayoutMediator(binding.tabs, binding.viewPager,
-//                (tab, position) -> tab.setText(tabCategories.get(position))
-//        ).attach();
-
-        binding.tabs.setTabMode(TabLayout.MODE_SCROLLABLE);
-        setUpClickListeners();
 
         return binding.getRoot();
     }
 
     @Override
-    public void onResume(){
-        super.onResume();
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        instance = this;
+        ((AppCompatActivity)getActivity()).setSupportActionBar(binding.toolbar);
+
+        adapter = new HomeTabsPagerAdapter(this);
+
+        binding.viewPager.setAdapter(adapter);
+        new TabLayoutMediator(binding.tabs, binding.viewPager,
+                (tab, position) -> tab.setText(tabCategories.get(position))
+        ).attach();
+
+        binding.tabs.setTabMode(TabLayout.MODE_SCROLLABLE);
+        setUpClickListeners();
     }
 
     @Override
@@ -86,34 +73,26 @@ public class HomeTabsFragment extends Fragment {
 
     private void observeViewModel(HomeTabsViewModel viewModel) {
         // Update the list when the data changes
-        viewModel.getCategoryListObservable().observe(this, new Observer<ArrayList<String>>() {
+        viewModel.getCategoryListObservable().observe(getViewLifecycleOwner(), new Observer<ArrayList<String>>() {
             @Override
             public void onChanged(@Nullable ArrayList<String> categories) {
                 if (categories != null) {
 
-                    categories.add(0, "feed");
-                    categories.add("edit");
+                    Log.d("categories", "B4 adding feed and edit :" + categories.toString());
+                    if(!categories.get(0).equals("feed")) {
+                        categories.add(0, "feed");
+                        categories.add("edit");
+                    }
 
-//                    for(String cat : categories){
-//                        Log.d("catfight", "From data base  " + cat);
-//                    }
-//
-//                    if(viewModel.getCategoriesListMaintainable() != null){
-//                        for(String cat :  viewModel.getCategoriesListMaintainable()){
-//                            Log.d("catfight", "From view model " + cat);
-//                        }
-//                        Log.d("catfight", "are they indeed equal  " + categories.equals(viewModel.getCategoriesListMaintainable()));
-//                        Log.d("catfight", "\n");
-//                    }
-
-                    if(viewModel.getCategoriesListMaintainable() == null || !viewModel.getCategoriesListMaintainable().equals(categories)){
+                    //if(viewModel.getCategoriesListMaintainable() == null || !viewModel.getCategoriesListMaintainable().equals(categories)){
 
                         tabCategories = categories;
                         viewModel.setCategoriesListMaintainable(categories);
 
-                        adapter.setCategoriesList(categories);
-                        binding.viewPager.setCurrentItem(0);
-                    }
+                    //}
+
+                    adapter.setCategoriesList(tabCategories);
+                    //binding.viewPager.setCurrentItem(0);
 
                 }
             }

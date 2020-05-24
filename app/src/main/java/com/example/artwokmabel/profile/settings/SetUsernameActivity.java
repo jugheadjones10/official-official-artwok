@@ -54,7 +54,7 @@ public class SetUsernameActivity extends AppCompatActivity implements DuplicateU
                     binding.usernameEditText.setError("Please enter a username");
                 }else{
                     binding.progressBar.setVisibility(View.VISIBLE);
-                    FirestoreRepo.getInstance().isUsernameDuplicate(username, getInstance());
+                    //FirestoreRepo.getInstance().isUsernameDuplicate(username, getInstance());
                 }
 
             }

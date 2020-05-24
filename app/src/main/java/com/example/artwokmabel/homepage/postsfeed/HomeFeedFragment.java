@@ -94,7 +94,7 @@ public class HomeFeedFragment extends Fragment {
 
     private void observeViewModel(HomeFeedViewModel viewModel) {
         // Update the list when the data changes
-        viewModel.getFeedPostsObeservable().observe(this, new Observer<List<MainPost>>() {
+        viewModel.getFeedPostsObeservable().observe(getViewLifecycleOwner(), new Observer<List<MainPost>>() {
             @Override
             public void onChanged(@Nullable List<MainPost> posts) {
                 if (posts != null) {
@@ -103,7 +103,7 @@ public class HomeFeedFragment extends Fragment {
             }
         });
 
-        viewModel.getFeedListingObservable().observe(this, new Observer<List<Listing>>() {
+        viewModel.getFeedListingObservable().observe(getViewLifecycleOwner(), new Observer<List<Listing>>() {
             @Override
             public void onChanged(@Nullable List<Listing> listings) {
                 if (listings != null) {

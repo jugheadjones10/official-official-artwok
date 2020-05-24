@@ -100,61 +100,60 @@ public class SplashActivity extends AppCompatActivity {
                 }
             }
         }
-
         linearLayout = findViewById(R.id.splashactivity_linearlayout);
     }
 
-    @Override protected void onResume() {
+//    @Override protected void onResume() {
+//
+//        super.onResume();
+//
+//        mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
+//        FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
+//                .setDeveloperModeEnabled(BuildConfig.DEBUG)
+//                .build();
+//        mFirebaseRemoteConfig.setConfigSettings(configSettings);
+//        mFirebaseRemoteConfig.setDefaults(R.xml.default_config);
+//
+//        mFirebaseRemoteConfig.fetch(0)
+//                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<Void> task) {
+//                        if (task.isSuccessful()) {
+//
+//                            // Once the config is successfully fetched it must be activated before newly fetched
+//                            // values are returned.
+//                            mFirebaseRemoteConfig.activateFetched();
+//                        } else {
+//
+//                        }
+//                        displayMessage();
+//                    }
+//                });
+//    }
 
-        super.onResume();
-
-        mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
-        FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
-                .setDeveloperModeEnabled(BuildConfig.DEBUG)
-                .build();
-        mFirebaseRemoteConfig.setConfigSettings(configSettings);
-        mFirebaseRemoteConfig.setDefaults(R.xml.default_config);
-
-        mFirebaseRemoteConfig.fetch(0)
-                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-
-                            // Once the config is successfully fetched it must be activated before newly fetched
-                            // values are returned.
-                            mFirebaseRemoteConfig.activateFetched();
-                        } else {
-
-                        }
-                        displayMessage();
-                    }
-                });
-    }
-
-    void displayMessage() {
-        String splash_background = mFirebaseRemoteConfig.getString("splash_background");
-        boolean caps = mFirebaseRemoteConfig.getBoolean("splash_message_caps");
-        String splash_message = mFirebaseRemoteConfig.getString("splash_message");
-
-        linearLayout.setBackgroundColor(Color.parseColor(splash_background));
-
-        if(caps){
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage(splash_message).setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    finish();
-                }
-            });
-
-            builder.create().show();
-
-        }else {
-            startActivity(new Intent(this, LoginOptionsActivity.class));
-        }
-
-    }
+//    void displayMessage() {
+//        String splash_background = mFirebaseRemoteConfig.getString("splash_background");
+//        boolean caps = mFirebaseRemoteConfig.getBoolean("splash_message_caps");
+//        String splash_message = mFirebaseRemoteConfig.getString("splash_message");
+//
+//        linearLayout.setBackgroundColor(Color.parseColor(splash_background));
+//
+//        if(caps){
+//            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//            builder.setMessage(splash_message).setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialogInterface, int i) {
+//                    finish();
+//                }
+//            });
+//
+//            builder.create().show();
+//
+//        }else {
+//            startActivity(new Intent(this, LoginOptionsActivity.class));
+//        }
+//
+//    }
 
 
 }

@@ -46,10 +46,10 @@ public class LoginActivity extends AppCompatActivity {
             }else{
                 binding.progressBar.setVisibility(View.VISIBLE);
 
-                FirestoreRepo.getInstance().logIntoAccount(
-                        email,
-                        password
-                );
+//                FirestoreRepo.getInstance().logIntoAccount(
+//                        email,
+//                        password
+//                );
             }
         }
     }

@@ -49,7 +49,7 @@ public class CreateAccountEmailActivity extends AppCompatActivity {
                 binding.emailEditText.setError("Please enter a valid email");
             }else{
                 binding.progressBar.setVisibility(View.VISIBLE);
-                FirestoreRepo.getInstance().isEmailDuplicate(email);
+                //FirestoreRepo.getInstance().isEmailDuplicate(email);
             }
         }
     }

@@ -125,9 +125,11 @@ public class SettingsActivity extends AppCompatActivity {
     public class OnPasswordChange{
         public void onPasswordChange(){
 
-            Intent intent = new Intent(SettingsActivity.this, ForgotPasswordActivity.class);
-            intent.putExtra("email", user.getEmail());
-            startActivity(intent);
+            //Change the below to start using nav
+
+//            Intent intent = new Intent(SettingsActivity.this, ForgotPasswordActivity.class);
+//            intent.putExtra("email", user.getEmail());
+//            startActivity(intent);
         }
     }
 

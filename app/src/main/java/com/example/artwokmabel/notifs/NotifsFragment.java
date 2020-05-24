@@ -46,7 +46,7 @@ public class NotifsFragment extends Fragment {
         binding.notifsRecyclerview.setAdapter(adapter);
 
         viewModel = ViewModelProviders.of(this).get(NotifsViewModel.class);
-        viewModel.getUserNotificationsObservable().observe(this, new Observer<List<Notification>>() {
+        viewModel.getUserNotificationsObservable().observe(getViewLifecycleOwner(), new Observer<List<Notification>>() {
             @Override
             public void onChanged(@Nullable List<Notification> notifs) {
                 if (notifs != null) {

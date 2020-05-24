@@ -2,12 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/main_home_fragment"
+        android:id="@+id/home_graph"
         android:icon="@drawable/homeicon"
         android:title="Home" />
 
     <item
-        android:id="@+id/main_chat_fragment"
+        android:id="@+id/chat_graph"
         android:icon="@drawable/message"
         android:title="Chat" />
 
@@ -17,12 +17,12 @@
 <!--        android:title="Groups" />-->
 
     <item
-        android:id="@+id/main_notifs_fragment"
+        android:id="@+id/notif_graph"
         android:icon="@drawable/png_notification"
         android:title="Notifications" />
 
     <item
-        android:id="@+id/main_profile_fragment"
+        android:id="@+id/profile_graph"
         android:icon="@drawable/profileicon"
         android:title="Profile" />
 

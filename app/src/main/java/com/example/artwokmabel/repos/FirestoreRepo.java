@@ -23,6 +23,8 @@ import com.example.artwokmabel.login.CreateAccountUsernameActivity;
 import com.example.artwokmabel.login.DuplicateUsernameChecker;
 import com.example.artwokmabel.login.LoginActivity;
 import com.example.artwokmabel.chat.models.UserUserModel;
+import com.example.artwokmabel.login.LoginViewModel;
+import com.example.artwokmabel.login.RegistrationViewModel;
 import com.example.artwokmabel.models.Comment;
 import com.example.artwokmabel.models.ImageMessage;
 import com.example.artwokmabel.models.Message;
@@ -294,33 +296,28 @@ public class FirestoreRepo {
             .update("number_of_posts", FieldValue.increment(1));
     }
 
-    public void logIntoAccount(String email, String password){
+    public void logIntoAccount(String email, String password, LoginViewModel.LoginCallback callback){
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
-
         mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(LoginActivity.getInstance(), new OnCompleteListener<AuthResult>() {
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            LoginActivity.getInstance().loginCallback(true);
+                            callback.loginCallback(true);
                         } else {
-                            // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(LoginActivity.getInstance(), "Login failed",
-                                    Toast.LENGTH_SHORT).show();
-
-                            LoginActivity.getInstance().loginCallback(false);
+                            callback.loginCallback(false);
                         }
                     }
                 });
     }
 
-    public void createAccount(String email, String username,  String password){
+    public void createAccount(String email, String username, String password, RegistrationViewModel.CreateAccountCallback callback){
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         DatabaseReference RootRef = FirebaseDatabase.getInstance().getReference();
 
         mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(CreateAccountPasswordActivity.getInstance(), new OnCompleteListener<AuthResult>() {
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
@@ -343,7 +340,6 @@ public class FirestoreRepo {
 
                                             // Log and toast
                                             Log.d("notives", token);
-
 
                                             User userObject = new User(
                                                     username.toLowerCase(),
@@ -372,20 +368,15 @@ public class FirestoreRepo {
                                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                         @Override
                                                         public void onSuccess(Void aVoid) {
-                                                            Log.d(TAG, "DocumentSnapshot successfully written!");
-                                                            //PushUserToAlgolia(username, uid);
-                                                            CreateAccountPasswordActivity.getInstance().createAccountCallback(true);
+                                                            callback.createAccountCallback(true);
                                                         }
                                                     })
                                                     .addOnFailureListener(new OnFailureListener() {
                                                         @Override
                                                         public void onFailure(@NonNull Exception e) {
-                                                            Log.w(TAG, "Error writing document", e);
-                                                            Toast.makeText(CreateAccountPasswordActivity.getInstance(), "Create account failed", Toast.LENGTH_SHORT).show();
+                                                            callback.createAccountCallback(false);
                                                         }
                                                     });
-
-
                                         }
                                     });
 
@@ -393,16 +384,14 @@ public class FirestoreRepo {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(CreateAccountPasswordActivity.getInstance(), "Create account failed", Toast.LENGTH_SHORT).show();
-
-                            CreateAccountPasswordActivity.getInstance().createAccountCallback(false);
+                            callback.createAccountCallback(false);
                         }
                     }
                 });
 
     }
 
-    public void isEmailDuplicate(String email){
+    public void isEmailDuplicate(String email, RegistrationViewModel.CollectDetailCallback callback){
     db.collection("Users")
             .whereEqualTo("email", email)
             .get()
@@ -410,11 +399,10 @@ public class FirestoreRepo {
                 @Override
                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
                     if (task.isSuccessful()) {
-                        Log.d(TAG, Integer.toString(task.getResult().size()));
                         if (task.getResult().size() != 0) {
-                            CreateAccountEmailActivity.getInstance().isEmailDuplicateCallback(true);
+                            callback.collectDetailCallback(true);
                         }else{
-                            CreateAccountEmailActivity.getInstance().isEmailDuplicateCallback(false);
+                            callback.collectDetailCallback(false);
                         }
                     } else {
                         Log.d(TAG, "Error getting documents: ", task.getException());
@@ -423,7 +411,7 @@ public class FirestoreRepo {
             });
     }
 
-    public void isUsernameDuplicate(String username, DuplicateUsernameChecker checker){
+    public void isUsernameDuplicate(String username, RegistrationViewModel.CollectDetailCallback callback){
         db.collection("Users")
                 .whereEqualTo("username", username)
                 .get()
@@ -431,11 +419,10 @@ public class FirestoreRepo {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            Log.d(TAG, Integer.toString(task.getResult().size()));
                             if (task.getResult().size() != 0) {
-                                checker.isUsernameDuplicateCallback(true);
+                                callback.collectDetailCallback(true);
                             }else{
-                                checker.isUsernameDuplicateCallback(false);
+                                callback.collectDetailCallback(false);
                             }
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());

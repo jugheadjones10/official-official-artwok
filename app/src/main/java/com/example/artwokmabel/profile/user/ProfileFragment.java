@@ -34,15 +34,20 @@ public class ProfileFragment extends Fragment {
     private ViewProfileToolbarMeBinding toolbarMeBinding;
     private ViewProfileToolbarOthersBinding toolbarOthersBinding;
 
+    public ProfileFragment(){}
 
     public ProfileFragment(String userId){
-        this.mAuth = FirebaseAuth.getInstance();
         this.userId = userId;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        mAuth = FirebaseAuth.getInstance();
+
+        if(userId == null){
+            userId = mAuth.getCurrentUser().getUid();
+        }
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false);
         binding.profileTab.bringToFront();
@@ -86,7 +91,7 @@ public class ProfileFragment extends Fragment {
         binding.profileTab.setupWithViewPager(binding.profileViewpager);
 
         viewModel = ViewModelProviders.of(this).get(ProfileFragmentViewModel.class);
-        viewModel.getUserObservable(userId).observe(this, new Observer<User>() {
+        viewModel.getUserObservable(userId).observe(getViewLifecycleOwner(), new Observer<User>() {
             @Override
             public void onChanged(@Nullable User user) {
                 binding.setUser(user);

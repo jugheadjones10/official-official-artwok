@@ -47,7 +47,7 @@ public class CreateAccountUsernameActivity extends AppCompatActivity implements 
                 binding.usernameEditText.setError("Please enter a username");
             }else{
                 binding.progressBar.setVisibility(View.VISIBLE);
-                FirestoreRepo.getInstance().isUsernameDuplicate(username, getInstance());
+                //FirestoreRepo.getInstance().isUsernameDuplicate(username, getInstance());
             }
         }
     }

@@ -3,6 +3,7 @@ package com.example.artwokmabel;
 import android.util.Log;
 
 import com.example.artwokmabel.repos.FirestoreRepo;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -14,7 +15,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     public void onNewToken(String s) {
         super.onNewToken(s);
 
-        FirestoreRepo.getInstance().addTokenToFirestore(s);
+        if(FirebaseAuth.getInstance().getCurrentUser() != null){
+            FirestoreRepo.getInstance().addTokenToFirestore(s);
+        }
     }
 
     @Override

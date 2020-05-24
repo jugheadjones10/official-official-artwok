@@ -54,11 +54,11 @@ public class CreateAccountPasswordActivity extends AppCompatActivity {
                 toast.show();
             }else{
                 binding.progressBar.setVisibility(View.VISIBLE);
-
-                FirestoreRepo.getInstance().createAccount(
-                        getIntent().getStringExtra("email"),
-                        getIntent().getStringExtra("username"),
-                        binding.passwordEditText.getText().toString());
+//
+//                FirestoreRepo.getInstance().createAccount(
+//                        getIntent().getStringExtra("email"),
+//                        getIntent().getStringExtra("username"),
+//                        binding.passwordEditText.getText().toString());
             }
         }
     }
