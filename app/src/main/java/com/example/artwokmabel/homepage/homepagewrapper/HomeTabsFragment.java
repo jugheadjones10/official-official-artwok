@@ -72,31 +72,36 @@ public class HomeTabsFragment extends Fragment {
     }
 
     private void observeViewModel(HomeTabsViewModel viewModel) {
+
+        tabCategories = new ArrayList<>();
+        tabCategories.add("feed");
+        tabCategories.add("gifts");
+        adapter.setCategoriesList(tabCategories);
+
+
         // Update the list when the data changes
-        viewModel.getCategoryListObservable().observe(getViewLifecycleOwner(), new Observer<ArrayList<String>>() {
-            @Override
-            public void onChanged(@Nullable ArrayList<String> categories) {
-                if (categories != null) {
-
-                    Log.d("categories", "B4 adding feed and edit :" + categories.toString());
-                    if(!categories.get(0).equals("feed")) {
-                        categories.add(0, "feed");
-                        categories.add("edit");
-                    }
-
-                    //if(viewModel.getCategoriesListMaintainable() == null || !viewModel.getCategoriesListMaintainable().equals(categories)){
-
-                        tabCategories = categories;
-                        viewModel.setCategoriesListMaintainable(categories);
-
-                    //}
-
-                    adapter.setCategoriesList(tabCategories);
-                    //binding.viewPager.setCurrentItem(0);
-
-                }
-            }
-        });
+//        viewModel.getCategoryListObservable().observe(getViewLifecycleOwner(), new Observer<ArrayList<String>>() {
+//            @Override
+//            public void onChanged(@Nullable ArrayList<String> categories) {
+//                if (categories != null) {
+//
+//                    Log.d("categories", "B4 adding feed and edit :" + categories.toString());
+//                    if(!categories.get(0).equals("feed")) {
+//                        categories.add(0, "feed");
+//                        categories.add("edit");
+//                    }
+//
+//                    //if(viewModel.getCategoriesListMaintainable() == null || !viewModel.getCategoriesListMaintainable().equals(categories)){
+//                        tabCategories = categories;
+//                        viewModel.setCategoriesListMaintainable(categories);
+//                    //}
+//
+//                    adapter.setCategoriesList(tabCategories);
+//                    //binding.viewPager.setCurrentItem(0);
+//
+//                }
+//            }
+//        });
     }
 
     public static HomeTabsFragment getInstance(){
