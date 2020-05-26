@@ -15,6 +15,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.FragmentHomeTabsBinding;
@@ -29,6 +31,8 @@ public class HomeTabsFragment extends Fragment {
 
     private FragmentHomeTabsBinding binding;
     private HomeTabsPagerAdapter adapter;
+
+    private NavController navController;
 
     private ArrayList<String> tabCategories;
     private static HomeTabsFragment instance = null;
@@ -47,6 +51,7 @@ public class HomeTabsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         instance = this;
+        navController = Navigation.findNavController(view);
         ((AppCompatActivity)getActivity()).setSupportActionBar(binding.toolbar);
 
         adapter = new HomeTabsPagerAdapter(this);
@@ -129,7 +134,8 @@ public class HomeTabsFragment extends Fragment {
         binding.mainsearchbar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadFragment(new TemporarySearchFragment());
+                navController.navigate(R.id.action_home_graph_to_temporarySearchFragment);
+                //loadFragment(new TemporarySearchFragment());
             }
         });
     }
