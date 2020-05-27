@@ -27,17 +27,12 @@ class HomePageActivity : AppCompatActivity() {
     private var chatsViewModel: MessageChatsViewModel? = null
     private var ordersViewModel: MessageOrdersViewModel? = null
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home_page)
         instance = this
         mAuth = FirebaseAuth.getInstance()
 
-
-//        navView = findViewById(R.id.nav_view);
-//        navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-//        navView.setSelectedItemId(R.id.homeTabsFragment);
         FirebaseInstanceId.getInstance().instanceId
                 .addOnCompleteListener(OnCompleteListener { task ->
                     if (!task.isSuccessful) {
