@@ -17,6 +17,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
@@ -55,7 +56,6 @@ public class HomeTabsFragment extends Fragment {
 
         instance = this;
         navController = Navigation.findNavController(view);
-
         adapter = new HomeTabsPagerAdapter(this);
 
         binding.viewPager.setAdapter(adapter);

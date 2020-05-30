@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 
 import com.example.artwokmabel.HomePageActivity;
@@ -80,6 +81,17 @@ public class MessageFragment extends Fragment implements SearchAnimationToolbar.
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         navController = Navigation.findNavController(view);
+        navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
+            @Override
+            public void onDestinationChanged(@NonNull NavController controller,
+                                             @NonNull NavDestination destination, @Nullable Bundle arguments) {
+                if(destination.getId() == R.id.chatFragment) {
+                    HomePageActivity.Companion.getBottomNavBar().setVisibility(View.GONE);
+                } else {
+                    HomePageActivity.Companion.getBottomNavBar().setVisibility(View.VISIBLE);
+                }
+            }
+        });
 
         binding.toolbar.setSupportActionBar((AppCompatActivity) getActivity());
         binding.toolbar.setTitle("");

@@ -117,15 +117,8 @@ public class ListingsHomeAdapter extends RecyclerView.Adapter<ListingsHomeAdapte
     //Todo: might need to add on clicked to carousel view
     public class OnListingClicked{
         public void onListClicked(Listing data){
-//            Intent intent = new Intent(mContext, ListingActivity.class);
-//            intent.putExtra("listing", data);
-//            mContext.startActivity(intent);
-
             HomeGraphDirections.ActionGlobalListingFragment action =
                     HomeGraphDirections.actionGlobalListingFragment(data);
-//            HomeFeedFragmentDirections.ActionHomeFeedFragmentToListingFragment action =
-//                    HomeFeedFragmentDirections.actionHomeFeedFragmentToListingFragment(data);
-//            navController.navigate(action);
             navController.navigate(action);
         }
     }

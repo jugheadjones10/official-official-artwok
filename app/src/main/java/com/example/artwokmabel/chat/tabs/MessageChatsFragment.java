@@ -13,6 +13,8 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
@@ -22,6 +24,7 @@ import com.example.artwokmabel.chat.models.ChatChatModel;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.MessageChatsFragmentBinding;
 import com.example.artwokmabel.databinding.MessageFollowingFragmentBinding;
+import com.example.artwokmabel.homepage.adapters.ListingsAdapter;
 import com.example.artwokmabel.models.NormalChat;
 import com.example.artwokmabel.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -44,20 +47,29 @@ public class MessageChatsFragment extends Fragment {
     public MessageChatsFragmentBinding binding;
     private MessageChatsAdapter adapter;
     private MessageChatsViewModel viewModel;
+    private NavController navController;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.message_chats_fragment, container, false);
-
-        adapter = new MessageChatsAdapter(getActivity());
-        binding.chatsFragmentRecyclerview.setAdapter(adapter);
-
         viewModel = ViewModelProviders.of(this).get(MessageChatsViewModel.class);
-        observeViewModel(viewModel);
 
         return binding.getRoot();
     }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        //Below is a tricky line - take note of it. Why won't it work with the single argument version of findNavController?
+        navController = Navigation.findNavController(requireActivity(), R.id.nav_host_container);
+
+        adapter = new MessageChatsAdapter(getActivity(), navController);
+        binding.chatsFragmentRecyclerview.setAdapter(adapter);
+        observeViewModel(viewModel);
+    }
+
 
     private void observeViewModel(MessageChatsViewModel viewModel) {
         viewModel.getChattingWithObservable().observe(this, new Observer<List<NormalChat>>() {

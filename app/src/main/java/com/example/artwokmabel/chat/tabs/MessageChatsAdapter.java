@@ -12,11 +12,13 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavController;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.Utils.TransactFragment;
+import com.example.artwokmabel.chat.MessageFragmentDirections;
 import com.example.artwokmabel.chat.personalchat.ChatActivity;
 import com.example.artwokmabel.databinding.ItemMessageChatsBinding;
 import com.example.artwokmabel.models.NormalChat;
@@ -35,6 +37,7 @@ public class MessageChatsAdapter extends RecyclerView.Adapter<MessageChatsAdapte
     private List<NormalChat> chatsListFiltered;
     private Context context;
     private MessageChatsViewModel viewModel;
+    private NavController navController;
 
     private static MessageChatsAdapter instance;
     private FirebaseAuth mAuth;
@@ -43,12 +46,13 @@ public class MessageChatsAdapter extends RecyclerView.Adapter<MessageChatsAdapte
         return instance;
     }
 
-    public MessageChatsAdapter(Context context) {
+    public MessageChatsAdapter(Context context, NavController navController) {
         this.instance = this;
         this.context = context;
         this.viewModel = ViewModelProviders.of((FragmentActivity)context).get(MessageChatsViewModel.class);
         this.mAuth = FirebaseAuth.getInstance();
 
+        this.navController = navController;
     }
 
     @Override
@@ -121,11 +125,9 @@ public class MessageChatsAdapter extends RecyclerView.Adapter<MessageChatsAdapte
 
     public class OnChatClicked{
         public void onChatClicked(User user){
-            Intent chatIntent = new Intent(context, ChatActivity.class);
-            chatIntent.putExtra("message_following_id", user.getUid());
-            chatIntent.putExtra("message_following_username", user.getUsername());
-            chatIntent.putExtra("message_following_profile_img", user.getProfile_url());
-            context.startActivity(chatIntent);
+            MessageFragmentDirections.ActionChatGraphToChatFragment action =
+                    MessageFragmentDirections.actionChatGraphToChatFragment(user.getUid(), user.getUsername(), user.getProfile_url());
+            navController.navigate(action);
         }
     }
 

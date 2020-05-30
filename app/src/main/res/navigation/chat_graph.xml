@@ -6,5 +6,27 @@
     <fragment
         android:id="@+id/chat_graph"
         android:name="com.example.artwokmabel.chat.MessageFragment"
-        android:label="MessageFragment" />
+        android:label="MessageFragment" >
+        <action
+            android:id="@+id/action_chat_graph_to_chatFragment"
+            app:destination="@id/chatFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/messageChatsFragment"
+        android:name="com.example.artwokmabel.chat.tabs.MessageChatsFragment"
+        android:label="MessageChatsFragment" />
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.example.artwokmabel.chat.personalchat.ChatFragment"
+        android:label="ChatFragment" >
+        <argument
+            android:name="following_id"
+            app:argType="string" />
+        <argument
+            android:name="following_username"
+            app:argType="string" />
+        <argument
+            android:name="following_profile_img"
+            app:argType="string" />
+    </fragment>
 </navigation>
