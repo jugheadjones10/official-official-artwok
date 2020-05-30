@@ -77,10 +77,6 @@ public class RegistrationViewModel extends ViewModel {
         return password;
     }
 
-    public interface CollectDetailCallback{
-        void collectDetailCallback(boolean isDuplicate);
-    }
-
     public interface CreateAccountCallback{
         void createAccountCallback(boolean successful);
     }

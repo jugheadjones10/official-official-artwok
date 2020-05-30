@@ -24,21 +24,21 @@ public class PeopleActivity extends AppCompatActivity {
         setSupportActionBar(binding.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        adapter = new PeoplePagerAdapter(this);
-        binding.viewPager.setAdapter(adapter);
-
-        new TabLayoutMediator(binding.tabs, binding.viewPager,
-                new TabLayoutMediator.TabConfigurationStrategy() {
-                    @Override
-                    public void onConfigureTab(TabLayout.Tab tab, int position) {
-                        if(position == 0){
-                            tab.setText("Following");
-                        }else{
-                            tab.setText("Followers");
-                        }
-                    }
-                }
-        ).attach();
-        binding.tabs.setTabMode(TabLayout.MODE_SCROLLABLE);
+//        adapter = new PeoplePagerAdapter(this);
+//        binding.viewPager.setAdapter(adapter);
+//
+//        new TabLayoutMediator(binding.tabs, binding.viewPager,
+//                new TabLayoutMediator.TabConfigurationStrategy() {
+//                    @Override
+//                    public void onConfigureTab(TabLayout.Tab tab, int position) {
+//                        if(position == 0){
+//                            tab.setText("Following");
+//                        }else{
+//                            tab.setText("Followers");
+//                        }
+//                    }
+//                }
+//        ).attach();
+//        binding.tabs.setTabMode(TabLayout.MODE_SCROLLABLE);
     }
 }

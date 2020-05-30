@@ -15,6 +15,7 @@ import com.example.artwokmabel.R;
 import com.example.artwokmabel.Utils.TransactFragment;
 import com.example.artwokmabel.databinding.FragmentSearchUsersBinding;
 import com.example.artwokmabel.homepage.search.SearchActivity;
+import com.example.artwokmabel.homepage.search.SearchFragment;
 import com.example.artwokmabel.profile.people.FollowersAdapter;
 import com.example.artwokmabel.profile.people.ViewOtherUserActivity;
 
@@ -40,7 +41,7 @@ public class SearchUsersFragment extends Fragment {
         adapter = new FollowersAdapter(getContext(), "searchpage");
         binding.usersList.setAdapter(adapter);
 
-        SearchActivity.getInstance().callSearch("", 1);
+        SearchFragment.getInstance().callSearch("", 1);
 
         return binding.getRoot();
     }

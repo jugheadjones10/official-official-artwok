@@ -7,39 +7,55 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
+import com.example.artwokmabel.databinding.FragmentSearchBinding;
+import com.example.artwokmabel.databinding.FragmentTempSearchBinding;
 import com.example.artwokmabel.homepage.homepagewrapper.HomeTabsFragment;
 import com.example.artwokmabel.R;
 
 public class TemporarySearchFragment extends Fragment {
 
     private EditText searchView;
+    private FragmentTempSearchBinding binding;
+    private NavController navController;
+    private AppBarConfiguration appBarConfiguration;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_temp_search, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_temp_search, container, false);
 
-        Toolbar toolbar = view.findViewById(R.id.temp_search_toolbar);
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        return binding.getRoot();
+    }
 
-        searchView = view.findViewById(R.id.temp_search_edit);
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        navController = Navigation.findNavController(view);
+
+        ((AppCompatActivity)getActivity()).setSupportActionBar(binding.tempSearchToolbar);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 //        searchView.setInputType(InputType.TYPE_NULL);
 //        searchView.onActionViewExpanded();
-        searchView.setOnClickListener(new View.OnClickListener(){
+        binding.tempSearchEdit.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                //HomeTabsFragment.getInstance().loadFragment(new ProductFragment());
-                Intent intent = new Intent(getActivity(), SearchActivity.class);
-                startActivity(intent);
+                navController.navigate(R.id.action_temporarySearchFragment_to_searchFragment);
             }
         });
 
-        return view;
     }
+
 }

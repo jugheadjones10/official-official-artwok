@@ -5,11 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.example.artwokmabel.R;
@@ -24,6 +27,7 @@ public class IndivUserListingsFragment extends Fragment {
     private String indivUserId;
     private String indivUsername;
 
+    private NavController navController;
     private IndivUserListingsViewModel viewModel;
     private FragmentIndivUserListingsBinding binding;
     private ListingsAdapter adapter;
@@ -36,9 +40,6 @@ public class IndivUserListingsFragment extends Fragment {
 
         binding.recyclerview.setHasFixedSize(true);
         binding.recyclerview.setLayoutManager(new GridLayoutManager(getContext(), 2));
-
-        adapter = new ListingsAdapter(getActivity());
-        binding.recyclerview.setAdapter(adapter);
 
         Bundle bundle = this.getArguments();
         if (bundle != null) {
@@ -94,6 +95,16 @@ public class IndivUserListingsFragment extends Fragment {
     }
 
     @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        navController = Navigation.findNavController(view);
+
+        adapter = new ListingsAdapter(getActivity(), navController);
+        binding.recyclerview.setAdapter(adapter);
+    }
+
+    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         viewModel = ViewModelProviders.of(this).get(IndivUserListingsViewModel.class);
@@ -103,7 +114,7 @@ public class IndivUserListingsFragment extends Fragment {
 
     private void observeViewModel(IndivUserListingsViewModel viewModel) {
         // Update the list when the data changes
-        viewModel.getUserListingsObservable(indivUserId).observe(this, new Observer<List<Listing>>() {
+        viewModel.getUserListingsObservable(indivUserId).observe(getViewLifecycleOwner(), new Observer<List<Listing>>() {
             @Override
             public void onChanged(@Nullable List<Listing> listings) {
                 if (listings != null) {

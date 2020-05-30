@@ -6,5 +6,43 @@
     <fragment
         android:id="@+id/profile_graph"
         android:name="com.example.artwokmabel.profile.user.ProfileFragment"
-        android:label="ProfileFragment" />
+        android:label="ProfileFragment" >
+        <action
+            android:id="@+id/action_profile_graph_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_profile_graph_to_peopleFragment"
+            app:destination="@id/peopleFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.artwokmabel.profile.settings.SettingsFragment"
+        android:label="SettingsFragment" >
+        <action
+            android:id="@+id/action_settingsFragment_to_setUsernameFragment"
+            app:destination="@id/setUsernameFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_setIntroFragment"
+            app:destination="@id/setIntroFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/setUsernameFragment"
+        android:name="com.example.artwokmabel.profile.settings.SetUsernameFragment"
+        android:label="SetUsernameFragment" >
+        <argument
+            android:name="username"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/setIntroFragment"
+        android:name="com.example.artwokmabel.profile.settings.SetIntroFragment"
+        android:label="SetIntroFragment" >
+        <argument
+            android:name="Intro"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/peopleFragment"
+        android:name="com.example.artwokmabel.profile.people.PeopleFragment"
+        android:label="PeopleFragment" />
 </navigation>

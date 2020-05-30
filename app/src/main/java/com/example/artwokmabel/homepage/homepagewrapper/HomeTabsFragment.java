@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,7 +18,10 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
+import com.example.artwokmabel.HomePageActivity;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.FragmentHomeTabsBinding;
 import com.example.artwokmabel.homepage.favorites.FavoritesActivity;
@@ -31,7 +35,6 @@ public class HomeTabsFragment extends Fragment {
 
     private FragmentHomeTabsBinding binding;
     private HomeTabsPagerAdapter adapter;
-
     private NavController navController;
 
     private ArrayList<String> tabCategories;
@@ -52,7 +55,6 @@ public class HomeTabsFragment extends Fragment {
 
         instance = this;
         navController = Navigation.findNavController(view);
-        ((AppCompatActivity)getActivity()).setSupportActionBar(binding.toolbar);
 
         adapter = new HomeTabsPagerAdapter(this);
 
@@ -63,6 +65,18 @@ public class HomeTabsFragment extends Fragment {
 
         binding.tabs.setTabMode(TabLayout.MODE_SCROLLABLE);
         setUpClickListeners();
+
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                //Somehow adding the below code solved not only the "goes to splash instead of out problem"
+                //but also the start screen goes to splash and stays there problem. Why?
+                Intent a = new Intent(Intent.ACTION_MAIN);
+                a.addCategory(Intent.CATEGORY_HOME);
+                a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(a);
+            }
+        });
     }
 
     @Override
@@ -82,7 +96,6 @@ public class HomeTabsFragment extends Fragment {
         tabCategories.add("feed");
         tabCategories.add("gifts");
         adapter.setCategoriesList(tabCategories);
-
 
         // Update the list when the data changes
 //        viewModel.getCategoryListObservable().observe(getViewLifecycleOwner(), new Observer<ArrayList<String>>() {
@@ -113,15 +126,6 @@ public class HomeTabsFragment extends Fragment {
         return instance;
     }
 
-    public void loadFragment(Fragment fragment) {
-        // load fragment
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        //transaction.add(R.id.container, fragment);
-        transaction.replace(R.id.container, fragment);
-        transaction.addToBackStack(null);
-        transaction.commitAllowingStateLoss();
-    }
-
     private void setUpClickListeners(){
         binding.favBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,7 +139,6 @@ public class HomeTabsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 navController.navigate(R.id.action_home_graph_to_temporarySearchFragment);
-                //loadFragment(new TemporarySearchFragment());
             }
         });
     }

@@ -26,7 +26,7 @@ public class SettingsActivityViewModel extends ViewModel {
     }
 
     public void updateUserIntroduction(String introduction){
-        //FirestoreRepo.getInstance().updateUserIntro(introduction, mAuth.getCurrentUser().getUid());
+//        FirestoreRepo.getInstance().updateUserIntro(introduction, mAuth.getCurrentUser().getUid());
     }
 
     public void updateUserProfileUrl(String profile_url){

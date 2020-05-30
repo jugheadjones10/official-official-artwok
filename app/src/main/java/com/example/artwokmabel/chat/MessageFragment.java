@@ -10,12 +10,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
+import com.example.artwokmabel.HomePageActivity;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.chat.tabs.MessageChatsAdapter;
 import com.example.artwokmabel.chat.tabs.MessageChatsFragment;
@@ -32,6 +36,7 @@ public class MessageFragment extends Fragment implements SearchAnimationToolbar.
 
     public MainMessageFragmentBinding binding;
     private MessageFragmentPagerAdapter adapter;
+    private NavController navController;
 
     private static MessageFragment instance;
 
@@ -74,12 +79,21 @@ public class MessageFragment extends Fragment implements SearchAnimationToolbar.
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        navController = Navigation.findNavController(view);
 
         binding.toolbar.setSupportActionBar((AppCompatActivity) getActivity());
         binding.toolbar.setTitle("");
         binding.toolbar.setOnSearchQueryChangedListener(MessageFragment.this);
         binding.toolbar.setSearchTextColor(Color.BLACK);
 
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                if(!binding.toolbar.onBackPressed()){
+                    HomePageActivity.Companion.getBottomNavBar().setSelectedItemId(R.id.home_graph);
+                }
+            }
+        });
     }
 
     @Override
@@ -87,7 +101,6 @@ public class MessageFragment extends Fragment implements SearchAnimationToolbar.
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_search, menu);
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

@@ -13,6 +13,7 @@ import com.example.artwokmabel.chat.tabs.MessageOrdersViewModel
 import com.example.artwokmabel.repos.FirestoreRepo
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.badge.BadgeDrawable
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.iid.FirebaseInstanceId
 import kotlinx.android.synthetic.main.activity_home_page.*
@@ -27,9 +28,14 @@ class HomePageActivity : AppCompatActivity() {
     private var chatsViewModel: MessageChatsViewModel? = null
     private var ordersViewModel: MessageOrdersViewModel? = null
 
+    companion object{
+        var bottomNavBar: BottomNavigationView? = null
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home_page)
+        bottomNavBar = nav_view
         instance = this
         mAuth = FirebaseAuth.getInstance()
 

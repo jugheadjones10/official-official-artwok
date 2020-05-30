@@ -10,13 +10,16 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
+import androidx.navigation.NavController;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.artwokmabel.HomeGraphDirections;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.ItemHomeListingBinding;
 import com.example.artwokmabel.HomePageActivity;
 import com.example.artwokmabel.homepage.listing.ListingActivity;
+import com.example.artwokmabel.homepage.listingstab.ListingsTabFragmentDirections;
 import com.example.artwokmabel.models.Listing;
 import com.example.artwokmabel.homepage.user.IndivUserFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -34,9 +37,11 @@ public class ListingsHomeAdapter extends RecyclerView.Adapter<ListingsHomeAdapte
     private Context mContext;
     private List<Listing> listingsList;
     private FirebaseFirestore db;
+    private NavController navController;
 
-    public ListingsHomeAdapter(Context context){
+    public ListingsHomeAdapter(Context context, NavController navController){
         this.mContext = context;
+        this.navController = navController;
     }
 
     @NonNull
@@ -112,9 +117,16 @@ public class ListingsHomeAdapter extends RecyclerView.Adapter<ListingsHomeAdapte
     //Todo: might need to add on clicked to carousel view
     public class OnListingClicked{
         public void onListClicked(Listing data){
-            Intent intent = new Intent(mContext, ListingActivity.class);
-            intent.putExtra("listing", data);
-            mContext.startActivity(intent);
+//            Intent intent = new Intent(mContext, ListingActivity.class);
+//            intent.putExtra("listing", data);
+//            mContext.startActivity(intent);
+
+            HomeGraphDirections.ActionGlobalListingFragment action =
+                    HomeGraphDirections.actionGlobalListingFragment(data);
+//            HomeFeedFragmentDirections.ActionHomeFeedFragmentToListingFragment action =
+//                    HomeFeedFragmentDirections.actionHomeFeedFragmentToListingFragment(data);
+//            navController.navigate(action);
+            navController.navigate(action);
         }
     }
 

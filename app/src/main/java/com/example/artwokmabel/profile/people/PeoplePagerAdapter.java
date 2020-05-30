@@ -7,8 +7,8 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 public class PeoplePagerAdapter extends FragmentStateAdapter {
 
-    public PeoplePagerAdapter(FragmentActivity fragmentActivity) {
-        super(fragmentActivity);
+    public PeoplePagerAdapter(Fragment fragment) {
+        super(fragment);
     }
 
     @NonNull

@@ -11,8 +11,8 @@ import com.example.artwokmabel.homepage.search.tabs.SearchUsersFragment;
 
 public class SearchPagerAdapter extends FragmentStateAdapter {
 
-    public SearchPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
-        super(fragmentActivity);
+    public SearchPagerAdapter(@NonNull Fragment fragment) {
+        super(fragment);
     }
 
     @NonNull

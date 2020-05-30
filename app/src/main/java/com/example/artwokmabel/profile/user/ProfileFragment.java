@@ -7,12 +7,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.FragmentProfileBinding;
@@ -28,6 +31,7 @@ public class ProfileFragment extends Fragment {
 
     private ProfileFragmentViewModel viewModel;
     private FragmentProfileBinding binding;
+    private NavController navController;
     private FirebaseAuth mAuth;
     private String userId;
 
@@ -112,14 +116,14 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        viewModel.getNumUserListings(userId).observe(this, new Observer<Integer>() {
+        viewModel.getNumUserListings(userId).observe(getViewLifecycleOwner(), new Observer<Integer>() {
             @Override
             public void onChanged(@Nullable Integer numListings) {
                 binding.setNumlistings(numListings);
             }
         });
 
-        viewModel.getNumUserPosts(userId).observe(this, new Observer<Integer>() {
+        viewModel.getNumUserPosts(userId).observe(getViewLifecycleOwner(), new Observer<Integer>() {
             @Override
             public void onChanged(@Nullable Integer numPosts) {
                 binding.setNumposts(numPosts);
@@ -129,17 +133,20 @@ public class ProfileFragment extends Fragment {
         return binding.getRoot();
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
+        navController = Navigation.findNavController(view);
+    }
+
     public class OnPeopleClicked{
         public void onPeopleClicked(){
-            Intent intent = new Intent(getContext(), PeopleActivity.class);
-            startActivity(intent);
+            navController.navigate(R.id.action_profile_graph_to_peopleFragment);
         }
     }
 
     public class OnSettingsClicked{
         public void onSettingsClicked(){
-            Intent intent = new Intent(getContext(), SettingsActivity.class);
-            startActivity(intent);
+            navController.navigate(R.id.action_profile_graph_to_settingsFragment);
         }
     }
 

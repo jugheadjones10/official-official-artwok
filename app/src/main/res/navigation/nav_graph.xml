@@ -12,7 +12,8 @@
             app:destination="@id/loginOptionsFragment" />
         <action
             android:id="@+id/action_splashFragment_to_homePageActivity"
-            app:destination="@id/homePageActivity" />
+            app:destination="@id/homePageActivity"
+            app:popUpToInclusive="false" />
     </fragment>
     <fragment
         android:id="@+id/forgotPasswordFragment"

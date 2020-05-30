@@ -2,28 +2,33 @@ package com.example.artwokmabel.homepage.listing;
 
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
-
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.Utils.TransactFragment;
 import com.example.artwokmabel.chat.offerchat.OfferActivity;
-import com.example.artwokmabel.chat.personalchat.ChatActivity;
-import com.example.artwokmabel.databinding.ActivityListingBinding;
+import com.example.artwokmabel.databinding.FragmentListingBinding;
 import com.example.artwokmabel.homepage.callbacks.ShareClickCallback;
 import com.example.artwokmabel.models.Listing;
 import com.example.artwokmabel.models.Message;
 import com.example.artwokmabel.models.User;
+import com.example.artwokmabel.profile.settings.SetUsernameFragmentArgs;
 import com.example.artwokmabel.repos.FirestoreRepo;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -32,34 +37,42 @@ import com.squareup.picasso.Picasso;
 import com.synnapps.carouselview.ImageListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class ListingActivity extends AppCompatActivity {
+public class ListingFragment extends Fragment {
 
-    private ActivityListingBinding binding;
+    private FragmentListingBinding binding;
     private FirebaseAuth mAuth;
     private Listing listing;
     private ListingPagerAdapter adapter;
     private ListingActivityViewModel viewModel;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_listing, container, false);
 
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        adapter = new ListingPagerAdapter(this);
         mAuth = FirebaseAuth.getInstance();
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_listing);
 
-        //adapter = new ListingPagerAdapter(this);
+        ((AppCompatActivity)requireActivity()).setSupportActionBar(binding.indivToolbar);
+        ((AppCompatActivity)requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        setHasOptionsMenu(true);
         getIncomingIntent();
     }
 
     private void getIncomingIntent(){
 
-        listing = (Listing)getIntent().getSerializableExtra("listing");
+        listing = ListingFragmentArgs.fromBundle(getArguments()).getListing();
         viewModel = ViewModelProviders.of(this).get(ListingActivityViewModel.class);
 
-        viewModel.getUserObservable(mAuth.getCurrentUser().getUid()).observe(this, new Observer<User>() {
+        viewModel.getUserObservable(mAuth.getCurrentUser().getUid()).observe(getViewLifecycleOwner(), new Observer<User>() {
             @Override
             public void onChanged(@Nullable User me) {
                 if (me != null) {
@@ -94,7 +107,7 @@ public class ListingActivity extends AppCompatActivity {
             }
         });
 
-        viewModel.getUserObservable(listing.getUserid()).observe(this, new Observer<User>() {
+        viewModel.getUserObservable(listing.getUserid()).observe(getViewLifecycleOwner(), new Observer<User>() {
             @Override
             public void onChanged(@Nullable User user) {
 
@@ -112,8 +125,7 @@ public class ListingActivity extends AppCompatActivity {
 
         binding.setListing(listing);
         binding.setSharecallback(new ShareClickCallback());
-        binding.setOnofferclicked(new OnOfferClicked());
-        binding.setOnprofileclicked(new OnProfileClicked());
+        binding.setListingFragment(this);
 
         ArrayList<String> images = listing.getPhotos();
         Log.d("listing_check", images.toString());
@@ -132,7 +144,7 @@ public class ListingActivity extends AppCompatActivity {
             binding.listingImage.setPageCount(images.size());
         }
 
-        setSupportActionBar(binding.indivToolbar);
+        ((AppCompatActivity)requireActivity()).setSupportActionBar(binding.indivToolbar);
 
         if(mAuth.getCurrentUser().getUid().equals(listing.getUserid())){
             binding.indivToolbar.inflateMenu(R.menu.indiv_listing_menu_mine);
@@ -161,30 +173,24 @@ public class ListingActivity extends AppCompatActivity {
         ).attach();
     }
 
-    public class OnOfferClicked{
-        public void onOfferClicked(Listing listing){
-            Intent offerIntent = new Intent(ListingActivity.this, OfferActivity.class);
-            offerIntent.putExtra("orderchat", FirestoreRepo.getInstance().changeListingToMeBuy(listing, new Message("", "", "", "","","", "", 0, "false")));
-            startActivity(offerIntent);
-        }
+    public void onOfferClicked(Listing listing){
+        //Intent offerIntent = new Intent(ListingActivity.this, OfferActivity.class);
+        //offerIntent.putExtra("orderchat", FirestoreRepo.getInstance().changeListingToMeBuy(listing, new Message("", "", "", "","","", "", 0, "false")));
+        //startActivity(offerIntent);
     }
 
-    public class OnProfileClicked{
-        public void onProfileClicked(User user){
-            new TransactFragment().loadFragment(ListingActivity.this, user.getUid());
-        }
+    public void onProfileClicked(User user){
+        //new TransactFragment().loadFragment(ListingFragment.this, user.getUid());
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         if(mAuth.getCurrentUser().getUid().equals(listing.getUserid())){
             inflater.inflate(R.menu.indiv_listing_menu_mine, menu);
         }else{
             inflater.inflate(R.menu.indiv_listing_menu_yours, menu);
         }
-        return true;
+        super.onCreateOptionsMenu(menu,inflater);
     }
 
     @Override

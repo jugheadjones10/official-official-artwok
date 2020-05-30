@@ -13,8 +13,8 @@ public class ListingPagerAdapter extends FragmentStateAdapter {
 
     private Listing listing;
 
-    public ListingPagerAdapter(FragmentActivity fragmentActivity) {
-        super(fragmentActivity);
+    public ListingPagerAdapter(Fragment fragment) {
+        super(fragment);
     }
 
     public void setListing(Listing listing){

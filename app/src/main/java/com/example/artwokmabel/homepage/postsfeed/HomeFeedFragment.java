@@ -6,15 +6,19 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.FragmentHomeFeedBinding;
+import com.example.artwokmabel.homepage.adapters.ListingsAdapter;
 import com.example.artwokmabel.homepage.adapters.PostsAdapter;
 import com.example.artwokmabel.models.Listing;
 import com.example.artwokmabel.models.MainPost;
@@ -30,6 +34,7 @@ public class HomeFeedFragment extends Fragment {
     private HomeFeedViewModel viewModel;
     private PostsAdapter postsAdapter;
     private ListingsHomeAdapter listingsAdapter;
+    private NavController navController;
     //Todo: add horizontal scrollable listings
 
     @Override
@@ -37,15 +42,23 @@ public class HomeFeedFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home_feed, container, false);
-
         binding.recyclerview.setHasFixedSize(false);
 
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        //Below is a tricky line - take note of it. Why won't it work with the single argument version of findNavController?
+        navController = Navigation.findNavController(requireActivity(), R.id.nav_host_container);
 
         postsAdapter = new PostsAdapter(getContext());
         binding.recyclerview.setAdapter(postsAdapter);
 
         //Todo: bring back listings recycler view
-        listingsAdapter = new ListingsHomeAdapter(getContext());
+        listingsAdapter = new ListingsHomeAdapter(getContext(), navController);
 
         //InfiniteScrollAdapter wrapper = InfiniteScrollAdapter.wrap(listingsAdapter);
         //binding.horizontalRecyclerViewListings.setAdapter(wrapper);
@@ -80,9 +93,8 @@ public class HomeFeedFragment extends Fragment {
 
             }
         });
-
-        return binding.getRoot();
     }
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {

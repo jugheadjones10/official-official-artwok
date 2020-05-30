@@ -12,13 +12,19 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.artwokmabel.HomeGraphDirections;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.ItemNormalListingBinding;
 import com.example.artwokmabel.homepage.listing.ListingActivity;
+import com.example.artwokmabel.homepage.listingstab.ListingsTabFragmentDirections;
+import com.example.artwokmabel.homepage.listingstab.ListingsTabViewModel;
 import com.example.artwokmabel.models.Listing;
+import com.example.artwokmabel.profile.settings.SettingsFragmentDirections;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
@@ -33,12 +39,14 @@ public class ListingsAdapter extends RecyclerView.Adapter<ListingsAdapter.myHold
     private List<Listing> listingsList;
     private FirebaseFirestore db;
     private ListingsAdapterViewModel viewModel;
+    private NavController navController;
     private FirebaseAuth mAuth;
 
 
-    public ListingsAdapter(Context context){
+    public ListingsAdapter(Context context, NavController navController){
         this.mContext = context;
         this.mAuth = FirebaseAuth.getInstance();
+        this.navController = navController;
         viewModel = ViewModelProviders.of((FragmentActivity)context).get(ListingsAdapterViewModel.class);
     }
 
@@ -133,19 +141,16 @@ public class ListingsAdapter extends RecyclerView.Adapter<ListingsAdapter.myHold
     //Todo: might need to add on clicked to carousel view
     public class OnListingClicked{
         public void onListClicked(Listing data){
-            Intent intent = new Intent(mContext, ListingActivity.class);
-//            intent.putExtra("username", data.getUsername());
-//            intent.putExtra("postid", data.getPostid());
-//            intent.putExtra("itemname", data.getName());
-//            intent.putExtra("price", data.getPrice());
-//            intent.putExtra("itemDesc", data.getDesc());
-//            intent.putExtra("photos", data.getPhotos());
-//            intent.putExtra("refund_exxhange", data.getReturn_exchange());
-//            intent.putExtra("delivery", data.getDelivery());
-//            intent.putExtra("userid", data.getUserid());
-            intent.putExtra("listing", data);
+//            Intent intent = new Intent(mContext, ListingActivity.class);
+//            intent.putExtra("listing", data);
+//            mContext.startActivity(intent);
 
-            mContext.startActivity(intent);
+            HomeGraphDirections.ActionGlobalListingFragment action =
+                    HomeGraphDirections.actionGlobalListingFragment(data);
+//            ListingsTabFragmentDirections.ActionListingsTabFragmentToListingFragment action =
+//                    ListingsTabFragmentDirections.actionListingsTabFragmentToListingFragment(data);
+            navController.navigate(action);
+
         }
     }
 

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -294,11 +295,7 @@
                 android:textColor="#555555"
                 android:textSize="18sp" />
         </LinearLayout>
-
-
-
     </LinearLayout>
-
 
     <HorizontalScrollView
         android:layout_width="341dp"
@@ -322,3 +319,4 @@
     </HorizontalScrollView>
 
 </LinearLayout>
+</layout>

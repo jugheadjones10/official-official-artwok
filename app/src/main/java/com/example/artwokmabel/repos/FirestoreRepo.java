@@ -25,6 +25,7 @@ import com.example.artwokmabel.login.LoginActivity;
 import com.example.artwokmabel.chat.models.UserUserModel;
 import com.example.artwokmabel.login.LoginViewModel;
 import com.example.artwokmabel.login.RegistrationViewModel;
+import com.example.artwokmabel.login.callbacks.CheckDuplicateCallback;
 import com.example.artwokmabel.models.Comment;
 import com.example.artwokmabel.models.ImageMessage;
 import com.example.artwokmabel.models.Message;
@@ -391,7 +392,7 @@ public class FirestoreRepo {
 
     }
 
-    public void isEmailDuplicate(String email, RegistrationViewModel.CollectDetailCallback callback){
+    public void isEmailDuplicate(String email, CheckDuplicateCallback callback){
     db.collection("Users")
             .whereEqualTo("email", email)
             .get()
@@ -411,7 +412,7 @@ public class FirestoreRepo {
             });
     }
 
-    public void isUsernameDuplicate(String username, RegistrationViewModel.CollectDetailCallback callback){
+    public void isUsernameDuplicate(String username, CheckDuplicateCallback callback){
         db.collection("Users")
                 .whereEqualTo("username", username)
                 .get()

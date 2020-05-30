@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/home_graph"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/home_graph"
     app:startDestination="@id/home_graph">
 
     <fragment
@@ -14,5 +15,34 @@
     <fragment
         android:id="@+id/temporarySearchFragment"
         android:name="com.example.artwokmabel.homepage.search.TemporarySearchFragment"
-        android:label="TemporarySearchFragment" />
+        android:label="TemporarySearchFragment" >
+        <action
+            android:id="@+id/action_temporarySearchFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.example.artwokmabel.homepage.search.SearchFragment"
+        android:label="SearchFragment" >
+        <action
+            android:id="@+id/action_searchFragment_to_home_graph"
+            app:destination="@id/home_graph"
+            app:popUpTo="@id/home_graph" />
+    </fragment>
+    <fragment
+        android:id="@+id/listingsTabFragment"
+        android:name="com.example.artwokmabel.homepage.listingstab.ListingsTabFragment"
+        android:label="ListingsTabFragment" />
+    <fragment
+        android:id="@+id/listingFragment"
+        android:name="com.example.artwokmabel.homepage.listing.ListingFragment"
+        android:label="ListingFragment" >
+        <argument
+            android:name="listing"
+            app:argType="com.example.artwokmabel.models.Listing" />
+    </fragment>
+    <fragment
+        android:id="@+id/homeFeedFragment"
+        android:name="com.example.artwokmabel.homepage.postsfeed.HomeFeedFragment"
+        android:label="HomeFeedFragment" /><action android:id="@+id/action_global_listingFragment" app:destination="@id/listingFragment"/>
 </navigation>
