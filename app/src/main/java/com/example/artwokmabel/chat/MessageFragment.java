@@ -85,7 +85,7 @@ public class MessageFragment extends Fragment implements SearchAnimationToolbar.
             @Override
             public void onDestinationChanged(@NonNull NavController controller,
                                              @NonNull NavDestination destination, @Nullable Bundle arguments) {
-                if(destination.getId() == R.id.chatFragment) {
+                if(destination.getId() == R.id.chatFragment || destination.getId() == R.id.offerFragment || destination.getId() == R.id.reviewFragment) {
                     HomePageActivity.Companion.getBottomNavBar().setVisibility(View.GONE);
                 } else {
                     HomePageActivity.Companion.getBottomNavBar().setVisibility(View.VISIBLE);

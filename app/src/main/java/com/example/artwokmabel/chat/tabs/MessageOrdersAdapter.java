@@ -12,11 +12,13 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavController;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.Utils.TransactFragment;
+import com.example.artwokmabel.chat.MessageFragmentDirections;
 import com.example.artwokmabel.chat.offerchat.OfferActivity;
 import com.example.artwokmabel.chat.personalchat.ChatActivity;
 import com.example.artwokmabel.databinding.ItemMessageChatsBinding;
@@ -40,6 +42,7 @@ public class MessageOrdersAdapter extends RecyclerView.Adapter<MessageOrdersAdap
     private Context context;
     private MessageOrdersViewModel viewModel;
     private FirebaseAuth mAuth;
+    private NavController navController;
 
     private static MessageOrdersAdapter instance;
 
@@ -47,10 +50,11 @@ public class MessageOrdersAdapter extends RecyclerView.Adapter<MessageOrdersAdap
         return instance;
     }
 
-    public MessageOrdersAdapter(Context context) {
+    public MessageOrdersAdapter(Context context, NavController navController) {
         this.instance = this;
         this.context = context;
         this.mAuth = FirebaseAuth.getInstance();
+        this.navController = navController;
         viewModel = ViewModelProviders.of((FragmentActivity)context).get(MessageOrdersViewModel.class);
     }
 
@@ -132,11 +136,12 @@ public class MessageOrdersAdapter extends RecyclerView.Adapter<MessageOrdersAdap
 
     public class OnChatClicked{
         public void onChatClicked(OrderChat orderChat){
-            Intent orderChatIntent = new Intent(context, OfferActivity.class);
-            orderChatIntent.putExtra("orderchat", orderChat);
-//            chatIntent.putExtra("message_following_username", user.getOrderChatname());
-//            chatIntent.putExtra("message_following_profile_img", user.getProfile_url());
-            context.startActivity(orderChatIntent);
+//            Intent orderChatIntent = new Intent(context, OfferActivity.class);
+//            orderChatIntent.putExtra("orderchat", orderChat);
+//            context.startActivity(orderChatIntent);
+            MessageFragmentDirections.ActionChatGraphToOfferFragment action =
+                    MessageFragmentDirections.actionChatGraphToOfferFragment(orderChat);
+            navController.navigate(action);
         }
     }
 

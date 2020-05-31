@@ -10,6 +10,9 @@
         <action
             android:id="@+id/action_chat_graph_to_chatFragment"
             app:destination="@id/chatFragment" />
+        <action
+            android:id="@+id/action_chat_graph_to_offerFragment"
+            app:destination="@id/offerFragment" />
     </fragment>
     <fragment
         android:id="@+id/messageChatsFragment"
@@ -27,6 +30,25 @@
             app:argType="string" />
         <argument
             android:name="following_profile_img"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/offerFragment"
+        android:name="com.example.artwokmabel.chat.offerchat.OfferFragment"
+        android:label="OfferFragment" >
+        <argument
+            android:name="orderchat"
+            app:argType="com.example.artwokmabel.models.OrderChat" />
+        <action
+            android:id="@+id/action_offerFragment_to_reviewFragment"
+            app:destination="@id/reviewFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/reviewFragment"
+        android:name="com.example.artwokmabel.chat.offerchat.ReviewFragment"
+        android:label="ReviewFragment" >
+        <argument
+            android:name="listing_id"
             app:argType="string" />
     </fragment>
 </navigation>

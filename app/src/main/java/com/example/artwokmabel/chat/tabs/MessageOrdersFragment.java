@@ -10,11 +10,14 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.artwokmabel.chat.MessageFragment;
@@ -34,23 +37,32 @@ public class MessageOrdersFragment extends Fragment {
     private MessageOrdersFragmentBinding binding;
     private MessageOrdersAdapter adapter;
     private MessageOrdersViewModel viewModel;
+    private NavController navController;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.message_orders_fragment, container, false);
 
-        adapter = new MessageOrdersAdapter(getActivity());
-        binding.chatsFragmentRecyclerview.setAdapter(adapter);
-
         viewModel = ViewModelProviders.of(this).get(MessageOrdersViewModel.class);
-        observeViewModel(viewModel);
 
         return binding.getRoot();
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        //Below is a tricky line - take note of it. Why won't it work with the single argument version of findNavController?
+        navController = Navigation.findNavController(requireActivity(), R.id.nav_host_container);
+        adapter = new MessageOrdersAdapter(getActivity(), navController);
+        binding.chatsFragmentRecyclerview.setAdapter(adapter);
+
+        observeViewModel(viewModel);
+    }
+
     private void observeViewModel(MessageOrdersViewModel viewModel) {
-        viewModel.getOrdersAndSellsObservable().observe(this, new Observer<List<OrderChat>>() {
+        viewModel.getOrdersAndSellsObservable().observe(getViewLifecycleOwner(), new Observer<List<OrderChat>>() {
             @Override
             public void onChanged(@Nullable List<OrderChat> orderChats) {
                 Log.d("chattingwith", Integer.toString(orderChats.size()));
@@ -63,7 +75,7 @@ public class MessageOrdersFragment extends Fragment {
             }
         });
 
-        viewModel.getNumOfUnreadInOffersTab().observe(this, new Observer<Integer>() {
+        viewModel.getNumOfUnreadInOffersTab().observe(getViewLifecycleOwner(), new Observer<Integer>() {
             @Override
             public void onChanged(Integer integer) {
                 BadgeDrawable badge = MessageFragment.getInstance().binding.messageTabs.getTabAt(2).getOrCreateBadge();

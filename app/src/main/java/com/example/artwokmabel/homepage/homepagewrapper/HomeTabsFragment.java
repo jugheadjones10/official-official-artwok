@@ -95,6 +95,10 @@ public class HomeTabsFragment extends Fragment {
         tabCategories = new ArrayList<>();
         tabCategories.add("feed");
         tabCategories.add("gifts");
+        tabCategories.add("handmade");
+        tabCategories.add("flowers");
+        tabCategories.add("troll");
+        tabCategories.add("requests");
         adapter.setCategoriesList(tabCategories);
 
         // Update the list when the data changes
