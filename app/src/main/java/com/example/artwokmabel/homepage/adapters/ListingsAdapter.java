@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.artwokmabel.HomeGraphDirections;
+import com.example.artwokmabel.ProfileGraphDirections;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.ItemNormalListingBinding;
 import com.example.artwokmabel.homepage.listing.ListingActivity;
@@ -141,10 +142,15 @@ public class ListingsAdapter extends RecyclerView.Adapter<ListingsAdapter.myHold
     //Todo: might need to add on clicked to carousel view
     public class OnListingClicked{
         public void onListClicked(Listing data){
-            HomeGraphDirections.ActionGlobalListingFragment action =
-                    HomeGraphDirections.actionGlobalListingFragment(data);
-            navController.navigate(action);
-
+            if(navController.getCurrentDestination().getId() == R.id.profile_graph){
+                ProfileGraphDirections.ActionGlobalListingFragment2 action =
+                        ProfileGraphDirections.actionGlobalListingFragment2(data);
+                navController.navigate(action);
+            }else{
+                HomeGraphDirections.ActionGlobalListingFragment action =
+                        HomeGraphDirections.actionGlobalListingFragment(data);
+                navController.navigate(action);
+            }
         }
     }
 

@@ -56,7 +56,6 @@ public class ProfileListingsFragment extends Fragment {
         binding.profileListingsRecyclerview.setHasFixedSize(true);
         binding.profileListingsRecyclerview.setLayoutManager(new GridLayoutManager(getContext(), 2));
 
-
         return binding.getRoot();
     }
 
@@ -64,7 +63,7 @@ public class ProfileListingsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        navController = Navigation.findNavController(view);
+        navController = Navigation.findNavController(requireActivity(), R.id.nav_host_container);
 
         adapter = new ListingsAdapter(getActivity(), navController);
         binding.profileListingsRecyclerview.setAdapter(adapter);
@@ -82,7 +81,7 @@ public class ProfileListingsFragment extends Fragment {
 
     private void observeViewModel(ProfileListingsViewModel viewModel) {
         // Update the list when the data changes
-        viewModel.getListingsObeservable(userId).observe(this, new Observer<List<Listing>>() {
+        viewModel.getListingsObeservable(userId).observe(getViewLifecycleOwner(), new Observer<List<Listing>>() {
             @Override
             public void onChanged(@Nullable List<Listing> listings) {
                 if (listings != null) {

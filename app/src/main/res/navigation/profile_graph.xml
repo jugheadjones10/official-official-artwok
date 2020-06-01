@@ -45,4 +45,12 @@
         android:id="@+id/peopleFragment"
         android:name="com.example.artwokmabel.profile.people.PeopleFragment"
         android:label="PeopleFragment" />
+    <fragment
+        android:id="@+id/listingFragment2"
+        android:name="com.example.artwokmabel.homepage.listing.ListingFragment"
+        android:label="ListingFragment" >
+        <argument
+            android:name="listing"
+            app:argType="com.example.artwokmabel.models.Listing" />
+    </fragment><action android:id="@+id/action_global_listingFragment2" app:destination="@id/listingFragment2"/>
 </navigation>

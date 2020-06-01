@@ -1270,7 +1270,7 @@ public class FirestoreRepo {
     }
 
 
-        public LiveData<List<Listing>> getUserListings(String uid){
+    public LiveData<List<Listing>> getUserListings(String uid){
         final MutableLiveData<List<Listing>> data = new MutableLiveData<>();
         List<Listing> tempData = new ArrayList<>();
 
@@ -1292,6 +1292,11 @@ public class FirestoreRepo {
                         }
 
                         Collections.sort(tempData, new SortListings());
+
+//                        for(Listing listing : tempData){
+//                            Log.d("Listingsordercheck", "User listings : " + listing.getName());
+//                        }
+
                         data.setValue(tempData);
                     }
                 });
@@ -1331,6 +1336,7 @@ public class FirestoreRepo {
 
         db.collectionGroup("Listings")
             .whereArrayContains("categories", category)
+            .orderBy("nanopast", Query.Direction.DESCENDING)
             .addSnapshotListener(new EventListener<QuerySnapshot>() {
                 @Override
                 public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
@@ -1345,7 +1351,12 @@ public class FirestoreRepo {
                         tempData.add(listdata);
                     }
 
-                    Collections.sort(tempData, new SortListings());
+//                    Collections.sort(tempData, new SortListings());
+
+//                    for(Listing listing : tempData){
+//                        Log.d("Listingsordercheck", "Single cat tabs listings : " + listing.getName());
+//                    }
+
                     data.setValue(tempData);
                 }
             });
@@ -1825,23 +1836,23 @@ public class FirestoreRepo {
                     String oneFollowing = following.get(i);
 
                     Task userListingsTask = db.collection("Users")
-                            .document(userId)
-                            .collection("Listings")
-                            .get()
-                            .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                                @Override
-                                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                                    if (e != null) {
-                                        Log.w("TAG", "Listen failed.", e);
-                                        return;
-                                    }
-
-                                    for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
-                                        Listing listdata = changeDocToListingModel(doc);
-                                        tempData.add(listdata);
-                                    }
+                        .document(oneFollowing)
+                        .collection("Listings")
+                        .get()
+                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                            @Override
+                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                if (e != null) {
+                                    Log.w("TAG", "Listen failed.", e);
+                                    return;
                                 }
-                            });
+
+                                for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                                    Listing listdata = changeDocToListingModel(doc);
+                                    tempData.add(listdata);
+                                }
+                            }
+                        });
                     tasks.add(userListingsTask);
 //                    FirestoreRepo.getInstance().getUserListingsQuery(oneFollowing)
 //                            .addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -2315,7 +2326,7 @@ public class FirestoreRepo {
 
     class SortListings implements Comparator<Listing> {
         public int compare(Listing a, Listing b){
-            return (int)b.getNanopast() - (int)a.getNanopast();
+            return Math.toIntExact((b.getNanopast() - a.getNanopast())/1000);
         }
     }
 
