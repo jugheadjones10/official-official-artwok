@@ -59,7 +59,6 @@ public class HomeFeedFragment extends Fragment {
 
         //Todo: bring back listings recycler view
         listingsAdapter = new ListingsHomeAdapter(getContext(), navController);
-
         //InfiniteScrollAdapter wrapper = InfiniteScrollAdapter.wrap(listingsAdapter);
         //binding.horizontalRecyclerViewListings.setAdapter(wrapper);
         binding.horizontalRecyclerViewListings.setAdapter(listingsAdapter);

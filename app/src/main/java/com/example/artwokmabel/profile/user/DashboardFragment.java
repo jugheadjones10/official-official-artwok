@@ -104,6 +104,7 @@ public class DashboardFragment extends Fragment {
 
                         messagesList.add(message);
                         messageAdapter.notifyDataSetChanged();
+                        binding.dashboardMessagesRecyclerView.scrollToPosition(binding.dashboardMessagesRecyclerView.getAdapter().getItemCount() - 1);
                     }
 
                     @Override

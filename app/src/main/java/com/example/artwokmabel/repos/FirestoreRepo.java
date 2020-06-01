@@ -1819,29 +1819,59 @@ public class FirestoreRepo {
                 following.add(userId);
                 ///////////////////////////////////////////////////////////////
                 tempData.clear();
+
+                List<Task> tasks = new ArrayList<>();
                 for(int i = 0; i < following.size(); i++){
                     String oneFollowing = following.get(i);
-                    FirestoreRepo.getInstance().getUserListingsQuery(oneFollowing)
-                            .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                                @Override
-                                public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException e) {
 
+                    Task userListingsTask = db.collection("Users")
+                            .document(userId)
+                            .collection("Listings")
+                            .get()
+                            .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                @Override
+                                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                                     if (e != null) {
                                         Log.w("TAG", "Listen failed.", e);
                                         return;
                                     }
 
-                                    for (QueryDocumentSnapshot doc : value) {
+                                    for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
                                         Listing listdata = changeDocToListingModel(doc);
                                         tempData.add(listdata);
                                     }
-
-                                    //Below sorts posts according to date posted
-                                    Collections.sort(tempData, new SortListings());
-                                    data.setValue(tempData);
                                 }
                             });
+                    tasks.add(userListingsTask);
+//                    FirestoreRepo.getInstance().getUserListingsQuery(oneFollowing)
+//                            .addSnapshotListener(new EventListener<QuerySnapshot>() {
+//                                @Override
+//                                public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException e) {
+//
+//                                    if (e != null) {
+//                                        Log.w("TAG", "Listen failed.", e);
+//                                        return;
+//                                    }
+//
+//                                    for (QueryDocumentSnapshot doc : value) {
+//                                        Listing listdata = changeDocToListingModel(doc);
+//                                        tempData.add(listdata);
+//                                    }
+//
+//                                    //Below sorts posts according to date posted
+//                                    Collections.sort(tempData, new SortListings());
+//                                    data.setValue(tempData);
+//                                }
+//                            });
                 }
+                Tasks.whenAll(tasks.toArray(new Task[0])).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Collections.sort(tempData, new SortListings());
+                        data.setValue(tempData);
+                    }
+                });
+
             }
         });
 

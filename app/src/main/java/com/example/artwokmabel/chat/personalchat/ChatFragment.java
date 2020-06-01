@@ -155,8 +155,7 @@ public class ChatFragment extends Fragment {
         RootRef.child("Messages").child(messageMeId).child(messageFollowingId)
                 .addChildEventListener(new ChildEventListener() {
                     @Override
-                    public void onChildAdded(DataSnapshot dataSnapshot, String s)
-                    {
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
                         Message message;
                         if(dataSnapshot.child("type").getValue().equals("image")) {
