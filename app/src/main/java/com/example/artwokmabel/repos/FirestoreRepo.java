@@ -228,13 +228,11 @@ public class FirestoreRepo {
 
         newPostRef.set(newPost)
                 .addOnSuccessListener(aVoid -> {
-                    callback.onPostUploadFinished();
+                    callback.onPostUploadFinished(true);
 //                    Toast.makeText(activity, "Successfully uploaded ic_dm.", Toast.LENGTH_LONG).show();
 //                    UploadPostActivity.getInstance().onPostUploaded();
-                });
-//                .addOnFailureListener(e ->
-//                        Toast.makeText(activity, "Failed to upload ic_dm. awd", Toast.LENGTH_LONG)
-//                                .show());
+                }).addOnFailureListener(e ->
+                    callback.onPostUploadFinished(false));
     }
 
     public void uploadNewListing(String postTitle, String postDesc, ArrayList<String> categories, Long price, String delivery, String refund, String currentUserId, ArrayList<String> postImageUris, Activity activity){

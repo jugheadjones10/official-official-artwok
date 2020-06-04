@@ -21,6 +21,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.example.artwokmabel.HomePageActivity;
 import com.example.artwokmabel.R;
@@ -46,6 +47,7 @@ public class UploadPostFragment extends Fragment {
         binding.setUploadPostFragment(this);
         mAuth = FirebaseAuth.getInstance();
 
+        binding.progressBar.setVisibility(View.GONE);
         originalMode = getActivity().getWindow().getAttributes().softInputMode;
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
@@ -69,14 +71,22 @@ public class UploadPostFragment extends Fragment {
 //
 
     public interface OnPostUploadFinished{
-        void onPostUploadFinished();
+        void onPostUploadFinished(boolean isSuccessful);
     }
 
     public void onPostUpload(){
+        binding.progressBar.setVisibility(View.VISIBLE);
         //TODO Should the below database call be allowed or should it be put in a view model?
         String htmlContent = binding.editor.getHtml();
-        FirestoreRepo.getInstance().uploadNewPost(htmlContent, mAuth.getCurrentUser().getUid(), () -> {
-            navController.navigateUp();
+
+        FirestoreRepo.getInstance().uploadNewPost(htmlContent, mAuth.getCurrentUser().getUid(), (isSuccessful) -> {
+            binding.progressBar.setVisibility(View.GONE);
+            if(isSuccessful){
+                navController.navigateUp();
+            }else{
+                Toast.makeText(requireActivity(), "Failed to upload post", Toast.LENGTH_LONG)
+                        .show();
+            }
         });
     }
 

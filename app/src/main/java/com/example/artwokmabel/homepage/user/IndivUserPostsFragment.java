@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.Navigation;
 
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.FragmentIndivUserPostsBinding;
@@ -49,7 +50,7 @@ public class IndivUserPostsFragment extends Fragment {
             Log.d("crapadoodle", indivUserId);
         }
 
-        adapter = new PostsAdapter(getContext());
+        adapter = new PostsAdapter(getContext(), Navigation.findNavController(requireActivity(), R.id.nav_host_container));
         binding.recyclerview.setAdapter(adapter);
 
         return binding.getRoot();

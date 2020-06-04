@@ -52,7 +52,7 @@ public class ProfilePostsFragment extends Fragment {
 
         binding.recyclerview.setHasFixedSize(true);
 
-        adapter = new PostsAdapter(getContext());
+        adapter = new PostsAdapter(getContext(), Navigation.findNavController(requireActivity(), R.id.nav_host_container));
         binding.recyclerview.setAdapter(adapter);
 
         return binding.getRoot();
@@ -74,7 +74,7 @@ public class ProfilePostsFragment extends Fragment {
 
     private void observeViewModel(ProfilePostsViewModel viewModel) {
         // Update the list when the data changes
-        viewModel.getUserPostsObeservable(userId).observe(this, new Observer<List<MainPost>>() {
+        viewModel.getUserPostsObeservable(userId).observe(getViewLifecycleOwner(), new Observer<List<MainPost>>() {
             @Override
             public void onChanged(@Nullable List<MainPost> categories) {
                 if (categories != null) {

@@ -11,6 +11,9 @@
         <action
             android:id="@+id/action_home_graph_to_temporarySearchFragment"
             app:destination="@id/temporarySearchFragment" />
+        <action
+            android:id="@+id/action_home_graph_to_postFragment"
+            app:destination="@id/postFragment" />
     </fragment>
     <fragment
         android:id="@+id/temporarySearchFragment"
@@ -45,4 +48,12 @@
         android:id="@+id/homeFeedFragment"
         android:name="com.example.artwokmabel.homepage.postsfeed.HomeFeedFragment"
         android:label="HomeFeedFragment" /><action android:id="@+id/action_global_listingFragment" app:destination="@id/listingFragment"/>
+    <fragment
+        android:id="@+id/postFragment"
+        android:name="com.example.artwokmabel.homepage.post.PostFragment"
+        android:label="PostFragment" >
+        <argument
+            android:name="post"
+            app:argType="com.example.artwokmabel.models.MainPost" />
+    </fragment>
 </navigation>

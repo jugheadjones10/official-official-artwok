@@ -13,16 +13,21 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavController;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.artwokmabel.HomeGraphDirections;
 import com.example.artwokmabel.HomePageActivity;
+import com.example.artwokmabel.ProfileGraphDirections;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.Utils.TransactFragment;
 import com.example.artwokmabel.databinding.ItemPostBinding;
 import com.example.artwokmabel.homepage.callbacks.MainPostClickCallback;
 import com.example.artwokmabel.homepage.homepagewrapper.HomeTabsFragment;
+import com.example.artwokmabel.homepage.homepagewrapper.HomeTabsFragmentDirections;
 import com.example.artwokmabel.homepage.post.PostActivity;
+import com.example.artwokmabel.homepage.postsfeed.HomeFeedFragmentDirections;
 import com.example.artwokmabel.homepage.user.IndivUserFragment;
 import com.example.artwokmabel.models.Comment;
 import com.example.artwokmabel.models.MainPost;
@@ -45,15 +50,17 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.myHolder> {
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
     private PostsAdapterViewModel viewModel;
+    private NavController navController;
 
 //    public PostsAdapter(Context context, List<MainPost> postList) {
 //        this.postList = postList;
 //        this.mContext = context;
 //    }
 
-    public PostsAdapter(Context context){
+    public PostsAdapter(Context context, NavController navController){
         this.mAuth = FirebaseAuth.getInstance();
         this.mContext = context;
+        this.navController = navController;
 
         viewModel = ViewModelProviders.of((FragmentActivity)context).get(PostsAdapterViewModel.class);
     }
@@ -212,9 +219,13 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.myHolder> {
     public final MainPostClickCallback postClickCallback = new MainPostClickCallback() {
         @Override
         public void onClick(MainPost post) {
-            Intent intent = new Intent(mContext, PostActivity.class);
-            intent.putExtra("post", post);
-            mContext.startActivity(intent);
+//            Intent intent = new Intent(mContext, PostActivity.class);
+//            intent.putExtra("post", post);
+//            mContext.startActivity(intent);
+
+            HomeTabsFragmentDirections.ActionHomeGraphToPostFragment action =
+                    HomeTabsFragmentDirections.actionHomeGraphToPostFragment(post);
+            navController.navigate(action);
         }
     };
 
