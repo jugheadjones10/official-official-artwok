@@ -10,6 +10,8 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +34,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class UploadPostFragment extends Fragment {
 
+    private NavController navController;
     private FragmentUploadPostBinding binding;
     private FirebaseAuth mAuth;
     private int originalMode;
@@ -52,6 +55,9 @@ public class UploadPostFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        navController = Navigation.findNavController(view);
+
         initView();
     }
 
@@ -62,9 +68,16 @@ public class UploadPostFragment extends Fragment {
 //    }
 //
 
+    public interface OnPostUploadFinished{
+        void onPostUploadFinished();
+    }
+
     public void onPostUpload(){
-//        String postText = "getHTML here";
-//        FirestoreRepo.getInstance().uploadNewPost(postText, mAuth.getCurrentUser().getUid(), UploadPostFragment.this);
+        //TODO Should the below database call be allowed or should it be put in a view model?
+        String htmlContent = binding.editor.getHtml();
+        FirestoreRepo.getInstance().uploadNewPost(htmlContent, mAuth.getCurrentUser().getUid(), () -> {
+            navController.navigateUp();
+        });
     }
 
     @Override

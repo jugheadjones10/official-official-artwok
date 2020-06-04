@@ -74,7 +74,9 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.myHolder> {
         holder.binding.setProfilecallback(new OnProfileClicked());
         holder.binding.setSharecallback(shareClickCallback);
         holder.binding.setOnfavpostclicked(new OnFavPostClicked());
-        holder.binding.setFavorite(holder.binding.favorite);
+//        holder.binding.setFavorite(holder.binding.favorite);
+
+        holder.binding.postWebView.loadData(data.getDesc(), "text/html", "UTF-8");
 
         ArrayList<String> images = data.getPhotos();
         ImageListener imageListener = new ImageListener() {
@@ -88,12 +90,12 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.myHolder> {
             }
         };
 
-        holder.binding.carouselView.setImageClickListener(new ImageClickListener() {
-            @Override
-            public void onClick(int position) {
-                postClickCallback.onClick(data);
-            }
-        });
+//        holder.binding.carouselView.setImageClickListener(new ImageClickListener() {
+//            @Override
+//            public void onClick(int position) {
+//                postClickCallback.onClick(data);
+//            }
+//        });
 
         //Change this later on by adding profile url at the point of upload
         db = FirebaseFirestore.getInstance();
@@ -117,13 +119,13 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.myHolder> {
                     }
                 });
 
-        if(images != null){
-            holder.binding.carouselView.setPageCount(images.size());
-            if(images.size() == 1){
-                holder.binding.carouselView.setRadius(0);
-            }
-            holder.binding.carouselView.setImageListener(imageListener);
-        }
+//        if(images != null){
+//            holder.binding.carouselView.setPageCount(images.size());
+//            if(images.size() == 1){
+//                holder.binding.carouselView.setRadius(0);
+//            }
+//            holder.binding.carouselView.setImageListener(imageListener);
+//        }
 
 
         //CHECK THIS PART AFTER MAKING BOTH YOURS AND OTHERS POSTS APPEAR
@@ -131,69 +133,22 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.myHolder> {
 
 
 
-        if(data.getUser_id().equals(mAuth.getCurrentUser().getUid())){
-            holder.binding.favorite.setImageResource(R.drawable.menu);
-        }else{
-            viewModel.getUserFavPostsObservable().observe((FragmentActivity)mContext, new Observer<List<String>>() {
-                @Override
-                public void onChanged(@Nullable List<String> favPosts) {
-                    if (favPosts != null) {
-                        if(favPosts.contains(data.getPostId())){
-                            holder.binding.favorite.setImageResource(R.drawable.like);
-                        }else{
-                            holder.binding.favorite.setImageResource(R.drawable.favourite_post);
-                        }
-                    }
-                }
-            });
-
-//            db = FirebaseFirestore.getInstance();
-//            db.collection("Users")
-//                    .document(mAuth.getCurrentUser().getUid())
-//                    .addSnapshotListener(new EventListener<DocumentSnapshot>() {
-//                        @Override
-//                        public void onEvent(@Nullable DocumentSnapshot snapshot, @Nullable FirebaseFirestoreException e) {
-//                            if (e != null) {
-//                                Log.w("TAG", "Listen failed.", e);
-//                                return;
-//                            }
-//                            if(snapshot.exists()){
-//                                ArrayList<String> favs = (ArrayList<String>) snapshot.get("fav_posts");
-//                                if(favs.contains(data.getPostId())){
-//                                    holder.binding.favorite.setImageResource(R.drawable.like);
-//                                }else{
-//                                    holder.binding.favorite.setImageResource(R.drawable.favourite_post);
-//                                }
-//                            }
-//                        }
-//                    });
-
-//            holder.binding.favorite.setOnClickListener(new View.OnClickListener() {
+//        if(data.getUser_id().equals(mAuth.getCurrentUser().getUid())){
+//            holder.binding.favorite.setImageResource(R.drawable.menu);
+//        }else{
+//            viewModel.getUserFavPostsObservable().observe((FragmentActivity)mContext, new Observer<List<String>>() {
 //                @Override
-//                public void onClick(View v) {
-//                    db.collection("Users")
-//                            .document(mAuth.getCurrentUser().getUid())
-//                            .get()
-//                            .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-//                                @Override
-//                                public void onSuccess(DocumentSnapshot documentSnapshot) {
-//                                    ArrayList<String> favs = (ArrayList<String>) documentSnapshot.get("fav_posts");
-//                                    if(favs.contains(data.getPostId())){
-//                                        holder.binding.favorite.setImageResource(R.drawable.favourite_post);
-//                                        db.collection("Users")
-//                                            .document( mAuth.getCurrentUser().getUid())
-//                                            .update("fav_posts", FieldValue.arrayRemove(data.getPostId()));
-//                                    }else{
-//                                        holder.binding.favorite.setImageResource(R.drawable.like);
-//                                        db.collection("Users")
-//                                            .document( mAuth.getCurrentUser().getUid())
-//                                            .update("fav_posts", FieldValue.arrayUnion(data.getPostId()));
-//                                    }
-//                                }
-//                            });
+//                public void onChanged(@Nullable List<String> favPosts) {
+//                    if (favPosts != null) {
+//                        if(favPosts.contains(data.getPostId())){
+//                            holder.binding.favorite.setImageResource(R.drawable.like);
+//                        }else{
+//                            holder.binding.favorite.setImageResource(R.drawable.favourite_post);
+//                        }
+//                    }
 //                }
 //            });
-        }
+//        }
         //Todo: do i need to set on click listener for carousel view too?
     }
 

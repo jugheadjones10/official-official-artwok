@@ -42,6 +42,7 @@ import com.example.artwokmabel.models.Review;
 import com.example.artwokmabel.models.User;
 import com.example.artwokmabel.profile.uploadlisting.UploadListingAcitvity;
 import com.example.artwokmabel.profile.uploadpost.UploadPostActivity;
+import com.example.artwokmabel.profile.uploadpost.UploadPostFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -209,7 +210,7 @@ public class FirestoreRepo {
                 });
     }
 
-    public void uploadNewPost(String postText, String userId, Activity activity){
+    public void uploadNewPost(String postText, String userId, UploadPostFragment.OnPostUploadFinished callback){
         DocumentReference newPostRef = db.collection("Users").document(userId).collection("Posts").document();
 
         ArrayList<String> photos = new ArrayList<>();
@@ -227,12 +228,13 @@ public class FirestoreRepo {
 
         newPostRef.set(newPost)
                 .addOnSuccessListener(aVoid -> {
-                    Toast.makeText(activity, "Successfully uploaded ic_dm.", Toast.LENGTH_LONG).show();
-                    UploadPostActivity.getInstance().onPostUploaded();
-                })
-                .addOnFailureListener(e ->
-                        Toast.makeText(activity, "Failed to upload ic_dm. awd", Toast.LENGTH_LONG)
-                                .show());
+                    callback.onPostUploadFinished();
+//                    Toast.makeText(activity, "Successfully uploaded ic_dm.", Toast.LENGTH_LONG).show();
+//                    UploadPostActivity.getInstance().onPostUploaded();
+                });
+//                .addOnFailureListener(e ->
+//                        Toast.makeText(activity, "Failed to upload ic_dm. awd", Toast.LENGTH_LONG)
+//                                .show());
     }
 
     public void uploadNewListing(String postTitle, String postDesc, ArrayList<String> categories, Long price, String delivery, String refund, String currentUserId, ArrayList<String> postImageUris, Activity activity){

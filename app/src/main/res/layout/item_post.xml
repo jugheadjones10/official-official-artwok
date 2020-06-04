@@ -10,25 +10,23 @@
         <variable name="postclickcallback" type="com.example.artwokmabel.homepage.callbacks.MainPostClickCallback"/>
         <variable name="onfavpostclicked" type="com.example.artwokmabel.homepage.adapters.PostsAdapter.OnFavPostClicked"/>
         <variable name="post" type="com.example.artwokmabel.models.MainPost"/>
-
         <variable name="favorite" type="android.widget.ImageView"/>
     </data>
 
     <androidx.cardview.widget.CardView
-    app:cardBackgroundColor="@android:color/white"
-    android:layout_margin="2dp"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/parent_layout_card"
-    android:onClick="@{() -> postclickcallback.onClick(post)}">
-
+        app:cardBackgroundColor="@android:color/white"
+        android:layout_margin="2dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/parent_layout_card"
+        android:onClick="@{() -> postclickcallback.onClick(post)}">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
+<!--        Change above back to wrap_contet if there are bugs-->
 
-<!--        -->
         <LinearLayout
             android:id="@+id/linearLayout3"
             android:layout_width="match_parent"
@@ -38,7 +36,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
-
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profile"
@@ -92,60 +89,56 @@
 
         </LinearLayout>
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-<!--            <ImageView-->
-<!--                android:id="@+id/postimg"-->
+<!--        <RelativeLayout-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content">-->
+<!--            -->
+<!--            <com.synnapps.carouselview.CarouselView-->
+<!--                android:id="@+id/carouselView"-->
 <!--                android:layout_width="match_parent"-->
 <!--                android:layout_height="240dp"-->
-<!--                android:layout_marginTop="0dp"-->
-<!--                android:layout_marginBottom="0dp"-->
-<!--                android:scaleType="fitXY"-->
-<!--                android:src="@drawable/color_palette" />-->
-            <com.synnapps.carouselview.CarouselView
-                android:id="@+id/carouselView"
-                android:layout_width="match_parent"
-                android:layout_height="240dp"
-                app:fillColor="#FFFFFFFF"
-                app:pageColor="#00000000"
-                app:radius="6dp"
-                app:strokeColor="#FF777777"
-                app:strokeWidth="0.7dp"
-                app:autoPlay="false"
-                app:indicatorVisibility="invisible" />
+<!--                app:fillColor="#FFFFFFFF"-->
+<!--                app:pageColor="#00000000"-->
+<!--                app:radius="6dp"-->
+<!--                app:strokeColor="#FF777777"-->
+<!--                app:strokeWidth="0.7dp"-->
+<!--                app:autoPlay="false"-->
+<!--                app:indicatorVisibility="invisible" />-->
+<!--            -->
+<!--            <ImageView-->
+<!--                android:layout_width="30dp"-->
+<!--                android:layout_height="30dp"-->
+<!--                android:layout_alignParentEnd="true"-->
+<!--                android:layout_alignParentRight="true"-->
+<!--                android:layout_marginStart="5dp"-->
+<!--                android:layout_marginLeft="5dp"-->
+<!--                android:layout_marginTop="7dp"-->
+<!--                android:layout_marginEnd="15dp"-->
+<!--                android:layout_marginRight="15dp"-->
+<!--                android:layout_marginBottom="5dp"-->
+<!--                android:id="@+id/favorite"-->
+<!--                android:onClick="@{() -> onfavpostclicked.onFavPostClicked(post, favorite)}"/>-->
 
+<!--        </RelativeLayout>-->
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginStart="5dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="7dp"
-                android:layout_marginEnd="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginBottom="5dp"
-                android:id="@+id/favorite"
-                android:onClick="@{() -> onfavpostclicked.onFavPostClicked(post, favorite)}"/>
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal">-->
 
-        </RelativeLayout>
+<!--            <TextView-->
+<!--                android:id="@+id/desc"-->
+<!--                style="@style/RegularCondensed"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginLeft="10dp"-->
+<!--                android:text="@{post.desc}" />-->
+<!--        </LinearLayout>-->
 
-        <LinearLayout
+        <WebView
+            android:id="@+id/post_web_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/desc"
-                style="@style/RegularCondensed"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="@{post.desc}" />
-        </LinearLayout>
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>

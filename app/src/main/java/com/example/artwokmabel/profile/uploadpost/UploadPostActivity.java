@@ -43,8 +43,8 @@ public class UploadPostActivity extends AppCompatActivity {
 
     public class OnPostUpload{
         public void onPostUpload(){
-            String postText = "getHTML here";
-            FirestoreRepo.getInstance().uploadNewPost(postText, mAuth.getCurrentUser().getUid(), UploadPostActivity.this);
+//            String postText = "getHTML here";
+//            FirestoreRepo.getInstance().uploadNewPost(postText, mAuth.getCurrentUser().getUid());
         }
     }
 }
