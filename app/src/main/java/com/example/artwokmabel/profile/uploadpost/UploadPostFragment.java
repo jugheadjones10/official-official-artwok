@@ -63,8 +63,8 @@ public class UploadPostFragment extends Fragment {
 //
 
     public void onPostUpload(){
-        String postText = "getHTML here";
-        FirestoreRepo.getInstance().uploadNewPost(postText, mAuth.getCurrentUser().getUid(), UploadPostFragment.this);
+//        String postText = "getHTML here";
+//        FirestoreRepo.getInstance().uploadNewPost(postText, mAuth.getCurrentUser().getUid(), UploadPostFragment.this);
     }
 
     @Override
