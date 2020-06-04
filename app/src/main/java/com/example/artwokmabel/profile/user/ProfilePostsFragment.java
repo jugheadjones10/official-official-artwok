@@ -11,6 +11,8 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.FragmentProfilePostsBinding;
@@ -29,6 +31,7 @@ public class ProfilePostsFragment extends Fragment {
     private PostsAdapter adapter;
     private String userId;
     private FirebaseAuth mAuth;
+    private NavController navController;
 
     public ProfilePostsFragment(String userId){
         this.userId = userId;
@@ -56,6 +59,12 @@ public class ProfilePostsFragment extends Fragment {
     }
 
     @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        navController = Navigation.findNavController(view);
+    }
+
+    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         viewModel = ViewModelProviders.of(this).get(ProfilePostsViewModel.class);
@@ -77,8 +86,9 @@ public class ProfilePostsFragment extends Fragment {
 
     public class OnUploadButtonClicked{
         public void onUploadButtonClicked(){
-            Intent intent = new Intent(getApplicationContext(), UploadPostActivity.class);
-            startActivity(intent);
+            navController.navigate(R.id.action_profile_graph_to_uploadPostFragment);
+//            Intent intent = new Intent(getApplicationContext(), UploadPostActivity.class);
+//            startActivity(intent);
         }
     }
 

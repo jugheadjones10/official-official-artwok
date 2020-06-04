@@ -15,8 +15,10 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 
+import com.example.artwokmabel.HomePageActivity;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.FragmentProfileBinding;
 import com.example.artwokmabel.databinding.ViewProfileToolbarMeBinding;
@@ -136,6 +138,17 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
         navController = Navigation.findNavController(view);
+        navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
+            @Override
+            public void onDestinationChanged(@NonNull NavController controller,
+                                             @NonNull NavDestination destination, @Nullable Bundle arguments) {
+                if(destination.getId() == R.id.uploadPostFragment) {
+                    HomePageActivity.Companion.getBottomNavBar().setVisibility(View.GONE);
+                } else {
+                    HomePageActivity.Companion.getBottomNavBar().setVisibility(View.VISIBLE);
+                }
+            }
+        });
     }
 
     public class OnPeopleClicked{

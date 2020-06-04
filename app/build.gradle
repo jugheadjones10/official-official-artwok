@@ -174,4 +174,8 @@ dependencies {
 
     // Testing Navigation
     androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
+
+    //Color Picker
+    implementation 'com.github.QuadFlask:colorpicker:0.0.13'
+
 }
