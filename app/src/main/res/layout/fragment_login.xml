@@ -143,14 +143,14 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/login_button_material"
                 style="@style/Widget.MaterialComponents.Button.TextButton"
-                android:elevation="3dp"
-                android:layout_width="230dp"
+                android:layout_width="240dp"
                 android:layout_height="@dimen/zero_ui_login_blue_buttons"
+                android:elevation="3dp"
+                android:onClick="@{() -> LoginFragment.onLoginClicked()}"
                 android:text="Log In"
                 android:textAllCaps="false"
                 android:textColor="@color/artwok_white"
                 app:backgroundTint="@color/login_buttons_color"
-                android:onClick="@{() -> LoginFragment.onLoginClicked()}"
                 app:cornerRadius="8dp" />
         </LinearLayout>
 
