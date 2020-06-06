@@ -21,11 +21,11 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.example.artwokmabel.HomePageActivity;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.FragmentSettingsBinding;
 import com.example.artwokmabel.homepage.callbacks.ImagePickerCallback;
-import com.example.artwokmabel.login.ForgotPasswordActivity;
-import com.example.artwokmabel.login.LoginOptionsActivity;
+import com.example.artwokmabel.homepage.homepagewrapper.HomeTabsFragment;
 import com.example.artwokmabel.models.User;
 import com.example.artwokmabel.profile.uploadlisting.UploadListingAcitvity;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -66,7 +66,7 @@ public class SettingsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        navController = Navigation.findNavController(view);
+        navController = Navigation.findNavController(requireActivity(), R.id.nav_host_container);
         viewModel = new ViewModelProvider(requireActivity()).get(SettingsActivityViewModel.class);
 
         mAuth = FirebaseAuth.getInstance();
@@ -118,6 +118,9 @@ public class SettingsFragment extends Fragment {
 
     public void onLogout(){
 //        FirebaseAuth.getInstance().signOut();
+//        HomePageActivity.Companion.getBottomNavBar().setSelectedItemId(R.id.home_graph);
+//        navController.popBackStack()
+
 //        Intent intent = new Intent(SettingsActivity.this, LoginOptionsActivity.class);
 //        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 //        startActivity(intent);
@@ -145,7 +148,6 @@ public class SettingsFragment extends Fragment {
             }
         });
         alertdialog.show();
-
     }
 
     @Override
