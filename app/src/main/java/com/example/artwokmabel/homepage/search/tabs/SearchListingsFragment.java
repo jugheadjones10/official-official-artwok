@@ -51,7 +51,7 @@ public class SearchListingsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        navController = Navigation.findNavController(view);
+        navController = Navigation.findNavController(requireActivity(), R.id.nav_host_container);
 
         adapter = new ListingsAdapter(getContext(), navController);
         binding.listingsList.setAdapter(adapter);

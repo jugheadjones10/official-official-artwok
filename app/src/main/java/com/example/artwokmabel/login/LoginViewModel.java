@@ -41,6 +41,14 @@ public class LoginViewModel extends ViewModel {
         email = "";
     }
 
+    public void checkAuthenticationState(){
+        if(FirebaseAuth.getInstance().getCurrentUser() == null){
+            authenticationState.setValue(AuthenticationState.UNAUTHENTICATED);
+        }else{
+            authenticationState.setValue(AuthenticationState.AUTHENTICATED);
+        }
+    }
+
     public void authenticate(String email, String password) {
         FirestoreRepo.getInstance().logIntoAccount(email, password, (successful) -> {
             if(successful){

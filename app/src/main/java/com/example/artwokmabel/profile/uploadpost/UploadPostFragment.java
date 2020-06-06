@@ -27,11 +27,18 @@ import com.example.artwokmabel.HomePageActivity;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.FragmentUploadPostBinding;
 import com.example.artwokmabel.repos.FirestoreRepo;
-import com.flask.colorpicker.ColorPickerView;
-import com.flask.colorpicker.OnColorSelectedListener;
-import com.flask.colorpicker.builder.ColorPickerClickListener;
-import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
+import com.github.dhaval2404.colorpicker.MaterialColorPickerDialog;
+import com.github.dhaval2404.colorpicker.listener.ColorListener;
+import com.github.dhaval2404.colorpicker.model.ColorShape;
+import com.github.dhaval2404.colorpicker.model.ColorSwatch;
 import com.google.firebase.auth.FirebaseAuth;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class UploadPostFragment extends Fragment {
 
@@ -62,13 +69,6 @@ public class UploadPostFragment extends Fragment {
 
         initView();
     }
-
-//    public void onPostUploaded(){
-//        Intent intent = new Intent(requireContext(), HomePageActivity.class);
-//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//        startActivity(intent);
-//    }
-//
 
     public interface OnPostUploadFinished{
         void onPostUploadFinished(boolean isSuccessful);
@@ -202,66 +202,50 @@ public class UploadPostFragment extends Fragment {
         });
 
         binding.actionTxtColor.setOnClickListener(new View.OnClickListener() {
-            private boolean isChanged;
-
             @Override public void onClick(View v) {
-                ColorPickerDialogBuilder
-                        .with(requireContext())
-                        .setTitle("Choose color")
-                        .initialColor(Color.BLACK)
-                        .wheelType(ColorPickerView.WHEEL_TYPE.FLOWER)
-                        .density(12)
-                        .setOnColorSelectedListener(new OnColorSelectedListener() {
+                new MaterialColorPickerDialog.Builder(
+                        requireActivity(),
+                        "Choose color",
+                        "Ok",
+                        "Cancel",
+                        new ColorListener() {
                             @Override
-                            public void onColorSelected(int selectedColor) {
-                                mEditor.setTextColor(Color.parseColor("#"+Integer.toHexString(selectedColor)));
+                            public void onColorSelected(int i, @NotNull String s) {
+                                mEditor.setTextColor(Color.parseColor(s));
                             }
-                        })
-                        .setPositiveButton("ok", new ColorPickerClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int selectedColor, Integer[] allColors) {
-                                mEditor.setTextColor(Color.parseColor("#"+Integer.toHexString(selectedColor)));
-                            }
-                        })
-                        .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                            }
-                        })
-                        .build()
-                        .show();
+                        },
+                        "#f6e58d",
+                        ColorSwatch._300,
+                        ColorShape.SQAURE,
+                        new ArrayList<String>(Arrays.asList( "#f6e58d", "#ffbe76", "#ff7979", "#badc58", "#dff9fb",
+                                "#7ed6df", "#e056fd", "#686de0", "#30336b", "#95afc0"))
+                )
+                .build()
+                .show();
             }
         });
 
         binding.actionBgColor.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
-                ColorPickerDialogBuilder
-                        .with(requireContext())
-                        .setTitle("Choose color")
-                        .initialColor(Color.BLACK)
-                        .wheelType(ColorPickerView.WHEEL_TYPE.FLOWER)
-                        .density(12)
-                        .setOnColorSelectedListener(new OnColorSelectedListener() {
+                new MaterialColorPickerDialog.Builder(
+                        requireActivity(),
+                        "Choose color",
+                        "Ok",
+                        "Cancel",
+                        new ColorListener() {
                             @Override
-                            public void onColorSelected(int selectedColor) {
-                                mEditor.setTextBackgroundColor(Color.parseColor("#"+Integer.toHexString(selectedColor)));
+                            public void onColorSelected(int i, @NotNull String s) {
+                                mEditor.setTextBackgroundColor(Color.parseColor(s));
                             }
-                        })
-                        .setPositiveButton("ok", new ColorPickerClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int selectedColor, Integer[] allColors) {
-                                mEditor.setTextBackgroundColor(Color.parseColor("#"+Integer.toHexString(selectedColor)));
-                            }
-                        })
-                        .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                            }
-                        })
-                        .build()
-                        .show();
-
-
+                        },
+                        "#f6e58d",
+                        ColorSwatch._300,
+                        ColorShape.SQAURE,
+                        new ArrayList<String>(Arrays.asList( "#f6e58d", "#ffbe76", "#ff7979", "#badc58", "#dff9fb",
+                                "#7ed6df", "#e056fd", "#686de0", "#30336b", "#95afc0"))
+                )
+                .build()
+                .show();
             }
         });
 

@@ -1785,32 +1785,68 @@ public class FirestoreRepo {
                 ArrayList<String> following = (ArrayList<String>) snapshot.get("following");
                 following.add(userId);
                 ///////////////////////////////////////////////////////////////
+
                 tempData.clear();
+
+                List<Task> tasks = new ArrayList<>();
                 for(int i = 0; i < following.size(); i++){
                     String oneFollowing = following.get(i);
-                    FirestoreRepo.getInstance().getUserPostsQuery(oneFollowing)
-                        .orderBy("nanopast", Query.Direction.DESCENDING)
-                        .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                            @Override
-                            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException e) {
 
-                                if (e != null) {
-                                    Log.w("TAG", "Listen failed.", e);
-                                    return;
+                    Task userListingsTask = db.collection("Users")
+                            .document(oneFollowing)
+                            .collection("Posts")
+                            .get()
+                            .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                @Override
+                                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                    if (e != null) {
+                                        Log.w("TAG", "Listen failed.", e);
+                                        return;
+                                    }
+
+                                    for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                                        MainPost post = changeDocToMainPostModel(doc);
+                                        tempData.add(post);
+                                    }
                                 }
-
-                                for (QueryDocumentSnapshot doc : value) {
-                                    MainPost listdata = changeDocToMainPostModel(doc);
-                                    tempData.add(listdata);
-                                }
-
-                                //Below sorts posts according to date posted
-                                //Collections.sort((ArrayList)tempData, new SortMain());
-                                data.setValue(tempData);
-
-                            }
-                        });
+                            });
+                    tasks.add(userListingsTask);
                 }
+                Tasks.whenAll(tasks.toArray(new Task[0])).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Collections.sort(tempData, new SortMain());
+                        data.setValue(tempData);
+                    }
+                });
+
+
+//                tempData.clear();
+//                for(int i = 0; i < following.size(); i++){
+//                    String oneFollowing = following.get(i);
+//                    FirestoreRepo.getInstance().getUserPostsQuery(oneFollowing)
+//                        .orderBy("nanopast", Query.Direction.DESCENDING)
+//                        .addSnapshotListener(new EventListener<QuerySnapshot>() {
+//                            @Override
+//                            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException e) {
+//
+//                                if (e != null) {
+//                                    Log.w("TAG", "Listen failed.", e);
+//                                    return;
+//                                }
+//
+//                                for (QueryDocumentSnapshot doc : value) {
+//                                    MainPost listdata = changeDocToMainPostModel(doc);
+//                                    tempData.add(listdata);
+//                                }
+//
+//                                //Below sorts posts according to date posted
+//                                //Collections.sort((ArrayList)tempData, new SortMain());
+//                                data.setValue(tempData);
+//
+//                            }
+//                        });
+//                }
             }
         });
 
@@ -1854,26 +1890,6 @@ public class FirestoreRepo {
                             }
                         });
                     tasks.add(userListingsTask);
-//                    FirestoreRepo.getInstance().getUserListingsQuery(oneFollowing)
-//                            .addSnapshotListener(new EventListener<QuerySnapshot>() {
-//                                @Override
-//                                public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException e) {
-//
-//                                    if (e != null) {
-//                                        Log.w("TAG", "Listen failed.", e);
-//                                        return;
-//                                    }
-//
-//                                    for (QueryDocumentSnapshot doc : value) {
-//                                        Listing listdata = changeDocToListingModel(doc);
-//                                        tempData.add(listdata);
-//                                    }
-//
-//                                    //Below sorts posts according to date posted
-//                                    Collections.sort(tempData, new SortListings());
-//                                    data.setValue(tempData);
-//                                }
-//                            });
                 }
                 Tasks.whenAll(tasks.toArray(new Task[0])).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -2320,7 +2336,7 @@ public class FirestoreRepo {
 
     class SortMain implements Comparator<MainPost> {
         public int compare(MainPost a, MainPost b){
-            return (int)b.getNanopast() - (int)a.getNanopast();
+            return Math.toIntExact((b.getNanopast() - a.getNanopast())/1000);
         }
     }
 

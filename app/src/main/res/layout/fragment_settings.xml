@@ -6,13 +6,6 @@
     <data>
         <variable name="user" type="com.example.artwokmabel.models.User"/>
         <variable name="SettingsFragment" type="com.example.artwokmabel.profile.settings.SettingsFragment"/>
-
-<!--        <variable name="onprofilepicchange" type="com.example.artwokmabel.profile.settings.SettingsActivity.OnProfilePicChange"/>-->
-<!--        <variable name="onusernamechange" type="com.example.artwokmabel.profile.settings.SettingsActivity.OnUsernameChange"/>-->
-<!--        <variable name="onintrochange" type="com.example.artwokmabel.profile.settings.SettingsActivity.OnIntroChange"/>-->
-<!--        <variable name="onpasswordchange" type="com.example.artwokmabel.profile.settings.SettingsActivity.OnPasswordChange"/>-->
-<!--        <variable name="onlogout" type="com.example.artwokmabel.profile.settings.SettingsActivity.OnLogout"/>-->
-<!--        <variable name="ondeactivate" type="com.example.artwokmabel.profile.settings.SettingsActivity.OnDeactivate"/>-->
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
