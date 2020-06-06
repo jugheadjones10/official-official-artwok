@@ -3,6 +3,7 @@ package com.example.artwokmabel.homepage.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -83,7 +84,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.myHolder> {
         holder.binding.setOnfavpostclicked(new OnFavPostClicked());
 //        holder.binding.setFavorite(holder.binding.favorite);
 
-        holder.binding.postWebView.loadData(data.getDesc(), "text/html", "UTF-8");
+        String encoded = Base64.encodeToString(data.getDesc().getBytes(), Base64.DEFAULT);
+        holder.binding.postWebView.loadData(encoded, "text/html", "base64");
 
         ArrayList<String> images = data.getPhotos();
         ImageListener imageListener = new ImageListener() {
