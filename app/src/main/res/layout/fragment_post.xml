@@ -28,7 +28,7 @@
                 <WebView
                     android:id="@+id/post_web_view"
                     android:layout_width="match_parent"
-                    android:layout_height="300dp"/>
+                    android:layout_height="wrap_content" />
 
 <!--                <com.synnapps.carouselview.CarouselView-->
 <!--                    android:id="@+id/post_carousel"-->

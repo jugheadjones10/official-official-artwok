@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -181,7 +182,8 @@ public class PostFragment extends Fragment {
     private void getIncomingIntent() {
 
         post = PostFragmentArgs.fromBundle(getArguments()).getPost();
-        binding.postWebView.loadData(post.getDesc(), "text/html", "UTF-8");
+        String encoded = Base64.encodeToString(post.getDesc().getBytes(), Base64.DEFAULT);
+        binding.postWebView.loadData(encoded, "text/html", "base64");
 
         postId = post.getPostId();
         posterUserId = post.getUser_id();

@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Base64;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
@@ -82,10 +84,16 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.myHolder> {
         holder.binding.setProfilecallback(new OnProfileClicked());
         holder.binding.setSharecallback(shareClickCallback);
         holder.binding.setOnfavpostclicked(new OnFavPostClicked());
-//        holder.binding.setFavorite(holder.binding.favorite);
+        holder.binding.setFavorite(holder.binding.favorite);
 
         String encoded = Base64.encodeToString(data.getDesc().getBytes(), Base64.DEFAULT);
         holder.binding.postWebView.loadData(encoded, "text/html", "base64");
+        holder.binding.parentLayoutCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                postClickCallback.onClick(data);
+            }
+        });
 
         ArrayList<String> images = data.getPhotos();
         ImageListener imageListener = new ImageListener() {
@@ -139,7 +147,6 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.myHolder> {
 
         //CHECK THIS PART AFTER MAKING BOTH YOURS AND OTHERS POSTS APPEAR
         //Todo: huge rearchitecture of favorites functionality
-
 
 
 //        if(data.getUser_id().equals(mAuth.getCurrentUser().getUid())){
@@ -221,10 +228,6 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.myHolder> {
     public final MainPostClickCallback postClickCallback = new MainPostClickCallback() {
         @Override
         public void onClick(MainPost post) {
-//            Intent intent = new Intent(mContext, PostActivity.class);
-//            intent.putExtra("post", post);
-//            mContext.startActivity(intent);
-
             HomeTabsFragmentDirections.ActionHomeGraphToPostFragment action =
                     HomeTabsFragmentDirections.actionHomeGraphToPostFragment(post);
             navController.navigate(action);
@@ -256,7 +259,6 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.myHolder> {
             this.binding = binding;
         }
     }
-
 
 }
 
