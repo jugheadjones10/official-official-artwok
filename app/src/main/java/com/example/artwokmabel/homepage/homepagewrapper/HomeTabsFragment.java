@@ -46,6 +46,7 @@ public class HomeTabsFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home_tabs, container, false);
+        binding.setHomeTabsFragment(this);
 
         return binding.getRoot();
     }
@@ -64,7 +65,7 @@ public class HomeTabsFragment extends Fragment {
         ).attach();
 
         binding.tabs.setTabMode(TabLayout.MODE_SCROLLABLE);
-        setUpClickListeners();
+//        setUpClickListeners();
 
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
             @Override
@@ -130,20 +131,29 @@ public class HomeTabsFragment extends Fragment {
         return instance;
     }
 
-    private void setUpClickListeners(){
-        binding.favBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getActivity(), FavoritesActivity.class);
-                startActivity(i);
-            }
-        });
 
-        binding.mainsearchbar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navController.navigate(R.id.action_home_graph_to_temporarySearchFragment);
-            }
-        });
+    public void onFavClicked(){
+        navController.navigate(R.id.action_home_graph_to_favoritesFragment);
     }
+
+    public void onSearchClicked(){
+        navController.navigate(R.id.action_home_graph_to_temporarySearchFragment);
+    }
+
+//    private void setUpClickListeners(){
+//        binding.favBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent i = new Intent(getActivity(), FavoritesActivity.class);
+//                startActivity(i);
+//            }
+//        });
+//
+//        binding.mainsearchbar.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                navController.navigate(R.id.action_home_graph_to_temporarySearchFragment);
+//            }
+//        });
+//    }
 }

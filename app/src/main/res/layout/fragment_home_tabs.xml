@@ -4,6 +4,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="HomeTabsFragment"
+            type="com.example.artwokmabel.homepage.homepagewrapper.HomeTabsFragment" />
+    </data>
+
 <!--    <LinearLayout-->
 <!--        android:layout_height="match_parent"-->
 <!--        android:layout_width="match_parent"-->
@@ -56,6 +62,7 @@
                             android:layout_width="25dp"
                             android:layout_height="35dp"
                             android:layout_gravity="bottom"
+                            android:onClick="@{() -> HomeTabsFragment.onSearchClicked()}"
                             android:src="@drawable/search_icon" />
 
                         <ImageButton
@@ -68,6 +75,7 @@
                             android:padding="5dp"
                             android:background="@null"
                             android:scaleType="fitCenter"
+                            android:onClick="@{() -> HomeTabsFragment.onFavClicked()}"
                             android:src="@drawable/ic_heart" />
                     </LinearLayout>
                 </androidx.appcompat.widget.Toolbar>

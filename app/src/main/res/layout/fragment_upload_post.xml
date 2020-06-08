@@ -57,11 +57,12 @@
                     android:background="@color/artwok_black"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"/>
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+
                     <HorizontalScrollView
-                        android:layout_marginLeft="48dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@android:color/white"
@@ -319,15 +320,14 @@
                         </LinearLayout>
                     </HorizontalScrollView>
 
-<!--                    android:onClick="@{() -> onpostupload.onPostUpload()}"-->
-                    <ImageView
-                        android:id="@+id/image_view_done_rich"
-                        android:background="@color/artwok_black"
-                        android:padding="10dp"
-                        android:layout_alignParentLeft="true"
-                        android:src="@drawable/ic_check_white"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp" />
+<!--                    <ImageView-->
+<!--                        android:id="@+id/image_view_done_rich"-->
+<!--                        android:background="@color/artwok_black"-->
+<!--                        android:padding="10dp"-->
+<!--                        android:layout_alignParentLeft="true"-->
+<!--                        android:src="@drawable/ic_check_white"-->
+<!--                        android:layout_width="48dp"-->
+<!--                        android:layout_height="48dp" />-->
                 </RelativeLayout>
 
 
