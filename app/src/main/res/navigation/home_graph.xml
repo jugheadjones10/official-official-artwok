@@ -12,9 +12,6 @@
             android:id="@+id/action_home_graph_to_temporarySearchFragment"
             app:destination="@id/temporarySearchFragment" />
         <action
-            android:id="@+id/action_home_graph_to_postFragment"
-            app:destination="@id/postFragment" />
-        <action
             android:id="@+id/action_home_graph_to_favoritesFragment"
             app:destination="@id/favoritesFragment" />
     </fragment>
@@ -63,4 +60,15 @@
         android:id="@+id/favoritesFragment"
         android:name="com.example.artwokmabel.homepage.favorites.FavoritesFragment"
         android:label="FavoritesFragment" />
+    <action android:id="@+id/action_global_postFragment" app:destination="@id/postFragment" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.artwokmabel.profile.user.ProfileFragment"
+        android:label="ProfileFragment" >
+        <argument
+            android:name="userId"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
+    <action android:id="@+id/action_global_profileFragment" app:destination="@id/profileFragment" />
 </navigation>

@@ -9,6 +9,7 @@ import android.view.ViewStub;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -19,10 +20,12 @@ import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 
 import com.example.artwokmabel.HomePageActivity;
+import com.example.artwokmabel.ProfileGraphDirections;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.FragmentProfileBinding;
 import com.example.artwokmabel.databinding.ViewProfileToolbarMeBinding;
 import com.example.artwokmabel.databinding.ViewProfileToolbarOthersBinding;
+import com.example.artwokmabel.homepage.post.PostFragmentArgs;
 import com.example.artwokmabel.models.User;
 import com.example.artwokmabel.profile.people.PeopleActivity;
 import com.example.artwokmabel.profile.settings.SettingsActivity;
@@ -51,6 +54,7 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         mAuth = FirebaseAuth.getInstance();
 
+        userId = ProfileFragmentArgs.fromBundle(getArguments()).getUserId();
         if(userId == null){
             userId = mAuth.getCurrentUser().getUid();
         }
@@ -76,10 +80,13 @@ public class ProfileFragment extends Fragment {
                     toolbarOthersBinding = DataBindingUtil.bind(inflated);
                     toolbarOthersBinding.setOnfollclicked(new OnFollClicked());
                     toolbarOthersBinding.setOnmenuclicked(new OnMenuClicked());
+
+//                    ((AppCompatActivity) requireActivity()).setSupportActionBar(toolbarOthersBinding.inflatedProe
                 }
             });
 
             binding.profileToolbar.getViewStub().setLayoutResource(R.layout.view_profile_toolbar_others);
+
         }
 
         if (!binding.profileToolbar.isInflated()) {
@@ -142,7 +149,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onDestinationChanged(@NonNull NavController controller,
                                              @NonNull NavDestination destination, @Nullable Bundle arguments) {
-                if(destination.getId() == R.id.uploadPostFragment) {
+                if(destination.getId() == R.id.uploadPostFragment || destination.getId() == R.id.postFragment || destination.getId() == R.id.listingFragment2) {
                     HomePageActivity.Companion.getBottomNavBar().setVisibility(View.GONE);
                 } else {
                     HomePageActivity.Companion.getBottomNavBar().setVisibility(View.VISIBLE);
@@ -170,16 +177,16 @@ public class ProfileFragment extends Fragment {
     }
 
     public class OnFollClicked{
-        public void onFollClicked(){
-            if(toolbarOthersBinding.follButton.getText().toString().equals("Following")){
-                toolbarOthersBinding.follButton.setText("Follow");
+            public void onFollClicked(){
+                if(toolbarOthersBinding.follButton.getText().toString().equals("Following")){
+                    toolbarOthersBinding.follButton.setText("Follow");
 
-                viewModel.removeUserFollowing(mAuth.getCurrentUser().getUid(), userId);
-            }else{
-                toolbarOthersBinding.follButton.setText("Following");
+                    viewModel.removeUserFollowing(mAuth.getCurrentUser().getUid(), userId);
+                }else{
+                    toolbarOthersBinding.follButton.setText("Following");
 
-                viewModel.addUserFollowing(mAuth.getCurrentUser().getUid(), userId);
-            }
+                    viewModel.addUserFollowing(mAuth.getCurrentUser().getUid(), userId);
+                }
         }
     }
 }

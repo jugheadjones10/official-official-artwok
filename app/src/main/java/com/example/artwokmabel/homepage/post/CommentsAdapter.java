@@ -14,9 +14,12 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavController;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.artwokmabel.HomeGraphDirections;
+import com.example.artwokmabel.ProfileGraphDirections;
 import com.example.artwokmabel.Utils.TransactFragment;
 import com.example.artwokmabel.databinding.ItemCommentBinding;
 import com.example.artwokmabel.databinding.ItemNormalListingBinding;
@@ -43,16 +46,18 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
     private String postId;
     private String postPosterId;
     private Context mContext;
+    private NavController navController;
 
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
 
-    public CommentsAdapter(Context context, String postId, String postPosterId) {
+    public CommentsAdapter(Context context, String postId, String postPosterId, NavController navController) {
         this.mContext = context;
         this.mAuth = FirebaseAuth.getInstance();
         this.viewModel = ViewModelProviders.of((FragmentActivity)context).get(CommentsViewModel.class);
         this.postId = postId;
         this.postPosterId = postPosterId;
+        this.navController = navController;
     }
 
     @NonNull
@@ -166,7 +171,16 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
 
     public class OnProfileClicked{
         public void onProfileClicked(Comment comment){
-            new TransactFragment().loadFragment(mContext, comment.getUser_id());
+            int currentGraph = navController.getGraph().getId();
+            if(currentGraph == R.id.home_graph){
+                HomeGraphDirections.ActionGlobalProfileFragment action =
+                        HomeGraphDirections.actionGlobalProfileFragment(comment.getUser_id());
+                navController.navigate(action);
+            }else if(currentGraph == R.id.profile_graph){
+                ProfileGraphDirections.ActionProfileGraphSelf action =
+                        ProfileGraphDirections.actionProfileGraphSelf(comment.getUser_id());
+                navController.navigate(action);
+            }
         }
     }
 

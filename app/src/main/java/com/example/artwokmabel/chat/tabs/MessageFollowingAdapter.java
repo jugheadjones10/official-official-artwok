@@ -12,9 +12,11 @@ import android.widget.Filterable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavController;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.artwokmabel.ChatGraphDirections;
 import com.example.artwokmabel.Utils.TransactFragment;
 import com.example.artwokmabel.chat.personalchat.ChatActivity;
 import com.example.artwokmabel.chat.models.UserUserModel;
@@ -38,6 +40,7 @@ public class MessageFollowingAdapter extends RecyclerView.Adapter<MessageFollowi
     private Context context;
     private PeopleAdapterViewModel viewModel;
     private FirebaseAuth mAuth;
+    private NavController navController;
 
     private static MessageFollowingAdapter instance;
 
@@ -45,10 +48,11 @@ public class MessageFollowingAdapter extends RecyclerView.Adapter<MessageFollowi
         return instance;
     }
 
-    public MessageFollowingAdapter(Context context) {
+    public MessageFollowingAdapter(Context context, NavController navController) {
         this.instance = this;
         this.context = context;
         this.mAuth = FirebaseAuth.getInstance();
+        this.navController = navController;
         viewModel = ViewModelProviders.of((FragmentActivity)context).get(PeopleAdapterViewModel.class);
     }
 
@@ -124,7 +128,9 @@ public class MessageFollowingAdapter extends RecyclerView.Adapter<MessageFollowi
 
     public class OnProfileClicked{
         public void onProfileClicked(User user){
-            new TransactFragment().loadFragment(context, user.getUid());
+            ChatGraphDirections.ActionGlobalProfileFragment3 action =
+                    ChatGraphDirections.actionGlobalProfileFragment3(user.getUid());
+            navController.navigate(action);
         }
     }
 

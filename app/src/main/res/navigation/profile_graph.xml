@@ -16,6 +16,11 @@
         <action
             android:id="@+id/action_profile_graph_to_uploadPostFragment"
             app:destination="@id/uploadPostFragment" />
+        <argument
+            android:name="userId"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null"/>
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
@@ -60,4 +65,18 @@
         android:id="@+id/uploadPostFragment"
         android:name="com.example.artwokmabel.profile.uploadpost.UploadPostFragment"
         android:label="UploadPostFragment" />
+    <fragment
+        android:id="@+id/postFragment2"
+        android:name="com.example.artwokmabel.homepage.post.PostFragment"
+        android:label="PostFragment" >
+        <argument
+            android:name="post"
+            app:argType="com.example.artwokmabel.models.MainPost" />
+    </fragment>
+    <action android:id="@+id/action_global_postFragment2" app:destination="@id/postFragment2" />
+    <action android:id="@+id/action_profile_graph_self" app:destination="@id/profile_graph" >
+        <argument
+            android:name="userId"
+            app:argType="string" />
+    </action>
 </navigation>

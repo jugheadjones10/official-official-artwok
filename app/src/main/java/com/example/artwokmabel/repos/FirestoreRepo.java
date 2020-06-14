@@ -864,6 +864,60 @@ public class FirestoreRepo {
         return data;
     }
 
+    public LiveData<List<MainPost>> getUserFavPostsObjects(String userId){
+        final MutableLiveData<List<MainPost>> data = new MutableLiveData<>();
+        List<MainPost> tempData = new ArrayList<>();
+        db.collection("Users")
+                .document(userId)
+                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable DocumentSnapshot snapshot,
+                                        @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.w(TAG, "Listen failed.", e);
+                            return;
+                        }
+
+                        if (snapshot != null && snapshot.exists()) {
+
+                            ArrayList<String> favPostIds = (ArrayList<String>) snapshot.getData().get("fav_posts");
+                            tempData.clear();
+                            List<Task> tasks = new ArrayList<>();
+                            for(int i = 0; i < favPostIds.size(); i++) {
+                                Task task =  db.collectionGroup("Posts")
+                                        .whereEqualTo("postId", favPostIds.get(i))
+                                        .get()
+                                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                                if(!queryDocumentSnapshots.isEmpty()){
+                                                    for(DocumentSnapshot post: queryDocumentSnapshots){
+                                                        MainPost postObject = changeDocToMainPostModel(post);
+                                                        tempData.add(postObject);
+                                                    }
+                                                }
+                                            }
+                                        });
+                                tasks.add(task);
+                            }
+
+                            Tasks.whenAll(tasks.toArray(new Task[0]))
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Collections.sort(tempData, new SortMain());
+                                            data.setValue(tempData);
+                                        }
+                                    });
+                        } else {
+                            Log.d(TAG, " data: null");
+                        }
+                    }
+                });
+
+        return data;
+    }
+
     public LiveData<List<Listing>> getUserFavListingsObjects(String userId){
         final MutableLiveData<List<Listing>> data = new MutableLiveData<>();
         List<Listing> tempData = new ArrayList<>();
@@ -915,7 +969,7 @@ public class FirestoreRepo {
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
-                                    Log.d("thestuffreturned", "final resulting temp data" + tempData.toString());
+                                    Collections.sort(tempData, new SortListings());
                                     data.setValue(tempData);
                                 }
                             });
@@ -984,7 +1038,7 @@ public class FirestoreRepo {
                             ArrayList<String> favs = (ArrayList<String>) snapshot.get("fav_posts");
                             if (favs != null) {
                                 if(favs.contains(post.getPostId())){
-                                    favorite.setImageResource(R.drawable.favourite_post);
+                                    favorite.setImageResource(R.drawable.heart_button);
                                     Log.d("thisruns", post.getPostId());
                                     FirestoreRepo.getInstance().removeUserPostFavs(post.getPostId(), userId);
                                 }else{
@@ -2364,7 +2418,7 @@ public class FirestoreRepo {
 //        }
 //    }
 
-    private MainPost changeDocToMainPostModel(QueryDocumentSnapshot doc){
+    private MainPost changeDocToMainPostModel(DocumentSnapshot doc){
         MainPost post = new MainPost(
                 doc.getString("user_id"),
                 doc.getString("desc"),

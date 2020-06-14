@@ -5,6 +5,7 @@ import android.widget.ImageView;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.artwokmabel.models.Listing;
 import com.example.artwokmabel.repos.FirestoreRepo;
 import com.example.artwokmabel.models.MainPost;
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,6 +24,14 @@ public class PostsAdapterViewModel extends ViewModel {
 
     public LiveData<List<String>> getUserFavPostsObservable() {
         return userFavPostsObservable;
+    }
+
+    public void addUserPostFavs(String postId){
+        FirestoreRepo.getInstance().addUserPostFavs(postId, mAuth.getCurrentUser().getUid());
+    }
+
+    public void removeUserPostFavs(String postId){
+        FirestoreRepo.getInstance().removeUserPostFavs(postId,  mAuth.getCurrentUser().getUid());
     }
 
     public void switchUserFavPostsNonObservable(MainPost post, ImageView favorite){

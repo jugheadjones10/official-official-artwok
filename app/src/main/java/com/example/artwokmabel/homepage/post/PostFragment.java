@@ -10,6 +10,8 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.util.Base64;
 import android.util.Log;
@@ -21,6 +23,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.artwokmabel.HomeGraphDirections;
+import com.example.artwokmabel.ProfileGraphDirections;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.Utils.TransactFragment;
 import com.example.artwokmabel.databinding.ActivityPost2Binding;
@@ -46,6 +50,7 @@ public class PostFragment extends Fragment {
     private PostActivityViewModel viewModel;
     private MainPost post;
     private CommentsAdapter commentsAdapter;
+    private NavController navController;
 
     private FirebaseAuth mAuth;
 
@@ -77,11 +82,12 @@ public class PostFragment extends Fragment {
         ((AppCompatActivity) requireActivity()).setSupportActionBar(binding.indivToolbar);
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        navController = Navigation.findNavController(requireActivity(), R.id.nav_host_container);
+
         getIncomingIntent();
 
-        commentsAdapter = new CommentsAdapter(requireActivity(), postId, posterUserId);
+        commentsAdapter = new CommentsAdapter(requireActivity(), postId, posterUserId, navController);
         binding.commentsRecyclerView.setAdapter(commentsAdapter);
-
 
         viewModel = ViewModelProviders.of(this).get(PostActivityViewModel.class);
 
@@ -156,7 +162,16 @@ public class PostFragment extends Fragment {
     }
 
     public void onProfileClicked(User user){
-//        new TransactFragment().loadFragment(PostActivity.this, user.getUid());
+        int currentGraph = navController.getGraph().getId();
+        if(currentGraph == R.id.home_graph){
+            HomeGraphDirections.ActionGlobalProfileFragment action =
+                    HomeGraphDirections.actionGlobalProfileFragment(post.getUser_id());
+            navController.navigate(action);
+        }else if(currentGraph == R.id.profile_graph){
+            ProfileGraphDirections.ActionProfileGraphSelf action =
+                    ProfileGraphDirections.actionProfileGraphSelf(post.getUser_id());
+            navController.navigate(action);
+        }
     }
 
 

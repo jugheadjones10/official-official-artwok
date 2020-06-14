@@ -6,8 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.artwokmabel.HomePageActivity;
@@ -24,6 +28,7 @@ public class SearchUsersFragment extends Fragment {
     private FragmentSearchUsersBinding binding;
     public FollowersAdapter adapter;
     private static SearchUsersFragment instance;
+    private NavController navController;
 
     public static SearchUsersFragment getInstance(){
         return instance;
@@ -38,15 +43,19 @@ public class SearchUsersFragment extends Fragment {
         binding.usersList.setHasFixedSize(true);
         binding.usersList.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        adapter = new FollowersAdapter(getContext(), "searchpage");
-        binding.usersList.setAdapter(adapter);
 
         SearchFragment.getInstance().callSearch("", 1);
 
         return binding.getRoot();
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-
-
+        //Below is a tricky line - take note of it. Why won't it work with the single argument version of findNavController?
+        navController = Navigation.findNavController(requireActivity(), R.id.nav_host_container);
+        adapter = new FollowersAdapter(getContext(), "searchpage", navController);
+        binding.usersList.setAdapter(adapter);
+    }
 }

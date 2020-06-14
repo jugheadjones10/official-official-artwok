@@ -71,7 +71,7 @@ public class ListingsTabFragment extends Fragment {
 
     private void observeViewModel(ListingsTabViewModel viewModel) {
         // Update the list when the data changes
-        viewModel.getListingsObeservable().observe(getViewLifecycleOwner(), new Observer<List<Listing>>() {
+        viewModel.getListingsObservable().observe(getViewLifecycleOwner(), new Observer<List<Listing>>() {
             @Override
             public void onChanged(@Nullable List<Listing> listings) {
                 if (listings != null) {

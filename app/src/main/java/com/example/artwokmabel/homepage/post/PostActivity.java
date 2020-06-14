@@ -23,6 +23,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.Navigation;
 
 import com.example.artwokmabel.Utils.TransactFragment;
 import com.example.artwokmabel.databinding.ActivityPost2Binding;
@@ -99,7 +100,7 @@ public class PostActivity extends AppCompatActivity {
 
         getIncomingIntent();
 
-        commentsAdapter = new CommentsAdapter(this, postId, posterUserId);
+        commentsAdapter = new CommentsAdapter(this, postId, posterUserId, Navigation.findNavController(this, R.id.nav_host_container));
         binding.commentsRecyclerView.setAdapter(commentsAdapter);
 
 //        commentBar.bringToFront();

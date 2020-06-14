@@ -21,7 +21,7 @@ public class ListingsTabViewModel extends ViewModel {
         listingsObeservable = FirestoreRepo.getInstance().getSingleCategoryListings(cat);
     }
 
-    public LiveData<List<Listing>> getListingsObeservable() {
+    public LiveData<List<Listing>> getListingsObservable() {
         return listingsObeservable;
     }
 

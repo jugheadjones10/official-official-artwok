@@ -9,9 +9,11 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavController;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.artwokmabel.ProfileGraphDirections;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.Utils.TransactFragment;
 import com.example.artwokmabel.databinding.ItemFollowingBinding;
@@ -28,6 +30,7 @@ public class FollowingAdapter extends RecyclerView.Adapter<FollowingAdapter.myHo
     private FirebaseAuth mAuth;
     private PeopleAdapterViewModel viewModel;
     private static FollowingAdapter instance;
+    private NavController navController;
 
     public static FollowingAdapter getInstance(){
         return instance;
@@ -35,9 +38,10 @@ public class FollowingAdapter extends RecyclerView.Adapter<FollowingAdapter.myHo
 
 
 
-    public FollowingAdapter(Context context){
+    public FollowingAdapter(Context context, NavController navController){
         this.mAuth = FirebaseAuth.getInstance();
         this.mContext = context;
+        this.navController = navController;
         instance = this;
 
         viewModel = ViewModelProviders.of((FragmentActivity)context).get(PeopleAdapterViewModel.class);
@@ -134,7 +138,11 @@ public class FollowingAdapter extends RecyclerView.Adapter<FollowingAdapter.myHo
 
     public class OnUserClicked{
         public void onUserClicked(User user){
-            new TransactFragment().loadFragment(mContext, user.getUid());
+            //Unlike FollowersAdapter, this adapter only appears in the profile graph, hence there is no need to check for
+            //current destination. FollowersAdapter appears in both SearchFragment and in Profile.
+            ProfileGraphDirections.ActionProfileGraphSelf action =
+                    ProfileGraphDirections.actionProfileGraphSelf(user.getUid());
+            navController.navigate(action);
         }
     }
 

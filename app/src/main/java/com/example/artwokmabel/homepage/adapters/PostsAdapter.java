@@ -2,6 +2,8 @@ package com.example.artwokmabel.homepage.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Base64;
 import android.view.LayoutInflater;
@@ -12,14 +14,17 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.artwokmabel.ChatGraphDirections;
 import com.example.artwokmabel.HomeGraphDirections;
 import com.example.artwokmabel.HomePageActivity;
 import com.example.artwokmabel.ProfileGraphDirections;
@@ -27,10 +32,13 @@ import com.example.artwokmabel.R;
 import com.example.artwokmabel.Utils.TransactFragment;
 import com.example.artwokmabel.databinding.ItemPostBinding;
 import com.example.artwokmabel.homepage.callbacks.MainPostClickCallback;
+import com.example.artwokmabel.homepage.favorites.FavoritesFragmentDirections;
 import com.example.artwokmabel.homepage.homepagewrapper.HomeTabsFragment;
 import com.example.artwokmabel.homepage.homepagewrapper.HomeTabsFragmentDirections;
 import com.example.artwokmabel.homepage.post.PostActivity;
 import com.example.artwokmabel.homepage.postsfeed.HomeFeedFragmentDirections;
+import com.example.artwokmabel.homepage.search.SearchFragmentDirections;
+import com.example.artwokmabel.homepage.search.TemporarySearchFragmentDirections;
 import com.example.artwokmabel.homepage.user.IndivUserFragment;
 import com.example.artwokmabel.models.Comment;
 import com.example.artwokmabel.models.MainPost;
@@ -43,6 +51,7 @@ import com.squareup.picasso.Picasso;
 import com.synnapps.carouselview.ImageClickListener;
 import com.synnapps.carouselview.ImageListener;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,16 +64,10 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.myHolder> {
     private PostsAdapterViewModel viewModel;
     private NavController navController;
 
-//    public PostsAdapter(Context context, List<MainPost> postList) {
-//        this.postList = postList;
-//        this.mContext = context;
-//    }
-
     public PostsAdapter(Context context, NavController navController){
         this.mAuth = FirebaseAuth.getInstance();
         this.mContext = context;
         this.navController = navController;
-
         viewModel = ViewModelProviders.of((FragmentActivity)context).get(PostsAdapterViewModel.class);
     }
 
@@ -83,7 +86,6 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.myHolder> {
         holder.binding.setPostclickcallback(postClickCallback);
         holder.binding.setProfilecallback(new OnProfileClicked());
         holder.binding.setSharecallback(shareClickCallback);
-        holder.binding.setOnfavpostclicked(new OnFavPostClicked());
         holder.binding.setFavorite(holder.binding.favorite);
 
         String encoded = Base64.encodeToString(data.getDesc().getBytes(), Base64.DEFAULT);
@@ -107,55 +109,59 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.myHolder> {
             }
         };
 
-//        holder.binding.carouselView.setImageClickListener(new ImageClickListener() {
-//            @Override
-//            public void onClick(int position) {
-//                postClickCallback.onClick(data);
-//            }
-//        });
-
         //Change this later on by adding profile url at the point of upload
         db = FirebaseFirestore.getInstance();
         db.collection("Users")
-                .document(data.getUser_id())
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
+            .document(data.getUser_id())
+            .get()
+            .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
 
-                            Picasso.get()
-                                    .load(document.getString("profile_url"))
-                                    .placeholder(R.drawable.loading_image)
-                                    .error(R.drawable.rick_and_morty)
-                                    .into(holder.binding.profile);
-                        } else {
+                        Picasso.get()
+                                .load(document.getString("profile_url"))
+                                .placeholder(R.drawable.loading_image)
+                                .error(R.drawable.rick_and_morty)
+                                .into(holder.binding.profile);
+                    } else {
 
-                        }
                     }
-                });
-
-//        if(images != null){
-//            holder.binding.carouselView.setPageCount(images.size());
-//            if(images.size() == 1){
-//                holder.binding.carouselView.setRadius(0);
-//            }
-//            holder.binding.carouselView.setImageListener(imageListener);
-//        }
-
+                }
+            });
 
         //CHECK THIS PART AFTER MAKING BOTH YOURS AND OTHERS POSTS APPEAR
         //Todo: huge rearchitecture of favorites functionality
+        if(data.getUser_id().equals(mAuth.getCurrentUser().getUid())){
+            holder.binding.favorite.setImageResource(R.drawable.menu);
+        }else{
+            holder.binding.setOnfavpostclicked(new OnFavPostClicked());
+            viewModel.getUserFavPostsObservable().observe((FragmentActivity) mContext, new Observer<List<String>>() {
+                @Override
+                public void onChanged(List<String> favPosts) {
+                    if (favPosts.contains(data.getPostId())) {
+                        holder.binding.favorite.setImageResource(R.drawable.like);
+                    } else {
+                        holder.binding.favorite.setImageResource(R.drawable.heart_button);
+                    }
+                }
+            });
 
+//            ArrayList<String> retrievedFavPosts = (ArrayList<String>) viewModel.getUserFavPostsObservable().getValue();
+//            if (retrievedFavPosts != null) {
+//                if(retrievedFavPosts.contains(data.getPostId())){
+//                    holder.binding.favorite.setImageResource(R.drawable.like);
+//                }else{
+//                    holder.binding.favorite.setImageResource(R.drawable.favourite_post);
+//                }
+//            }
 
-//        if(data.getUser_id().equals(mAuth.getCurrentUser().getUid())){
-//            holder.binding.favorite.setImageResource(R.drawable.menu);
-//        }else{
 //            viewModel.getUserFavPostsObservable().observe((FragmentActivity)mContext, new Observer<List<String>>() {
 //                @Override
-//                public void onChanged(@Nullable List<String> favPosts) {
-//                    if (favPosts != null) {
+//                public void onChanged(@Nullable List<String> retrievedFavPosts) {
+//                    if (retrievedFavPosts != null) {
+//                        favPosts = (ArrayList<String>) retrievedFavPosts;
 //                        if(favPosts.contains(data.getPostId())){
 //                            holder.binding.favorite.setImageResource(R.drawable.like);
 //                        }else{
@@ -164,9 +170,9 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.myHolder> {
 //                    }
 //                }
 //            });
-//        }
-        //Todo: do i need to set on click listener for carousel view too?
+        }
     }
+
 
     public void setPostsList(final List<MainPost> posts) {
         if (this.postList == null) {
@@ -176,7 +182,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.myHolder> {
             DiffUtil.DiffResult result = DiffUtil.calculateDiff(new DiffUtil.Callback() {
                 @Override
                 public int getOldListSize() {
-                    return PostsAdapter.this.postList.size();
+                    return postList.size();
                 }
 
                 @Override
@@ -186,21 +192,24 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.myHolder> {
 
                 @Override
                 public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-                    return PostsAdapter.this.postList.get(oldItemPosition).getPostId() ==
-                            posts.get(newItemPosition).getPostId();
+                    return postList.get(oldItemPosition).getPostId().equals(
+                            posts.get(newItemPosition).getPostId());
                 }
 
                 @Override
                 public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
-                    return PostsAdapter.this.postList.get(oldItemPosition).getPostId() ==
-                            posts.get(newItemPosition).getPostId();
+                    return postList.get(oldItemPosition).getPostId().equals(
+                            posts.get(newItemPosition).getPostId());
+//                    return postList.get(oldItemPosition).equals(
+//                            posts.get(newItemPosition));
                 }
             });
+
             this.postList = posts;
+            notifyDataSetChanged();
             result.dispatchUpdatesTo(this);
         }
     }
-
 
 //    public final MainPostClickCallback profileImageClickCallback = new MainPostClickCallback() {
 //        @Override
@@ -228,21 +237,41 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.myHolder> {
     public final MainPostClickCallback postClickCallback = new MainPostClickCallback() {
         @Override
         public void onClick(MainPost post) {
-            HomeTabsFragmentDirections.ActionHomeGraphToPostFragment action =
-                    HomeTabsFragmentDirections.actionHomeGraphToPostFragment(post);
-            navController.navigate(action);
+            int currentDestination = navController.getCurrentDestination().getId();
+            if(currentDestination == R.id.home_graph || currentDestination == R.id.favoritesFragment){
+                HomeGraphDirections.ActionGlobalPostFragment action =
+                        HomeGraphDirections.actionGlobalPostFragment(post);
+                navController.navigate(action);
+            }else if(currentDestination == R.id.profile_graph){
+                ProfileGraphDirections.ActionGlobalPostFragment2 action =
+                        ProfileGraphDirections.actionGlobalPostFragment2(post);
+                navController.navigate(action);
+            }
         }
     };
 
     public class OnFavPostClicked{
         public void onFavPostClicked(MainPost post, ImageView favorite){
             viewModel.switchUserFavPostsNonObservable(post, favorite);
+
+//            if(((BitmapDrawable)favorite.getDrawable()).getBitmap() == ((BitmapDrawable) ResourcesCompat.getDrawable(mContext.getResources(), R.drawable.like, null)).getBitmap()){
+//                favorite.setImageResource(R.drawable.heart_button);
+//                viewModel.removeUserPostFavs(post.getPostId());
+//            }else{
+//                favorite.setImageResource(R.drawable.like);
+//                viewModel.addUserPostFavs(post.getPostId());
+//            }
         }
     }
 
     public class OnProfileClicked{
         public void onProfileClicked(MainPost post){
-            new TransactFragment().loadFragment(mContext, post.getUser_id());
+            int currentDestination = navController.getCurrentDestination().getId();
+            if(currentDestination == R.id.home_graph || currentDestination == R.id.favoritesFragment){
+                HomeGraphDirections.ActionGlobalProfileFragment action =
+                        HomeGraphDirections.actionGlobalProfileFragment(post.getUser_id());
+                navController.navigate(action);
+            }
         }
     }
 
