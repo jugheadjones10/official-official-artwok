@@ -50,6 +50,7 @@ public class IndivUserPostsFragment extends Fragment {
             Log.d("crapadoodle", indivUserId);
         }
 
+        //TODO edit the destinationId argument below
         adapter = new PostsAdapter(getContext(), Navigation.findNavController(requireActivity(), R.id.nav_host_container));
         binding.recyclerview.setAdapter(adapter);
 
@@ -66,7 +67,7 @@ public class IndivUserPostsFragment extends Fragment {
 
     private void observeViewModel(IndivUserPostsViewModel viewModel) {
         // Update the list when the data changes
-        viewModel.getUserPostsObeservable().observe(this, new Observer<List<MainPost>>() {
+        viewModel.getUserPostsObeservable().observe(getViewLifecycleOwner(), new Observer<List<MainPost>>() {
             @Override
             public void onChanged(@Nullable List<MainPost> categories) {
                 if (categories != null) {

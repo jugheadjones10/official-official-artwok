@@ -6,11 +6,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.artwokmabel.HomePageActivity;
+import com.example.artwokmabel.databinding.FragmentFavoritePostsBinding;
+import com.example.artwokmabel.homepage.adapters.PostsAdapter;
+import com.example.artwokmabel.homepage.postsfeed.HomeFeedViewModel;
 import com.example.artwokmabel.models.MainPost;
 import com.example.artwokmabel.R;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -22,98 +34,39 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class FavoritePostsFragment extends Fragment {
-    private RecyclerView recyclerView;
-    private FavoritePostsAdapter adapter;
+    private PostsAdapter postsAdapter;
+    private FragmentFavoritePostsBinding binding;
+    private FavoritePostsViewModel viewModel;
+    private NavController navController;
 
-    private ArrayList<String> favPostIds;
-    private ArrayList<MainPost> favPosts;
-
-    FirebaseFirestore db;
-    FirebaseAuth mAuth;
-    private String TAG = "FavoritePostsFragment";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_favorite_posts, container, false);
+        binding.catRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
-        View view = inflater.inflate(R.layout.fragment_favorite_posts, container, false);
-        recyclerView = view.findViewById(R.id.cat_recycler_view);
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-
-        favPostIds = new ArrayList<>();
-        favPosts = new ArrayList<>();
-
-        adapter = new FavoritePostsAdapter(getActivity(), favPosts);
-        recyclerView.setAdapter(adapter);
-
-        db = FirebaseFirestore.getInstance();
-        mAuth = FirebaseAuth.getInstance();
-
-        db.collection("Users")
-                .document(mAuth.getCurrentUser().getUid())
-                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable DocumentSnapshot snapshot,
-                                        @Nullable FirebaseFirestoreException e) {
-                        if (e != null) {
-                            Log.w(TAG, "Listen failed.", e);
-                            return;
-                        }
-
-                        if (snapshot != null && snapshot.exists()) {
-                            Log.d(TAG, " data: " + snapshot.getData());
-
-                            favPosts.clear();
-                            favPostIds = (ArrayList<String>) snapshot.getData().get("fav_posts");
-                            //Get array list of fav posts
-                            Log.d("FIC", favPostIds.toString());
-                            for (String postid : favPostIds) {
-                                db.collectionGroup("Posts")
-                                        .whereEqualTo("postId", postid)
-                                        .get()
-                                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                                            @Override
-                                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                                                for(DocumentSnapshot post: queryDocumentSnapshots){
-                                                    MainPost favPost = new MainPost(
-                                                            post.getString("user_id"),
-                                                            post.getString("desc"),
-                                                            post.getString("hashtags"),
-                                                            post.getId(),
-                                                            "stand-in-username",
-                                                            (ArrayList<String>) post.get("photos"),
-                                                            post.getString("timestamp"),
-                                                            0000
-                                                    );
-                                                    //Fav favPost = new Fav(postid,  (ArrayList<String>) document.get("photos"));
-                                                    Log.d("FIR", "FOOFOFOFFOFO" + post.get("photos").toString());
-                                                    favPosts.add(favPost);
-                                                    Log.d("FIR", "FOOFOFOFFOFO" + favPosts.toString());
-
-                                                    adapter.notifyDataSetChanged();
-                                                }
-                                            }
-
-                                        });
-                            }
-
-                        } else {
-                            Log.d(TAG, " data: null");
-                        }
-                    }
-                });
-
-        return view;
+        return binding.getRoot();
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        navController = Navigation.findNavController(requireActivity(), R.id.nav_host_container);
+        postsAdapter = new PostsAdapter(getContext(), navController);
+        binding.catRecyclerView.setAdapter(postsAdapter);
 
-    public void removeFav(){
-
-    }
-
-    public void addFav(){
-
+        viewModel = ViewModelProviders.of(this).get(FavoritePostsViewModel.class);
+        viewModel.getUserFavPostsObservable().observe(getViewLifecycleOwner(), new Observer<List<MainPost>>() {
+            @Override
+            public void onChanged(List<MainPost> mainPosts) {
+                if(mainPosts != null){
+                    postsAdapter.setPostsList(mainPosts);
+                }
+            }
+        });
     }
 }

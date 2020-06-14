@@ -63,7 +63,7 @@
             android:adjustViewBounds="true"
             android:onClick="@{() -> onfavpostclicked.onFavPostClicked(post, favorite)}"
             android:padding="10dp"
-            android:src="@drawable/favourite"
+            android:src="@drawable/heart_button"
             app:layout_constraintBottom_toTopOf="@+id/guideline4"
             app:layout_constraintEnd_toStartOf="@+id/share_button"
             app:layout_constraintTop_toTopOf="parent" />

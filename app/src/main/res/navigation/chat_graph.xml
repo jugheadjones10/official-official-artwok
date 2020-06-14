@@ -51,4 +51,14 @@
             android:name="listing_id"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/profileFragment3"
+        android:name="com.example.artwokmabel.profile.user.ProfileFragment"
+        android:label="ProfileFragment" >
+        <argument
+            android:name="userId"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
+    <action android:id="@+id/action_global_profileFragment3" app:destination="@id/profileFragment3" />
 </navigation>

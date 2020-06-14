@@ -90,4 +90,18 @@ public class MainPost implements Serializable {
         this.nanopast = nanopast;
     }
 
+    @Override
+    public MainPost clone() {
+
+        MainPost clone;
+        try {
+            clone = (MainPost) super.clone();
+
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e); //should not happen
+        }
+
+        return clone;
+    }
+
 }

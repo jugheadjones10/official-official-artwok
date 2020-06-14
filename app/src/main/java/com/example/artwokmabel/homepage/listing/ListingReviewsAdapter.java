@@ -11,9 +11,12 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavController;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.artwokmabel.HomeGraphDirections;
+import com.example.artwokmabel.ProfileGraphDirections;
 import com.example.artwokmabel.Utils.TransactFragment;
 import com.example.artwokmabel.databinding.ItemCommentBinding;
 import com.example.artwokmabel.databinding.ItemReviewBinding;
@@ -35,9 +38,11 @@ public class ListingReviewsAdapter extends RecyclerView.Adapter<ListingReviewsAd
 
     private List<Review> reviewsList;
     private Context mContext;
+    private NavController navController;
 
-    public ListingReviewsAdapter(Context context) {
+    public ListingReviewsAdapter(Context context, NavController navController) {
         this.mContext = context;
+        this.navController = navController;
     }
 
     @NonNull
@@ -52,7 +57,7 @@ public class ListingReviewsAdapter extends RecyclerView.Adapter<ListingReviewsAd
     public void onBindViewHolder(@NonNull ReviewHolder holder, int i) {
         Review data = reviewsList.get(i);
         holder.binding.setReview(data);
-        //holder.binding.setOnprofileclicked(new CommentsAdapter.OnProfileClicked());
+        holder.binding.setOnprofileclicked(new OnProfileClicked());
 
         Picasso.get().load(data.getPosterurl()).into(holder.binding.reviewProfileImage);
 
@@ -110,8 +115,17 @@ public class ListingReviewsAdapter extends RecyclerView.Adapter<ListingReviewsAd
     }
 
     public class OnProfileClicked{
-        public void onProfileClicked(Comment comment){
-            new TransactFragment().loadFragment(mContext, comment.getUser_id());
+        public void onProfileClicked(Review review){
+            int currentGraph = navController.getGraph().getId();
+            if(currentGraph == R.id.home_graph){
+                HomeGraphDirections.ActionGlobalProfileFragment action =
+                        HomeGraphDirections.actionGlobalProfileFragment(review.getPosterid());
+                navController.navigate(action);
+            }else if(currentGraph == R.id.profile_graph){
+                ProfileGraphDirections.ActionProfileGraphSelf action =
+                        ProfileGraphDirections.actionProfileGraphSelf(review.getPosterid());
+                navController.navigate(action);
+            }
         }
     }
 

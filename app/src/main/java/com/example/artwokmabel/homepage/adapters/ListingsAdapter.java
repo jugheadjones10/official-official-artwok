@@ -2,6 +2,7 @@ package com.example.artwokmabel.homepage.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -18,12 +19,14 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.artwokmabel.HomeGraphDirections;
+import com.example.artwokmabel.HomePageActivity;
 import com.example.artwokmabel.ProfileGraphDirections;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.ItemNormalListingBinding;
 import com.example.artwokmabel.homepage.listing.ListingActivity;
 import com.example.artwokmabel.homepage.listingstab.ListingsTabFragmentDirections;
 import com.example.artwokmabel.homepage.listingstab.ListingsTabViewModel;
+import com.example.artwokmabel.homepage.user.IndivUserFragment;
 import com.example.artwokmabel.models.Listing;
 import com.example.artwokmabel.profile.settings.SettingsFragmentDirections;
 import com.google.firebase.auth.FirebaseAuth;
@@ -54,7 +57,6 @@ public class ListingsAdapter extends RecyclerView.Adapter<ListingsAdapter.myHold
     @NonNull
     @Override
     public myHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
-
         ItemNormalListingBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.item_normal_listing, parent,false);
         return new ListingsAdapter.myHolder(binding);
     }
@@ -66,9 +68,7 @@ public class ListingsAdapter extends RecyclerView.Adapter<ListingsAdapter.myHold
         myHolder.binding.setListingclickcallback(new OnListingClicked());
         //myHolder.binding.setProfilecallback(new OnProfileClicked());
         myHolder.binding.setListing(data);
-
         myHolder.binding.setFavorite(myHolder.binding.normalListingLike);
-
         myHolder.binding.normalListingLike.bringToFront();
 
         ArrayList<String> images = data.getPhotos();
@@ -154,23 +154,27 @@ public class ListingsAdapter extends RecyclerView.Adapter<ListingsAdapter.myHold
         }
     }
 
-//    public class OnProfileClicked{
-//        public void onProfileClicked(Listing data){
-//            IndivUserFragment indivUserFrag = new IndivUserFragment();
-//            Bundle args = new Bundle();
-//            args.putString("poster_username", data.getUsername());
-//            indivUserFrag.setArguments(args);
-//            HomePageActivity.getInstance().loadFragment(indivUserFrag);
-//        }
-//    }
+    public class OnProfileClicked{
+        public void onProfileClicked(Listing data){
+            //Uncomment if we eventually decide to bring back the profile photo in listings outside
+//            int currentDestination = navController.getCurrentDestination().getId();
+//            if(currentDestination == R.id.home_graph || currentDestination == R.id.favoritesFragment){
+//                HomeGraphDirections.ActionGlobalProfileFragment action =
+//                        HomeGraphDirections.actionGlobalProfileFragment(data.getUserid());
+//                navController.navigate(action);
+//            }else if(currentDestination == R.id.profile_graph){
+//                ProfileGraphDirections.ActionProfileGraphSelf action =
+//                        ProfileGraphDirections.actionProfileGraphSelf(data.getUserid());
+//                navController.navigate(action);
+//            }
+        }
+    }
 
     public class OnFavListingClicked{
         public void onFavListingClicked(Listing listing, ImageView favorite){
             viewModel.switchUserFavListingsNonObservable(listing, favorite);
         }
     }
-
-
 
     public void setListingsList(final List<Listing> listings) {
         if (this.listingsList == null) {

@@ -9,9 +9,12 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavController;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.artwokmabel.HomeGraphDirections;
+import com.example.artwokmabel.ProfileGraphDirections;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.Utils.TransactFragment;
 import com.example.artwokmabel.databinding.ItemFollowerBinding;
@@ -30,6 +33,7 @@ public class FollowersAdapter extends RecyclerView.Adapter<FollowersAdapter.myHo
     private FirebaseAuth mAuth;
     private PeopleAdapterViewModel viewModel;
     private static FollowersAdapter instance;
+    private NavController navController;
 
     private String forWhat;
 
@@ -38,10 +42,11 @@ public class FollowersAdapter extends RecyclerView.Adapter<FollowersAdapter.myHo
     }
 
 
-    public FollowersAdapter(Context context, String forWhat){
+    public FollowersAdapter(Context context, String forWhat, NavController navController){
         this.mAuth = FirebaseAuth.getInstance();
         this.mContext = context;
         this.forWhat = forWhat;
+        this.navController = navController;
         instance = this;
 
         viewModel = ViewModelProviders.of((FragmentActivity)context).get(PeopleAdapterViewModel.class);
@@ -155,7 +160,16 @@ public class FollowersAdapter extends RecyclerView.Adapter<FollowersAdapter.myHo
 
     public class OnUserClicked{
         public void onUserClicked(User user){
-            new TransactFragment().loadFragment(mContext, user.getUid());
+            int currentDestination = navController.getCurrentDestination().getId();
+            if(currentDestination == R.id.searchFragment) {
+                HomeGraphDirections.ActionGlobalProfileFragment action =
+                        HomeGraphDirections.actionGlobalProfileFragment(user.getUid());
+                navController.navigate(action);
+            }else if(currentDestination == R.id.peopleFragment){
+                ProfileGraphDirections.ActionProfileGraphSelf action =
+                        ProfileGraphDirections.actionProfileGraphSelf(user.getUid());
+                navController.navigate(action);
+            }
         }
     }
 

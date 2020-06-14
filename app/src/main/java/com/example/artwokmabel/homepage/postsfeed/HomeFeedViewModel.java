@@ -32,4 +32,8 @@ public class HomeFeedViewModel extends ViewModel {
         return feedListingsObeservable;
     }
 
+    public LiveData<List<String>> getUserFavPostsObservable() {
+        return FirestoreRepo.getInstance().getUserFavPosts(mAuth.getCurrentUser().getUid());
+    }
+
 }

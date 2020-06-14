@@ -16,6 +16,8 @@ import androidx.navigation.NavController;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.artwokmabel.ChatGraphDirections;
+import com.example.artwokmabel.ProfileGraphDirections;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.Utils.TransactFragment;
 import com.example.artwokmabel.chat.MessageFragmentDirections;
@@ -133,7 +135,9 @@ public class MessageChatsAdapter extends RecyclerView.Adapter<MessageChatsAdapte
 
     public class OnProfileClicked{
         public void onProfileClicked(User user){
-            new TransactFragment().loadFragment(context, user.getUid());
+            ChatGraphDirections.ActionGlobalProfileFragment3 action =
+                    ChatGraphDirections.actionGlobalProfileFragment3(user.getUid());
+            navController.navigate(action);
         }
     }
 
