@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.artwokmabel.HomeGraphDirections;
 import com.example.artwokmabel.ProfileGraphDirections;
+import com.example.artwokmabel.Utils.TimeWrangler;
 import com.example.artwokmabel.Utils.TransactFragment;
 import com.example.artwokmabel.databinding.ItemCommentBinding;
 import com.example.artwokmabel.databinding.ItemNormalListingBinding;
@@ -73,6 +74,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
         Comment data = commentsList.get(i);
         holder.binding.setComment(data);
         holder.binding.setOnprofileclicked(new OnProfileClicked());
+        holder.binding.setTime(TimeWrangler.changeNanopastToReadableDate(data.getDate_created()));
 
         Picasso.get().load(data.getPoster_url()).into(holder.binding.commentProfileImage);
 

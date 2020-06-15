@@ -89,7 +89,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.myHolder> {
         holder.binding.setFavorite(holder.binding.favorite);
 
         String encoded = Base64.encodeToString(data.getDesc().getBytes(), Base64.DEFAULT);
-        holder.binding.postWebView.loadData(encoded, "text/html", "base64");
+//        holder.binding.postWebView.loadData(encoded, "text/html", "base64");
         holder.binding.parentLayoutCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

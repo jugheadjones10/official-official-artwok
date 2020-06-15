@@ -4,6 +4,9 @@
 
     <data>
         <variable name="comment" type="com.example.artwokmabel.models.Comment"/>
+        <variable
+            name="time"
+            type="String" />
         <variable name="ondeleteclicked" type="com.example.artwokmabel.homepage.post.CommentsAdapter.OnDeleteClicked"/>
         <variable name="onprofileclicked" type="com.example.artwokmabel.homepage.post.CommentsAdapter.OnProfileClicked"/>
     </data>
@@ -69,35 +72,23 @@
                 android:layout_below="@+id/comment"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="10dp"
-                android:text="3 d"
+                android:text="@{time}"
                 android:textColor="@color/cat_bar_grey"
                 android:textSize="12sp" />
 
+<!--            Reply button : We may need this in the future-->
 <!--            <TextView-->
+<!--                android:id="@+id/comment_reply"-->
 <!--                android:layout_width="wrap_content"-->
 <!--                android:layout_height="wrap_content"-->
-<!--                android:text="20 likes"-->
-<!--                android:textStyle="bold"-->
-<!--                android:textColor="@color/cat_bar_grey"-->
-<!--                android:textSize="14sp"-->
-<!--                android:id="@+id/comment_likes"-->
-<!--                android:layout_marginTop="15dp"-->
-<!--                android:layout_marginLeft="15dp"-->
 <!--                android:layout_below="@+id/comment"-->
-<!--                android:layout_toRightOf="@+id/comment_time_posted"/>-->
-
-            <TextView
-                android:id="@+id/comment_reply"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/comment"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="10dp"
-                android:layout_toRightOf="@+id/comment_time_posted"
-                android:text="Reply"
-                android:textColor="@color/cat_bar_grey"
-                android:textSize="12sp"
-                android:textStyle="bold" />
+<!--                android:layout_marginLeft="15dp"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:layout_toRightOf="@+id/comment_time_posted"-->
+<!--                android:text="Reply"-->
+<!--                android:textColor="@color/cat_bar_grey"-->
+<!--                android:textSize="12sp"-->
+<!--                android:textStyle="bold" />-->
 
 
         </RelativeLayout>
