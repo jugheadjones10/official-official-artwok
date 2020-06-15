@@ -6,6 +6,9 @@
     <data>
         <variable name="review" type="com.example.artwokmabel.models.Review"/>
 <!--        <variable name="ondeleteclicked" type="com.example.artwokmabel.homepage.post.CommentsAdapter.OnDeleteClicked"/>-->
+        <variable
+            name="time"
+            type="String" />
         <variable name="onprofileclicked" type="com.example.artwokmabel.homepage.listing.ListingReviewsAdapter.OnProfileClicked"/>
     </data>
 
@@ -70,7 +73,7 @@
                 android:layout_below="@+id/review"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="10dp"
-                android:text="3 d"
+                android:text="@{time}"
                 android:textColor="@color/cat_bar_grey"
                 android:textSize="12sp" />
 

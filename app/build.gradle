@@ -23,7 +23,28 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+//        debug{
+//            ext.enableCrashlytics = false
+//            crunchPngs false
+//        }
     }
+//    flavorDimensions "version"
+//    productFlavors {
+//        // When building a variant that uses this flavor, the following configurations
+//        // override those in the defaultConfig block.
+//        dev {
+//            minSdkVersion 24
+//            versionNameSuffix "-dev"
+//            applicationIdSuffix '.dev'
+//        }
+//
+//        prod {
+//            // If you've configured the defaultConfig block for the release version of
+//            // your app, you can leave this block empty and Gradle uses configurations in
+//            // the defaultConfig block instead. You still need to create this flavor.
+//            // Otherwise, all variants use the "dev" flavor configurations.
+//        }
+//    }
     packagingOptions {
         exclude 'META-INF/LICENSE'
         exclude 'META-INF/LICENSE-FIREBASE.txt'

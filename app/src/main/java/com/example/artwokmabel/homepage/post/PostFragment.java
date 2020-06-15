@@ -135,7 +135,6 @@ public class PostFragment extends Fragment {
             }
         });
 
-
         viewModel.getCommentsObservable(postId, posterUserId).observe(getViewLifecycleOwner(), new Observer<List<Comment>>() {
             @Override
             public void onChanged(@Nullable List<Comment> commentsList) {
@@ -173,7 +172,6 @@ public class PostFragment extends Fragment {
             navController.navigate(action);
         }
     }
-
 
 //    @Override
 //    public boolean onOptionsItemSelected(MenuItem item) {
@@ -214,15 +212,5 @@ public class PostFragment extends Fragment {
                         .into(imageView);
             }
         };
-
-//        if (images != null) {
-//            binding.postCarousel.setPageCount(images.size());
-//            binding.postCarousel.setImageListener(imageListener);
-//
-//            if (images.size() == 1) {
-//                binding.postCarousel.setRadius(0);
-//            }
-//        }
-
     }
 }

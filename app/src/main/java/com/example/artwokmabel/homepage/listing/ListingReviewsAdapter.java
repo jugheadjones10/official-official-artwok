@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.artwokmabel.HomeGraphDirections;
 import com.example.artwokmabel.ProfileGraphDirections;
+import com.example.artwokmabel.Utils.TimeWrangler;
 import com.example.artwokmabel.Utils.TransactFragment;
 import com.example.artwokmabel.databinding.ItemCommentBinding;
 import com.example.artwokmabel.databinding.ItemReviewBinding;
@@ -58,6 +59,7 @@ public class ListingReviewsAdapter extends RecyclerView.Adapter<ListingReviewsAd
         Review data = reviewsList.get(i);
         holder.binding.setReview(data);
         holder.binding.setOnprofileclicked(new OnProfileClicked());
+        holder.binding.setTime(TimeWrangler.changeNanopastToReadableDate(data.getNanopast()));
 
         Picasso.get().load(data.getPosterurl()).into(holder.binding.reviewProfileImage);
 

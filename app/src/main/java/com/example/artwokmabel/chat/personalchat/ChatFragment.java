@@ -259,7 +259,6 @@ public class ChatFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == UploadListingAcitvity.REQUEST_IMAGE) {
             if (resultCode == RESULT_OK) {
-
                 if (data != null) {
                     Uri fileUri = data.getParcelableExtra("path");
 
@@ -280,7 +279,6 @@ public class ChatFragment extends Fragment {
 
                                 }
                             });
-
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
@@ -296,7 +294,7 @@ public class ChatFragment extends Fragment {
         }
     }
 
-    //Combine this wiht sendMessage to reduce code length
+    //Combine this with sendMessage to reduce code length
     private void sendImageMessage(String imageUrl){
 
         String messageSenderRef = "Messages/" + messageMeId + "/" + messageFollowingId;
@@ -341,8 +339,7 @@ public class ChatFragment extends Fragment {
     }
 
     //Further configure the below after completing the tutorial
-    private void DisplayLastSeen()
-    {
+    private void DisplayLastSeen() {
         RootRef.child("Users").child(messageFollowingId)
                 .addValueEventListener(new ValueEventListener() {
                     @Override
