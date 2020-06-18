@@ -15,6 +15,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavController;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -41,10 +42,12 @@ public class NotifsAdapter extends RecyclerView.Adapter<NotifsAdapter.NotifViewH
     private Context mContext;
     private List<Notification> notifsList;
     private NotifsViewModel viewModel;
+    private NavController navController;
 
-    public NotifsAdapter(Context context){
+    public NotifsAdapter(Context context, NavController navController){
         this.mContext =  context;
         this.viewModel = ViewModelProviders.of((FragmentActivity)context).get(NotifsViewModel.class);
+        this.navController = navController;
     }
 
     @Override
@@ -82,7 +85,9 @@ public class NotifsAdapter extends RecyclerView.Adapter<NotifsAdapter.NotifViewH
                 });
             }else if (notif.getAction() == Notification.FOLLOWED){
 
-                new TransactFragment().loadFragment(mContext, notif.getProtagId());
+                NotifsFragmentDirections.ActionNotifGraphToProfileFragment2 action =
+                        NotifsFragmentDirections.actionNotifGraphToProfileFragment2(notif.getProtagId());
+                navController.navigate(action);
 
             }else if(notif.getAction() == Notification.OTHERS_UPLOAD_LISTING){
                 intent = new Intent(mContext, ListingActivity.class);

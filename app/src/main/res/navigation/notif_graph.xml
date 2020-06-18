@@ -6,5 +6,17 @@
     <fragment
         android:id="@+id/notif_graph"
         android:name="com.example.artwokmabel.notifs.NotifsFragment"
-        android:label="NotifsFragment" />
+        android:label="NotifsFragment" >
+        <action
+            android:id="@+id/action_notif_graph_to_profileFragment2"
+            app:destination="@id/profileFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment2"
+        android:name="com.example.artwokmabel.profile.user.ProfileFragment"
+        android:label="ProfileFragment" >
+        <argument
+            android:name="userId"
+            app:argType="string" />
+    </fragment>
 </navigation>

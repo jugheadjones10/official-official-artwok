@@ -8,36 +8,44 @@
         <variable name="onfollclicked" type="com.example.artwokmabel.profile.user.ProfileFragment.OnFollClicked" />
     </data>
 
-<LinearLayout
-    android:id="@+id/inflated_profile_toolbar"
-    android:background="@color/artwok_background_blue"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="right"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/inflated_profile_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/artwok_background_blue"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_marginRight="5dp"
-        android:gravity="center_vertical"
-        android:text="Follow"
-        android:id="@+id/foll_button"
-        android:onClick="@{() -> onfollclicked.onFollClicked()}"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:gravity="end"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-    <ImageButton
-        android:id="@+id/profile_settings"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginRight="5dp"
-        android:adjustViewBounds="true"
-        android:background="@null"
-        android:padding="8dp"
-        android:scaleType="fitCenter"
-        android:onClick="@{() -> onmenuclicked.onMenuClicked()}"
-        app:srcCompat="@drawable/menu" />
+            <TextView
+                android:id="@+id/foll_button"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="5dp"
+                android:gravity="center_vertical"
+                android:onClick="@{() -> onfollclicked.onFollClicked()}"
+                android:text="Follow" />
 
-</LinearLayout>
+            <ImageButton
+                android:id="@+id/profile_settings"
+                android:layout_width="32dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="5dp"
+                android:adjustViewBounds="true"
+                android:background="@null"
+                android:onClick="@{() -> onmenuclicked.onMenuClicked()}"
+                android:padding="8dp"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/menu" />
+
+        </LinearLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
 </layout>

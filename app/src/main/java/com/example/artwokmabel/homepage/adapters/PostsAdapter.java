@@ -82,11 +82,11 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.myHolder> {
     @Override
     public void onBindViewHolder(@NonNull myHolder holder, int i) {
         MainPost data = postList.get(i);
-        holder.binding.setPost(data);
         holder.binding.setPostclickcallback(postClickCallback);
         holder.binding.setProfilecallback(new OnProfileClicked());
         holder.binding.setSharecallback(shareClickCallback);
         holder.binding.setFavorite(holder.binding.favorite);
+        holder.binding.setPost(data);
 
         String encoded = Base64.encodeToString(data.getDesc().getBytes(), Base64.DEFAULT);
 //        holder.binding.postWebView.loadData(encoded, "text/html", "base64");
@@ -110,26 +110,26 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.myHolder> {
         };
 
         //Change this later on by adding profile url at the point of upload
-        db = FirebaseFirestore.getInstance();
-        db.collection("Users")
-            .document(data.getUser_id())
-            .get()
-            .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    if (task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
-
-                        Picasso.get()
-                                .load(document.getString("profile_url"))
-                                .placeholder(R.drawable.loading_image)
-                                .error(R.drawable.rick_and_morty)
-                                .into(holder.binding.profile);
-                    } else {
-
-                    }
-                }
-            });
+//        db = FirebaseFirestore.getInstance();
+//        db.collection("Users")
+//            .document(data.getUser_id())
+//            .get()
+//            .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+//                @Override
+//                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+//                    if (task.isSuccessful()) {
+//                        DocumentSnapshot document = task.getResult();
+//
+//                        Picasso.get()
+//                                .load(document.getString("profile_url"))
+//                                .placeholder(R.drawable.loading_image)
+//                                .error(R.drawable.rick_and_morty)
+//                                .into(holder.binding.profile);
+//                    } else {
+//
+//                    }
+//                }
+//            });
 
         //CHECK THIS PART AFTER MAKING BOTH YOURS AND OTHERS POSTS APPEAR
         //Todo: huge rearchitecture of favorites functionality
@@ -210,17 +210,6 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.myHolder> {
             result.dispatchUpdatesTo(this);
         }
     }
-
-//    public final MainPostClickCallback profileImageClickCallback = new MainPostClickCallback() {
-//        @Override
-//        public void onClick(MainPost post) {
-//            IndivUserFragment indivUserFrag = new IndivUserFragment();
-//            Bundle args = new Bundle();
-//            args.putString("poster_username", post.getUsername());
-//            indivUserFrag.setArguments(args);
-//            HomePageActivity.getInstance().loadFragment(indivUserFrag);
-//        }
-//    };
 
     public final MainPostClickCallback shareClickCallback = new MainPostClickCallback() {
         @Override
