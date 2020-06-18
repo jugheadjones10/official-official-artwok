@@ -117,20 +117,20 @@ public class FirestoreRepo {
 
         //This here might be a problem - check if the token field is created or not
         db.collection("Users")
-                .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .update("token", token)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d("notives", "Notifnotif went right");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w("notives", "Notifnotif went wrong", e);
-                    }
-                });
+            .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+            .update("token", token)
+            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Log.d("notives", "Notifnotif went right");
+                }
+            })
+            .addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.w("notives", "Notifnotif went wrong", e);
+                }
+            });
 
     }
 
@@ -295,6 +295,34 @@ public class FirestoreRepo {
         db.collection("Users")
             .document(currentUserId)
             .update("number_of_posts", FieldValue.increment(1));
+    }
+
+    public void deleteUserPost(String postId){
+        db.collectionGroup("Posts")
+            .whereEqualTo("postId", postId)
+            .get()
+            .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                @Override
+                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                    for(QueryDocumentSnapshot snapshot : queryDocumentSnapshots){
+                        snapshot.getReference().delete();
+                    }
+                }
+            });
+    }
+
+    public void deleteUserListing(String listingId){
+        db.collectionGroup("Listings")
+            .whereEqualTo("postid", listingId)
+            .get()
+            .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                @Override
+                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                    for(QueryDocumentSnapshot snapshot : queryDocumentSnapshots){
+                        snapshot.getReference().delete();
+                    }
+                }
+            });
     }
 
     public void logIntoAccount(String email, String password, LoginViewModel.LoginCallback callback){
@@ -1390,7 +1418,7 @@ public class FirestoreRepo {
 
         db.collectionGroup("Listings")
             .whereArrayContains("categories", category)
-            .orderBy("nanopast", Query.Direction.DESCENDING)
+//            .orderBy("nanopast", Query.Direction.DESCENDING)
             .addSnapshotListener(new EventListener<QuerySnapshot>() {
                 @Override
                 public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
@@ -1404,6 +1432,7 @@ public class FirestoreRepo {
                         Listing listdata = changeDocToListingModel(single);
                         tempData.add(listdata);
                     }
+                    Collections.sort(tempData, new SortListings());
 
 //                    Collections.sort(tempData, new SortListings());
 
@@ -1800,7 +1829,7 @@ public class FirestoreRepo {
      }
 
 
-        public LiveData<List<MainPost>> getUserPosts(String userId){
+     public LiveData<List<MainPost>> getUserPosts(String userId){
         final MutableLiveData<List<MainPost>> data = new MutableLiveData<>();
         List<MainPost> tempData = new ArrayList<>();
 

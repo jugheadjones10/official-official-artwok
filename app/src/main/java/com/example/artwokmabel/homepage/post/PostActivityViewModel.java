@@ -33,6 +33,10 @@ public class PostActivityViewModel extends ViewModel {
         FirestoreRepo.getInstance().removeUserPostFavs(postId,  mAuth.getCurrentUser().getUid());
     }
 
+    public void deleteUserPost(String postId){
+        FirestoreRepo.getInstance().deleteUserPost(postId);
+    }
+
     public LiveData<List<Comment>> getCommentsObservable(String postId, String posterId){
         commentsObservable = FirestoreRepo.getInstance().getPostComments(postId, posterId);
         return commentsObservable;

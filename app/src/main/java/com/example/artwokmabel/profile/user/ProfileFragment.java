@@ -80,8 +80,8 @@ public class ProfileFragment extends Fragment {
                     toolbarOthersBinding = DataBindingUtil.bind(inflated);
                     toolbarOthersBinding.setOnfollclicked(new OnFollClicked());
                     toolbarOthersBinding.setOnmenuclicked(new OnMenuClicked());
-
-//                    ((AppCompatActivity) requireActivity()).setSupportActionBar(toolbarOthersBinding.inflatedProe
+                    ((AppCompatActivity) requireActivity()).setSupportActionBar(toolbarOthersBinding.inflatedProfileToolbar);
+                    ((AppCompatActivity) requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                 }
             });
 

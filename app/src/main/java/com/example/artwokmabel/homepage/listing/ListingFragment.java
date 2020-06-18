@@ -148,12 +148,6 @@ public class ListingFragment extends Fragment {
             binding.listingImage.setPageCount(images.size());
         }
 
-        if(mAuth.getCurrentUser().getUid().equals(listing.getUserid())){
-            binding.indivToolbar.inflateMenu(R.menu.indiv_listing_menu_mine);
-        }else{
-            binding.indivToolbar.inflateMenu(R.menu.indiv_listing_menu_yours);
-        }
-
         adapter.setListing(listing);
         binding.pager.setAdapter(adapter);
 
@@ -217,6 +211,8 @@ public class ListingFragment extends Fragment {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.listing_delete:
+                viewModel.deleteUserListing(listing.getPostid());
+                navController.navigateUp();
                 return true;
             case R.id.listing_edit:
                 return true;
