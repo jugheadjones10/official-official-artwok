@@ -41,6 +41,11 @@ public class ListingActivityViewModel extends ViewModel {
         FirestoreRepo.getInstance().removeUserRequestFavs(requestId, mAuth.getCurrentUser().getUid());
     }
 
+    public void deleteUserListing(String listingId){
+        FirestoreRepo.getInstance().deleteUserListing(listingId);
+    }
+
+
     public LiveData<List<Review>> getListingReviews(Listing listing){
         return FirestoreRepo.getInstance().getListingReviews(listing);
     }

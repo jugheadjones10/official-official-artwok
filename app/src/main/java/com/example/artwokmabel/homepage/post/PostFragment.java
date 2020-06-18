@@ -16,6 +16,8 @@ import androidx.navigation.Navigation;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -85,6 +87,15 @@ public class PostFragment extends Fragment {
         navController = Navigation.findNavController(requireActivity(), R.id.nav_host_container);
 
         getIncomingIntent();
+        setHasOptionsMenu(true);
+
+        if(mAuth.getCurrentUser().getUid().equals(post.getUser_id())){
+            binding.indivToolbar.inflateMenu(R.menu.indiv_listing_menu_mine);
+        }else{
+            binding.indivToolbar.inflateMenu(R.menu.indiv_listing_menu_yours);
+        }
+
+        binding.indivToolbar.inflateMenu(R.menu.indiv_listing_menu_mine);
 
         commentsAdapter = new CommentsAdapter(requireActivity(), postId, posterUserId, navController);
         binding.commentsRecyclerView.setAdapter(commentsAdapter);
@@ -212,5 +223,31 @@ public class PostFragment extends Fragment {
                         .into(imageView);
             }
         };
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        if(mAuth.getCurrentUser().getUid().equals(post.getUser_id())){
+            inflater.inflate(R.menu.indiv_listing_menu_mine, menu);
+        }else{
+            inflater.inflate(R.menu.indiv_listing_menu_yours, menu);
+        }
+        super.onCreateOptionsMenu(menu,inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.listing_delete:
+                viewModel.deleteUserPost(post.getPostId());
+                navController.navigateUp();
+                return true;
+            case R.id.listing_edit:
+                return true;
+            case R.id.listing_report:
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
