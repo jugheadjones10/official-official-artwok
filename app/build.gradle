@@ -199,4 +199,7 @@ dependencies {
     //Most recent color picker
     implementation 'com.github.dhaval2404:colorpicker:1.1'
 
+    //Picasso transformer
+    compile 'jp.wasabeef:picasso-transformations:2.2.1'
+
 }

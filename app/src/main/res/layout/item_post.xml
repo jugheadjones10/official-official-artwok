@@ -84,25 +84,40 @@
             app:srcCompat="@drawable/ic_share_black_24dp" />
 
         <LinearLayout
+            android:id="@+id/webview_wrapper"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            app:layout_constraintHeight_max="300dp"
+            app:layout_constrainedHeight="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/guideline4">
 
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="AWDADWADWAWDAWd">
-
-            </TextView>
-<!--            <WebView-->
-<!--                android:id="@+id/post_web_view"-->
+<!--            <androidx.constraintlayout.widget.ConstraintLayout-->
 <!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                tools:layout_editor_absoluteX="15dp"-->
-<!--                tools:layout_editor_absoluteY="130dp" />-->
+<!--                android:layout_height="0dp"-->
+<!--                app:layout_constraintHeight_max="300dp"-->
+<!--                app:layout_constrainedHeight="true"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="@+id/guideline4">-->
+
+                <!--            Below is for testing purposes-->
+                <!--            <TextView-->
+                <!--                android:layout_width="match_parent"-->
+                <!--                android:layout_height="wrap_content"-->
+                <!--                android:text="AWDADWADWAWDAWd">-->
+                <!--            </TextView>-->
+
+                <WebView
+                    android:id="@+id/post_web_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:layout_editor_absoluteX="15dp"
+                    tools:layout_editor_absoluteY="130dp" />
+<!--            </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+
         </LinearLayout>
 
         <androidx.constraintlayout.widget.Guideline

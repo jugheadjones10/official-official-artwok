@@ -1,16 +1,24 @@
 package com.example.artwokmabel.homepage.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.webkit.JavascriptInterface;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -89,7 +97,36 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.myHolder> {
         holder.binding.setPost(data);
 
         String encoded = Base64.encodeToString(data.getDesc().getBytes(), Base64.DEFAULT);
-//        holder.binding.postWebView.loadData(encoded, "text/html", "base64");
+
+        holder.binding.postWebView.getSettings().setJavaScriptEnabled(true);
+        class JsObject {
+            @JavascriptInterface
+            public void toString(String jsResult) {
+                float webViewHeight = (Integer.parseInt(jsResult) * mContext.getResources().getDisplayMetrics().density);
+
+                ((Activity)mContext).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(Math.round(webViewHeight) > 500){
+                            ViewGroup.LayoutParams params = holder.binding.postWebView.getLayoutParams();
+                            params.height = 500;
+                            holder.binding.postWebView.setLayoutParams(params);
+                        }
+                    }
+                });
+                Log.d("myHeight", "parsed JSResult : " + Float.toString(webViewHeight));
+            }
+        }
+        holder.binding.postWebView.addJavascriptInterface(new JsObject(), "HTMLOUT");
+        holder.binding.postWebView.loadData(encoded, "text/html", "base64");
+        holder.binding.postWebView.setWebViewClient(new WebViewClient() {
+            public void onPageFinished(WebView view, String url) {
+                view.loadUrl("javascript:( function () { var h = document.body.scrollHeight; HTMLOUT.toString(h); } ) ()");
+            }
+        });
+
+        //This click listener doesn't work. Find a way to detect a click on the web view
+        //Try onTouchEvent?
         holder.binding.parentLayoutCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

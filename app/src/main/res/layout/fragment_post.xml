@@ -97,7 +97,8 @@
                     android:id="@+id/comments_recycler_view"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"></androidx.recyclerview.widget.RecyclerView>
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                />
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
 

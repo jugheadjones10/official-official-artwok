@@ -1,5 +1,6 @@
 package com.example.artwokmabel.homepage.listing;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -20,6 +21,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.example.artwokmabel.HomeGraphDirections;
@@ -34,6 +36,7 @@ import com.example.artwokmabel.models.Message;
 import com.example.artwokmabel.models.User;
 import com.example.artwokmabel.profile.settings.SetUsernameFragmentArgs;
 import com.example.artwokmabel.repos.FirestoreRepo;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.auth.FirebaseAuth;
@@ -211,12 +214,37 @@ public class ListingFragment extends Fragment {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.listing_delete:
-                viewModel.deleteUserListing(listing.getPostid());
-                navController.navigateUp();
+                new MaterialAlertDialogBuilder(getContext())
+                        .setTitle("Delete Listing?")
+                        .setMessage("This action cannot be reversed!")
+                        .setNeutralButton("Cancel", null)
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                viewModel.deleteUserListing(listing.getPostid());
+                                navController.navigateUp();
+                            }
+                        })
+                        .show();
+
                 return true;
             case R.id.listing_edit:
                 return true;
             case R.id.listing_report:
+                final EditText taskEditText = new EditText(getContext());
+                new MaterialAlertDialogBuilder(getContext())
+                        .setTitle("Report this listing")
+                        .setMessage("Describe why you feel this listing inappropriate")
+                        .setView(taskEditText)
+                        .setPositiveButton("Report", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                String report = String.valueOf(taskEditText.getText());
+                                viewModel.sendListingReport(report, listing.getPostid());
+                            }
+                        })
+                        .setNeutralButton("Cancel", null)
+                        .show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
