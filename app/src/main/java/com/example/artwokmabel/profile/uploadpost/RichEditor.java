@@ -1,6 +1,7 @@
 package com.example.artwokmabel.profile.uploadpost;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -10,6 +11,8 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.ViewGroup;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -317,6 +320,10 @@ public class RichEditor extends WebView {
         exec("javascript:RE.setHeading('" + heading + "');");
     }
 
+    public void unsetHeading(){
+        exec("javascript:RE.unsetHeading();");
+    }
+
     public void setIndent() {
         exec("javascript:RE.setIndent();");
     }
@@ -398,6 +405,7 @@ public class RichEditor extends WebView {
     }
 
     protected class EditorWebViewClient extends WebViewClient {
+
         @Override public void onPageFinished(WebView view, String url) {
             isReady = url.equalsIgnoreCase(SETUP_HTML);
             if (mLoadListener != null) {

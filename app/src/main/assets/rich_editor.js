@@ -13,6 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+document.onkeypress = function (e) {
+    if(e.keycode == 13){
+
+    }
+};
 
 var RE = {};
 
@@ -107,11 +112,11 @@ RE.setItalic = function() {
 }
 
 RE.setSubscript = function() {
-    document.execCommand('subscript', false, null);
+    document.execCommand('subscript', false, "");
 }
 
 RE.setSuperscript = function() {
-    document.execCommand('superscript', false, null);
+    document.execCommand('superscript', false, "");
 }
 
 RE.setStrikeThrough = function() {
@@ -149,7 +154,18 @@ RE.setFontSize = function(fontSize){
 }
 
 RE.setHeading = function(heading) {
-    document.execCommand('formatBlock', false, '<h'+heading+'>');
+    //document.execCommand('formatBlock', false, '<h'+heading+'>');
+    if(heading == 1){
+        document.execCommand("fontSize", false, 7);
+    }else if(heading == 2){
+        document.execCommand("fontSize", false, 6);
+    }else if(heading == 3){
+        document.execCommand("fontSize", false, 5);
+    }
+}
+
+RE.unsetHeading = function() {
+    document.execCommand("fontSize", false, 4);
 }
 
 RE.setIndent = function() {

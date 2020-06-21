@@ -1,5 +1,6 @@
 package com.example.artwokmabel.profile.uploadpost;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -13,10 +14,12 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.webkit.JavascriptInterface;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -26,6 +29,7 @@ import android.widget.Toast;
 import com.example.artwokmabel.HomePageActivity;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.FragmentUploadPostBinding;
+import com.example.artwokmabel.homepage.callbacks.ImagePickerCallback;
 import com.example.artwokmabel.repos.FirestoreRepo;
 import com.github.dhaval2404.colorpicker.MaterialColorPickerDialog;
 import com.github.dhaval2404.colorpicker.listener.ColorListener;
@@ -46,6 +50,8 @@ public class UploadPostFragment extends Fragment {
     private FragmentUploadPostBinding binding;
     private FirebaseAuth mAuth;
     private int originalMode;
+    private RichEditor mEditor;
+    private ArrayList<View> headingViews = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -57,6 +63,10 @@ public class UploadPostFragment extends Fragment {
         binding.progressBar.setVisibility(View.GONE);
         originalMode = getActivity().getWindow().getAttributes().softInputMode;
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+
+        headingViews.add(binding.actionHeading1);
+        headingViews.add(binding.actionHeading2);
+        headingViews.add(binding.actionHeading3);
 
         return binding.getRoot();
     }
@@ -90,6 +100,31 @@ public class UploadPostFragment extends Fragment {
         });
     }
 
+    //Set grey bg if not, set not if grey bg
+    private void setBackground(View view){
+        if(view.getBackground() == null){
+            view.setBackgroundResource(R.drawable.rounded_corners);
+        }else{
+            view.setBackground(null);
+        }
+    }
+
+    private void onHeadingClicked(View view, int heading){
+        if(view.getBackground() == null){
+            view.setBackgroundResource(R.drawable.rounded_corners);
+
+            for(View headingView : headingViews){
+                if(!headingView.equals(view)){
+                    headingView.setBackground(null);
+                }
+            }
+            mEditor.setHeading(heading);
+        }else{
+            view.setBackground(null);
+            mEditor.unsetHeading();
+        }
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -106,7 +141,7 @@ public class UploadPostFragment extends Fragment {
 //        pd.setCancelable(false);
 //        this.edit_text_upload_description =  (RichEditor) findViewById(R.id.editor);
 
-        final RichEditor mEditor = (RichEditor) binding.editor;
+        mEditor = (RichEditor) binding.editor;
 
         //mEditor.setEditorBackgroundColor(Color.BLUE);
         //mEditor.setBackgroundColor(Color.BLUE);
@@ -131,76 +166,64 @@ public class UploadPostFragment extends Fragment {
 
         binding.actionBold.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
+                setBackground(binding.actionBold);
                 mEditor.setBold();
             }
         });
 
         binding.actionItalic.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
+                setBackground(binding.actionItalic);
                 mEditor.setItalic();
             }
         });
 
-        binding.actionSubscript.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                mEditor.setSubscript();
-            }
-        });
-
-        binding.actionSuperscript.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                mEditor.setSuperscript();
-            }
-        });
+//        binding.actionSubscript.setOnClickListener(new View.OnClickListener() {
+//            @Override public void onClick(View v) {
+//                mEditor.setSubscript();
+//            }
+//        });
+//
+//        binding.actionSuperscript.setOnClickListener(new View.OnClickListener() {
+//            @Override public void onClick(View v) {
+//                mEditor.setSuperscript();
+//            }
+//        });
 
         binding.actionStrikethrough.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
+                setBackground(binding.actionStrikethrough);
                 mEditor.setStrikeThrough();
             }
         });
 
         binding.actionUnderline.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
+                setBackground(binding.actionUnderline);
                 mEditor.setUnderline();
             }
         });
 
         binding.actionHeading1.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
-                mEditor.setHeading(1);
+               onHeadingClicked(v, 1);
             }
         });
 
         binding.actionHeading2.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
-                mEditor.setHeading(2);
+                onHeadingClicked(v, 2);
             }
         });
 
         binding.actionHeading3.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
-                mEditor.setHeading(3);
+                onHeadingClicked(v, 3);
             }
         });
 
-        binding.actionHeading4.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                mEditor.setHeading(4);
-            }
-        });
-
-        binding.actionHeading5.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                mEditor.setHeading(5);
-            }
-        });
-
-        binding.actionHeading6.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                mEditor.setHeading(6);
-            }
-        });
-
+        //Curious as to why set on click listener doesn't work on the parent wrapper relative layout
+        binding.actionTxtColor.bringToFront();
         binding.actionTxtColor.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 new MaterialColorPickerDialog.Builder(
@@ -212,6 +235,7 @@ public class UploadPostFragment extends Fragment {
                             @Override
                             public void onColorSelected(int i, @NotNull String s) {
                                 mEditor.setTextColor(Color.parseColor(s));
+                                binding.actionTxtColorIndicator.setColorFilter(Color.parseColor(s));
                             }
                         },
                         "#f6e58d",
@@ -225,6 +249,7 @@ public class UploadPostFragment extends Fragment {
             }
         });
 
+        binding.actionBgColor.bringToFront();
         binding.actionBgColor.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 new MaterialColorPickerDialog.Builder(
@@ -236,6 +261,7 @@ public class UploadPostFragment extends Fragment {
                             @Override
                             public void onColorSelected(int i, @NotNull String s) {
                                 mEditor.setTextBackgroundColor(Color.parseColor(s));
+                                binding.actionBgColorIndicator.setColorFilter(Color.parseColor(s));
                             }
                         },
                         "#f6e58d",
@@ -279,12 +305,6 @@ public class UploadPostFragment extends Fragment {
             }
         });
 
-        binding.actionBlockquote.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                mEditor.setBlockquote();
-            }
-        });
-
         binding.actionInsertBullets.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 mEditor.setBullets();
@@ -298,6 +318,14 @@ public class UploadPostFragment extends Fragment {
         });
 
         binding.actionInsertImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                new ImagePickerCallback(requireActivity(), )
+
+            }
+        });
+
+        binding.actionInsertOnlineImage.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
