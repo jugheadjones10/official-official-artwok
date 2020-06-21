@@ -51,6 +51,8 @@ public class UploadPostFragment extends Fragment {
     private FirebaseAuth mAuth;
     private int originalMode;
     private RichEditor mEditor;
+    private String currentTextColor = "#000000";
+    private String currentBgColor = "#000000";
     private ArrayList<View> headingViews = new ArrayList<>();
 
     @Override
@@ -236,12 +238,13 @@ public class UploadPostFragment extends Fragment {
                             public void onColorSelected(int i, @NotNull String s) {
                                 mEditor.setTextColor(Color.parseColor(s));
                                 binding.actionTxtColorIndicator.setColorFilter(Color.parseColor(s));
+                                currentTextColor = s;
                             }
                         },
-                        "#f6e58d",
+                        currentTextColor,
                         ColorSwatch._300,
                         ColorShape.SQAURE,
-                        new ArrayList<String>(Arrays.asList( "#f6e58d", "#ffbe76", "#ff7979", "#badc58", "#dff9fb",
+                        new ArrayList<String>(Arrays.asList("#000000", "#f6e58d", "#ffbe76", "#ff7979", "#badc58", "#dff9fb",
                                 "#7ed6df", "#e056fd", "#686de0", "#30336b", "#95afc0"))
                 )
                 .build()
@@ -262,12 +265,13 @@ public class UploadPostFragment extends Fragment {
                             public void onColorSelected(int i, @NotNull String s) {
                                 mEditor.setTextBackgroundColor(Color.parseColor(s));
                                 binding.actionBgColorIndicator.setColorFilter(Color.parseColor(s));
+                                currentBgColor = s;
                             }
                         },
-                        "#f6e58d",
+                        currentBgColor,
                         ColorSwatch._300,
                         ColorShape.SQAURE,
-                        new ArrayList<String>(Arrays.asList( "#f6e58d", "#ffbe76", "#ff7979", "#badc58", "#dff9fb",
+                        new ArrayList<String>(Arrays.asList("#000000", "#f6e58d", "#ffbe76", "#ff7979", "#badc58", "#dff9fb",
                                 "#7ed6df", "#e056fd", "#686de0", "#30336b", "#95afc0"))
                 )
                 .build()
