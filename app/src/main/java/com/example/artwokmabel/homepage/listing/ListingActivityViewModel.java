@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.artwokmabel.models.Listing;
+import com.example.artwokmabel.models.Report;
 import com.example.artwokmabel.models.Review;
 import com.example.artwokmabel.repos.FirestoreRepo;
 import com.example.artwokmabel.models.User;
@@ -45,6 +46,9 @@ public class ListingActivityViewModel extends ViewModel {
         FirestoreRepo.getInstance().deleteUserListing(listingId);
     }
 
+    public void sendListingReport(String report, String listingId){
+        FirestoreRepo.getInstance().sendReport(report, listingId, Report.LISTING);
+    }
 
     public LiveData<List<Review>> getListingReviews(Listing listing){
         return FirestoreRepo.getInstance().getListingReviews(listing);

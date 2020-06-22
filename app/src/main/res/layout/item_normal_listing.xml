@@ -14,7 +14,6 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/parent_layout_card"
-        android:background="@drawable/listing_rounded_corners"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"

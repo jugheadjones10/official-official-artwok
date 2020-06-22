@@ -1,6 +1,7 @@
 package com.example.artwokmabel.homepage.post;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Base64;
 import android.util.Log;
@@ -22,6 +24,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -39,6 +42,7 @@ import com.example.artwokmabel.models.Comment;
 import com.example.artwokmabel.models.Listing;
 import com.example.artwokmabel.models.MainPost;
 import com.example.artwokmabel.models.User;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
 import com.synnapps.carouselview.ImageListener;
@@ -94,7 +98,6 @@ public class PostFragment extends Fragment {
         }else{
             binding.indivToolbar.inflateMenu(R.menu.indiv_listing_menu_yours);
         }
-
         binding.indivToolbar.inflateMenu(R.menu.indiv_listing_menu_mine);
 
         commentsAdapter = new CommentsAdapter(requireActivity(), postId, posterUserId, navController);
@@ -239,12 +242,36 @@ public class PostFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.listing_delete:
-                viewModel.deleteUserPost(post.getPostId());
-                navController.navigateUp();
+                new MaterialAlertDialogBuilder(getContext())
+                        .setTitle("Delete Post?")
+                        .setMessage("This action cannot be reversed!")
+                        .setNeutralButton("Cancel", null)
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                viewModel.deleteUserPost(post.getPostId());
+                                navController.navigateUp();
+                            }
+                        })
+                        .show();
                 return true;
             case R.id.listing_edit:
                 return true;
             case R.id.listing_report:
+                final EditText taskEditText = new EditText(getContext());
+                new MaterialAlertDialogBuilder(getContext())
+                        .setTitle("Report this post")
+                        .setMessage("Describe why you feel this post inappropriate")
+                        .setView(taskEditText)
+                        .setPositiveButton("Report", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                String report = String.valueOf(taskEditText.getText());
+                                viewModel.sendPostReport(report, post.getPostId());
+                            }
+                        })
+                        .setNeutralButton("Cancel", null)
+                        .show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

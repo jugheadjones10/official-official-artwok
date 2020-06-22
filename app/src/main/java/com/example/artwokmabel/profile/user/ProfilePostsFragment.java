@@ -61,7 +61,7 @@ public class ProfilePostsFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        navController = Navigation.findNavController(view);
+        navController = Navigation.findNavController(requireActivity(), R.id.nav_host_container);
     }
 
     @Override

@@ -2,8 +2,11 @@ package com.example.artwokmabel.homepage.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Path;
+import android.graphics.RectF;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
@@ -37,6 +40,8 @@ import com.synnapps.carouselview.ImageListener;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 
 public class ListingsAdapter extends RecyclerView.Adapter<ListingsAdapter.myHolder> {
     private Context mContext;
@@ -76,10 +81,13 @@ public class ListingsAdapter extends RecyclerView.Adapter<ListingsAdapter.myHold
             @Override
             public void setImageForPosition(int position, ImageView imageView) {
                 //imageView.setImageResource(sampleImages[position]);
+
+
                 Picasso.get()
                         .load(images.get(position))
+                        .transform(new RoundedCornersTransformation(10, 0))
                         .resize(300, 300)
-                        .placeholder(R.drawable.loading_image)
+                        .placeholder(R.drawable.loading_image_rounded_50)
                         .error(R.drawable.rick_and_morty)
                         .into(imageView);
             }

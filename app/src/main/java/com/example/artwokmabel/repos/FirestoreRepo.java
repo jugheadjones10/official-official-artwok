@@ -33,6 +33,7 @@ import com.example.artwokmabel.models.NormalChat;
 import com.example.artwokmabel.models.Notification;
 import com.example.artwokmabel.models.OfferMessage;
 import com.example.artwokmabel.models.OrderChat;
+import com.example.artwokmabel.models.Report;
 import com.example.artwokmabel.models.Request;
 import com.example.artwokmabel.homepage.request.upload.UploadRequestActivity;
 import com.example.artwokmabel.models.Category;
@@ -1418,7 +1419,6 @@ public class FirestoreRepo {
 
         db.collectionGroup("Listings")
             .whereArrayContains("categories", category)
-//            .orderBy("nanopast", Query.Direction.DESCENDING)
             .addSnapshotListener(new EventListener<QuerySnapshot>() {
                 @Override
                 public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
@@ -1434,32 +1434,9 @@ public class FirestoreRepo {
                     }
                     Collections.sort(tempData, new SortListings());
 
-//                    Collections.sort(tempData, new SortListings());
-
-//                    for(Listing listing : tempData){
-//                        Log.d("Listingsordercheck", "Single cat tabs listings : " + listing.getName());
-//                    }
-
                     data.setValue(tempData);
                 }
             });
-
-//                .get()
-//                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-//                    @Override
-//                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-//                        tempData.clear();
-//                        for(DocumentSnapshot single: queryDocumentSnapshots){
-//                            Listing listdata = changeDocToListingModel(single);
-//                            tempData.add(listdata);
-//                            Log.d("mycokk", listdata.getName());
-//                        }
-//
-//                        Collections.sort(tempData, new SortListings());
-//                        data.setValue(tempData);
-//                    }
-//                });
-
         return data;
     }
 
@@ -1608,6 +1585,11 @@ public class FirestoreRepo {
 //                });
 //        return data;
 //    }
+
+    public void sendReport(String report, String postId, String type){
+        db.collection("Reports")
+                .add(new Report(report, postId, type));
+    }
 
     public void addNewMessage(Comment comment, String chatRoomId){
 
@@ -2431,13 +2413,13 @@ public class FirestoreRepo {
 
     class SortRequests implements Comparator<Request> {
         public int compare(Request a, Request b){
-            return (int)b.getNanopast() - (int)a.getNanopast();
+            return Math.toIntExact((b.getNanopast() - a.getNanopast())/1000);
         }
     }
 
     class SortComments implements Comparator<Comment> {
         public int compare(Comment a, Comment b){
-            return (int)a.getDate_created() - (int)b.getDate_created();
+            return Math.toIntExact((b.getDate_created() - a.getDate_created())/1000);
         }
     }
 
