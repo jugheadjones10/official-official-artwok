@@ -32,7 +32,7 @@
         <LinearLayout
             android:id="@+id/text_stuff"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="@dimen/listing_details_height"
             android:orientation="vertical"
             android:paddingLeft="@dimen/spacing_small"
             android:background="@drawable/home_listing_rounded"
