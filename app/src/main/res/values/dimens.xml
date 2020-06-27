@@ -5,4 +5,41 @@
     <dimen name="create_account_text">17sp</dimen>
     <dimen name="fab_margin">16dp</dimen>
 
+<!-- ==============================================================  -->
+    <!-- font sizes -->
+    <dimen name="font_larger">22sp</dimen>
+    <dimen name="font_large">18sp</dimen>
+    <dimen name="font_normal">15sp</dimen>
+
+    <!-- Below are the ones that have currently been used   -->
+    <dimen name="font_small">12sp</dimen>
+
+<!-- ==============================================================  -->
+    <!-- typical spacing between two views -->
+    <dimen name="spacing_huge">40dp</dimen>
+    <dimen name="spacing_large">24dp</dimen>
+    <dimen name="spacing_tiny">4dp</dimen>
+
+    <!-- Below are the ones that have currently been used   -->
+    <dimen name="spacing_normal">18dp</dimen>
+    <dimen name="spacing_small">10dp</dimen>
+    <dimen name="radius_normal">8dp</dimen>
+
+
+<!-- ==============================================================  -->
+    <!-- typical sizes of views -->
+    <dimen name="button_height_tall">60dp</dimen>
+    <dimen name="button_height_normal">40dp</dimen>
+    <dimen name="button_height_short">32dp</dimen>
+
+    <!-- Below are the ones that have currently been used   -->
+    <dimen name="toolbar_height_normal">45dp</dimen>
+    <dimen name="tabs_height_normal">45dp</dimen>
+
+    <dimen name="icon_artwok_width_normal">100dp</dimen>
+    <dimen name="icon_search_width_normal">25dp</dimen>
+    <dimen name="icon_favorite_width_normal">25dp</dimen>
+
+
+
 </resources>

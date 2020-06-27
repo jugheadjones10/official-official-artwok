@@ -84,10 +84,10 @@ public class HomeFeedFragment extends Fragment {
         binding.horizontalRecyclerViewListings.setAdapter(listingsAdapter);
 
         binding.horizontalRecyclerViewListings.setItemTransformer(new ScaleTransformer.Builder()
-                .setMaxScale(1.05f)
-                .setMinScale(0.8f)
+//                .setMaxScale(1.05f)
+//                .setMinScale(0.8f)
                 .setPivotX(Pivot.X.CENTER) // CENTER is a default one
-                .setPivotY(Pivot.Y.BOTTOM) // CENTER is a default one
+                .setPivotY(Pivot.Y.CENTER) // CENTER is a default one
                 .build());
         binding.horizontalRecyclerViewListings.setSlideOnFling(true);
         binding.horizontalRecyclerViewListings.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
@@ -118,8 +118,8 @@ public class HomeFeedFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        viewModel =  new ViewModelProvider(requireActivity()).get(HomeFeedViewModel.class);
 
+        viewModel =  new ViewModelProvider(requireActivity()).get(HomeFeedViewModel.class);
         observeViewModel(viewModel);
     }
 

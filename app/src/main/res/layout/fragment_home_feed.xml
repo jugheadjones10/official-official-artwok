@@ -1,63 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/appbar"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+            android:layout_height="wrap_content">
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
+            <ImageView
+                android:id="@+id/imageView4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/artwok_white"
-                app:contentInsetStart="0dp"
-                app:layout_scrollFlags="scroll"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+                android:adjustViewBounds="true"
+                android:src="@drawable/banner1"
+                app:layout_constraintBottom_toTopOf="@+id/horizontal_recycler_view_listings"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed" />
 
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+            <com.yarolegovich.discretescrollview.DiscreteScrollView
+                android:id="@+id/horizontal_recycler_view_listings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_small"
+                android:layout_marginBottom="@dimen/spacing_small"
+                app:layout_constraintBottom_toTopOf="@+id/recyclerview"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView4" />
 
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/banner1" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/horizontal_recycler_view_listings" />
 
-                    <com.yarolegovich.discretescrollview.DiscreteScrollView
-                        android:id="@+id/horizontal_recycler_view_listings"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="8dp" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-                </LinearLayout>
-
-            </androidx.appcompat.widget.Toolbar>
-
-        </com.google.android.material.appbar.AppBarLayout>
-
-
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-        <!--                tools:context=".HomeScreen"-->
+    </androidx.core.widget.NestedScrollView>
 
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+<!--    <androidx.coordinatorlayout.widget.CoordinatorLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent">-->
+
+<!--        <com.google.android.material.appbar.AppBarLayout-->
+<!--            android:id="@+id/appbar"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">-->
+
+<!--            <androidx.appcompat.widget.Toolbar-->
+<!--                android:id="@+id/toolbar"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:background="@color/artwok_white"-->
+<!--                app:contentInsetStart="0dp"-->
+<!--                app:layout_scrollFlags="scroll"-->
+<!--                app:popupTheme="@style/ThemeOverlay.AppCompat.Light">-->
+
+
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:orientation="vertical">-->
+
+<!--                    <ImageView-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:src="@drawable/banner1" />-->
+
+<!--                    <com.yarolegovich.discretescrollview.DiscreteScrollView-->
+<!--                        android:id="@+id/horizontal_recycler_view_listings"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginTop="8dp"-->
+<!--                        android:layout_marginBottom="8dp" />-->
+
+<!--                </LinearLayout>-->
+
+<!--            </androidx.appcompat.widget.Toolbar>-->
+
+<!--        </com.google.android.material.appbar.AppBarLayout>-->
+
+
+
+<!--        <androidx.recyclerview.widget.RecyclerView-->
+<!--            android:id="@+id/recyclerview"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
+<!--            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />-->
+<!--        &lt;!&ndash;                tools:context=".HomeScreen"&ndash;&gt;-->
+
+<!--    </androidx.coordinatorlayout.widget.CoordinatorLayout>-->
 </layout>

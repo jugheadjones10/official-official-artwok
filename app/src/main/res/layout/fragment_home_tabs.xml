@@ -10,11 +10,6 @@
             type="com.example.artwokmabel.homepage.homepagewrapper.HomeTabsFragment" />
     </data>
 
-<!--    <LinearLayout-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:orientation="vertical">-->
-
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:id="@+id/main_content"
             android:layout_width="match_parent"
@@ -30,7 +25,7 @@
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
-                    android:layout_height="45dp"
+                    android:layout_height="@dimen/toolbar_height_normal"
                     android:layout_weight="1"
                     android:background="?attr/colorPrimary"
                     app:contentInsetStart="0dp"
@@ -41,15 +36,15 @@
                     <LinearLayout
                         android:id="@+id/linearLayout3"
                         android:layout_width="match_parent"
-                        android:layout_height="45dp"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:orientation="horizontal">
+
                         <ImageView
-                            android:layout_width="100dp"
+                            android:layout_width="@dimen/icon_artwok_width_normal"
                             android:layout_height="match_parent"
                             android:layout_gravity="start|bottom"
-                            android:layout_marginLeft="18dp"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="@dimen/spacing_normal"
                             android:src="@drawable/artwok_login_icon" />
 
                         <View
@@ -59,20 +54,18 @@
 
                         <ImageView
                             android:id="@+id/mainsearchbar"
-                            android:layout_width="25dp"
-                            android:layout_height="35dp"
+                            android:layout_width="@dimen/icon_search_width_normal"
+                            android:layout_height="match_parent"
                             android:layout_gravity="bottom"
                             android:onClick="@{() -> HomeTabsFragment.onSearchClicked()}"
                             android:src="@drawable/search_icon" />
 
                         <ImageButton
                             android:id="@+id/fav_btn"
-                            android:layout_width="45dp"
-                            android:layout_height="35dp"
-                            android:layout_gravity="bottom"
-                            android:layout_marginRight="5dp"
-                            android:adjustViewBounds="true"
-                            android:padding="5dp"
+                            android:layout_width="@dimen/icon_favorite_width_normal"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="@dimen/spacing_normal"
+                            android:layout_marginLeft="@dimen/spacing_normal"
                             android:background="@null"
                             android:scaleType="fitCenter"
                             android:onClick="@{() -> HomeTabsFragment.onFavClicked()}"
@@ -84,7 +77,7 @@
                 <com.google.android.material.tabs.TabLayout
                     android:id="@+id/tabs"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="@dimen/tabs_height_normal"
                     app:tabGravity="fill"
                     app:tabTextAppearance="@style/CustomTextAppearanceTab"
                     app:tabIndicatorColor="@color/artwok_white"
@@ -97,7 +90,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-<!--    </LinearLayout>-->
 </layout>
