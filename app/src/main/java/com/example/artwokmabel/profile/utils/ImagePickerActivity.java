@@ -16,8 +16,14 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProviders;
 
+import com.example.artwokmabel.HomePageActivity;
 import com.example.artwokmabel.R;
+import com.example.artwokmabel.homepage.callbacks.ImagePickerCallback;
+import com.example.artwokmabel.profile.uploadpost.UploadPostFragment;
+import com.example.artwokmabel.profile.uploadpost.UploadPostViewModel;
+import com.example.artwokmabel.profile.user.ProfileFragmentViewModel;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -51,6 +57,8 @@ public class ImagePickerActivity extends AppCompatActivity {
     private int IMAGE_COMPRESSION = 80;
     public static String fileName;
 
+    private UploadPostViewModel viewModel;
+
     public interface PickerOptionListener {
         void onTakeCameraSelected();
 
@@ -61,6 +69,8 @@ public class ImagePickerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_picker);
+
+        viewModel = UploadPostFragment.getInstance().viewModel;
 
         Intent intent = getIntent();
         if (intent == null) {
@@ -220,15 +230,19 @@ public class ImagePickerActivity extends AppCompatActivity {
     }
 
     private void setResultOk(Uri imagePath) {
-        Intent intent = new Intent();
-        intent.putExtra("path", imagePath);
-        setResult(Activity.RESULT_OK, intent);
+//        Intent intent = new Intent();
+//        intent.putExtra("path", imagePath);
+//        setResult(Activity.RESULT_OK, intent);
+
+        viewModel.setResultOk(imagePath);
         finish();
     }
 
     private void setResultCancelled() {
-        Intent intent = new Intent();
-        setResult(Activity.RESULT_CANCELED, intent);
+//        Intent intent = new Intent();
+//        setResult(Activity.RESULT_CANCELED, intent);
+
+//        viewModel.setResultCancelled();
         finish();
     }
 

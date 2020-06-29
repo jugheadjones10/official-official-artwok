@@ -6,11 +6,15 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
@@ -30,12 +34,18 @@ import com.example.artwokmabel.HomePageActivity;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.FragmentUploadPostBinding;
 import com.example.artwokmabel.homepage.callbacks.ImagePickerCallback;
+import com.example.artwokmabel.profile.uploadlisting.UploadListingAcitvity;
 import com.example.artwokmabel.repos.FirestoreRepo;
 import com.github.dhaval2404.colorpicker.MaterialColorPickerDialog;
 import com.github.dhaval2404.colorpicker.listener.ColorListener;
 import com.github.dhaval2404.colorpicker.model.ColorShape;
 import com.github.dhaval2404.colorpicker.model.ColorSwatch;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -43,6 +53,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 public class UploadPostFragment extends Fragment {
 
@@ -54,13 +65,25 @@ public class UploadPostFragment extends Fragment {
     private String currentTextColor = "#000000";
     private String currentBgColor = "#000000";
     private ArrayList<View> headingViews = new ArrayList<>();
+    public static final int REQUEST_IMAGE = 100;
+
+    public UploadPostViewModel viewModel;
+    private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+
+    public static UploadPostFragment instance;
+
+    public static UploadPostFragment getInstance(){
+        return instance;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
+        instance = this;
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_upload_post, container, false);
         binding.setUploadPostFragment(this);
         mAuth = FirebaseAuth.getInstance();
+
+        viewModel = ViewModelProviders.of(this).get(UploadPostViewModel.class);
 
         binding.progressBar.setVisibility(View.GONE);
         originalMode = getActivity().getWindow().getAttributes().softInputMode;
@@ -324,8 +347,40 @@ public class UploadPostFragment extends Fragment {
         binding.actionInsertImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                new ImagePickerCallback(requireActivity(), )
+                new ImagePickerCallback(requireActivity(), REQUEST_IMAGE).onImagePickerClicked();
+                viewModel.getImagePath().observe(getViewLifecycleOwner(), new Observer<Uri>() {
+                    @Override
+                    public void onChanged(Uri uri) {
+                        if(uri != null){
+                            Log.d("urivalue", uri.toString());
+                            Uri fileUri = uri;
+                            String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
+                            int randomNumber = new Random().nextInt();
+                            String fileName = Integer.toString(randomNumber);
+
+                            StorageReference fileToUpload = storageReference.child("Images").child(currentUserId).child(fileName); // randomize name
+
+                            fileToUpload.putFile(fileUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                @Override
+                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                    storageReference.child("Images").child(currentUserId).child(fileName).getDownloadUrl().addOnCompleteListener(task -> {
+                                        if (task.isSuccessful()) {
+                                            mEditor.insertImage(task.getResult().toString(), task.getResult().toString());
+                                            Log.d("newmethod", task.getResult().toString());
+                                        }
+                                    });
+
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(requireActivity(), "Upload image failed", Toast.LENGTH_LONG).show();
+                                }
+                            });
+                        }
+                    }
+                });
             }
         });
 

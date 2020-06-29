@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">Artwok</string>
+
+
+
+
+
     <string name="buy_sell_share">Buy. Sell. Share.</string>
     <string name="login">Sign in</string>
     <string name="artwok_logo">artwok_logo</string>

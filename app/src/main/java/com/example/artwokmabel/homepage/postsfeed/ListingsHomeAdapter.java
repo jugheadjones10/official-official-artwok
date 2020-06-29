@@ -33,6 +33,8 @@ import com.synnapps.carouselview.ImageListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
+
 public class ListingsHomeAdapter extends RecyclerView.Adapter<ListingsHomeAdapter.homeListingsHolder>{
     private Context mContext;
     private List<Listing> listingsList;
@@ -58,11 +60,8 @@ public class ListingsHomeAdapter extends RecyclerView.Adapter<ListingsHomeAdapte
         Log.d("checkinglistings", data.getName());
 
         homeListingsHolder.binding.setListingclickcallback(new ListingsHomeAdapter.OnListingClicked());
-//        homeListingsHolder.binding.setProfilecallback(new ListingsHomeAdapter.OnProfileClicked());
 
         homeListingsHolder.binding.setListing(data);
-
-        homeListingsHolder.binding.textStuff.bringToFront();
 
         ArrayList<String> images = data.getPhotos();
         ImageListener imageListener = new ImageListener() {
@@ -71,6 +70,7 @@ public class ListingsHomeAdapter extends RecyclerView.Adapter<ListingsHomeAdapte
                 //imageView.setImageResource(sampleImages[position]);
                 Picasso.get()
                         .load(images.get(position))
+                        .transform(new RoundedCornersTransformation(10, 0, RoundedCornersTransformation.CornerType.TOP))
                         .resize(300, 300)
                         .placeholder(R.drawable.loading_image)
                         .error(R.drawable.rick_and_morty)
@@ -122,17 +122,6 @@ public class ListingsHomeAdapter extends RecyclerView.Adapter<ListingsHomeAdapte
             navController.navigate(action);
         }
     }
-
-//    public class OnProfileClicked{
-//        public void onProfileClicked(Listing data){
-//            IndivUserFragment indivUserFrag = new IndivUserFragment();
-//            Bundle args = new Bundle();
-//            args.putString("poster_username", data.getUsername());
-//            indivUserFrag.setArguments(args);
-//            HomePageActivity.getInstance().loadFragment(indivUserFrag);
-//        }
-//    }
-
 
     public void setListingsList(final List<Listing> listings) {
         if (this.listingsList == null) {
