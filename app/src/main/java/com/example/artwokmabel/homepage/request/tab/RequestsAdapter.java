@@ -118,7 +118,7 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.myHold
                 });
 
         if(data.getUserid().equals(mAuth.getCurrentUser().getUid())){
-            myHolder.binding.requestFavorite.setImageResource(R.drawable.menu);
+            myHolder.binding.requestFavorite.setImageResource(R.drawable.ic_menu);
         }else {
             myHolder.binding.setOnfavrequestclicked(new OnFavRequestClicked());
 

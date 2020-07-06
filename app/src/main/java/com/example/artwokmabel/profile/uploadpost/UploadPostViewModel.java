@@ -6,29 +6,36 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.artwokmabel.UploadViewModel;
 import com.example.artwokmabel.models.Listing;
 import com.example.artwokmabel.models.User;
 import com.example.artwokmabel.repos.FirestoreRepo;
 
 import java.util.List;
 
-public class UploadPostViewModel extends ViewModel {
+public class UploadPostViewModel extends ViewModel implements UploadViewModel {
 
     private MutableLiveData<Uri> imagePath = new MutableLiveData<>();
+    private MutableLiveData<Uri> videoPath = new MutableLiveData<>();
 
     public UploadPostViewModel(){
-//        imagePath.setValue(null);
+
     }
 
     public void setResultOk(Uri imagePath){
         this.imagePath.setValue(imagePath);
     }
+    public void setVideoResultOk(Uri videoPath){
+        this.videoPath.setValue(videoPath);
+    }
 
-//    public void setResultCancelled(){
-//
-//    }
 
     public LiveData<Uri> getImagePath() {
         return imagePath;
     }
+
+    public LiveData<Uri> getVideoPath() {
+        return videoPath;
+    }
+
 }

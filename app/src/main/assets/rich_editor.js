@@ -193,7 +193,12 @@ RE.setBlockquote = function() {
 }
 
 RE.insertImage = function(url, alt) {
-    var html = '<img src="' + url + '" alt="' + alt + '" />';
+    var html = '<img src="' + url + '" alt="' + alt + '" width="100%"/>';
+    RE.insertHTML(html);
+}
+
+RE.insertVideo = function(url, alt) {
+    var html = '<video width="100%" autoplay loop muted><source src="' + url + '" alt="' + alt + '" type="video/mp4"></video>'
     RE.insertHTML(html);
 }
 
@@ -315,6 +320,32 @@ RE.blurFocus = function() {
 
 RE.removeFormat = function() {
     document.execCommand('removeFormat', false, null);
+}
+
+RE.checkIfStart = function(){
+    checkIfStartObject.setFk("FUCKFUCKFUCK")
+
+    var sel = window.getSelection()
+    var nd = sel.anchorNode
+//    var text = nd.textContent
+
+    if(nd.tagName == "DIV"){
+        checkIfStartObject.setStart(true);
+    }else{
+        checkIfStartObject.setStart(false);
+    }
+
+//    return nd.tagName == "DIV"
+//    return nd.tagName
+
+//
+  var sel = window.getSelection(), offset = sel.focusOffset;
+  sel.modify ("move","backward","character");
+  if (offset == sel.focusOffset) return true;
+  else {
+    sel.modify ("move","forward","character");
+    return false;
+  }
 }
 
 // Event Listeners

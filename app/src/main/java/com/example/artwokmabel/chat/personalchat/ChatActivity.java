@@ -28,7 +28,6 @@ import com.example.artwokmabel.models.Message;
 import com.example.artwokmabel.models.OfferMessage;
 import com.example.artwokmabel.models.OrderChat;
 import com.example.artwokmabel.profile.settings.SettingsActivity;
-import com.example.artwokmabel.profile.uploadlisting.UploadListingAcitvity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -67,6 +66,8 @@ public class ChatActivity extends AppCompatActivity {
     private MessageAdapter messageAdapter;
     private final List<Message> messagesList = new ArrayList<>();
 
+    public static final int REQUEST_IMAGE = 100;
+
     private String saveCurrentTime, saveCurrentDate;
 
     @Override
@@ -100,7 +101,7 @@ public class ChatActivity extends AppCompatActivity {
         binding.sendFilesBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new ImagePickerCallback(ChatActivity.this, UploadListingAcitvity.REQUEST_IMAGE).onImagePickerClicked();
+//                new ImagePickerCallback(ChatActivity.this, REQUEST_IMAGE).onImagePickerClicked();
             }
         });
 
@@ -142,34 +143,34 @@ public class ChatActivity extends AppCompatActivity {
     private void DisplayLastSeen()
     {
         RootRef.child("Users").child(messageFollowingId)
-                .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot)
-                    {
-                        if (dataSnapshot.child("userState").hasChild("state")) {
-                            String state = dataSnapshot.child("userState").child("state").getValue().toString();
-                            String date = dataSnapshot.child("userState").child("date").getValue().toString();
-                            String time = dataSnapshot.child("userState").child("time").getValue().toString();
+            .addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot)
+                {
+                    if (dataSnapshot.child("userState").hasChild("state")) {
+                        String state = dataSnapshot.child("userState").child("state").getValue().toString();
+                        String date = dataSnapshot.child("userState").child("date").getValue().toString();
+                        String time = dataSnapshot.child("userState").child("time").getValue().toString();
 
-                            if (state.equals("online"))
-                            {
-                                chatBarBinding.customUserLastSeen.setText("online");
-                            }
-                            else if (state.equals("offline"))
-                            {
-                                chatBarBinding.customUserLastSeen.setText("Last Seen: " + date + " " + time);
-                            }
-                        } else
+                        if (state.equals("online"))
                         {
-                            chatBarBinding.customUserLastSeen.setText("offline");
+                            chatBarBinding.customUserLastSeen.setText("online");
                         }
+                        else if (state.equals("offline"))
+                        {
+                            chatBarBinding.customUserLastSeen.setText("Last Seen: " + date + " " + time);
+                        }
+                    } else
+                    {
+                        chatBarBinding.customUserLastSeen.setText("offline");
                     }
+                }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
 
-                    }
-                });
+                }
+            });
     }
 
 
@@ -285,7 +286,7 @@ public class ChatActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult (int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == UploadListingAcitvity.REQUEST_IMAGE) {
+        if (requestCode == REQUEST_IMAGE) {
             if (resultCode == RESULT_OK) {
 
                 if (data != null) {

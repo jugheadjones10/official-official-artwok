@@ -13,9 +13,8 @@ import androidx.fragment.app.Fragment;
 import com.example.artwokmabel.R;
 
 public class DescFragment extends Fragment {
-    View view;
-    TextView desc;
-    public DescFragment () {}
+    private View view;
+    public TextView desc;
 
     @Nullable
     @Override

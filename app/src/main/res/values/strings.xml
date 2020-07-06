@@ -1,9 +1,20 @@
 <resources>
+
     <string name="app_name">Artwok</string>
 
+<!--    New string resources-->
+    <string name="hint_input_comment">Comment...</string>
 
+    <string name="label_button_following">following</string>
+    <string name="label_button_upload_listing">Upload Listing</string>
 
+    <string name="title_dialog_choose_option">Choose Option</string>
+    <string name="option_dialog_photo">Take Photo</string>
+    <string name="option_dialog_gallery">Choose Image From Gallery</string>
+    <string name="option_dialog_gallery_video">Choose Video From Gallery</string>
+    <string name="option_dialog_video">Take Video</string>
 
+<!--    -->
 
     <string name="buy_sell_share">Buy. Sell. Share.</string>
     <string name="login">Sign in</string>
@@ -63,9 +74,7 @@
     <string name="orderdelivery">"Delivery"</string>
     <string name="orderrefund">"Refund\Exchange Policy"</string>
     <string name="toast_image_intent_null">null</string>
-    <string name="lbl_set_profile_photo">Choose Option</string>
-    <string name="lbl_take_camera_picture">Take From Camera</string>
-    <string name="lbl_choose_from_gallery">Choose From Gallery</string>
+
     <string name="Login_buy_sell_share">Buy    Sell    Share!</string>
     <string name="Login_log_in">Log in</string>
     <string name="Login_create_account">Create account</string>

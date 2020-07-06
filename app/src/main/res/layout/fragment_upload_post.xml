@@ -294,7 +294,7 @@
                                 />
 
                             <ImageButton
-                                android:id="@+id/action_insert__online_image"
+                                android:id="@+id/action_insert_online_image"
                                 android:layout_width="48dp"
                                 android:layout_height="48dp"
                                 android:padding="4dp"
@@ -303,6 +303,18 @@
                                 android:contentDescription="@null"
                                 android:src="@drawable/ic_image"
                                 />
+
+                            <ImageButton
+                                android:id="@+id/action_insert_video"
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
+                                android:padding="4dp"
+                                android:background="@color/purple"
+                                android:tint="@color/artwok_black"
+                                android:contentDescription="@null"
+                                android:src="@drawable/ic_image"
+                                />
+
 
 
                             <ImageButton

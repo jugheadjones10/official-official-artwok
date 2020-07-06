@@ -41,7 +41,7 @@ import com.example.artwokmabel.models.Listing;
 import com.example.artwokmabel.models.MainPost;
 import com.example.artwokmabel.models.Review;
 import com.example.artwokmabel.models.User;
-import com.example.artwokmabel.profile.uploadlisting.UploadListingAcitvity;
+import com.example.artwokmabel.profile.uploadlisting.UploadListingViewModel;
 import com.example.artwokmabel.profile.uploadpost.UploadPostActivity;
 import com.example.artwokmabel.profile.uploadpost.UploadPostFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -236,7 +236,7 @@ public class FirestoreRepo {
                     callback.onPostUploadFinished(false));
     }
 
-    public void uploadNewListing(String postTitle, String postDesc, ArrayList<String> categories, Long price, String delivery, String refund, String currentUserId, ArrayList<String> postImageUris, Activity activity){
+    public void uploadNewListing(String postTitle, String postDesc, ArrayList<String> categories, Long price, String delivery, String refund, String currentUserId, ArrayList<String> postImageUris, UploadListingViewModel.UploadListingCallback callback){
         postTitle = postTitle.substring(0, 1).toUpperCase() + postTitle.substring(1);
 
         DocumentReference newListingRef = db.collection("Users").document(currentUserId).collection("Listings").document();
@@ -256,12 +256,14 @@ public class FirestoreRepo {
 
         newListingRef.set(newListing)
                 .addOnSuccessListener(aVoid -> {
-                    Toast.makeText(activity, "Successfully uploaded ic_dm.", Toast.LENGTH_LONG).show();
-                    UploadListingAcitvity.getInstance().onUploaded();
+                    callback.uploadListingCallback(true);
+//                    Toast.makeText(activity, "Successfully uploaded ic_dm.", Toast.LENGTH_LONG).show();
+//                    UploadListingAcitvity.getInstance().onUploaded();
                 })
-                .addOnFailureListener(e ->
-                        Toast.makeText(activity, "Failed to upload ic_dm. awd", Toast.LENGTH_LONG)
-                                .show());
+                .addOnFailureListener(e -> {
+                    callback.uploadListingCallback(false);
+//                    Toast.makeText(activity, "Failed to upload ic_dm. awd", Toast.LENGTH_LONG).show()
+                });
 
         FirebaseDatabase.getInstance().getReference()
                 .child("Listings")

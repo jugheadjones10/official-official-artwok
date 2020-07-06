@@ -27,7 +27,6 @@ import com.example.artwokmabel.databinding.FragmentSettingsBinding;
 import com.example.artwokmabel.homepage.callbacks.ImagePickerCallback;
 import com.example.artwokmabel.homepage.homepagewrapper.HomeTabsFragment;
 import com.example.artwokmabel.models.User;
-import com.example.artwokmabel.profile.uploadlisting.UploadListingAcitvity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -42,6 +41,7 @@ import static android.app.Activity.RESULT_OK;
 
 public class SettingsFragment extends Fragment {
 
+    public static final int REQUEST_IMAGE = 100;
     private FragmentSettingsBinding binding;
     private SettingsActivityViewModel viewModel;
     private NavController navController;
@@ -91,7 +91,7 @@ public class SettingsFragment extends Fragment {
     }
 
     public void onProfilePicChange(){
-        new ImagePickerCallback(requireActivity(), UploadListingAcitvity.REQUEST_IMAGE).onImagePickerClicked();
+//        new ImagePickerCallback(requireActivity(), UploadListingAcitvity.REQUEST_IMAGE).onImagePickerClicked();
     }
 
     public void onUsernameChange(){
@@ -153,7 +153,7 @@ public class SettingsFragment extends Fragment {
     @Override
     public void onActivityResult (int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == UploadListingAcitvity.REQUEST_IMAGE) {
+        if (requestCode == REQUEST_IMAGE) {
             if (resultCode == RESULT_OK) {
 
                 if (data != null) {

@@ -66,7 +66,6 @@
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name" />
-        <activity android:name=".rubbish.LoginActivityOld" />
         <activity
             android:name="com.facebook.CustomTabActivity"
             android:exported="true">
@@ -96,15 +95,6 @@
         <activity
             android:name=".profile.uploadlisting.UploadListingAcitvity"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".rubbish.ForgotPasswordActivityOld" />
-        <activity android:name=".rubbish.LaunchPageActivity" />
-        <activity android:name=".rubbish.CreateAccountActivity" />
-        <activity android:name=".rubbish.GroupActivity" />
-        <activity android:name=".rubbish.AddListingActivity" />
-        <activity android:name=".groups.GroupProfileActivity" />
-        <activity android:name=".groups.UploadGroupPostActivity" />
-        <activity android:name=".chat.activities.ChatOrderActivity" />
-        <activity android:name=".chat.activities.ChatOrderReviewActivity" />
         <activity android:name=".homepage.favorites.FavoritesActivity" />
         <activity
             android:name=".homepage.listing.ListingActivity"
@@ -134,8 +124,6 @@
         <!-- <action android:name="com.google.firebase.MESSAGING_EVENT" /> -->
         <!-- </intent-filter> -->
         <!-- </service> -->
-        <!-- <activity android:name=".LoginActivityUNUSED" /> -->
-        <!-- <activity android:name=".SignupActivityUNUSED" /> -->
         <activity android:name="com.onegravity.rteditor.media.choose.MediaChooserActivity" />
         <activity android:name="com.onegravity.rteditor.media.crop.CropImageActivity" />
         <activity

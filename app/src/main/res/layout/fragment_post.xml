@@ -24,7 +24,7 @@
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/indiv_toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
+                android:layout_height="@dimen/toolbar_height_normal"
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
@@ -40,32 +40,29 @@
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/profile_picture"
-                        android:layout_width="55dp"
+                        android:layout_width="@dimen/circle_profile_width"
+                        android:src="@drawable/rjha"
                         android:layout_height="match_parent"
-                        android:layout_gravity="left|center_vertical"
                         android:onClick="@{() -> FragmentPost.onProfileClicked(user)}"
-                        android:padding="8dp" />
+                        android:padding="@dimen/spacing_small" />
 
                     <TextView
                         android:id="@+id/poster_username"
-                        android:layout_width="fill_parent"
-                        android:layout_height="?attr/actionBarSize"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:paddingLeft="5dp"
+                        android:layout_marginStart="@dimen/spacing_small"
                         android:text="@{user.username}"
-                        android:textSize="18sp" />
+                     />
 
-                    <ImageButton
+                    <ImageView
                         android:id="@+id/favorite"
-                        android:layout_width="50dp"
-                        android:layout_height="?attr/actionBarSize"
-                        android:layout_gravity="end"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
                         android:adjustViewBounds="true"
-                        android:background="@null"
-                        android:padding="10dp"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/favourite" />
+                        android:padding="@dimen/spacing_normal"
+                        android:src="@drawable/heart_button" />
                 </LinearLayout>
 
             </androidx.appcompat.widget.Toolbar>
@@ -109,7 +106,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:hint="Comment..."
+            android:hint="@string/hint_input_comment"
             app:boxBackgroundColor="@android:color/transparent"
             app:boxStrokeWidth="0dp"
             app:boxStrokeWidthFocused="0dp"

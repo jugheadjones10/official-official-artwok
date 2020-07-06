@@ -90,14 +90,14 @@ public class ListingFragment extends Fragment {
                 if (me != null) {
 
                     if(listing.getUserid().equals(mAuth.getCurrentUser().getUid())){
-                        binding.favoriteButton.setVisibility(View.GONE);
+                        binding.favorite.setVisibility(View.GONE);
                     }else{
                         currentUserListingsFavs = me.getFav_listings();
 
                         if(currentUserListingsFavs != null && currentUserListingsFavs.contains(listing.getPostid())){
-                            binding.favoriteButton.setImageResource(R.drawable.like);
+                            binding.favorite.setImageResource(R.drawable.like);
                         }else{
-                            binding.favoriteButton.setImageResource(R.drawable.favourite_post);
+                            binding.favorite.setImageResource(R.drawable.heart_button);
                         }
 //                        binding.favoriteButton.setOnClickListener(new View.OnClickListener() {
 //                            @Override

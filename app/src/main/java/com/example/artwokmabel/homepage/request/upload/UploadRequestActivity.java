@@ -110,14 +110,14 @@ public class UploadRequestActivity extends AppCompatActivity {
         binding.carouselView.setImageClickListener(new ImageClickListener() {
             @Override
             public void onClick(int position) {
-                new ImagePickerCallback(UploadRequestActivity.this, REQUEST_IMAGE).onImagePickerClicked();
+                //new ImagePickerCallback(UploadRequestActivity.this, REQUEST_IMAGE).onImagePickerClicked();
             }
         });
 
         binding.uploadPicL.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                new ImagePickerCallback(UploadRequestActivity.this, REQUEST_IMAGE).onImagePickerClicked();
+                //new ImagePickerCallback(UploadRequestActivity.this, REQUEST_IMAGE).onImagePickerClicked();
             }
         });
 

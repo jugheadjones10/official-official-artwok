@@ -50,7 +50,7 @@ public class FollowingAdapter extends RecyclerView.Adapter<FollowingAdapter.myHo
     @NonNull
     @Override
     public FollowingAdapter.myHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
-        ItemFollowingBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.item_following, parent,false);
+        ItemFollowingBinding binding =  DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.item_following, parent,false);
 
         return new FollowingAdapter.myHolder(binding);
     }
@@ -120,18 +120,16 @@ public class FollowingAdapter extends RecyclerView.Adapter<FollowingAdapter.myHo
         public void onFollowingClicked(Button followingButton, User user){
             if(followingButton.getText().toString().equals("Following")){
                 followingButton.setText("Follow");
-
                 viewModel.removeUserFollowing(mAuth.getCurrentUser().getUid(), user.getUid());
             }else{
                 followingButton.setText("Following");
-
                 viewModel.addUserFollowing(mAuth.getCurrentUser().getUid(), user.getUid());
             }
         }
     }
 
     public class OnChatClicked{
-        public void onChatClicked(){
+        public void onChatClicked(User user){
 
         }
     }

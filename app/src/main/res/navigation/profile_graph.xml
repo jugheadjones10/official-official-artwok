@@ -21,6 +21,9 @@
             app:argType="string"
             app:nullable="true"
             android:defaultValue="@null" />
+        <action
+            android:id="@+id/action_profile_graph_to_uploadListingFragment"
+            app:destination="@id/uploadListingFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
@@ -79,4 +82,8 @@
             android:name="userId"
             app:argType="string" />
     </action>
+    <fragment
+        android:id="@+id/uploadListingFragment"
+        android:name="com.example.artwokmabel.profile.uploadlisting.UploadListingFragment"
+        android:label="UploadListingFragment" />
 </navigation>

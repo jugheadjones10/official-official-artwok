@@ -30,8 +30,7 @@
                     android:background="?attr/colorPrimary"
                     app:contentInsetStart="0dp"
                     app:layout_scrollFlags="scroll|enterAlways"
-                    app:popupTheme="@style/AppTheme.PopupOverlay"
-                    app:title="@string/app_name">
+                    app:popupTheme="@style/AppTheme.PopupOverlay">
 
                     <LinearLayout
                         android:id="@+id/linearLayout3"
@@ -44,7 +43,7 @@
                             android:layout_width="@dimen/icon_artwok_width_normal"
                             android:layout_height="match_parent"
                             android:layout_gravity="start|bottom"
-                            android:layout_marginLeft="@dimen/spacing_normal"
+                            android:layout_marginLeft="@dimen/spacing_large"
                             android:src="@drawable/artwok_login_icon" />
 
                         <View
@@ -64,12 +63,12 @@
                             android:id="@+id/fav_btn"
                             android:layout_width="@dimen/icon_favorite_width_normal"
                             android:layout_height="match_parent"
-                            android:layout_marginRight="@dimen/spacing_normal"
-                            android:layout_marginLeft="@dimen/spacing_normal"
+                            android:layout_marginRight="@dimen/spacing_large"
+                            android:layout_marginLeft="@dimen/spacing_large"
                             android:background="@null"
                             android:scaleType="fitCenter"
                             android:onClick="@{() -> HomeTabsFragment.onFavClicked()}"
-                            android:src="@drawable/ic_heart" />
+                            android:src="@drawable/ic_favorite_border_black_24dp" />
                     </LinearLayout>
                 </androidx.appcompat.widget.Toolbar>
 

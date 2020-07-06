@@ -24,99 +24,168 @@
             type="com.example.artwokmabel.profile.people.FollowingAdapter.OnUserClicked" />
     </data>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:gravity="center_vertical"-->
+<!--        android:orientation="horizontal">-->
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/contact_picture"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_marginLeft="16dp"
-            android:onClick="@{() -> onuserclicked.onUserClicked(user)}"
-            android:src="@drawable/budget_details_lady" />
-
-<!--        <FrameLayout-->
-<!--            android:id="@+id/contact_picture_outside"-->
+<!--        <de.hdodenhof.circleimageview.CircleImageView-->
+<!--            android:id="@+id/contact_picture"-->
 <!--            android:layout_width="35dp"-->
 <!--            android:layout_height="35dp"-->
 <!--            android:layout_marginLeft="16dp"-->
-<!--            style="@drawable/rounded_image_corners">-->
+<!--            android:onClick="@{() -> onuserclicked.onUserClicked(user)}"-->
+<!--            android:src="@drawable/budget_details_lady" />-->
+
+<!--&lt;!&ndash;        <FrameLayout&ndash;&gt;-->
+<!--&lt;!&ndash;            android:id="@+id/contact_picture_outside"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_width="35dp"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_height="35dp"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_marginLeft="16dp"&ndash;&gt;-->
+<!--&lt;!&ndash;            style="@drawable/rounded_image_corners">&ndash;&gt;-->
+
+<!--&lt;!&ndash;            <ImageView&ndash;&gt;-->
+<!--&lt;!&ndash;                android:id="@+id/contact_picture"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_height="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:adjustViewBounds="true"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:scaleType="centerInside"&ndash;&gt;-->
+<!--&lt;!&ndash;                tools:srcCompat="@tools:sample/avatars[0]" />&ndash;&gt;-->
+<!--&lt;!&ndash;        </FrameLayout>&ndash;&gt;-->
+
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_marginLeft="8dp"-->
+<!--            android:layout_marginTop="8dp"-->
+<!--            android:layout_marginBottom="8dp"-->
+<!--            android:orientation="vertical">-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/item_following_username"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="0dp"-->
+<!--                android:layout_weight="1"-->
+<!--                android:text="@{user.username}"-->
+<!--                android:textStyle="bold" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/item_following_desc"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="0dp"-->
+<!--                android:layout_weight="1"-->
+<!--                android:text="@{user.email}"-->
+<!--                android:textSize="12sp" />-->
+<!--        </LinearLayout>-->
+
+<!--        <View-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1" />-->
+
+<!--        <Button-->
+<!--            android:id="@+id/following_button"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:layout_marginRight="16dp"-->
+<!--            android:layout_marginBottom="10dp"-->
+<!--            android:background="@drawable/rounded_corners"-->
+<!--            android:text="Following"-->
+<!--            android:onClick="@{() -> onfollowingclicked.onFollowingClicked(followbutton, user)}"-->
+<!--            android:textAllCaps="false"-->
+<!--            android:textSize="12sp" />-->
+
+<!--        <FrameLayout-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:layout_marginRight="16dp"-->
+<!--            android:layout_marginBottom="10dp"-->
+<!--            android:background="@drawable/rounded_corners"-->
+<!--            android:paddingLeft="2dp"-->
+<!--            android:paddingTop="4dp"-->
+<!--            android:paddingRight="2dp"-->
+<!--            android:paddingBottom="4dp">-->
 
 <!--            <ImageView-->
-<!--                android:id="@+id/contact_picture"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:adjustViewBounds="true"-->
-<!--                android:scaleType="centerInside"-->
-<!--                tools:srcCompat="@tools:sample/avatars[0]" />-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:src="@drawable/chat_button" />-->
 <!--        </FrameLayout>-->
+<!--        -->
+<!--    </LinearLayout>-->
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/following_profile_height">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:orientation="vertical">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/contact_picture"
+                android:layout_width="@dimen/following_circle_profile_pic_width"
+                android:layout_height="0dp"
+                android:onClick="@{() -> onuserclicked.onUserClicked(user)}"
+                android:padding="@dimen/spacing_small"
+                android:src="@drawable/budget_details_lady"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/item_following_username"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                style="@style/RegularCondensed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/spacing_small"
                 android:text="@{user.username}"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/item_following_desc"
+                app:layout_constraintStart_toEndOf="@+id/contact_picture"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="spread" />
 
             <TextView
                 android:id="@+id/item_following_desc"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:text="@{user.email}"
-                android:textSize="12sp" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
-        <Button
-            android:id="@+id/following_button"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/rounded_corners"
-            android:text="Following"
-            android:onClick="@{() -> onfollowingclicked.onFollowingClicked(followbutton, user)}"
-            android:textAllCaps="false"
-            android:textSize="12sp" />
-
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/rounded_corners"
-            android:paddingLeft="2dp"
-            android:paddingTop="4dp"
-            android:paddingRight="2dp"
-            android:paddingBottom="4dp">
-
-            <ImageView
+                style="@style/RegularCondensed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/spacing_small"
+                android:text="@{user.email}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/contact_picture"
+                app:layout_constraintTop_toBottomOf="@+id/item_following_username" />
+
+            <Button
+                android:id="@+id/following_button"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/spacing_large"
+                android:layout_marginBottom="@dimen/spacing_large"
+                android:background="@drawable/follow_button_rounded"
+                android:onClick="@{() -> onfollowingclicked.onFollowingClicked(followbutton, user)}"
+                android:text="@string/label_button_following"
+                android:textAllCaps="false"
+                android:layout_marginRight="@dimen/spacing_small"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/imageView5"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
                 android:layout_gravity="center"
-                android:src="@drawable/chat_button" />
-        </FrameLayout>
+                android:adjustViewBounds="true"
+                android:padding="@dimen/spacing_normal"
+                android:src="@drawable/message_user"
+                android:layout_marginRight="@dimen/spacing_small"
+                android:onClick="@{() -> onchatclicked.onChatClicked(user)}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-
-    </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

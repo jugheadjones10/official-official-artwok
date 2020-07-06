@@ -21,7 +21,6 @@ import androidx.navigation.Navigation;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.artwokmabel.chat.MessageFragment;
-import com.example.artwokmabel.chat.activities.ChatOrderActivity;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.MessageChatsFragmentBinding;
 import com.example.artwokmabel.databinding.MessageOrdersFragmentBinding;

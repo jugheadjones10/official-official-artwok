@@ -16,10 +16,12 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.artwokmabel.HomePageActivity;
 import com.example.artwokmabel.R;
+import com.example.artwokmabel.UploadViewModel;
 import com.example.artwokmabel.homepage.callbacks.ImagePickerCallback;
 import com.example.artwokmabel.profile.uploadpost.UploadPostFragment;
 import com.example.artwokmabel.profile.uploadpost.UploadPostViewModel;
@@ -50,19 +52,22 @@ public class ImagePickerActivity extends AppCompatActivity {
 
 
     public static final int REQUEST_IMAGE_CAPTURE = 0;
+    public static final int REQUEST_VIDEO_CAPTURE = 2;
     public static final int REQUEST_GALLERY_IMAGE = 1;
+    public static final int REQUEST_GALLERY_VIDEO = 3;
 
     private boolean lockAspectRatio = false, setBitmapMaxWidthHeight = false;
     private int ASPECT_RATIO_X = 16, ASPECT_RATIO_Y = 9, bitmapMaxWidth = 1000, bitmapMaxHeight = 1000;
     private int IMAGE_COMPRESSION = 80;
     public static String fileName;
 
-    private UploadPostViewModel viewModel;
+    private UploadViewModel viewModel;
 
     public interface PickerOptionListener {
         void onTakeCameraSelected();
-
         void onChooseGallerySelected();
+        void onChooseGalleryVideoSelected();
+        void onTakeVideoSelected();
     }
 
     @Override
@@ -70,7 +75,7 @@ public class ImagePickerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_picker);
 
-        viewModel = UploadPostFragment.getInstance().viewModel;
+        viewModel = ImagePickerCallback.getInstance().viewModel;
 
         Intent intent = getIntent();
         if (intent == null) {
@@ -89,25 +94,35 @@ public class ImagePickerActivity extends AppCompatActivity {
         int requestCode = intent.getIntExtra(INTENT_IMAGE_PICKER_OPTION, -1);
         if (requestCode == REQUEST_IMAGE_CAPTURE) {
             takeCameraImage();
-        } else {
+        } else if(requestCode == REQUEST_GALLERY_IMAGE){
             chooseImageFromGallery();
+        }else if(requestCode == REQUEST_GALLERY_VIDEO){
+            chooseVideoFromGallery();
+        }else{
+            takeVideo();
         }
     }
 
     public static void showImagePickerOptions(Context context, PickerOptionListener listener) {
         // setup the alert builder
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle(context.getString(R.string.lbl_set_profile_photo));
+        builder.setTitle(context.getString(R.string.title_dialog_choose_option));
 
         // add a list
-        String[] options = {context.getString(R.string.lbl_take_camera_picture), context.getString(R.string.lbl_choose_from_gallery)};
+        String[] options = {context.getString(R.string.option_dialog_photo), context.getString(R.string.option_dialog_video), context.getString(R.string.option_dialog_gallery), context.getString(R.string.option_dialog_gallery_video)};
         builder.setItems(options, (dialog, which) -> {
             switch (which) {
                 case 0:
                     listener.onTakeCameraSelected();
                     break;
                 case 1:
+                    listener.onTakeVideoSelected();
+                    break;
+                case 2:
                     listener.onChooseGallerySelected();
+                    break;
+                case 3:
+                    listener.onChooseGalleryVideoSelected();
                     break;
             }
         });
@@ -144,6 +159,13 @@ public class ImagePickerActivity extends AppCompatActivity {
                 }).check();
     }
 
+    private void takeVideo(){
+        Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+        if (takeVideoIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takeVideoIntent, REQUEST_VIDEO_CAPTURE);
+        }
+    }
+
     private void chooseImageFromGallery() {
         Dexter.withActivity(this)
                 .withPermissions(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -164,6 +186,11 @@ public class ImagePickerActivity extends AppCompatActivity {
                 }).check();
     }
 
+    private void chooseVideoFromGallery(){
+        Intent pickVideo = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(pickVideo, REQUEST_GALLERY_VIDEO);
+    }
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
@@ -174,10 +201,27 @@ public class ImagePickerActivity extends AppCompatActivity {
                     setResultCancelled();
                 }
                 break;
+            case REQUEST_VIDEO_CAPTURE:
+                if (resultCode == RESULT_OK) {
+                    //cropImage(getCacheImagePath(fileName));
+                    Uri videoUri = data.getData();
+                    setVideoResultOk(videoUri);
+                } else {
+                    setResultCancelled();
+                }
+                break;
             case REQUEST_GALLERY_IMAGE:
                 if (resultCode == RESULT_OK) {
                     Uri imageUri = data.getData();
                     cropImage(imageUri);
+                } else {
+                    setResultCancelled();
+                }
+                break;
+            case REQUEST_GALLERY_VIDEO:
+                if (resultCode == RESULT_OK) {
+                    Uri videoUri = data.getData();
+                    setVideoResultOk(videoUri);
                 } else {
                     setResultCancelled();
                 }
@@ -233,8 +277,12 @@ public class ImagePickerActivity extends AppCompatActivity {
 //        Intent intent = new Intent();
 //        intent.putExtra("path", imagePath);
 //        setResult(Activity.RESULT_OK, intent);
-
         viewModel.setResultOk(imagePath);
+        finish();
+    }
+
+    private void setVideoResultOk(Uri videoPath){
+        viewModel.setVideoResultOk(videoPath);
         finish();
     }
 

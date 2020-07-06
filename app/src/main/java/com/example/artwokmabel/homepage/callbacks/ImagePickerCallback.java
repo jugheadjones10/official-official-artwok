@@ -3,7 +3,11 @@ package com.example.artwokmabel.homepage.callbacks;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.provider.MediaStore;
 
+import androidx.lifecycle.ViewModel;
+
+import com.example.artwokmabel.UploadViewModel;
 import com.example.artwokmabel.profile.uploadpost.UploadPostViewModel;
 import com.example.artwokmabel.profile.utils.ImagePickerActivity;
 import com.karumi.dexter.Dexter;
@@ -18,10 +22,19 @@ public class ImagePickerCallback {
 
     private Activity activity;
     private int requestCode;
+    public UploadViewModel viewModel;
+    private static ImagePickerCallback instance;
 
-    public ImagePickerCallback(Activity activity, int requestCode){
+    //No overlap with other image picker callbacks should occur
+    public static ImagePickerCallback getInstance(){
+        return instance;
+    }
+
+    public ImagePickerCallback(Activity activity, int requestCode, UploadViewModel viewModel){
+        instance = this;
         this.activity = activity;
         this.requestCode = requestCode;
+        this.viewModel = viewModel;
     }
 
     public void onImagePickerClicked(){
@@ -53,8 +66,18 @@ public class ImagePickerCallback {
             }
 
             @Override
+            public void onTakeVideoSelected() {
+                launchTakeVideoIntent();
+            }
+
+            @Override
             public void onChooseGallerySelected() {
                 launchGalleryIntent();
+            }
+
+            @Override
+            public void onChooseGalleryVideoSelected() {
+                launchGalleryVideoIntent();
             }
         });
     }
@@ -76,9 +99,38 @@ public class ImagePickerCallback {
         activity.startActivityForResult(intent, requestCode);
     }
 
+    private void launchTakeVideoIntent(){
+        Intent intent = new Intent(activity, ImagePickerActivity.class);
+        intent.putExtra(ImagePickerActivity.INTENT_IMAGE_PICKER_OPTION, ImagePickerActivity.REQUEST_VIDEO_CAPTURE);
+
+        // setting aspect ratio
+        intent.putExtra(ImagePickerActivity.INTENT_LOCK_ASPECT_RATIO, true);
+        intent.putExtra(ImagePickerActivity.INTENT_ASPECT_RATIO_X, 1); // 16x9, 1x1, 3:4, 3:2
+        intent.putExtra(ImagePickerActivity.INTENT_ASPECT_RATIO_Y, 1);
+
+        // setting maximum bitmap width and height
+        intent.putExtra(ImagePickerActivity.INTENT_SET_BITMAP_MAX_WIDTH_HEIGHT, true);
+        intent.putExtra(ImagePickerActivity.INTENT_BITMAP_MAX_WIDTH, 1000);
+        intent.putExtra(ImagePickerActivity.INTENT_BITMAP_MAX_HEIGHT, 1000);
+
+        activity.startActivityForResult(intent, requestCode);
+    }
+
     private void launchGalleryIntent() {
         Intent intent = new Intent(activity, ImagePickerActivity.class);
         intent.putExtra(ImagePickerActivity.INTENT_IMAGE_PICKER_OPTION, ImagePickerActivity.REQUEST_GALLERY_IMAGE);
+
+        // setting aspect ratio
+        intent.putExtra(ImagePickerActivity.INTENT_LOCK_ASPECT_RATIO, true);
+        intent.putExtra(ImagePickerActivity.INTENT_ASPECT_RATIO_X, 1); // 16x9, 1x1, 3:4, 3:2
+        intent.putExtra(ImagePickerActivity.INTENT_ASPECT_RATIO_Y, 1);
+
+        activity.startActivityForResult(intent, requestCode);
+    }
+
+    private void launchGalleryVideoIntent(){
+        Intent intent = new Intent(activity, ImagePickerActivity.class);
+        intent.putExtra(ImagePickerActivity.INTENT_IMAGE_PICKER_OPTION, ImagePickerActivity.REQUEST_GALLERY_VIDEO);
 
         // setting aspect ratio
         intent.putExtra(ImagePickerActivity.INTENT_LOCK_ASPECT_RATIO, true);

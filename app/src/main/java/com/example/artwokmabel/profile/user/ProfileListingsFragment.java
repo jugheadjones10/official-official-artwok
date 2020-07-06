@@ -20,7 +20,6 @@ import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.FragmentProfileListingsBinding;
 import com.example.artwokmabel.homepage.adapters.ListingsAdapter;
 import com.example.artwokmabel.models.Listing;
-import com.example.artwokmabel.profile.uploadlisting.UploadListingAcitvity;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
@@ -93,8 +92,7 @@ public class ProfileListingsFragment extends Fragment {
 
     public class OnAddListingClicked{
         public void onAddListingClicked(){
-            Intent intent = new Intent(getApplicationContext(), UploadListingAcitvity.class);
-            startActivity(intent);
+            navController.navigate(R.id.action_profile_graph_to_uploadListingFragment);
         }
     }
 
