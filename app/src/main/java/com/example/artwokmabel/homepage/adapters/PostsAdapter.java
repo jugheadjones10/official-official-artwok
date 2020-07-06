@@ -104,16 +104,16 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.myHolder> {
             public void toString(String jsResult) {
                 float webViewHeight = (Integer.parseInt(jsResult) * mContext.getResources().getDisplayMetrics().density);
 
-                ((Activity)mContext).runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if(Math.round(webViewHeight) > 500){
-                            ViewGroup.LayoutParams params = holder.binding.postWebView.getLayoutParams();
-                            params.height = 500;
-                            holder.binding.postWebView.setLayoutParams(params);
-                        }
-                    }
-                });
+//                ((Activity)mContext).runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        if(Math.round(webViewHeight) > 500){
+//                            ViewGroup.LayoutParams params = holder.binding.postWebView.getLayoutParams();
+//                            params.height = 500;
+//                            holder.binding.postWebView.setLayoutParams(params);
+//                        }
+//                    }
+//                });
                 Log.d("myHeight", "parsed JSResult : " + Float.toString(webViewHeight));
             }
         }
