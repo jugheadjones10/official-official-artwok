@@ -1,4 +1,4 @@
-package com.example.artwokmabel.profile.uploadpost;
+package com.example.artwokmabel.profile.uploadlisting;
 
 import android.net.Uri;
 
@@ -7,18 +7,13 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.artwokmabel.UploadViewModel;
-import com.example.artwokmabel.models.Listing;
-import com.example.artwokmabel.models.User;
-import com.example.artwokmabel.repos.FirestoreRepo;
 
-import java.util.List;
-
-public class UploadPostViewModel extends ViewModel implements UploadViewModel {
+public class UploadListingDescViewModel extends ViewModel implements UploadViewModel {
 
     private MutableLiveData<Uri> imagePath = new MutableLiveData<>();
     private MutableLiveData<Uri> videoPath = new MutableLiveData<>();
 
-    public UploadPostViewModel(){
+    public UploadListingDescViewModel(){
 
     }
 
@@ -37,5 +32,6 @@ public class UploadPostViewModel extends ViewModel implements UploadViewModel {
     public LiveData<Uri> getVideoPath() {
         return videoPath;
     }
+
 
 }

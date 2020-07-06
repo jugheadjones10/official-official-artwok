@@ -29,7 +29,6 @@ import com.example.artwokmabel.homepage.callbacks.ImagePickerCallback;
 import com.example.artwokmabel.models.ImageMessage;
 import com.example.artwokmabel.models.Message;
 import com.example.artwokmabel.models.OrderChat;
-import com.example.artwokmabel.profile.uploadlisting.UploadListingAcitvity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -60,6 +59,7 @@ public class ChatFragment extends Fragment {
 
     private CustomChatBarBinding chatBarBinding;
     private FragmentChatBinding binding;
+    public static final int REQUEST_IMAGE = 100;
 
     private String messageFollowingId, messageFollowingUsername, messageFollowingProfileImg, messageMeId;
 
@@ -111,7 +111,7 @@ public class ChatFragment extends Fragment {
         binding.sendFilesBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new ImagePickerCallback(requireActivity(), UploadListingAcitvity.REQUEST_IMAGE).onImagePickerClicked();
+//                new ImagePickerCallback(requireActivity(), UploadListingAcitvity.REQUEST_IMAGE).onImagePickerClicked();
             }
         });
 
@@ -257,7 +257,7 @@ public class ChatFragment extends Fragment {
     @Override
     public void onActivityResult (int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == UploadListingAcitvity.REQUEST_IMAGE) {
+        if (requestCode == REQUEST_IMAGE) {
             if (resultCode == RESULT_OK) {
                 if (data != null) {
                     Uri fileUri = data.getParcelableExtra("path");

@@ -34,7 +34,6 @@ import com.example.artwokmabel.HomePageActivity;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.FragmentUploadPostBinding;
 import com.example.artwokmabel.homepage.callbacks.ImagePickerCallback;
-import com.example.artwokmabel.profile.uploadlisting.UploadListingAcitvity;
 import com.example.artwokmabel.repos.FirestoreRepo;
 import com.github.dhaval2404.colorpicker.MaterialColorPickerDialog;
 import com.github.dhaval2404.colorpicker.listener.ColorListener;
@@ -65,7 +64,9 @@ public class UploadPostFragment extends Fragment {
     private String currentTextColor = "#000000";
     private String currentBgColor = "#000000";
     private ArrayList<View> headingViews = new ArrayList<>();
+    private ArrayList<String> selectedViews = new ArrayList<>();
     public static final int REQUEST_IMAGE = 100;
+    public CheckIfStartObject checkIfStartObject;
 
     public UploadPostViewModel viewModel;
     private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
@@ -77,7 +78,14 @@ public class UploadPostFragment extends Fragment {
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        Log.d("uploadpostoncreateview", "ON CREATE IT WAS CALLED");
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Log.d("uploadpostoncreateview", "ON CREATE VIEW IT WAS CALLED");
         instance = this;
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_upload_post, container, false);
         binding.setUploadPostFragment(this);
@@ -98,6 +106,7 @@ public class UploadPostFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        Log.d("uploadpostoncreateview", "ON VIEW CREATED IT WAS CALLED");
         super.onViewCreated(view, savedInstanceState);
 
         navController = Navigation.findNavController(view);
@@ -150,11 +159,58 @@ public class UploadPostFragment extends Fragment {
         }
     }
 
+    public void clearAllBackgrounds(){
+        Log.d("isstart", "THe fk says : " + checkIfStartObject.fk);
+        Log.d("isstart", mEditor.getHtml());
+        if(checkIfStartObject.isStart()){
+            for(String viewName : selectedViews){
+                switch (viewName) {
+                    case "bold":
+                        binding.actionBold.performClick();
+                        break;
+                    case "italic":
+                        binding.actionItalic.performClick();
+                        break;
+                    case "strike":
+                        binding.actionStrikethrough.performClick();
+                        break;
+                    case "underline":
+                        binding.actionUnderline.performClick();
+                        break;
+                }
+            }
+            selectedViews.clear();
+            Log.d("isstart", "It's the start");
+        }else{
+            Log.d("isstart", "It's not the start");
+        }
+
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
         getActivity().getWindow().setSoftInputMode(originalMode);
     }
+
+    ////////////////////
+    public class CheckIfStartObject {
+        private boolean isStart;
+        public String fk;
+        public boolean isStart() { return isStart; }
+
+        @JavascriptInterface
+        public void setStart(boolean isStart){this.isStart = isStart;}
+
+        @JavascriptInterface
+        public void setFk(String fr){this.fk = fr;}
+
+    }
+
+    public interface OnIsStartFound{
+        void clearBackgrounds(String s);
+    }
+    /////////////////////
 
     private  void initView(){
 
@@ -167,6 +223,11 @@ public class UploadPostFragment extends Fragment {
 //        this.edit_text_upload_description =  (RichEditor) findViewById(R.id.editor);
 
         mEditor = (RichEditor) binding.editor;
+
+        //////////////////////////
+        checkIfStartObject = new CheckIfStartObject();
+        mEditor.addJavascriptInterface(checkIfStartObject, "checkIfStartObject");
+        ////////////////////////
 
         //mEditor.setEditorBackgroundColor(Color.BLUE);
         //mEditor.setBackgroundColor(Color.BLUE);
@@ -193,6 +254,10 @@ public class UploadPostFragment extends Fragment {
             @Override public void onClick(View v) {
                 setBackground(binding.actionBold);
                 mEditor.setBold();
+
+                if(!selectedViews.contains("bold")){
+                    selectedViews.add("bold");
+                }
             }
         });
 
@@ -200,6 +265,11 @@ public class UploadPostFragment extends Fragment {
             @Override public void onClick(View v) {
                 setBackground(binding.actionItalic);
                 mEditor.setItalic();
+
+                if(!selectedViews.contains("italic")){
+                    selectedViews.add("italic");
+                }
+
             }
         });
 
@@ -219,6 +289,10 @@ public class UploadPostFragment extends Fragment {
             @Override public void onClick(View v) {
                 setBackground(binding.actionStrikethrough);
                 mEditor.setStrikeThrough();
+
+                if(!selectedViews.contains("strike")) {
+                    selectedViews.add("strike");
+                }
             }
         });
 
@@ -226,24 +300,31 @@ public class UploadPostFragment extends Fragment {
             @Override public void onClick(View v) {
                 setBackground(binding.actionUnderline);
                 mEditor.setUnderline();
+
+                if(!selectedViews.contains("underline")) {
+                    selectedViews.add("underline");
+                }
             }
         });
 
         binding.actionHeading1.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                onHeadingClicked(v, 1);
+                //selectedViews.add(v);
             }
         });
 
         binding.actionHeading2.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 onHeadingClicked(v, 2);
+                //selectedViews.add(v);
             }
         });
 
         binding.actionHeading3.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 onHeadingClicked(v, 3);
+                //selectedViews.add(v);
             }
         });
 
@@ -347,7 +428,34 @@ public class UploadPostFragment extends Fragment {
         binding.actionInsertImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new ImagePickerCallback(requireActivity(), REQUEST_IMAGE).onImagePickerClicked();
+                mEditor.checkIfStart((String s) -> {
+                    Log.d("isstart", mEditor.getHtml());
+                    if(s.equals("true")){
+                        for(String viewName : selectedViews){
+                            switch (viewName) {
+                                case "bold":
+                                    binding.actionBold.performClick();
+                                    break;
+                                case "italic":
+                                    binding.actionItalic.performClick();
+                                    break;
+                                case "strike":
+                                    binding.actionStrikethrough.performClick();
+                                    break;
+                                case "underline":
+                                    binding.actionUnderline.performClick();
+                                    break;
+                            }
+                        }
+                        selectedViews.clear();
+                        Log.d("isstart", "It's the start");
+                    }else{
+                        Log.d("isstart", "It's not the start");
+                    }
+
+                });
+                //clearAllBackgrounds();
+                new ImagePickerCallback(requireActivity(), REQUEST_IMAGE, viewModel).onImagePickerClicked();
                 viewModel.getImagePath().observe(getViewLifecycleOwner(), new Observer<Uri>() {
                     @Override
                     public void onChanged(Uri uri) {
@@ -367,6 +475,8 @@ public class UploadPostFragment extends Fragment {
                                     storageReference.child("Images").child(currentUserId).child(fileName).getDownloadUrl().addOnCompleteListener(task -> {
                                         if (task.isSuccessful()) {
                                             mEditor.insertImage(task.getResult().toString(), task.getResult().toString());
+
+
                                             Log.d("newmethod", task.getResult().toString());
                                         }
                                     });
@@ -378,6 +488,9 @@ public class UploadPostFragment extends Fragment {
                                     Toast.makeText(requireActivity(), "Upload image failed", Toast.LENGTH_LONG).show();
                                 }
                             });
+
+                            viewModel.setResultOk(null);
+
                         }
                     }
                 });
@@ -398,6 +511,7 @@ public class UploadPostFragment extends Fragment {
                         String m_Text = input.getText().toString();
                         mEditor.insertImage(m_Text,
                                 m_Text);
+                        clearAllBackgrounds();
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -408,6 +522,48 @@ public class UploadPostFragment extends Fragment {
                 });
 
                 builder.show();
+            }
+        });
+
+        binding.actionInsertVideo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new ImagePickerCallback(requireActivity(), REQUEST_IMAGE, viewModel).onImagePickerClicked();
+                viewModel.getVideoPath().observe(getViewLifecycleOwner(), new Observer<Uri>() {
+                    @Override
+                    public void onChanged(Uri uri) {
+                        if(uri != null){
+                            Log.d("urivalue", uri.toString());
+                            Uri fileUri = uri;
+                            String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+                            int randomNumber = new Random().nextInt();
+                            String fileName = Integer.toString(randomNumber);
+
+                            StorageReference fileToUpload = storageReference.child("Images").child(currentUserId).child(fileName); // randomize name
+
+                            fileToUpload.putFile(fileUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                @Override
+                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                    storageReference.child("Images").child(currentUserId).child(fileName).getDownloadUrl().addOnCompleteListener(task -> {
+                                        if (task.isSuccessful()) {
+                                            mEditor.insertVideo(task.getResult().toString(), task.getResult().toString());
+                                            clearAllBackgrounds();
+                                            Log.d("newmethod", task.getResult().toString());
+                                        }
+                                    });
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(requireActivity(), "Upload image failed", Toast.LENGTH_LONG).show();
+                                }
+                            });
+
+                            viewModel.setVideoResultOk(null);
+                        }
+                    }
+                });
             }
         });
 
@@ -437,7 +593,7 @@ public class UploadPostFragment extends Fragment {
                         String i = one.getText().toString();
                         String j = two.getText().toString();
                         mEditor.insertLink(j,i);
-
+                        clearAllBackgrounds();
                     }
                 });
 
@@ -447,7 +603,6 @@ public class UploadPostFragment extends Fragment {
                     }
                 });
                 builder.show();
-
 
             }
         });

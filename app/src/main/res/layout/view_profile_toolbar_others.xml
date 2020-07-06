@@ -42,7 +42,7 @@
                 android:onClick="@{() -> onmenuclicked.onMenuClicked()}"
                 android:padding="8dp"
                 android:scaleType="fitCenter"
-                app:srcCompat="@drawable/menu" />
+                app:srcCompat="@drawable/ic_menu" />
 
         </LinearLayout>
 

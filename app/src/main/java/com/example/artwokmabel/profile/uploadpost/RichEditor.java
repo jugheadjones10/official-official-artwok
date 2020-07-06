@@ -13,9 +13,12 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
+import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
+import androidx.fragment.app.FragmentActivity;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -79,6 +82,8 @@ public class RichEditor extends WebView {
     public RichEditor(Context context, AttributeSet attrs) {
         this(context, attrs, android.R.attr.webViewStyle);
     }
+
+
 
     @SuppressLint("SetJavaScriptEnabled")
     public RichEditor(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -361,6 +366,11 @@ public class RichEditor extends WebView {
         exec("javascript:RE.insertImage('" + url + "', '" + alt + "');");
     }
 
+    public void insertVideo(String url, String alt){
+        exec("javascript:RE.prepareInsert();");
+        exec("javascript:RE.insertVideo('" + url + "', '" + alt + "');");
+    }
+
     public void insertLink(String href, String title) {
         exec("javascript:RE.prepareInsert();");
         exec("javascript:RE.insertLink('" + href + "', '" + title + "');");
@@ -378,6 +388,19 @@ public class RichEditor extends WebView {
 
     public void clearFocusEditor() {
         exec("javascript:RE.blurFocus();");
+    }
+
+    public void checkIfStart(UploadPostFragment.OnIsStartFound callback){
+        evaluateJavascript("javascript:RE.checkIfStart();",  new ValueCallback<String>() {
+            @Override
+            public void onReceiveValue(String s) {
+                Log.d("isstart", s); // Prints: "this"
+                callback.clearBackgrounds(s);
+
+            }
+        });
+
+//        exec("javascript:RE.checkIfStart();");
     }
 
     private String convertHexColorString(int color) {

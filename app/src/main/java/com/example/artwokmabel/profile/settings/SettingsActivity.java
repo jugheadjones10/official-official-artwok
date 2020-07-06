@@ -30,7 +30,6 @@ import com.example.artwokmabel.homepage.callbacks.ImagePickerCallback;
 import com.example.artwokmabel.login.ForgotPasswordActivity;
 import com.example.artwokmabel.login.LoginOptionsActivity;
 import com.example.artwokmabel.models.User;
-import com.example.artwokmabel.profile.uploadlisting.UploadListingAcitvity;
 import com.example.artwokmabel.profile.user.ProfileFragmentViewModel;
 import com.google.android.gms.dynamic.SupportFragmentWrapper;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -52,6 +51,8 @@ public class SettingsActivity extends AppCompatActivity {
     public User user;
 
     private static SettingsActivity instance;
+
+    public static final int REQUEST_IMAGE = 100;
 
     public static SettingsActivity getInstance(){
         return instance;
@@ -98,7 +99,7 @@ public class SettingsActivity extends AppCompatActivity {
     public class OnProfilePicChange{
         public void onProfilePicChange(){
 
-            new ImagePickerCallback(SettingsActivity.this, UploadListingAcitvity.REQUEST_IMAGE).onImagePickerClicked();
+//            new ImagePickerCallback(SettingsActivity.this, UploadListingAcitvity.REQUEST_IMAGE).onImagePickerClicked();
 
         }
     }
@@ -173,7 +174,7 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult (int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == UploadListingAcitvity.REQUEST_IMAGE) {
+        if (requestCode == REQUEST_IMAGE) {
             if (resultCode == RESULT_OK) {
 
                 if (data != null) {

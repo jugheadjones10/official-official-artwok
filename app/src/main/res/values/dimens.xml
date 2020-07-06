@@ -9,24 +9,26 @@
     <!-- font sizes -->
     <dimen name="font_larger">22sp</dimen>
     <dimen name="font_large">18sp</dimen>
-    <dimen name="font_normal">15sp</dimen>
+    <dimen name="font_normal">14sp</dimen>
 
     <!-- Below are the ones that have currently been used   -->
     <dimen name="font_small">12sp</dimen>
 
 <!-- ==============================================================  -->
     <!-- typical spacing between two views -->
-    <dimen name="spacing_huge">40dp</dimen>
-    <dimen name="spacing_large">24dp</dimen>
-    <dimen name="spacing_tiny">4dp</dimen>
 
     <!-- Below are the ones that have currently been used   -->
-    <dimen name="spacing_normal">18dp</dimen>
-    <dimen name="spacing_small">10dp</dimen>
+    <dimen name="spacing_enormous">40dp</dimen>
+    <dimen name="spacing_huge">24dp</dimen>
+    <dimen name="spacing_large">16dp</dimen>
+    <dimen name="spacing_normal">12dp</dimen>
+    <dimen name="spacing_small">8dp</dimen>
+    <dimen name="spacing_tiny">4dp</dimen>
+
     <dimen name="radius_normal">8dp</dimen>
 
 
-<!-- ==============================================================  -->
+    <!-- ==============================================================  -->
     <!-- typical sizes of views -->
     <dimen name="button_height_tall">60dp</dimen>
     <dimen name="button_height_normal">40dp</dimen>
@@ -35,12 +37,16 @@
     <!-- Below are the ones that have currently been used   -->
     <dimen name="toolbar_height_normal">45dp</dimen>
     <dimen name="tabs_height_normal">45dp</dimen>
-    <dimen name="listing_details_height">40dp</dimen>
+    <dimen name="listing_home_details_height">40dp</dimen>
+    <dimen name="listing_inside_details_height">45dp</dimen>
+    <dimen name="post_details_height">45dp</dimen>
+    <dimen name="post_max_height">300dp</dimen>
+    <dimen name="following_profile_height">55dp</dimen>
+    <dimen name="following_circle_profile_pic_width">55dp</dimen>
+    <dimen name="circle_profile_width">45dp</dimen>
 
     <dimen name="icon_artwok_width_normal">100dp</dimen>
     <dimen name="icon_search_width_normal">25dp</dimen>
     <dimen name="icon_favorite_width_normal">25dp</dimen>
-
-
 
 </resources>

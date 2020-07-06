@@ -171,7 +171,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.myHolder> {
         //CHECK THIS PART AFTER MAKING BOTH YOURS AND OTHERS POSTS APPEAR
         //Todo: huge rearchitecture of favorites functionality
         if(data.getUser_id().equals(mAuth.getCurrentUser().getUid())){
-            holder.binding.favorite.setImageResource(R.drawable.menu);
+            holder.binding.favorite.setImageResource(R.drawable.ic_menu);
         }else{
             holder.binding.setOnfavpostclicked(new OnFavPostClicked());
             viewModel.getUserFavPostsObservable().observe((FragmentActivity) mContext, new Observer<List<String>>() {

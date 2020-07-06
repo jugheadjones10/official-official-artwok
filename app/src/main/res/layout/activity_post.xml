@@ -81,7 +81,7 @@
                         android:background="@null"
                         android:padding="10dp"
                         android:scaleType="fitCenter"
-                        android:src="@drawable/favourite"
+                        android:src="@drawable/heart_button"
                         android:id="@+id/favorite"/>
 
 <!--                    <ImageButton-->

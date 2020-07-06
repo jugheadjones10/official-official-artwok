@@ -87,8 +87,6 @@ public class ProfilePostsFragment extends Fragment {
     public class OnUploadButtonClicked{
         public void onUploadButtonClicked(){
             navController.navigate(R.id.action_profile_graph_to_uploadPostFragment);
-//            Intent intent = new Intent(getApplicationContext(), UploadPostActivity.class);
-//            startActivity(intent);
         }
     }
 
