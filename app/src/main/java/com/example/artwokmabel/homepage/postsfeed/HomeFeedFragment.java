@@ -74,8 +74,7 @@ public class HomeFeedFragment extends Fragment {
             }
         });
 
-        postsAdapter = new PostsAdapter(getContext(), navController);
-        binding.recyclerview.setAdapter(postsAdapter);
+        setUpPostsAdapter();
 
         //Todo: bring back listings recycler view
         listingsAdapter = new ListingsHomeAdapter(getContext(), navController);
@@ -128,28 +127,6 @@ public class HomeFeedFragment extends Fragment {
         viewModel.getFeedPostsObeservable().observe(getViewLifecycleOwner(), new Observer<List<MainPost>>() {
             @Override
             public void onChanged(@Nullable List<MainPost> posts) {
-
-//                viewModel.getUserFavPostsObservable().observe(getViewLifecycleOwner(), new Observer<List<String>>() {
-//                    @Override
-//                    public void onChanged(List<String> favPosts) {
-//
-//                        ArrayList<MainPost> newPostsList = new ArrayList<>();
-//                        if(favPosts != null && posts != null){
-//                            ArrayList<String> postIds = posts.stream().map(x -> x.getPostId()).collect(Collectors.toCollection(ArrayList::new));
-//                            for(int i = 0; i < posts.size(); i++) {
-//                                MainPost clonedPost = posts.get(i).clone();
-//                                if (favPosts.contains(postIds.get(i))) {
-//                                    clonedPost.favorited = true;
-//                                } else {
-//                                    clonedPost.favorited = false;
-//                                }
-//                                newPostsList.add(clonedPost);
-//                            }
-//                            postsAdapter.setPostsList(posts);
-//                        }
-//                    }
-//                });
-
                 if(posts != null){
                     Log.d("ADDDD", posts.toString());
                     postsAdapter.setPostsList(posts);
@@ -167,4 +144,10 @@ public class HomeFeedFragment extends Fragment {
         });
     }
 
+    private void setUpPostsAdapter(){
+
+        postsAdapter = new PostsAdapter(getContext(), navController);
+        binding.recyclerview.setAdapter(postsAdapter);
+
+    }
 }

@@ -1,7 +1,9 @@
 package com.example.artwokmabel.profile.people;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
@@ -18,7 +20,9 @@ import com.example.artwokmabel.ProfileGraphDirections;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.Utils.TransactFragment;
 import com.example.artwokmabel.databinding.ItemFollowerBinding;
+import com.example.artwokmabel.homepage.search.SearchFragmentDirections;
 import com.example.artwokmabel.models.User;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
 
@@ -74,25 +78,69 @@ public class FollowersAdapter extends RecyclerView.Adapter<FollowersAdapter.myHo
             }else{
                 holder.binding.followingButton.setText("Follow");
             }
-
         }else{
             holder.binding.followingButton.setText("Follow");
         }
 
-        holder.binding.setOnuserclicked(new OnUserClicked());
-        holder.binding.setFollowbutton(holder.binding.followingButton);
         holder.binding.setUser(data);
+        holder.binding.setButton(holder.binding.followingButton);
+        holder.binding.setCallbacks(new UserItemCallback(
+            //On User Clicked
+            (User user) -> {
+//                ProfileGraphDirections.ActionProfileGraphSelf action =
+//                        ProfileGraphDirections.actionProfileGraphSelf(user.getUid());
+//                navController.navigate(action);
+                int currentDestination = navController.getCurrentDestination().getId();
+                if(currentDestination == R.id.searchFragment) {
+                    HomeGraphDirections.ActionGlobalProfileFragment action =
+                            HomeGraphDirections.actionGlobalProfileFragment(user.getUid());
+                    navController.navigate(action);
+                }else if(currentDestination == R.id.peopleFragment){
+                    ProfileGraphDirections.ActionProfileGraphSelf action =
+                            ProfileGraphDirections.actionProfileGraphSelf(user.getUid());
+                    navController.navigate(action);
+                }
+            },
+            //On Button Clicked
+            (Button button, User user) -> {
+                if(button.getText().toString().equals("Following")){
+                    new MaterialAlertDialogBuilder(mContext)
+                            .setTitle("Unfollow user?")
+                            .setMessage("")
+                            .setNeutralButton("Cancel", null)
+                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    button.setText("Follow");
+                                    viewModel.removeUserFollowing(mAuth.getCurrentUser().getUid(), user.getUid());
+                                }
+                            })
+                            .show();
+                }else{
+                    button.setText("Following");
+                    viewModel.addUserFollowing(mAuth.getCurrentUser().getUid(), user.getUid());
+                }
+            },
+            //On Chat Clicked
+            (User user) -> {
+                int currentDestination = navController.getCurrentDestination().getId();
+                if(currentDestination == R.id.searchFragment) {
+                    SearchFragmentDirections.ActionSearchFragmentToChatFragment action =
+                            SearchFragmentDirections.actionSearchFragmentToChatFragment(user.getUid(), user.getUsername(), user.getProfile_url());
+                    navController.navigate(action);
+                }else if(currentDestination == R.id.peopleFragment){
+                    PeopleFragmentDirections.ActionPeopleFragmentToChatFragment action =
+                            PeopleFragmentDirections.actionPeopleFragmentToChatFragment(user.getUid(), user.getUsername(), user.getProfile_url());
+                    navController.navigate(action);
+                }
+            }
+        ));
+
         Picasso.get()
-                .load(data.getProfile_url())
-                .placeholder(R.drawable.loading_image)
-                .error(R.drawable.rick_and_morty)
-                .into(holder.binding.contactPicture);
-
-
-        //Todo: do i need to set on click listener for carousel view too?
-
-        holder.binding.setOnchatclicked(new FollowersAdapter.OnChatClicked());
-        holder.binding.setOnfollowingclicked(new FollowersAdapter.OnFollowingClicked());
+            .load(data.getProfile_url())
+            .placeholder(R.drawable.loading_image)
+            .error(R.drawable.rick_and_morty)
+            .into(holder.binding.contactPicture);
     }
 
     public void setFollowingsList(final List<User> users) {
@@ -134,42 +182,6 @@ public class FollowersAdapter extends RecyclerView.Adapter<FollowersAdapter.myHo
             }
             notifyDataSetChanged();
             result.dispatchUpdatesTo(this);
-        }
-    }
-    
-    public class OnFollowingClicked{
-        public void onFollowingClicked(Button followingButton, User user){
-            if(followingButton.getText().toString().equals("Following")){
-                followingButton.setText("Follow");
-
-                viewModel.removeUserFollowing(mAuth.getCurrentUser().getUid(), user.getUid());
-            }else{
-                followingButton.setText("Following");
-
-                viewModel.addUserFollowing(mAuth.getCurrentUser().getUid(), user.getUid());
-            }
-
-        }
-    }
-
-    public class OnChatClicked{
-        public void onChatClicked(){
-
-        }
-    }
-
-    public class OnUserClicked{
-        public void onUserClicked(User user){
-            int currentDestination = navController.getCurrentDestination().getId();
-            if(currentDestination == R.id.searchFragment) {
-                HomeGraphDirections.ActionGlobalProfileFragment action =
-                        HomeGraphDirections.actionGlobalProfileFragment(user.getUid());
-                navController.navigate(action);
-            }else if(currentDestination == R.id.peopleFragment){
-                ProfileGraphDirections.ActionProfileGraphSelf action =
-                        ProfileGraphDirections.actionProfileGraphSelf(user.getUid());
-                navController.navigate(action);
-            }
         }
     }
 

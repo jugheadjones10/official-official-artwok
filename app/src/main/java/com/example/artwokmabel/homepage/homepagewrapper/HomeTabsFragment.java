@@ -60,6 +60,10 @@ public class HomeTabsFragment extends Fragment {
         adapter = new HomeTabsPagerAdapter(this);
 
         binding.viewPager.setAdapter(adapter);
+
+        //Prevent reloading of WebView
+        binding.viewPager.setOffscreenPageLimit(10);
+
         new TabLayoutMediator(binding.tabs, binding.viewPager,
                 (tab, position) -> tab.setText(tabCategories.get(position))
         ).attach();

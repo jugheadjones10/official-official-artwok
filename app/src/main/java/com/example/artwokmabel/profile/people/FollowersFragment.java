@@ -39,7 +39,6 @@ public class FollowersFragment  extends Fragment {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_following, container, false);
         binding.recyclerview.setHasFixedSize(true);
-
         viewModel = ViewModelProviders.of(this).get(PeopleViewModel.class);
 
         observeViewModel(viewModel);
@@ -60,7 +59,7 @@ public class FollowersFragment  extends Fragment {
 
     private void observeViewModel(PeopleViewModel viewModel) {
         // Update the list when the data changes
-        viewModel.getFollowersUsersObservable().observe(this, new Observer<List<User>>() {
+        viewModel.getFollowersUsersObservable().observe(getViewLifecycleOwner(), new Observer<List<User>>() {
             @Override
             public void onChanged(@Nullable List<User> users) {
                 if (users != null) {
@@ -70,7 +69,7 @@ public class FollowersFragment  extends Fragment {
             }
         });
 
-        viewModel.getFollowingUsersObservable().observe(this, new Observer<List<User>>() {
+        viewModel.getFollowingUsersObservable().observe(getViewLifecycleOwner(), new Observer<List<User>>() {
             @Override
             public void onChanged(@Nullable List<User> users) {
                 if (users != null) {

@@ -149,7 +149,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onDestinationChanged(@NonNull NavController controller,
                                              @NonNull NavDestination destination, @Nullable Bundle arguments) {
-                if(destination.getId() == R.id.uploadPostFragment || destination.getId() == R.id.uploadListingFragment || destination.getId() == R.id.postFragment || destination.getId() == R.id.listingFragment2) {
+                if(destination.getId() == R.id.uploadPostFragment || destination.getId() == R.id.uploadListingFragment || destination.getId() == R.id.postFragment || destination.getId() == R.id.listingFragment2 || destination.getId() == R.id.chatFragment) {
                     HomePageActivity.Companion.getBottomNavBar().setVisibility(View.GONE);
                 } else {
                     HomePageActivity.Companion.getBottomNavBar().setVisibility(View.VISIBLE);

@@ -1,6 +1,7 @@
 package com.example.artwokmabel.profile.people;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +36,6 @@ public class FollowingFragment extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_following, container, false);
         binding.recyclerview.setHasFixedSize(true);
 
-
         viewModel = ViewModelProviders.of(this).get(PeopleViewModel.class);
 
         observeViewModel(viewModel);
@@ -46,7 +46,6 @@ public class FollowingFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         //Below is a tricky line - take note of it. Why won't it work with the single argument version of findNavController?
         navController = Navigation.findNavController(requireActivity(), R.id.nav_host_container);
         followingAdapter = new FollowingAdapter(getContext(), navController);
@@ -59,6 +58,7 @@ public class FollowingFragment extends Fragment {
             @Override
             public void onChanged(@Nullable List<User> users) {
                 if (users != null) {
+                    Log.d("followingcheck", users.toString());
                     followingAdapter.setFollowingsList(users);
                 }
             }

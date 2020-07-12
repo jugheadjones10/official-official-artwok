@@ -127,7 +127,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:onClick="@{() -> SettingsFragment.onIntroChange()}"
-                    android:text="temporary intro" />
+                    android:text="@{user.introduction}" />
 
             </LinearLayout>
 

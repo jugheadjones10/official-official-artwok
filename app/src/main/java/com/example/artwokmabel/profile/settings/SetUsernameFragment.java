@@ -51,7 +51,6 @@ public class SetUsernameFragment extends Fragment {
 
         ((AppCompatActivity)requireActivity()).setSupportActionBar(binding.settingsToolbar);
         ((AppCompatActivity)requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
     }
 
     public void onTickButtonClicked(){

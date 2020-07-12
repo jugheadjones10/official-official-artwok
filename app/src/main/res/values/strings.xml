@@ -5,7 +5,7 @@
 <!--    New string resources-->
     <string name="hint_input_comment">Comment...</string>
 
-    <string name="label_button_following">following</string>
+    <string name="label_button_following">Following</string>
     <string name="label_button_upload_listing">Upload Listing</string>
 
     <string name="title_dialog_choose_option">Choose Option</string>

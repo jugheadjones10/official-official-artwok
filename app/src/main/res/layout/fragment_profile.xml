@@ -122,7 +122,7 @@
                     android:layout_weight="1"
                     android:textColor="@color/artwok_black"
                     android:paddingTop="3dp"
-                    android:text="Hello!"
+                    android:text="@{user.introduction}"
                     android:textSize="12sp" />
 
             </LinearLayout>
