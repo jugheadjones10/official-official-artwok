@@ -1,13 +1,16 @@
 package com.example.artwokmabel.profile.people;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.recyclerview.widget.DiffUtil;
@@ -18,6 +21,7 @@ import com.example.artwokmabel.R;
 import com.example.artwokmabel.Utils.TransactFragment;
 import com.example.artwokmabel.databinding.ItemFollowingBinding;
 import com.example.artwokmabel.models.User;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
 
@@ -55,26 +59,58 @@ public class FollowingAdapter extends RecyclerView.Adapter<FollowingAdapter.myHo
         return new FollowingAdapter.myHolder(binding);
     }
 
+    //Set ViewModel in recycler view item layout.
     @Override
     public void onBindViewHolder(@NonNull FollowingAdapter.myHolder holder, int i) {
         User data = followingsList.get(i);
 
-        holder.binding.followingButton.setText("Following");
-
-        holder.binding.setOnuserclicked(new OnUserClicked());
-        holder.binding.setFollowbutton(holder.binding.followingButton);
         holder.binding.setUser(data);
+        holder.binding.setButton(holder.binding.followingButton);
+
+        holder.binding.setButtontext("Following");
+        holder.binding.setCallbacks(new UserItemCallback(
+                //On User Clicked
+                (User user) -> {
+                    ProfileGraphDirections.ActionProfileGraphSelf action =
+                            ProfileGraphDirections.actionProfileGraphSelf(user.getUid());
+                    navController.navigate(action);
+                },
+                //On Button Clicked
+                (Button button, User user) -> {
+//                    if(button.getText().toString().equals("Following")){
+                        new MaterialAlertDialogBuilder(mContext)
+                                .setTitle("Unfollow user?")
+                                .setMessage("")
+                                .setNeutralButton("Cancel", null)
+                                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        button.setText("Follow");
+//                                        holder.binding.setButtontext("Follow");
+//                                        notifyItemChanged(i);
+                                        viewModel.removeUserFollowing(mAuth.getCurrentUser().getUid(), user.getUid());
+                                    }
+                                })
+                                .show();
+    //                    }else{
+    //                        button.setText("Following");
+    //                        viewModel.addUserFollowing(mAuth.getCurrentUser().getUid(), user.getUid());
+    //                    }
+                },
+                //On Chat Clicked
+                (User user) -> {
+                    PeopleFragmentDirections.ActionPeopleFragmentToChatFragment action =
+                            PeopleFragmentDirections.actionPeopleFragmentToChatFragment(user.getUid(), user.getUsername(), user.getProfile_url());
+                    navController.navigate(action);
+                }
+        ));
+
         Picasso.get()
                 .load(data.getProfile_url())
                 .placeholder(R.drawable.loading_image)
                 .error(R.drawable.rick_and_morty)
                 .into(holder.binding.contactPicture);
 
-
-        //Todo: do i need to set on click listener for carousel view too?
-
-        holder.binding.setOnchatclicked(new OnChatClicked());
-        holder.binding.setOnfollowingclicked(new OnFollowingClicked());
     }
 
     public void setFollowingsList(final List<User> users) {
@@ -114,41 +150,9 @@ public class FollowingAdapter extends RecyclerView.Adapter<FollowingAdapter.myHo
         }
     }
 
-
-
-    public class OnFollowingClicked{
-        public void onFollowingClicked(Button followingButton, User user){
-            if(followingButton.getText().toString().equals("Following")){
-                followingButton.setText("Follow");
-                viewModel.removeUserFollowing(mAuth.getCurrentUser().getUid(), user.getUid());
-            }else{
-                followingButton.setText("Following");
-                viewModel.addUserFollowing(mAuth.getCurrentUser().getUid(), user.getUid());
-            }
-        }
-    }
-
-    public class OnChatClicked{
-        public void onChatClicked(User user){
-
-        }
-    }
-
-    public class OnUserClicked{
-        public void onUserClicked(User user){
-            //Unlike FollowersAdapter, this adapter only appears in the profile graph, hence there is no need to check for
-            //current destination. FollowersAdapter appears in both SearchFragment and in Profile.
-            ProfileGraphDirections.ActionProfileGraphSelf action =
-                    ProfileGraphDirections.actionProfileGraphSelf(user.getUid());
-            navController.navigate(action);
-        }
-    }
-
     @Override
     public int getItemCount() {
-
             return followingsList == null ? 0 : followingsList.size();
-
     }
 
     class myHolder extends RecyclerView.ViewHolder {
@@ -159,7 +163,6 @@ public class FollowingAdapter extends RecyclerView.Adapter<FollowingAdapter.myHo
             this.binding = binding;
         }
     }
-
 
 }
 

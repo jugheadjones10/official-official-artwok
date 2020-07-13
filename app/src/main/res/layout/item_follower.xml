@@ -8,22 +8,12 @@
         <variable
             name="user"
             type="com.example.artwokmabel.models.User" />
-
         <variable
-            name="onfollowingclicked"
-            type="com.example.artwokmabel.profile.people.FollowersAdapter.OnFollowingClicked" />
-
-        <variable
-            name="onchatclicked"
-            type="com.example.artwokmabel.profile.people.FollowersAdapter.OnChatClicked" />
-
-        <variable
-            name="onuserclicked"
-            type="com.example.artwokmabel.profile.people.FollowersAdapter.OnUserClicked" />
-
-        <variable
-            name="followbutton"
+            name="button"
             type="android.widget.Button" />
+        <variable
+            name="callbacks"
+            type="com.example.artwokmabel.profile.people.UserItemCallback" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -34,7 +24,7 @@
             android:id="@+id/contact_picture"
             android:layout_width="@dimen/following_circle_profile_pic_width"
             android:layout_height="0dp"
-            android:onClick="@{() -> onuserclicked.onUserClicked(user)}"
+            android:onClick="@{() -> callbacks.onUserClicked.onUserClicked(user)}"
             android:padding="@dimen/spacing_small"
             android:src="@drawable/budget_details_lady"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -60,7 +50,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/spacing_small"
-            android:text="@{user.email}"
+            android:textSize="@dimen/text_small"
+            android:text="@{user.introduction}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/contact_picture"
             app:layout_constraintTop_toBottomOf="@+id/item_following_username" />
@@ -70,12 +61,14 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginTop="@dimen/spacing_large"
+            android:layout_marginRight="@dimen/spacing_small"
             android:layout_marginBottom="@dimen/spacing_large"
             android:background="@drawable/follow_button_rounded"
-            android:onClick="@{() -> onfollowingclicked.onFollowingClicked(followbutton, user)}"
+            android:onClick="@{() -> callbacks.onButtonClicked.onButtonClicked(button, user)}"
             android:text="@string/label_button_following"
+            android:textSize="@dimen/text_small"
             android:textAllCaps="false"
-            android:layout_marginRight="@dimen/spacing_small"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/imageView5"
             app:layout_constraintTop_toTopOf="parent" />
@@ -86,9 +79,10 @@
             android:layout_height="0dp"
             android:layout_gravity="center"
             android:adjustViewBounds="true"
-            android:padding="@dimen/spacing_normal"
+            android:padding="@dimen/spacing_large"
             android:src="@drawable/message_user"
             android:layout_marginRight="@dimen/spacing_small"
+            android:onClick="@{() -> callbacks.onChatClicked.onChatClicked(user)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

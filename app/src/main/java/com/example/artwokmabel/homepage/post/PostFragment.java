@@ -243,17 +243,17 @@ public class PostFragment extends Fragment {
         switch (item.getItemId()) {
             case R.id.listing_delete:
                 new MaterialAlertDialogBuilder(getContext())
-                        .setTitle("Delete Post?")
-                        .setMessage("This action cannot be reversed!")
-                        .setNeutralButton("Cancel", null)
-                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                viewModel.deleteUserPost(post.getPostId());
-                                navController.navigateUp();
-                            }
-                        })
-                        .show();
+                    .setTitle("Delete Post?")
+                    .setMessage("This action cannot be reversed!")
+                    .setNeutralButton("Cancel", null)
+                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            viewModel.deleteUserPost(post.getPostId());
+                            navController.navigateUp();
+                        }
+                    })
+                    .show();
                 return true;
             case R.id.listing_edit:
                 return true;

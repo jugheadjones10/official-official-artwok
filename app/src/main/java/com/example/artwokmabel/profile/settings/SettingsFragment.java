@@ -61,7 +61,6 @@ public class SettingsFragment extends Fragment {
         return binding.getRoot();
     }
 
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -103,12 +102,11 @@ public class SettingsFragment extends Fragment {
     public void onIntroChange(){
         //Replace the placeholder below eventually with User.getIntroduction() - currently the call is null
         SettingsFragmentDirections.ActionSettingsFragmentToSetIntroFragment action =
-                SettingsFragmentDirections.actionSettingsFragmentToSetIntroFragment("yadeehoo placeholder intro");
+                SettingsFragmentDirections.actionSettingsFragmentToSetIntroFragment(user.getIntroduction());
         navController.navigate(action);
     }
 
     public void onPasswordChange(){
-
         //Change the below to start using nav
 
 //        Intent intent = new Intent(SettingsActivity.this, ForgotPasswordActivity.class);
