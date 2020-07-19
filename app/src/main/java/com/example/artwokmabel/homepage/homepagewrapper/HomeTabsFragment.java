@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -11,6 +12,7 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -63,6 +65,22 @@ public class HomeTabsFragment extends Fragment {
 
         //Prevent reloading of WebView
         binding.viewPager.setOffscreenPageLimit(10);
+
+        binding.toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.search:
+                        navController.navigate(R.id.action_home_graph_to_temporarySearchFragment);
+                        return true;
+                    case R.id.favorite:
+                        navController.navigate(R.id.action_home_graph_to_favoritesFragment);
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+        });
 
         new TabLayoutMediator(binding.tabs, binding.viewPager,
                 (tab, position) -> tab.setText(tabCategories.get(position))

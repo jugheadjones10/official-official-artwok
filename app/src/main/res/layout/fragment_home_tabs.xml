@@ -19,58 +19,68 @@
             <com.google.android.material.appbar.AppBarLayout
                 android:id="@+id/appbar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:theme="@style/AppTheme.AppBarOverlay">
+                android:layout_height="wrap_content">
 
-                <androidx.appcompat.widget.Toolbar
+                <com.google.android.material.appbar.MaterialToolbar
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/toolbar_height_normal"
-                    android:layout_weight="1"
-                    android:background="?attr/colorPrimary"
-                    app:contentInsetStart="0dp"
-                    app:layout_scrollFlags="scroll|enterAlways"
-                    app:popupTheme="@style/AppTheme.PopupOverlay">
+                    android:layout_height="?attr/actionBarSize"
+                    app:menu="@menu/home_toolbar"
+                    style="@style/Widget.MaterialComponents.Toolbar.Primary">
 
-                    <LinearLayout
-                        android:id="@+id/linearLayout3"
-                        android:layout_width="match_parent"
+                    <ImageView
+                        android:layout_width="@dimen/icon_artwok_width_normal"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:orientation="horizontal">
+                        android:src="@drawable/artwok_login_icon" />
 
-                        <ImageView
-                            android:layout_width="@dimen/icon_artwok_width_normal"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="start|bottom"
-                            android:layout_marginLeft="@dimen/spacing_large"
-                            android:src="@drawable/artwok_login_icon" />
+                </com.google.android.material.appbar.MaterialToolbar>
 
-                        <View
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"/>
 
-                        <ImageView
-                            android:id="@+id/mainsearchbar"
-                            android:layout_width="@dimen/icon_search_width_normal"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="bottom"
-                            android:onClick="@{() -> HomeTabsFragment.onSearchClicked()}"
-                            android:src="@drawable/search_icon" />
+<!--                <androidx.appcompat.widget.Toolbar-->
+<!--                    android:id="@+id/toolbar"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="@dimen/toolbar_height_normal"-->
+<!--                    app:layout_scrollFlags="scroll|enterAlways">-->
 
-                        <ImageButton
-                            android:id="@+id/fav_btn"
-                            android:layout_width="@dimen/icon_favorite_width_normal"
-                            android:layout_height="match_parent"
-                            android:layout_marginRight="@dimen/spacing_large"
-                            android:layout_marginLeft="@dimen/spacing_large"
-                            android:background="@null"
-                            android:scaleType="fitCenter"
-                            android:onClick="@{() -> HomeTabsFragment.onFavClicked()}"
-                            android:src="@drawable/ic_favorite_border_black_24dp" />
-                    </LinearLayout>
-                </androidx.appcompat.widget.Toolbar>
+<!--                    <LinearLayout-->
+<!--                        android:id="@+id/linearLayout3"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:orientation="horizontal">-->
+
+<!--                        <ImageView-->
+<!--                            android:layout_width="@dimen/icon_artwok_width_normal"-->
+<!--                            android:layout_height="match_parent"-->
+<!--                            android:layout_gravity="start|bottom"-->
+<!--                            android:layout_marginLeft="@dimen/spacing_large"-->
+<!--                            android:src="@drawable/artwok_login_icon" />-->
+
+<!--                        <View-->
+<!--                            android:layout_width="0dp"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_weight="1"/>-->
+
+<!--                        <ImageView-->
+<!--                            android:id="@+id/mainsearchbar"-->
+<!--                            android:layout_width="@dimen/icon_search_width_normal"-->
+<!--                            android:layout_height="match_parent"-->
+<!--                            android:layout_gravity="bottom"-->
+<!--                            android:onClick="@{() -> HomeTabsFragment.onSearchClicked()}"-->
+<!--                            android:src="@drawable/search_icon" />-->
+
+<!--                        <ImageButton-->
+<!--                            android:id="@+id/fav_btn"-->
+<!--                            android:layout_width="@dimen/icon_favorite_width_normal"-->
+<!--                            android:layout_height="match_parent"-->
+<!--                            android:layout_marginRight="@dimen/spacing_large"-->
+<!--                            android:layout_marginLeft="@dimen/spacing_large"-->
+<!--                            android:background="@null"-->
+<!--                            android:scaleType="fitCenter"-->
+<!--                            android:onClick="@{() -> HomeTabsFragment.onFavClicked()}"-->
+<!--                            android:src="@drawable/ic_favorite_border_black_24dp" />-->
+<!--                    </LinearLayout>-->
+<!--                </androidx.appcompat.widget.Toolbar>-->
 
 
                 <com.google.android.material.tabs.TabLayout

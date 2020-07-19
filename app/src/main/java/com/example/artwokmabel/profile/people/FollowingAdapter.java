@@ -77,25 +77,18 @@ public class FollowingAdapter extends RecyclerView.Adapter<FollowingAdapter.myHo
                 },
                 //On Button Clicked
                 (Button button, User user) -> {
-//                    if(button.getText().toString().equals("Following")){
-                        new MaterialAlertDialogBuilder(mContext)
-                                .setTitle("Unfollow user?")
-                                .setMessage("")
-                                .setNeutralButton("Cancel", null)
-                                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        button.setText("Follow");
-//                                        holder.binding.setButtontext("Follow");
-//                                        notifyItemChanged(i);
-                                        viewModel.removeUserFollowing(mAuth.getCurrentUser().getUid(), user.getUid());
-                                    }
-                                })
-                                .show();
-    //                    }else{
-    //                        button.setText("Following");
-    //                        viewModel.addUserFollowing(mAuth.getCurrentUser().getUid(), user.getUid());
-    //                    }
+                    new MaterialAlertDialogBuilder(mContext)
+                            .setTitle("Unfollow user?")
+                            .setMessage("")
+                            .setNeutralButton("Cancel", null)
+                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    button.setText("Follow");
+                                    viewModel.removeUserFollowing(mAuth.getCurrentUser().getUid(), user.getUid());
+                                }
+                            })
+                            .show();
                 },
                 //On Chat Clicked
                 (User user) -> {

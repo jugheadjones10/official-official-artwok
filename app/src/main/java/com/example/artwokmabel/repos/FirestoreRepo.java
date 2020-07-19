@@ -12,8 +12,6 @@ import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.algolia.search.saas.Client;
-import com.algolia.search.saas.Index;
 import com.example.artwokmabel.HomePageActivity;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.chat.personalchat.ChatActivity;
@@ -60,6 +58,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.snapshot.Index;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -101,19 +100,19 @@ public class FirestoreRepo {
     }
 
 
-    private void PushUserToAlgolia(String username, String userid){
-        Client client = new Client("CTIOUIUY3T", "7f3f4f1b7f3eab10acf7e980b2023a23");
-        Index algoliaIndex = client.getIndex("Users");
-
-        JSONObject newData = null;
-        try {
-            newData = new JSONObject()
-                    .put("username", username);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        algoliaIndex.saveObjectAsync(newData, userid, null);
-    }
+//    private void PushUserToAlgolia(String username, String userid){
+//        Client client = new Client("CTIOUIUY3T", "7f3f4f1b7f3eab10acf7e980b2023a23");
+//        Index algoliaIndex = client.getIndex("Users");
+//
+//        JSONObject newData = null;
+//        try {
+//            newData = new JSONObject()
+//                    .put("username", username);
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//        algoliaIndex.saveObjectAsync(newData, userid, null);
+//    }
 
     public void addTokenToFirestore(String token){
 
@@ -1309,6 +1308,33 @@ public class FirestoreRepo {
         return data;
     }
 
+
+    public LiveData<User> getUserOnce(String uid){
+
+        final MutableLiveData<User> data = new MutableLiveData<>();
+
+        db.collection("Users")
+                .document(uid)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+                                User user = document.toObject(User.class);
+                                data.setValue(user);
+                            } else {
+                            }
+                        } else {
+                            Log.d(TAG, "get failed with ", task.getException());
+                        }
+                    }
+                });
+
+        return data;
+    }
+
     public interface PostRetrieved {
         void onPostRetrieved(MainPost post);
     }
@@ -1862,6 +1888,52 @@ public class FirestoreRepo {
         return  data;
     }
 
+    public LiveData<List<String>> getFollowingsAsStringsList(String userId){
+        DocumentReference userRef = FirestoreRepo.getInstance().getUserRef(userId);
+
+        final MutableLiveData<List<String>> data = new MutableLiveData<>();
+
+        userRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot snapshot, @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.w("TAG", "Listen failed.", e);
+                    return;
+                }
+                ArrayList<String> following = (ArrayList<String>) snapshot.get("following");
+                data.setValue(following);
+            }
+        });
+
+        return data;
+    }
+
+
+    public Query getFeedPostsQuery (List<String> followingIds){
+
+//        db.collectionGroup("Posts")
+//            .whereIn("user_id", followingIds)
+//            .orderBy("nanopast", Query.Direction.DESCENDING)
+//            .get()
+//            .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+//                @Override
+//                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+//                    queryDocumentSnapshots.getDocuments().forEach(documentSnapshot -> {
+//                        Log.d("querytest", documentSnapshot.toString());
+//                    });
+//                }
+//            }).addOnFailureListener(new OnFailureListener() {
+//                @Override
+//                public void onFailure(@NonNull Exception e) {
+//                    Log.d("querytest", e.getMessage());
+//                }
+//            });
+
+            return db.collectionGroup("Posts")
+                .whereIn("user_id", followingIds)
+                .orderBy("nanopast", Query.Direction.DESCENDING);
+    }
+
     public LiveData<List<MainPost>> getFeedPosts(String userId){
         DocumentReference userRef = FirestoreRepo.getInstance().getUserRef(userId);
 
@@ -1901,6 +1973,7 @@ public class FirestoreRepo {
                             });
                     tasks.add(userListingsTask);
                 }
+
                 Tasks.whenAll(tasks.toArray(new Task[0])).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

@@ -32,6 +32,7 @@
         <item name="textAppearanceOverline">@style/TextAppearance.MaterialComponents.Overline</item>
         <!--        Material themes-->
 
+        
         <!-- For the resting Spinner style -->
         <item name="android:spinnerItemStyle">
             @style/spinner_style
@@ -40,11 +41,11 @@
         <item name="materialAlertDialogTheme">@style/AlertDialogMaterialTheme</item>
     </style>
 
-<!--    <style name="materialDialogTheme" parent="@style/ThemeOverlay.MaterialComponents.MaterialAlertDialog">-->
-<!--        <item name="backgroundTint">@color/white</item>-->
-<!--        <item name="backgroundColor">@color/white</item>-->
-<!--        <item name="textColor">@color/pink</item>-->
-<!--    </style>-->
+
+    <!---->
+
+    <!---->
+
 
     <style name="AlertDialogMaterialTheme" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
         <item name="buttonBarPositiveButtonStyle">@style/Alert.Button</item>
