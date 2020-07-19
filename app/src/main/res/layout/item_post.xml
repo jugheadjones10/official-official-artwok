@@ -5,16 +5,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <variable name="profilecallback" type="com.example.artwokmabel.homepage.adapters.PostsAdapter.OnProfileClicked"/>
-        <variable name="sharecallback" type="com.example.artwokmabel.homepage.callbacks.MainPostClickCallback"/>
-        <variable name="postclickcallback" type="com.example.artwokmabel.homepage.callbacks.MainPostClickCallback"/>
-        <variable name="onfavpostclicked" type="com.example.artwokmabel.homepage.adapters.PostsAdapter.OnFavPostClicked"/>
+<!--        <variable name="profilecallback" type="com.example.artwokmabel.homepage.adapters.PostsAdapter.OnProfileClicked"/>-->
+<!--        <variable name="sharecallback" type="com.example.artwokmabel.homepage.callbacks.MainPostClickCallback"/>-->
+<!--        <variable name="postclickcallback" type="com.example.artwokmabel.homepage.callbacks.MainPostClickCallback"/>-->
+<!--        <variable name="onfavpostclicked" type="com.example.artwokmabel.homepage.adapters.PostsAdapter.OnFavPostClicked"/>-->
         <variable name="post" type="com.example.artwokmabel.models.MainPost"/>
         <variable name="favorite" type="android.widget.ImageView"/>
+        <variable name="callbacks" type="com.example.artwokmabel.homepage.postsfeed.PostCallback"/>
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/parent_layout_card"
+        android:onClick="@{() -> callbacks.onPostClicked.onPostClicked(post)}"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
@@ -25,7 +28,7 @@
             android:id="@+id/profile"
             android:layout_width="@dimen/circle_profile_width"
             android:layout_height="0dp"
-            android:onClick="@{() -> profilecallback.onProfileClicked(post)}"
+            android:onClick="@{() -> callbacks.onProfileClicked.onProfileClicked(post)}"
             android:padding="@dimen/spacing_small"
             android:src="@drawable/rjha"
             app:layout_constraintBottom_toTopOf="@+id/guideline4"
@@ -61,7 +64,7 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:adjustViewBounds="true"
-            android:onClick="@{() -> onfavpostclicked.onFavPostClicked(post, favorite)}"
+            android:onClick="@{() -> callbacks.onFavClicked.onFavClicked(post, favorite)}"
             android:padding="@dimen/spacing_normal"
             android:src="@drawable/heart_button"
             app:layout_constraintBottom_toTopOf="@+id/guideline4"

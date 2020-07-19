@@ -1,11 +1,17 @@
 package com.example.artwokmabel.homepage.postsfeed;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.JavascriptInterface;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,15 +24,28 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
+import androidx.paging.PagedList;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.example.artwokmabel.HomeGraphDirections;
 import com.example.artwokmabel.HomePageActivity;
+import com.example.artwokmabel.ProfileGraphDirections;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.FragmentHomeFeedBinding;
+import com.example.artwokmabel.databinding.ItemPostBinding;
 import com.example.artwokmabel.homepage.adapters.ListingsAdapter;
 import com.example.artwokmabel.homepage.adapters.PostsAdapter;
+import com.example.artwokmabel.homepage.callbacks.MainPostClickCallback;
+import com.example.artwokmabel.homepage.homepagewrapper.HomeTabsFragment;
 import com.example.artwokmabel.models.Listing;
 import com.example.artwokmabel.models.MainPost;
+import com.example.artwokmabel.models.User;
+import com.firebase.ui.firestore.paging.FirestorePagingAdapter;
+import com.firebase.ui.firestore.paging.FirestorePagingOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.squareup.picasso.Picasso;
+import com.synnapps.carouselview.ImageListener;
 import com.yarolegovich.discretescrollview.InfiniteScrollAdapter;
 import com.yarolegovich.discretescrollview.transform.Pivot;
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer;
@@ -42,6 +61,8 @@ public class HomeFeedFragment extends Fragment {
     private PostsAdapter postsAdapter;
     private ListingsHomeAdapter listingsAdapter;
     private NavController navController;
+    private FirestorePagingAdapter<MainPost, PostViewHolder> adapter;
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
 //    private List<MainPost> feedPosts;
     //Todo: add horizontal scrollable listings
@@ -51,7 +72,8 @@ public class HomeFeedFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home_feed, container, false);
-        binding.recyclerview.setHasFixedSize(false);
+//        binding.recyclerview.setHasFixedSize(false);
+//        binding.recyclerview.setNestedScrollingEnabled(true);
 
         return binding.getRoot();
     }
@@ -74,17 +96,23 @@ public class HomeFeedFragment extends Fragment {
             }
         });
 
+        viewModel =  new ViewModelProvider(requireActivity()).get(HomeFeedViewModel.class);
+        observeViewModel(viewModel);
+
         setUpPostsAdapter();
+
+        binding.swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                adapter.refresh();
+            }
+        });
 
         //Todo: bring back listings recycler view
         listingsAdapter = new ListingsHomeAdapter(getContext(), navController);
-        //InfiniteScrollAdapter wrapper = InfiniteScrollAdapter.wrap(listingsAdapter);
-        //binding.horizontalRecyclerViewListings.setAdapter(wrapper);
         binding.horizontalRecyclerViewListings.setAdapter(listingsAdapter);
 
         binding.horizontalRecyclerViewListings.setItemTransformer(new ScaleTransformer.Builder()
-//                .setMaxScale(1.05f)
-//                .setMinScale(0.8f)
                 .setPivotX(Pivot.X.CENTER) // CENTER is a default one
                 .setPivotY(Pivot.Y.CENTER) // CENTER is a default one
                 .build());
@@ -113,26 +141,28 @@ public class HomeFeedFragment extends Fragment {
         });
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        viewModel =  new ViewModelProvider(requireActivity()).get(HomeFeedViewModel.class);
-        observeViewModel(viewModel);
+    public void onStop() {
+        super.onStop();
+        adapter.stopListening();
     }
 
     private void observeViewModel(HomeFeedViewModel viewModel) {
         // Update the list when the data changes
-        viewModel.getFeedPostsObeservable().observe(getViewLifecycleOwner(), new Observer<List<MainPost>>() {
-            @Override
-            public void onChanged(@Nullable List<MainPost> posts) {
-                if(posts != null){
-                    Log.d("ADDDD", posts.toString());
-                    postsAdapter.setPostsList(posts);
-                }
-            }
-        });
+//        viewModel.getFeedPostsObeservable().observe(getViewLifecycleOwner(), new Observer<List<MainPost>>() {
+//            @Override
+//            public void onChanged(@Nullable List<MainPost> posts) {
+//                if(posts != null){
+//                    Log.d("ADDDD", posts.toString());
+//                    postsAdapter.setPostsList(posts);
+//                }
+//            }
+//        });
 
         viewModel.getFeedListingObservable().observe(getViewLifecycleOwner(), new Observer<List<Listing>>() {
             @Override
@@ -145,9 +175,27 @@ public class HomeFeedFragment extends Fragment {
     }
 
     private void setUpPostsAdapter(){
+        viewModel.getUserOnce(FirebaseAuth.getInstance().getCurrentUser().getUid()).observe(getViewLifecycleOwner(), new Observer<User>() {
+            @Override
+            public void onChanged(User user) {
+                if(user != null){
+                    Log.d("numtimes", "I've been loaded!");
+                    PagedList.Config config = new PagedList.Config.Builder()
+                            .setEnablePlaceholders(false)
+                            .setInitialLoadSizeHint(4)
+                            .setPrefetchDistance(2)
+                            .setPageSize(3)
+                            .build();
 
-        postsAdapter = new PostsAdapter(getContext(), navController);
-        binding.recyclerview.setAdapter(postsAdapter);
+                    FirestorePagingOptions<MainPost> options = new FirestorePagingOptions.Builder<MainPost>()
+                            .setQuery(viewModel.getFeedPostsQuery(user.getFollowing()), config, MainPost.class)
+                            .build();
 
+                    adapter = new FirestorePagingAdapterImpl(options, user, getContext(), navController, binding.swipeRefreshLayout);
+                    binding.recyclerview.setAdapter(adapter);
+                    adapter.startListening();
+                }
+            }
+        });
     }
 }

@@ -6,18 +6,23 @@
     <dimen name="fab_margin">16dp</dimen>
 
 <!-- ==============================================================  -->
+    <!-- Below are common values -->
+
     <!-- font sizes -->
-    <dimen name="font_larger">22sp</dimen>
+    <dimen name="font_huge">22sp</dimen>
     <dimen name="font_large">18sp</dimen>
     <dimen name="font_normal">14sp</dimen>
-
-    <!-- Below are the ones that have currently been used   -->
+    <!-- Only font size currently being used in the app is font_small (need to check this statement)   -->
     <dimen name="font_small">12sp</dimen>
 
-<!-- ==============================================================  -->
-    <!-- typical spacing between two views -->
+    <!-- spacing sizes (to be used for margins/paddings) -->
 
-    <!-- Below are the ones that have currently been used   -->
+    <!-- radius sizes -->
+
+
+
+    <!-- ==============================================================  -->
+
     <dimen name="spacing_enormous">40dp</dimen>
     <dimen name="spacing_huge">24dp</dimen>
     <dimen name="spacing_large">16dp</dimen>
@@ -29,6 +34,7 @@
     <dimen name="radius_normal">8dp</dimen>
 
     <dimen name="text_small">12sp</dimen>
+
 
     <!-- ==============================================================  -->
     <!-- typical sizes of views -->

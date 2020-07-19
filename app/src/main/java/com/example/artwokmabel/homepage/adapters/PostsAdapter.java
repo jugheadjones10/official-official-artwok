@@ -90,9 +90,9 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.myHolder> {
     @Override
     public void onBindViewHolder(@NonNull myHolder holder, int i) {
         MainPost data = postList.get(i);
-        holder.binding.setPostclickcallback(postClickCallback);
-        holder.binding.setProfilecallback(new OnProfileClicked());
-        holder.binding.setSharecallback(shareClickCallback);
+//        holder.binding.setPostclickcallback(postClickCallback);
+//        holder.binding.setProfilecallback(new OnProfileClicked());
+//        holder.binding.setSharecallback(shareClickCallback);
         holder.binding.setFavorite(holder.binding.favorite);
         holder.binding.setPost(data);
 
@@ -173,17 +173,17 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.myHolder> {
         if(data.getUser_id().equals(mAuth.getCurrentUser().getUid())){
             holder.binding.favorite.setImageResource(R.drawable.ic_menu);
         }else{
-            holder.binding.setOnfavpostclicked(new OnFavPostClicked());
-            viewModel.getUserFavPostsObservable().observe((FragmentActivity) mContext, new Observer<List<String>>() {
-                @Override
-                public void onChanged(List<String> favPosts) {
-                    if (favPosts.contains(data.getPostId())) {
-                        holder.binding.favorite.setImageResource(R.drawable.like);
-                    } else {
-                        holder.binding.favorite.setImageResource(R.drawable.heart_button);
-                    }
-                }
-            });
+//            holder.binding.setOnfavpostclicked(new OnFavPostClicked());
+//            viewModel.getUserFavPostsObservable().observe((FragmentActivity) mContext, new Observer<List<String>>() {
+//                @Override
+//                public void onChanged(List<String> favPosts) {
+//                    if (favPosts.contains(data.getPostId())) {
+//                        holder.binding.favorite.setImageResource(R.drawable.like);
+//                    } else {
+//                        holder.binding.favorite.setImageResource(R.drawable.heart_button);
+//                    }
+//                }
+//            });
 
 //            ArrayList<String> retrievedFavPosts = (ArrayList<String>) viewModel.getUserFavPostsObservable().getValue();
 //            if (retrievedFavPosts != null) {
@@ -279,7 +279,6 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.myHolder> {
     public class OnFavPostClicked{
         public void onFavPostClicked(MainPost post, ImageView favorite){
             viewModel.switchUserFavPostsNonObservable(post, favorite);
-
 //            if(((BitmapDrawable)favorite.getDrawable()).getBitmap() == ((BitmapDrawable) ResourcesCompat.getDrawable(mContext.getResources(), R.drawable.like, null)).getBitmap()){
 //                favorite.setImageResource(R.drawable.heart_button);
 //                viewModel.removeUserPostFavs(post.getPostId());

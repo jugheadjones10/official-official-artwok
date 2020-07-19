@@ -45,7 +45,6 @@ public class FollowersAdapter extends RecyclerView.Adapter<FollowersAdapter.myHo
         return instance;
     }
 
-
     public FollowersAdapter(Context context, String forWhat, NavController navController){
         this.mAuth = FirebaseAuth.getInstance();
         this.mContext = context;

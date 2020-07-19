@@ -98,25 +98,30 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.71828'
 
     implementation 'androidx.appcompat:appcompat:1.0.2'
-    implementation 'com.google.firebase:firebase-config:19.0.2'
-    implementation 'com.google.firebase:firebase-messaging:20.1.0'
+
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'com.google.android.material:material:1.1.0'
 
     // Glide Library
-    implementation 'com.github.bumptech.glide:glide:4.8.0'
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
 
     // FirebaseUI for Firebase Realtime Database
-    implementation 'com.google.firebase:firebase-auth:19.1.0'
-    implementation 'com.google.firebase:firebase-analytics:17.2.0'
-    implementation 'com.google.firebase:firebase-database:19.1.0'
+    implementation 'com.google.firebase:firebase-config:19.2.0'
+    implementation 'com.google.firebase:firebase-messaging:20.2.3'
+    implementation 'com.google.firebase:firebase-auth:19.3.2'
+    implementation 'com.google.firebase:firebase-analytics:17.4.4'
+    implementation 'com.google.firebase:firebase-database:19.3.1'
+    implementation 'com.google.firebase:firebase-storage:19.1.1'
+    implementation 'com.google.firebase:firebase-firestore:21.5.0'
+    implementation 'com.firebaseui:firebase-ui-storage:4.3.1'
+    implementation 'com.firebaseui:firebase-ui-auth:4.3.1'
+    implementation 'com.firebaseui:firebase-ui-firestore:5.0.0'
     implementation 'com.firebaseui:firebase-ui-database:4.2.1'
-    implementation 'com.google.firebase:firebase-storage:19.1.0'
-    implementation 'com.google.firebase:firebase-firestore:21.1.1'
+
 
     // Circular ImageView
     implementation 'de.hdodenhof:circleimageview:3.0.1'
@@ -130,11 +135,9 @@ dependencies {
     // hashtag library https://github.com/armcha/AutoLinkTextViewV2
     implementation 'com.github.darsh2:MultipleImageSelect:v0.0.4' // multiple ic_dm select
 
-    implementation 'com.firebaseui:firebase-ui-storage:4.3.1'
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
 
-    implementation 'androidx.appcompat:appcompat:1.0.2'
-    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
 
     // for push notifications
 //    implementation 'com.google.code.gson:gson:2.8.6'
@@ -147,10 +150,10 @@ dependencies {
     implementation 'com.github.amarjain07:StickyScrollView:1.0.2'
     //For Sticky ScrollView in Individual Activity Comments
 
+    //Weird alpha material
     implementation 'com.google.android.material:material:1.2.0-alpha01'
 
-    implementation 'com.algolia:algoliasearch-android:3.27.0'
-    implementation 'com.algolia:instantsearch-android:2.1.0'
+
     implementation "androidx.lifecycle:lifecycle-extensions:2.1.0"
     implementation "androidx.lifecycle:lifecycle-common-java8:2.1.0"
 
@@ -163,9 +166,6 @@ dependencies {
 
     // Picasso circleCrop image and other transformations
     implementation 'jp.wasabeef:picasso-transformations:2.2.1'
-
-    //Firebase
-    implementation 'com.firebaseui:firebase-ui-auth:4.3.1'
 
     //chooseimage and crop
     implementation "com.karumi:dexter:5.0.0"
@@ -202,10 +202,6 @@ dependencies {
     //Picasso transformer
     compile 'jp.wasabeef:picasso-transformations:2.2.1'
 
-    // Firestore FirebaseUI Library
-    implementation 'com.firebaseui:firebase-ui-firestore:5.0.0'
-
     // Paging Library
     implementation 'android.arch.paging:runtime:1.0.1'
-
 }
