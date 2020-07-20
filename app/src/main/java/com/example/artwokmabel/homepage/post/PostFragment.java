@@ -2,11 +2,13 @@ package com.example.artwokmabel.homepage.post;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -87,18 +89,12 @@ public class PostFragment extends Fragment {
 
         ((AppCompatActivity) requireActivity()).setSupportActionBar(binding.indivToolbar);
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity) requireActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         navController = Navigation.findNavController(requireActivity(), R.id.nav_host_container);
 
         getIncomingIntent();
         setHasOptionsMenu(true);
-
-        if(mAuth.getCurrentUser().getUid().equals(post.getUser_id())){
-            binding.indivToolbar.inflateMenu(R.menu.indiv_listing_menu_mine);
-        }else{
-            binding.indivToolbar.inflateMenu(R.menu.indiv_listing_menu_yours);
-        }
-        binding.indivToolbar.inflateMenu(R.menu.indiv_listing_menu_mine);
 
         commentsAdapter = new CommentsAdapter(requireActivity(), postId, posterUserId, navController);
         binding.commentsRecyclerView.setAdapter(commentsAdapter);
@@ -109,31 +105,13 @@ public class PostFragment extends Fragment {
             @Override
             public void onChanged(@Nullable User user) {
                 if (user != null) {
+                    ArrayList<String> favs = user.getFav_posts();
+                    Log.d("favfav", favs.toString());
 
-                    if (posterUserId.equals(mAuth.getCurrentUser().getUid())) {
-                        binding.favorite.setVisibility(View.GONE);
+                    if (favs.contains(postId)) {
+                        binding.indivToolbar.getMenu().getItem(0).setIcon(R.drawable.like);
                     } else {
-                        ArrayList<String> favs = user.getFav_posts();
-                        Log.d("favfav", favs.toString());
-
-                        if (favs != null && favs.contains(postId)) {
-                            binding.favorite.setImageResource(R.drawable.like);
-                        } else {
-                            binding.favorite.setImageResource(R.drawable.favourite_post);
-                        }
-
-                        binding.favorite.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-
-                                if (favs != null && favs.contains(postId)) {
-                                    viewModel.removeUserPostFavs(postId);
-                                } else {
-                                    viewModel.addUserPostFavs(postId);
-                                }
-                            }
-                        });
-
+                        binding.indivToolbar.getMenu().getItem(0).setIcon(R.drawable.heart_button);
                     }
                 }
             }
@@ -187,17 +165,6 @@ public class PostFragment extends Fragment {
         }
     }
 
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//            case android.R.id.home:
-//                onBackPressed();
-//                return true;
-//            default:
-//                return super.onOptionsItemSelected(item);
-//        }
-//    }
-
     private void closeKeyboard() {
         View view = getActivity().getCurrentFocus();
         if (view != null) {
@@ -241,6 +208,15 @@ public class PostFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.favorite:
+                if(((BitmapDrawable)item.getIcon()).getBitmap() == ((BitmapDrawable) ResourcesCompat.getDrawable(getContext().getResources(), R.drawable.like, null)).getBitmap()){
+                    item.setIcon(R.drawable.favourite_post);
+                    viewModel.removeUserPostFavs(postId);
+                }else{
+                    item.setIcon(R.drawable.like);
+                    viewModel.addUserPostFavs(post.getPostId());
+                }
+                return true;
             case R.id.listing_delete:
                 new MaterialAlertDialogBuilder(getContext())
                     .setTitle("Delete Post?")

@@ -50,8 +50,6 @@ public class HomeFeedViewModel extends ViewModel {
         return FirestoreRepo.getInstance().getUserOnce(uid);
     }
 
-
-
     public Query getFeedPostsQuery(List<String> followingIds){
         return FirestoreRepo.getInstance().getFeedPostsQuery(followingIds);
     }

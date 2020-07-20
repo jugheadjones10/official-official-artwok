@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-<!--        <variable name="profilecallback" type="com.example.artwokmabel.homepage.adapters.PostsAdapter.OnProfileClicked"/>-->
+        <variable name="time" type="String" />        <!--        <variable name="profilecallback" type="com.example.artwokmabel.homepage.adapters.PostsAdapter.OnProfileClicked"/>-->
 <!--        <variable name="sharecallback" type="com.example.artwokmabel.homepage.callbacks.MainPostClickCallback"/>-->
 <!--        <variable name="postclickcallback" type="com.example.artwokmabel.homepage.callbacks.MainPostClickCallback"/>-->
 <!--        <variable name="onfavpostclicked" type="com.example.artwokmabel.homepage.adapters.PostsAdapter.OnFavPostClicked"/>-->
@@ -53,7 +53,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/spacing_small"
-            android:text="@{post.timestamp}"
+            android:text="@{time}"
             app:layout_constraintBottom_toTopOf="@+id/guideline4"
             app:layout_constraintStart_toEndOf="@+id/profile"
             app:layout_constraintTop_toBottomOf="@+id/poster_name" />

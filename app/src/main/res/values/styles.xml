@@ -32,7 +32,9 @@
         <item name="textAppearanceOverline">@style/TextAppearance.MaterialComponents.Overline</item>
         <!--        Material themes-->
 
-        
+        <item name="textAllCaps">false</item>
+
+
         <!-- For the resting Spinner style -->
         <item name="android:spinnerItemStyle">
             @style/spinner_style
@@ -43,6 +45,13 @@
 
 
     <!---->
+    <style name="Widget.Artwok.Toolbar" parent="Widget.MaterialComponents.Toolbar.Primary">
+        <item name="contentInsetStartWithNavigation">0dp</item>
+    </style>
+
+    <style name="TextAppearance.Artwok.ToolbarText" parent="MaterialAlertDialog.MaterialComponents.Title.Text">
+
+    </style>
 
     <!---->
 
