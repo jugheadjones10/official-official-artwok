@@ -21,6 +21,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.example.artwokmabel.HomeGraphDirections;
 import com.example.artwokmabel.ProfileGraphDirections;
 import com.example.artwokmabel.R;
+import com.example.artwokmabel.Utils.TimeWrangler;
 import com.example.artwokmabel.databinding.ItemPostBinding;
 import com.example.artwokmabel.homepage.adapters.PostsAdapter;
 import com.example.artwokmabel.homepage.adapters.PostsAdapterViewModel;
@@ -66,7 +67,11 @@ class FirestorePagingAdapterImpl extends FirestorePagingAdapter<MainPost, PostVi
 
     @Override
     protected void onBindViewHolder(@NonNull PostViewHolder postViewHolder, int i, @NonNull MainPost mainPost) {
+        Log.d("postinfo", "Here's one post username : " + mainPost.getUsername());
+        Log.d("postinfo", "Here's one post username : " + mainPost.getTimestamp());
+
         postViewHolder.binding.setPost(mainPost);
+        postViewHolder.binding.setTime(TimeWrangler.changeNanopastToReadableDate(mainPost.getNanopast()));
         postViewHolder.binding.setFavorite(postViewHolder.binding.favorite);
 
         if(mainPost.getUser_id().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
@@ -137,7 +142,7 @@ class FirestorePagingAdapterImpl extends FirestorePagingAdapter<MainPost, PostVi
                         Picasso.get()
                                 .load(document.getString("profile_url"))
                                 .placeholder(R.drawable.loading_image)
-                                .error(R.drawable.rick_and_morty)
+                                .error(R.drawable.loading_image)
                                 .into(postViewHolder.binding.profile);
                     } else {
 

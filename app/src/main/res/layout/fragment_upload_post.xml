@@ -3,6 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <variable name="time" type="String"/>
+        <variable name="user" type="com.example.artwokmabel.models.User"/>
         <variable name="UploadPostFragment" type="com.example.artwokmabel.profile.uploadpost.UploadPostFragment"/>
     </data>
 
@@ -12,6 +14,46 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         >
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:menu="@menu/upload_post_toolbar"
+                style="@style/Widget.Artwok.Toolbar">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profile_picture"
+                    android:layout_width="@dimen/circle_profile_width"
+                    android:src="@drawable/rjha"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/spacing_small" />
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:id="@+id/poster_username"
+                        style="@style/TextAppearance.Artwok.ToolbarText"
+                        android:text="@{user.username}" />
+
+                    <TextView
+                        android:id="@+id/time"
+                        style="@style/TextAppearance.Artwok.ToolbarText"
+                        android:text="@{time}" />
+                </LinearLayout>
+
+            </com.google.android.material.appbar.MaterialToolbar>
+        </com.google.android.material.appbar.AppBarLayout>
 
         <RelativeLayout
             android:elevation="10dp"
@@ -35,16 +77,16 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="270dp" />
 
-            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-                android:id="@+id/upload_post_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/editor"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="5dp"
-                android:onClick="@{() -> UploadPostFragment.onPostUpload()}"
-                android:padding="8dp"
-                android:text="Upload Post" />
+<!--            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton-->
+<!--                android:id="@+id/upload_post_button"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_alignBottom="@+id/editor"-->
+<!--                android:layout_centerHorizontal="true"-->
+<!--                android:layout_marginBottom="5dp"-->
+<!--                android:onClick="@{() -> UploadPostFragment.onPostUpload()}"-->
+<!--                android:padding="8dp"-->
+<!--                android:text="Upload Post" />-->
 
             <LinearLayout
                 android:id="@+id/lin_con"
@@ -293,27 +335,27 @@
                                 android:src="@drawable/ic_image"
                                 />
 
-                            <ImageButton
-                                android:id="@+id/action_insert_online_image"
-                                android:layout_width="48dp"
-                                android:layout_height="48dp"
-                                android:padding="4dp"
-                                android:background="@color/pink"
-                                android:tint="@color/artwok_black"
-                                android:contentDescription="@null"
-                                android:src="@drawable/ic_image"
-                                />
+<!--                            <ImageButton-->
+<!--                                android:id="@+id/action_insert_online_image"-->
+<!--                                android:layout_width="48dp"-->
+<!--                                android:layout_height="48dp"-->
+<!--                                android:padding="4dp"-->
+<!--                                android:background="@color/pink"-->
+<!--                                android:tint="@color/artwok_black"-->
+<!--                                android:contentDescription="@null"-->
+<!--                                android:src="@drawable/ic_image"-->
+<!--                                />-->
 
-                            <ImageButton
-                                android:id="@+id/action_insert_video"
-                                android:layout_width="48dp"
-                                android:layout_height="48dp"
-                                android:padding="4dp"
-                                android:background="@color/purple"
-                                android:tint="@color/artwok_black"
-                                android:contentDescription="@null"
-                                android:src="@drawable/ic_image"
-                                />
+<!--                            <ImageButton-->
+<!--                                android:id="@+id/action_insert_video"-->
+<!--                                android:layout_width="48dp"-->
+<!--                                android:layout_height="48dp"-->
+<!--                                android:padding="4dp"-->
+<!--                                android:background="@color/purple"-->
+<!--                                android:tint="@color/artwok_black"-->
+<!--                                android:contentDescription="@null"-->
+<!--                                android:src="@drawable/ic_image"-->
+<!--                                />-->
 
 
 

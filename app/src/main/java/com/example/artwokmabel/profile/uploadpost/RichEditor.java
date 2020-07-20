@@ -396,7 +396,6 @@ public class RichEditor extends WebView {
             public void onReceiveValue(String s) {
                 Log.d("isstart", s); // Prints: "this"
                 callback.clearBackgrounds(s);
-
             }
         });
 

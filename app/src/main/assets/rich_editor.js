@@ -225,6 +225,10 @@ RE.insertLink = function(url, title) {
     RE.callback();
 }
 
+RE.simulateEnter = function(){
+
+}
+
 RE.setTodo = function(text) {
     var html = '<input type="checkbox" name="'+ text +'" value="'+ text +'"/> &nbsp;';
     document.execCommand('insertHTML', false, html);

@@ -41,9 +41,12 @@ import com.example.artwokmabel.homepage.homepagewrapper.HomeTabsFragment;
 import com.example.artwokmabel.models.Listing;
 import com.example.artwokmabel.models.MainPost;
 import com.example.artwokmabel.models.User;
+import com.example.artwokmabel.repos.FirestoreRepo;
+import com.firebase.ui.firestore.SnapshotParser;
 import com.firebase.ui.firestore.paging.FirestorePagingAdapter;
 import com.firebase.ui.firestore.paging.FirestorePagingOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.squareup.picasso.Picasso;
 import com.synnapps.carouselview.ImageListener;
 import com.yarolegovich.discretescrollview.InfiniteScrollAdapter;
@@ -188,7 +191,13 @@ public class HomeFeedFragment extends Fragment {
                             .build();
 
                     FirestorePagingOptions<MainPost> options = new FirestorePagingOptions.Builder<MainPost>()
-                            .setQuery(viewModel.getFeedPostsQuery(user.getFollowing()), config, MainPost.class)
+                            .setQuery(viewModel.getFeedPostsQuery(user.getFollowing()), config, new SnapshotParser<MainPost>() {
+                                @NonNull
+                                @Override
+                                public MainPost parseSnapshot(@NonNull DocumentSnapshot snapshot) {
+                                    return FirestoreRepo.getInstance().changeDocToMainPostModel(snapshot);
+                                }
+                            })
                             .build();
 
                     adapter = new FirestorePagingAdapterImpl(options, user, getContext(), navController, binding.swipeRefreshLayout);

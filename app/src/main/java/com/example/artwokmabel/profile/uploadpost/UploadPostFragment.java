@@ -6,20 +6,28 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -32,8 +40,11 @@ import android.widget.Toast;
 
 import com.example.artwokmabel.HomePageActivity;
 import com.example.artwokmabel.R;
+import com.example.artwokmabel.Utils.TimeWrangler;
 import com.example.artwokmabel.databinding.FragmentUploadPostBinding;
 import com.example.artwokmabel.homepage.callbacks.ImagePickerCallback;
+import com.example.artwokmabel.models.User;
+import com.example.artwokmabel.profile.user.ProfileFragmentViewModel;
 import com.example.artwokmabel.repos.FirestoreRepo;
 import com.github.dhaval2404.colorpicker.MaterialColorPickerDialog;
 import com.github.dhaval2404.colorpicker.listener.ColorListener;
@@ -41,10 +52,12 @@ import com.github.dhaval2404.colorpicker.model.ColorShape;
 import com.github.dhaval2404.colorpicker.model.ColorSwatch;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -70,6 +83,7 @@ public class UploadPostFragment extends Fragment {
 
     public UploadPostViewModel viewModel;
     private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+    private ProfileFragmentViewModel profileFragmentViewModel;
 
     public static UploadPostFragment instance;
 
@@ -92,6 +106,22 @@ public class UploadPostFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
 
         viewModel = ViewModelProviders.of(this).get(UploadPostViewModel.class);
+        profileFragmentViewModel = new ViewModelProvider(this).get(ProfileFragmentViewModel.class);
+        profileFragmentViewModel.getUserObservable(mAuth.getCurrentUser().getUid()).observe(getViewLifecycleOwner(), new Observer<User>() {
+            @Override
+            public void onChanged(User user) {
+                if(user != null){
+                    binding.setUser(user);
+                    Picasso
+                        .get()
+                        .load(user.getProfile_url())
+                        .placeholder(R.drawable.loading_image)
+                        .error(R.drawable.loading_image)
+                        .into(binding.profilePicture);
+                    binding.setTime(TimeWrangler.changeNanopastToReadableDate(System.currentTimeMillis()));
+                }
+            }
+        });
 
         binding.progressBar.setVisibility(View.GONE);
         originalMode = getActivity().getWindow().getAttributes().softInputMode;
@@ -111,7 +141,29 @@ public class UploadPostFragment extends Fragment {
 
         navController = Navigation.findNavController(view);
 
+        ((AppCompatActivity) requireActivity()).setSupportActionBar(binding.toolbar);
+        ((AppCompatActivity) requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity) requireActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
+        setHasOptionsMenu(true);
+
         initView();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.upload_post_toolbar, menu);
+        super.onCreateOptionsMenu(menu,inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.upload_post:
+                onPostUpload();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     public interface OnPostUploadFinished{
@@ -428,26 +480,29 @@ public class UploadPostFragment extends Fragment {
         binding.actionInsertImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                //getActivity().dispatchKeyEvent(KeyC);
+
                 mEditor.checkIfStart((String s) -> {
                     Log.d("isstart", mEditor.getHtml());
                     if(s.equals("true")){
-                        for(String viewName : selectedViews){
-                            switch (viewName) {
-                                case "bold":
-                                    binding.actionBold.performClick();
-                                    break;
-                                case "italic":
-                                    binding.actionItalic.performClick();
-                                    break;
-                                case "strike":
-                                    binding.actionStrikethrough.performClick();
-                                    break;
-                                case "underline":
-                                    binding.actionUnderline.performClick();
-                                    break;
-                            }
-                        }
-                        selectedViews.clear();
+//                        for(String viewName : selectedViews){
+//                            switch (viewName) {
+//                                case "bold":
+//                                    binding.actionBold.performClick();
+//                                    break;
+//                                case "italic":
+//                                    binding.actionItalic.performClick();
+//                                    break;
+//                                case "strike":
+//                                    binding.actionStrikethrough.performClick();
+//                                    break;
+//                                case "underline":
+//                                    binding.actionUnderline.performClick();
+//                                    break;
+//                            }
+//                        }
+//                        selectedViews.clear();
                         Log.d("isstart", "It's the start");
                     }else{
                         Log.d("isstart", "It's not the start");
@@ -494,41 +549,7 @@ public class UploadPostFragment extends Fragment {
                         }
                     }
                 });
-            }
-        });
 
-        binding.actionInsertOnlineImage.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-                builder.setTitle("Insert Image");
-                final EditText input = new EditText(requireContext());
-                input.setHint("Image Link");
-                builder.setView(input);
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String m_Text = input.getText().toString();
-                        mEditor.insertImage(m_Text,
-                                m_Text);
-                        clearAllBackgrounds();
-                    }
-                });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-
-                builder.show();
-            }
-        });
-
-        binding.actionInsertVideo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new ImagePickerCallback(requireActivity(), REQUEST_IMAGE, viewModel).onImagePickerClicked();
                 viewModel.getVideoPath().observe(getViewLifecycleOwner(), new Observer<Uri>() {
                     @Override
                     public void onChanged(Uri uri) {
@@ -566,6 +587,76 @@ public class UploadPostFragment extends Fragment {
                 });
             }
         });
+
+//        binding.actionInsertOnlineImage.setOnClickListener(new View.OnClickListener() {
+//            @Override public void onClick(View v) {
+//
+//                AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+//                builder.setTitle("Insert Image");
+//                final EditText input = new EditText(requireContext());
+//                input.setHint("Image Link");
+//                builder.setView(input);
+//                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        String m_Text = input.getText().toString();
+//                        mEditor.insertImage(m_Text,
+//                                m_Text);
+//                        clearAllBackgrounds();
+//                    }
+//                });
+//                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        dialog.cancel();
+//                    }
+//                });
+//
+//                builder.show();
+//            }
+//        });
+
+//        binding.actionInsertVideo.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                new ImagePickerCallback(requireActivity(), REQUEST_IMAGE, viewModel).onImagePickerClicked();
+//                viewModel.getVideoPath().observe(getViewLifecycleOwner(), new Observer<Uri>() {
+//                    @Override
+//                    public void onChanged(Uri uri) {
+//                        if(uri != null){
+//                            Log.d("urivalue", uri.toString());
+//                            Uri fileUri = uri;
+//                            String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+//
+//                            int randomNumber = new Random().nextInt();
+//                            String fileName = Integer.toString(randomNumber);
+//
+//                            StorageReference fileToUpload = storageReference.child("Images").child(currentUserId).child(fileName); // randomize name
+//
+//                            fileToUpload.putFile(fileUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//                                @Override
+//                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                                    storageReference.child("Images").child(currentUserId).child(fileName).getDownloadUrl().addOnCompleteListener(task -> {
+//                                        if (task.isSuccessful()) {
+//                                            mEditor.insertVideo(task.getResult().toString(), task.getResult().toString());
+//                                            clearAllBackgrounds();
+//                                            Log.d("newmethod", task.getResult().toString());
+//                                        }
+//                                    });
+//                                }
+//                            }).addOnFailureListener(new OnFailureListener() {
+//                                @Override
+//                                public void onFailure(@NonNull Exception e) {
+//                                    Toast.makeText(requireActivity(), "Upload image failed", Toast.LENGTH_LONG).show();
+//                                }
+//                            });
+//
+//                            viewModel.setVideoResultOk(null);
+//                        }
+//                    }
+//                });
+//            }
+//        });
 
         binding.actionInsertLink.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {

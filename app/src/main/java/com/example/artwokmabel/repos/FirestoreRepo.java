@@ -214,26 +214,43 @@ public class FirestoreRepo {
     public void uploadNewPost(String postText, String userId, UploadPostFragment.OnPostUploadFinished callback){
         DocumentReference newPostRef = db.collection("Users").document(userId).collection("Posts").document();
 
-        ArrayList<String> photos = new ArrayList<>();
-        photos.add("https://firebasestorage.googleapis.com/v0/b/artwok-database.appspot.com/o/Rick%20and%20Morty%20white.png?alt=media&token=dd2a8310-6a36-43e4-8372-ff6f2d465f95");
-        MainPost newPost =  new MainPost(
-            userId,
-            postText,
-            "placeholder hashtags",
-            newPostRef.getId(),
-            "placeholder username",
-            photos,
-            "bla",
-            System.currentTimeMillis()
-        );
+        db.collection("Users")
+                .document(userId)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+                                User user = document.toObject(User.class);
 
-        newPostRef.set(newPost)
-                .addOnSuccessListener(aVoid -> {
-                    callback.onPostUploadFinished(true);
-//                    Toast.makeText(activity, "Successfully uploaded ic_dm.", Toast.LENGTH_LONG).show();
-//                    UploadPostActivity.getInstance().onPostUploaded();
-                }).addOnFailureListener(e ->
-                    callback.onPostUploadFinished(false));
+                                ArrayList<String> photos = new ArrayList<>();
+                                photos.add("https://firebasestorage.googleapis.com/v0/b/artwok-database.appspot.com/o/Rick%20and%20Morty%20white.png?alt=media&token=dd2a8310-6a36-43e4-8372-ff6f2d465f95");
+                                MainPost newPost =  new MainPost(
+                                        userId,
+                                        postText,
+                                        "placeholder hashtags",
+                                        newPostRef.getId(),
+                                        user.getUsername(),
+                                        photos,
+                                        "bla",
+                                        System.currentTimeMillis()
+                                );
+
+                                newPostRef.set(newPost)
+                                        .addOnSuccessListener(aVoid -> {
+                                            callback.onPostUploadFinished(true);
+                                        }).addOnFailureListener(e ->
+                                        callback.onPostUploadFinished(false));
+
+                            } else {
+                            }
+                        } else {
+                            Log.d(TAG, "get failed with ", task.getException());
+                        }
+                    }
+                });
     }
 
     public void uploadNewListing(String postTitle, String postDesc, ArrayList<String> categories, Long price, String delivery, String refund, String currentUserId, ArrayList<String> postImageUris, UploadListingViewModel.UploadListingCallback callback){
@@ -2532,7 +2549,7 @@ public class FirestoreRepo {
 //        }
 //    }
 
-    private MainPost changeDocToMainPostModel(DocumentSnapshot doc){
+    public MainPost changeDocToMainPostModel(DocumentSnapshot doc){
         MainPost post = new MainPost(
                 doc.getString("user_id"),
                 doc.getString("desc"),
