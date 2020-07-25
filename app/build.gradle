@@ -204,4 +204,7 @@ dependencies {
 
     // Paging Library
     implementation 'android.arch.paging:runtime:1.0.1'
+
+    //Epoxy data binding support
+    implementation 'com.airbnb.android:epoxy-databinding:3.11.0'
 }

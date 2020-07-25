@@ -28,6 +28,7 @@ import com.example.artwokmabel.HomePageActivity;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.FragmentHomeTabsBinding;
 import com.example.artwokmabel.homepage.favorites.FavoritesActivity;
+import com.example.artwokmabel.homepage.listingstab.ShrinkListingsAnimation;
 import com.example.artwokmabel.homepage.search.TemporarySearchFragment;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -36,16 +37,19 @@ import java.util.ArrayList;
 
 public class HomeTabsFragment extends Fragment {
 
-    private FragmentHomeTabsBinding binding;
+    public FragmentHomeTabsBinding binding;
     private HomeTabsPagerAdapter adapter;
     private NavController navController;
 
     private ArrayList<String> tabCategories;
     private static HomeTabsFragment instance = null;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        instance = this;
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home_tabs, container, false);
         binding.setHomeTabsFragment(this);
@@ -62,6 +66,7 @@ public class HomeTabsFragment extends Fragment {
         adapter = new HomeTabsPagerAdapter(this);
 
         binding.viewPager.setAdapter(adapter);
+        binding.viewPager.setPageTransformer(new ShrinkListingsAnimation());
 
         //Prevent reloading of WebView
         binding.viewPager.setOffscreenPageLimit(10);

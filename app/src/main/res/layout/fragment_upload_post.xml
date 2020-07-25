@@ -46,10 +46,10 @@
                         style="@style/TextAppearance.Artwok.ToolbarText"
                         android:text="@{user.username}" />
 
-                    <TextView
-                        android:id="@+id/time"
-                        style="@style/TextAppearance.Artwok.ToolbarText"
-                        android:text="@{time}" />
+<!--                    <TextView-->
+<!--                        android:id="@+id/time"-->
+<!--                        style="@style/TextAppearance.Artwok.ToolbarText"-->
+<!--                        android:text="@{time}" />-->
                 </LinearLayout>
 
             </com.google.android.material.appbar.MaterialToolbar>

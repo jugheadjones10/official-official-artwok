@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.artwokmabel.homepage.edit.EditCategoriesFragment;
-import com.example.artwokmabel.homepage.postsfeed.HomeFeedFragment;
 import com.example.artwokmabel.homepage.listingstab.ListingsTabFragment;
+import com.example.artwokmabel.homepage.postsfeed.HomeFeedFragment;
 import com.example.artwokmabel.homepage.request.tab.RequestsFragment;
 
 import java.util.ArrayList;

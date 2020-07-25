@@ -21,19 +21,51 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <com.google.android.material.appbar.MaterialToolbar
-                    android:id="@+id/toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    app:menu="@menu/home_toolbar"
-                    style="@style/Widget.MaterialComponents.Toolbar.Primary">
+<!--                <com.google.android.material.appbar.CollapsingToolbarLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    app:layout_scrollFlags="scroll|exitUntilCollapsed">-->
 
-                    <ImageView
-                        android:layout_width="@dimen/icon_artwok_width_normal"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/artwok_login_icon" />
+                    <com.google.android.material.appbar.MaterialToolbar
+                        android:id="@+id/toolbar"
+                        android:layout_width="match_parent"
+                        android:layout_height="?attr/actionBarSize"
+                        app:menu="@menu/home_toolbar"
+                        style="@style/Widget.MaterialComponents.Toolbar.Primary"
 
-                </com.google.android.material.appbar.MaterialToolbar>
+                        app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
+    <!--                    Added the above line to material toolbar, update styles?-->
+
+                        <ImageView
+                            android:layout_width="@dimen/icon_artwok_width_normal"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/artwok_login_icon" />
+
+                    </com.google.android.material.appbar.MaterialToolbar>
+
+                    <com.google.android.material.tabs.TabLayout
+                        android:id="@+id/tabs"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/tabs_height_normal"
+                        app:tabGravity="fill"
+                        app:tabTextAppearance="@style/CustomTextAppearanceTab"
+                        app:tabIndicatorColor="@color/artwok_white"
+                        app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
+                        app:tabMode="scrollable">
+                    </com.google.android.material.tabs.TabLayout>
+
+                    <com.yarolegovich.discretescrollview.DiscreteScrollView
+                        app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
+                        android:id="@+id/horizontal_recycler_view_listings"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="@dimen/spacing_small"
+                        android:paddingTop="@dimen/spacing_small"/>
+<!--                        android:layout_marginTop="@dimen/spacing_small"-->
+<!--                        android:layout_marginBottom="@dimen/spacing_small" -->
+
+
+<!--                </com.google.android.material.appbar.CollapsingToolbarLayout>-->
 
 
 <!--                <androidx.appcompat.widget.Toolbar-->
@@ -83,15 +115,7 @@
 <!--                </androidx.appcompat.widget.Toolbar>-->
 
 
-                <com.google.android.material.tabs.TabLayout
-                    android:id="@+id/tabs"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/tabs_height_normal"
-                    app:tabGravity="fill"
-                    app:tabTextAppearance="@style/CustomTextAppearanceTab"
-                    app:tabIndicatorColor="@color/artwok_white"
-                    app:tabMode="scrollable">
-                </com.google.android.material.tabs.TabLayout>
+
             </com.google.android.material.appbar.AppBarLayout>
 
             <androidx.viewpager2.widget.ViewPager2

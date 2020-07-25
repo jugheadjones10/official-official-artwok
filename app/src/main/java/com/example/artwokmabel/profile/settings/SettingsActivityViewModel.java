@@ -18,7 +18,7 @@ public class SettingsActivityViewModel extends ViewModel {
     }
 
     private LiveData<User> userObservable;
-    private MutableLiveData<IntroLoadingStatus> loadingObservable = new MutableLiveData<>(IntroLoadingStatus.NOTLOADING);
+    private MutableLiveData<IntroLoadingStatus> loadingObservable = new MutableLiveData<>(IntroLoadingStatus.BEFORELOAD);
 
     private FirebaseAuth mAuth;
 
