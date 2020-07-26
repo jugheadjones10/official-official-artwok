@@ -104,5 +104,13 @@
     <fragment
         android:id="@+id/uploadListingFragment"
         android:name="com.example.artwokmabel.profile.uploadlisting.UploadListingFragment"
-        android:label="UploadListingFragment" />
+        android:label="UploadListingFragment" >
+        <action
+            android:id="@+id/action_uploadListingFragment_to_uploadListingRichTextEditor"
+            app:destination="@id/uploadListingRichTextEditor" />
+    </fragment>
+    <fragment
+        android:id="@+id/uploadListingRichTextEditor"
+        android:name="com.example.artwokmabel.profile.uploadlisting.UploadListingRichTextEditorFragment"
+        android:label="UploadListingRichTextEditor" />
 </navigation>

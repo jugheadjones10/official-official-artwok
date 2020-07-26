@@ -1,14 +1,17 @@
 package com.example.artwokmabel.profile.settings;
 
+import android.net.Uri;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.artwokmabel.UploadViewModel;
 import com.example.artwokmabel.models.User;
 import com.example.artwokmabel.repos.FirestoreRepo;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class SettingsActivityViewModel extends ViewModel {
+public class SettingsActivityViewModel extends ViewModel implements UploadViewModel {
 
     enum IntroLoadingStatus {
         BEFORELOAD,
@@ -66,6 +69,25 @@ public class SettingsActivityViewModel extends ViewModel {
         FirestoreRepo.getInstance().deleteCurrentUser();
 
     }
+
+    //For the pick image callback
+    private MutableLiveData<Uri> imagePath = new MutableLiveData<>();
+    private MutableLiveData<Uri> videoPath = new MutableLiveData<>();
+
+    public void setResultOk(Uri imagePath){
+        this.imagePath.setValue(imagePath);
+    }
+    public void setVideoResultOk(Uri videoPath){
+        this.videoPath.setValue(videoPath);
+    }
+
+    public LiveData<Uri> getImagePath() {
+        return imagePath;
+    }
+    public LiveData<Uri> getVideoPath() {
+        return videoPath;
+    }
+
 
     public interface DataLoadSuccessful{
         void isSuccessful(boolean isSuccessful);

@@ -1946,9 +1946,9 @@ public class FirestoreRepo {
 //                }
 //            });
 
-            return db.collectionGroup("Posts")
-                .whereIn("user_id", followingIds)
-                .orderBy("nanopast", Query.Direction.DESCENDING);
+        return db.collectionGroup("Posts")
+            .whereIn("user_id", followingIds)
+            .orderBy("nanopast", Query.Direction.DESCENDING);
     }
 
     public LiveData<List<MainPost>> getFeedPosts(String userId){
@@ -2485,6 +2485,14 @@ public class FirestoreRepo {
                 .document(userId)
                 .collection("Posts");
         return userPostsTask;
+    }
+
+    public Query getSortedUserPostsQuery(String userId){
+        Query userPostsQuery = db.collection("Users")
+                .document(userId)
+                .collection("Posts")
+                .orderBy("nanopast", Query.Direction.DESCENDING);
+        return userPostsQuery;
     }
 
     public Query getUserListingsQuery(String userId){

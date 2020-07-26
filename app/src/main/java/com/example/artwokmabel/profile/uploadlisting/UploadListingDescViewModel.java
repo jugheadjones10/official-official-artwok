@@ -1,6 +1,7 @@
 package com.example.artwokmabel.profile.uploadlisting;
 
 import android.net.Uri;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -13,6 +14,8 @@ public class UploadListingDescViewModel extends ViewModel implements UploadViewM
     private MutableLiveData<Uri> imagePath = new MutableLiveData<>();
     private MutableLiveData<Uri> videoPath = new MutableLiveData<>();
 
+    private MutableLiveData<String> htmlContent = new MutableLiveData<>();
+
     public UploadListingDescViewModel(){
 
     }
@@ -22,6 +25,10 @@ public class UploadListingDescViewModel extends ViewModel implements UploadViewM
     }
     public void setVideoResultOk(Uri videoPath){
         this.videoPath.setValue(videoPath);
+    }
+    public void setHtmlContent(String html){
+        this.htmlContent.setValue(html);
+        Log.d("insideview", htmlContent.getValue());
     }
 
 
@@ -33,5 +40,8 @@ public class UploadListingDescViewModel extends ViewModel implements UploadViewM
         return videoPath;
     }
 
+    public LiveData<String> getHtmlContent(){
+        return htmlContent;
+    }
 
 }

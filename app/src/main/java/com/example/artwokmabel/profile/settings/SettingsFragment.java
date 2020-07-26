@@ -27,6 +27,7 @@ import com.example.artwokmabel.databinding.FragmentSettingsBinding;
 import com.example.artwokmabel.homepage.callbacks.ImagePickerCallback;
 import com.example.artwokmabel.homepage.homepagewrapper.HomeTabsFragment;
 import com.example.artwokmabel.models.User;
+import com.example.artwokmabel.profile.utils.ImagePickerActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -90,7 +91,47 @@ public class SettingsFragment extends Fragment {
     }
 
     public void onProfilePicChange(){
-//        new ImagePickerCallback(requireActivity(), UploadListingAcitvity.REQUEST_IMAGE).onImagePickerClicked();
+        new ImagePickerCallback(requireActivity(), REQUEST_IMAGE, viewModel, ImagePickerActivity.SHOW_IMAGE_OPTIONS_ONLY).onImagePickerClicked();
+        viewModel.getImagePath().observe(getViewLifecycleOwner(), new Observer<Uri>() {
+            @Override
+            public void onChanged(Uri uri) {
+                if(uri != null){
+                    Log.d("urivalue", uri.toString());
+                    Uri fileUri = uri;
+                    String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+                    int randomNumber = new Random().nextInt();
+                    String fileName = Integer.toString(randomNumber);
+
+                    StorageReference fileToUpload = storageReference.child("Images").child(currentUserId).child(fileName); // randomize name
+
+                    fileToUpload.putFile(fileUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            storageReference.child("Images").child(currentUserId).child(fileName).getDownloadUrl().addOnCompleteListener(task -> {
+                                if (task.isSuccessful()) {
+                                    viewModel.updateUserProfileUrl(task.getResult().toString());
+                                    Picasso.get()
+                                            .load(task.getResult().toString())
+                                            .placeholder(R.drawable.loading_image_rounded_50)
+                                            .error(R.drawable.rick_and_morty)
+                                            .into(binding.profilePicture);
+                                }
+                            });
+
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(requireActivity(), "Upload image failed", Toast.LENGTH_LONG).show();
+                        }
+                    });
+
+                    viewModel.setResultOk(null);
+
+                }
+            }
+        });
     }
 
     public void onUsernameChange(){

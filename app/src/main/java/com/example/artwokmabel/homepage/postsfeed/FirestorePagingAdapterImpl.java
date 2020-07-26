@@ -39,7 +39,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-class FirestorePagingAdapterImpl extends FirestorePagingAdapter<MainPost, PostViewHolder> {
+public class FirestorePagingAdapterImpl extends FirestorePagingAdapter<MainPost, PostViewHolder> {
 
     private User user;
     private Context mContext;

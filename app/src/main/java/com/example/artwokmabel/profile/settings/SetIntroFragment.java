@@ -62,7 +62,7 @@ public class SetIntroFragment extends Fragment {
             public void onChanged(SettingsActivityViewModel.IntroLoadingStatus loadingStatus) {
                 if(loadingStatus == SettingsActivityViewModel.IntroLoadingStatus.LOADING){
                     binding.progressBar.setVisibility(View.VISIBLE);
-                }else if(loadingStatus == SettingsActivityViewModel.IntroLoadingStatus.UNSUCCESSFUL || loadingStatus == SettingsActivityViewModel.IntroLoadingStatus.BEFORELOAD){
+                }else if(loadingStatus == SettingsActivityViewModel.IntroLoadingStatus.UNSUCCESSFUL){
                     binding.progressBar.setVisibility(View.GONE);
                     Toast.makeText(getContext(), "Change of introduction not successful", Toast.LENGTH_SHORT).show();
                 }else if(loadingStatus == SettingsActivityViewModel.IntroLoadingStatus.NOTLOADING){
@@ -70,6 +70,9 @@ public class SetIntroFragment extends Fragment {
                     Toast.makeText(requireActivity(), "Intro name change successful", Toast.LENGTH_SHORT).show();
                     navController.navigateUp();
                     viewModel.setLoadingStatus(SettingsActivityViewModel.IntroLoadingStatus.BEFORELOAD);
+                }else{
+                    //When it's before load
+                    binding.progressBar.setVisibility(View.GONE);
                 }
             }
         });
