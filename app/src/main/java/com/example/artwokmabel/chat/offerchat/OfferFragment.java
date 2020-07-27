@@ -36,6 +36,7 @@ import com.example.artwokmabel.databinding.FragmentOfferBinding;
 import com.example.artwokmabel.models.Message;
 import com.example.artwokmabel.models.OfferMessage;
 import com.example.artwokmabel.models.OrderChat;
+import com.example.artwokmabel.profile.settings.SettingsFragmentDirections;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -106,6 +107,7 @@ public class OfferFragment extends Fragment {
         initializeControllers();
 
         offerBarBinding.setOrderchat(orderChat);
+        offerBarBinding.setOfferFragment(this);
         Picasso.get().load(orderChat.getListing().getPhotos().get(0)).into(offerBarBinding.customProfileImage);
 
         binding.sendMessageBtn.setOnClickListener(new View.OnClickListener() {
@@ -120,7 +122,6 @@ public class OfferFragment extends Fragment {
     public void onOfferClicked(){
 
         AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
-
         //builder.setTitle("Name");
 
         class DecimalDigitsInputFilter implements InputFilter {
@@ -161,6 +162,11 @@ public class OfferFragment extends Fragment {
         });
     }
 
+    public void onDocumentClicked(){
+        OfferFragmentDirections.ActionOfferFragmentToOfferAgreementFragment action =
+                OfferFragmentDirections.actionOfferFragmentToOfferAgreementFragment(orderChat.getListing());
+        navController.navigate(action);
+    }
 
     private void initializeControllers() {
         messageAdapter = new MessageAdapter(messagesList, orderChat);
@@ -178,7 +184,6 @@ public class OfferFragment extends Fragment {
     }
 
     private void inflateChatBar(){
-
         ((AppCompatActivity)requireActivity()).setSupportActionBar(binding.mainAppBar);
         ActionBar actionBar = ((AppCompatActivity)requireActivity()).getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);

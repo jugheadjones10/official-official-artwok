@@ -5,6 +5,9 @@
         <variable
             name="orderchat"
             type="com.example.artwokmabel.models.OrderChat" />
+        <variable
+            name="OfferFragment"
+            type="com.example.artwokmabel.chat.offerchat.OfferFragment" />
     </data>
     <RelativeLayout
         android:layout_width="match_parent"
@@ -45,6 +48,17 @@
             android:textColor="@android:color/background_light"
             android:textSize="14sp"
             android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/agreement_doc"
+            android:layout_width="47dp"
+            android:layout_height="47dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="@dimen/spacing_small"
+            android:cropToPadding="true"
+            android:onClick="@{() -> OfferFragment.onDocumentClicked()}"
+            android:src="@drawable/agreement" />
 
     </RelativeLayout>
 </layout>
