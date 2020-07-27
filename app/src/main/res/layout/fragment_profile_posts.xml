@@ -8,16 +8,21 @@
         <variable name="callback" type="com.example.artwokmabel.profile.user.ProfilePostsFragment.OnUploadButtonClicked"/>
     </data>
 
-<LinearLayout
-    android:id="@+id/activity_posts_fragment"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+<!--<LinearLayout-->
+<!--    android:id="@+id/activity_posts_fragment"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    android:orientation="vertical">-->
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="0.16"
         android:background="@color/artwok_white">
 
         <androidx.recyclerview.widget.RecyclerView
@@ -53,6 +58,7 @@
             app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-</LinearLayout>
+<!--</LinearLayout>-->
 </layout>

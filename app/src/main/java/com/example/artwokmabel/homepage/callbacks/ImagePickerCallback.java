@@ -24,17 +24,19 @@ public class ImagePickerCallback {
     private int requestCode;
     public UploadViewModel viewModel;
     private static ImagePickerCallback instance;
+    private String showOptions;
 
     //No overlap with other image picker callbacks should occur
     public static ImagePickerCallback getInstance(){
         return instance;
     }
 
-    public ImagePickerCallback(Activity activity, int requestCode, UploadViewModel viewModel){
+    public ImagePickerCallback(Activity activity, int requestCode, UploadViewModel viewModel, String showOptions){
         instance = this;
         this.activity = activity;
         this.requestCode = requestCode;
         this.viewModel = viewModel;
+        this.showOptions = showOptions;
     }
 
     public void onImagePickerClicked(){
@@ -59,7 +61,7 @@ public class ImagePickerCallback {
     }
 
     private void showImagePickerOptions(){
-        ImagePickerActivity.showImagePickerOptions(activity, new ImagePickerActivity.PickerOptionListener() {
+        ImagePickerActivity.showImagePickerOptions(activity, showOptions,new ImagePickerActivity.PickerOptionListener() {
             @Override
             public void onTakeCameraSelected() {
                 launchCameraIntent();

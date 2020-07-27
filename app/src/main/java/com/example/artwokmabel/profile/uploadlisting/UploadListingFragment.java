@@ -21,7 +21,6 @@ import androidx.lifecycle.ViewModelProviders;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.FragmentUploadListingBinding;
 import com.example.artwokmabel.homepage.callbacks.ImagePickerCallback;
-import com.example.artwokmabel.homepage.request.upload.UploadRequestDescFragment;
 import com.example.artwokmabel.profile.people.PeoplePagerAdapter;
 import com.example.artwokmabel.profile.uploadpost.UploadPostViewModel;
 import com.example.artwokmabel.repos.FirestoreRepo;
@@ -37,6 +36,9 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Random;
+
+import static com.example.artwokmabel.profile.utils.ImagePickerActivity.SHOW_ALL_OPTIONS;
+import static com.example.artwokmabel.profile.utils.ImagePickerActivity.SHOW_IMAGE_OPTIONS_ONLY;
 
 public class UploadListingFragment extends Fragment {
 
@@ -85,27 +87,26 @@ public class UploadListingFragment extends Fragment {
             }
         });
 
-
         new TabLayoutMediator(binding.tabLayout, binding.pager,
-                new TabLayoutMediator.TabConfigurationStrategy() {
-                    @Override
-                    public void onConfigureTab(TabLayout.Tab tab, int position) {
-                        if(position == 0){
-                            tab.setText("Description");
-                        }else if(position == 1){
-                            tab.setText("Details");
-                        }else if(position == 2){
-                            tab.setText("Delivery/Refund");
-                        }else{
-                            tab.setText("FAQ");
-                        }
+            new TabLayoutMediator.TabConfigurationStrategy() {
+                @Override
+                public void onConfigureTab(TabLayout.Tab tab, int position) {
+                    if(position == 0){
+                        tab.setText("Description");
+                    }else if(position == 1){
+                        tab.setText("Details");
+                    }else if(position == 2){
+                        tab.setText("Delivery/Refund");
+                    }else{
+                        tab.setText("FAQ");
                     }
                 }
+            }
         ).attach();
     }
 
     public void onUploadImageClicked(){
-        new ImagePickerCallback(requireActivity(), REQUEST_IMAGE, viewModel).onImagePickerClicked();
+        new ImagePickerCallback(requireActivity(), REQUEST_IMAGE, viewModel, SHOW_IMAGE_OPTIONS_ONLY).onImagePickerClicked();
         viewModel.getImagePath().observe(getViewLifecycleOwner(), new Observer<Uri>() {
             @Override
             public void onChanged(Uri uri) {
@@ -153,8 +154,8 @@ public class UploadListingFragment extends Fragment {
 
     public void onUploadListingClicked(){
 
-        String postDesc = UploadRequestDescFragment.getInstance().getDesc();
-        String postTitle = UploadRequestDescFragment.getInstance().getTitle();
+        String postDesc = UploadListingDescFragment.getInstance().getDesc();
+        String postTitle = UploadListingDescFragment.getInstance().getTitle();
 
         ArrayList<String> categories;
         long budget;

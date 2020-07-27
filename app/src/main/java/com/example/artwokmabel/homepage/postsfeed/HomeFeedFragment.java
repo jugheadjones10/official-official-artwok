@@ -12,7 +12,6 @@ import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
@@ -27,7 +26,6 @@ import androidx.navigation.Navigation;
 import androidx.paging.PagedList;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import com.example.artwokmabel.HomeGraphDirections;
 import com.example.artwokmabel.HomePageActivity;
 import com.example.artwokmabel.ProfileGraphDirections;
@@ -49,6 +47,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.squareup.picasso.Picasso;
 import com.synnapps.carouselview.ImageListener;
+import com.yarolegovich.discretescrollview.DiscreteScrollView;
 import com.yarolegovich.discretescrollview.InfiniteScrollAdapter;
 import com.yarolegovich.discretescrollview.transform.Pivot;
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer;
@@ -113,14 +112,17 @@ public class HomeFeedFragment extends Fragment {
 
         //Todo: bring back listings recycler view
         listingsAdapter = new ListingsHomeAdapter(getContext(), navController);
-        binding.horizontalRecyclerViewListings.setAdapter(listingsAdapter);
 
-        binding.horizontalRecyclerViewListings.setItemTransformer(new ScaleTransformer.Builder()
+        DiscreteScrollView horizontalRecyclerViewListings = HomeTabsFragment.getInstance().binding.horizontalRecyclerViewListings;
+        horizontalRecyclerViewListings.setAdapter(listingsAdapter);
+        horizontalRecyclerViewListings.setBackgroundColor(getResources().getColor(R.color.white));
+
+        horizontalRecyclerViewListings.setItemTransformer(new ScaleTransformer.Builder()
                 .setPivotX(Pivot.X.CENTER) // CENTER is a default one
                 .setPivotY(Pivot.Y.CENTER) // CENTER is a default one
                 .build());
-        binding.horizontalRecyclerViewListings.setSlideOnFling(true);
-        binding.horizontalRecyclerViewListings.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+        horizontalRecyclerViewListings.setSlideOnFling(true);
+        horizontalRecyclerViewListings.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
             @Override
             public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
                 int action = e.getAction();

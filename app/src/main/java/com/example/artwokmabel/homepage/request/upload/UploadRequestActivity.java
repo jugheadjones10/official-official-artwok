@@ -125,8 +125,10 @@ public class UploadRequestActivity extends AppCompatActivity {
             @Override
             public void onClick (View view){
 
-                String postDesc = UploadRequestDescFragment.getInstance().getDesc();
-                String postTitle = UploadRequestDescFragment.getInstance().getTitle();
+                String postDesc = "";
+                        //UploadRequestDescFragment.getInstance().getDesc();
+                String postTitle = "";
+                        //UploadRequestDescFragment.getInstance().getTitle();
 
                 String category = UploadRequestDetailsFragment.getInstance().getCategory();
                 long budget = UploadRequestDetailsFragment.getInstance().getBudget();

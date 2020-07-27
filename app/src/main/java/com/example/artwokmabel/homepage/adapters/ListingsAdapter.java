@@ -128,7 +128,7 @@ public class ListingsAdapter extends RecyclerView.Adapter<ListingsAdapter.myHold
 //                });
 
         if(data.getUserid().equals(mAuth.getCurrentUser().getUid())){
-            myHolder.binding.normalListingLike.setImageResource(R.drawable.ic_menu);
+            //myHolder.binding.normalListingLike.setImageResource(R.drawable.ic_menu);
         }else {
             myHolder.binding.setOnfavlistingclicked(new OnFavListingClicked());
             viewModel.getUserFavListingsObservable().observe((FragmentActivity) mContext, new Observer<List<String>>() {

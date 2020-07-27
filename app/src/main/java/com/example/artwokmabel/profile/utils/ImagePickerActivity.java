@@ -50,6 +50,8 @@ public class ImagePickerActivity extends AppCompatActivity {
     public static final String INTENT_BITMAP_MAX_WIDTH = "max_width";
     public static final String INTENT_BITMAP_MAX_HEIGHT = "max_height";
 
+    public static final String SHOW_IMAGE_OPTIONS_ONLY = "show image options only";
+    public static final String SHOW_ALL_OPTIONS = "show all options";
 
     public static final int REQUEST_IMAGE_CAPTURE = 0;
     public static final int REQUEST_VIDEO_CAPTURE = 2;
@@ -103,23 +105,29 @@ public class ImagePickerActivity extends AppCompatActivity {
         }
     }
 
-    public static void showImagePickerOptions(Context context, PickerOptionListener listener) {
+    public static void showImagePickerOptions(Context context,  String showOptions, PickerOptionListener listener) {
         // setup the alert builder
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle(context.getString(R.string.title_dialog_choose_option));
 
         // add a list
-        String[] options = {context.getString(R.string.option_dialog_photo), context.getString(R.string.option_dialog_video), context.getString(R.string.option_dialog_gallery), context.getString(R.string.option_dialog_gallery_video)};
+        String[] options;
+        if(showOptions == SHOW_IMAGE_OPTIONS_ONLY){
+            options = new String[]{context.getString(R.string.option_dialog_photo), context.getString(R.string.option_dialog_gallery)};
+        }else{
+            //When the option is SHOW_ALL_OPTIONS
+            options = new String[]{context.getString(R.string.option_dialog_photo), context.getString(R.string.option_dialog_gallery), context.getString(R.string.option_dialog_video), context.getString(R.string.option_dialog_gallery_video)};
+        }
         builder.setItems(options, (dialog, which) -> {
             switch (which) {
                 case 0:
                     listener.onTakeCameraSelected();
                     break;
                 case 1:
-                    listener.onTakeVideoSelected();
+                    listener.onChooseGallerySelected();
                     break;
                 case 2:
-                    listener.onChooseGallerySelected();
+                    listener.onTakeVideoSelected();
                     break;
                 case 3:
                     listener.onChooseGalleryVideoSelected();

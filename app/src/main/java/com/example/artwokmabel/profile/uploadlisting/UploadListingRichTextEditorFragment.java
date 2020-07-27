@@ -1,29 +1,11 @@
-package com.example.artwokmabel.profile.uploadpost;
+package com.example.artwokmabel.profile.uploadlisting;
 
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.res.ResourcesCompat;
-import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -33,17 +15,26 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.webkit.JavascriptInterface;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.example.artwokmabel.HomePageActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.Utils.TimeWrangler;
 import com.example.artwokmabel.databinding.FragmentUploadPostBinding;
 import com.example.artwokmabel.homepage.callbacks.ImagePickerCallback;
 import com.example.artwokmabel.models.User;
+import com.example.artwokmabel.profile.uploadpost.RichEditor;
 import com.example.artwokmabel.profile.user.ProfileFragmentViewModel;
 import com.example.artwokmabel.repos.FirestoreRepo;
 import com.github.dhaval2404.colorpicker.MaterialColorPickerDialog;
@@ -52,7 +43,6 @@ import com.github.dhaval2404.colorpicker.model.ColorShape;
 import com.github.dhaval2404.colorpicker.model.ColorSwatch;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -61,15 +51,13 @@ import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Random;
 
 import static com.example.artwokmabel.profile.utils.ImagePickerActivity.SHOW_ALL_OPTIONS;
 
-public class UploadPostFragment extends Fragment {
+public class UploadListingRichTextEditorFragment extends Fragment {
 
     private NavController navController;
     private FragmentUploadPostBinding binding;
@@ -83,25 +71,25 @@ public class UploadPostFragment extends Fragment {
     public static final int REQUEST_IMAGE = 100;
     public CheckIfStartObject checkIfStartObject;
 
-    public UploadPostViewModel viewModel;
+    public UploadListingDescViewModel viewModel;
     private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
     private ProfileFragmentViewModel profileFragmentViewModel;
 
+    public UploadListingRichTextEditorFragment(){
+
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.d("uploadpostoncreateview", "ON CREATE IT WAS CALLED");
         super.onCreate(savedInstanceState);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.d("uploadpostoncreateview", "ON CREATE VIEW IT WAS CALLED");
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_upload_post, container, false);
-        binding.setUploadPostFragment(this);
         mAuth = FirebaseAuth.getInstance();
 
-        viewModel = ViewModelProviders.of(this).get(UploadPostViewModel.class);
+        viewModel = new ViewModelProvider(requireActivity()).get(UploadListingDescViewModel.class);
         profileFragmentViewModel = new ViewModelProvider(this).get(ProfileFragmentViewModel.class);
         profileFragmentViewModel.getUserObservable(mAuth.getCurrentUser().getUid()).observe(getViewLifecycleOwner(), new Observer<User>() {
             @Override
@@ -109,11 +97,11 @@ public class UploadPostFragment extends Fragment {
                 if(user != null){
                     binding.setUser(user);
                     Picasso
-                        .get()
-                        .load(user.getProfile_url())
-                        .placeholder(R.drawable.loading_image)
-                        .error(R.drawable.loading_image)
-                        .into(binding.profilePicture);
+                            .get()
+                            .load(user.getProfile_url())
+                            .placeholder(R.drawable.loading_image)
+                            .error(R.drawable.loading_image)
+                            .into(binding.profilePicture);
                     binding.setTime(TimeWrangler.changeNanopastToReadableDate(System.currentTimeMillis()));
                 }
             }
@@ -142,21 +130,33 @@ public class UploadPostFragment extends Fragment {
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
         setHasOptionsMenu(true);
 
+        viewModel.getHtmlContent().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                if(s != null){
+                    mEditor.setHtml(s);
+                }
+            }
+        });
+
         initView();
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.upload_post_toolbar, menu);
-        super.onCreateOptionsMenu(menu,inflater);
-    }
+//    @Override
+//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+//        //inflater.inflate(R.menu.upload_post_toolbar, menu);
+//        super.onCreateOptionsMenu(menu,inflater);
+//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.upload_post:
-                onPostUpload();
-                return true;
+//            case R.id.upload_post:
+//                onPostUpload();
+//                return true;
+            case android.R.id.home:
+                Log.d("htmlcontent", mEditor.getHtml());
+                viewModel.setHtmlContent(mEditor.getHtml());
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -273,7 +273,7 @@ public class UploadPostFragment extends Fragment {
         mEditor = (RichEditor) binding.editor;
 
         //////////////////////////
-        checkIfStartObject = new CheckIfStartObject();
+        checkIfStartObject = new UploadListingRichTextEditorFragment.CheckIfStartObject();
         mEditor.addJavascriptInterface(checkIfStartObject, "checkIfStartObject");
         ////////////////////////
 
@@ -357,7 +357,7 @@ public class UploadPostFragment extends Fragment {
 
         binding.actionHeading1.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
-               onHeadingClicked(v, 1);
+                onHeadingClicked(v, 1);
                 //selectedViews.add(v);
             }
         });
@@ -399,8 +399,8 @@ public class UploadPostFragment extends Fragment {
                         new ArrayList<String>(Arrays.asList("#000000", "#f6e58d", "#ffbe76", "#ff7979", "#badc58", "#dff9fb",
                                 "#7ed6df", "#e056fd", "#686de0", "#30336b", "#95afc0"))
                 )
-                .build()
-                .show();
+                        .build()
+                        .show();
             }
         });
 
@@ -426,8 +426,8 @@ public class UploadPostFragment extends Fragment {
                         new ArrayList<String>(Arrays.asList("#000000", "#f6e58d", "#ffbe76", "#ff7979", "#badc58", "#dff9fb",
                                 "#7ed6df", "#e056fd", "#686de0", "#30336b", "#95afc0"))
                 )
-                .build()
-                .show();
+                        .build()
+                        .show();
             }
         });
 
@@ -694,4 +694,5 @@ public class UploadPostFragment extends Fragment {
             }
         });
     }
+
 }

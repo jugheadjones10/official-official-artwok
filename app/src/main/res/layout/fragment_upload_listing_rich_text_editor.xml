@@ -5,7 +5,6 @@
     <data>
         <variable name="time" type="String"/>
         <variable name="user" type="com.example.artwokmabel.models.User"/>
-        <variable name="UploadPostFragment" type="com.example.artwokmabel.profile.uploadpost.UploadPostFragment"/>
     </data>
 
     <LinearLayout
@@ -46,10 +45,10 @@
                         style="@style/TextAppearance.Artwok.ToolbarText"
                         android:text="@{user.username}" />
 
-<!--                    <TextView-->
-<!--                        android:id="@+id/time"-->
-<!--                        style="@style/TextAppearance.Artwok.ToolbarText"-->
-<!--                        android:text="@{time}" />-->
+                    <!--                    <TextView-->
+                    <!--                        android:id="@+id/time"-->
+                    <!--                        style="@style/TextAppearance.Artwok.ToolbarText"-->
+                    <!--                        android:text="@{time}" />-->
                 </LinearLayout>
 
             </com.google.android.material.appbar.MaterialToolbar>
@@ -77,16 +76,16 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="270dp" />
 
-<!--            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton-->
-<!--                android:id="@+id/upload_post_button"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_alignBottom="@+id/editor"-->
-<!--                android:layout_centerHorizontal="true"-->
-<!--                android:layout_marginBottom="5dp"-->
-<!--                android:onClick="@{() -> UploadPostFragment.onPostUpload()}"-->
-<!--                android:padding="8dp"-->
-<!--                android:text="Upload Post" />-->
+            <!--            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton-->
+            <!--                android:id="@+id/upload_post_button"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_alignBottom="@+id/editor"-->
+            <!--                android:layout_centerHorizontal="true"-->
+            <!--                android:layout_marginBottom="5dp"-->
+            <!--                android:onClick="@{() -> UploadPostFragment.onPostUpload()}"-->
+            <!--                android:padding="8dp"-->
+            <!--                android:text="Upload Post" />-->
 
             <LinearLayout
                 android:id="@+id/lin_con"
@@ -214,23 +213,23 @@
                                     android:src="@drawable/ic_format_color_indicator" />
                             </RelativeLayout>
 
-<!--                            <ImageButton-->
-<!--                                android:id="@+id/action_subscript"-->
-<!--                                android:layout_width="48dp"-->
-<!--                                android:layout_height="48dp"-->
-<!--                                android:background="@null"-->
-<!--                                android:contentDescription="@null"-->
-<!--                                android:src="@drawable/format_subscript"-->
-<!--                                />-->
+                            <!--                            <ImageButton-->
+                            <!--                                android:id="@+id/action_subscript"-->
+                            <!--                                android:layout_width="48dp"-->
+                            <!--                                android:layout_height="48dp"-->
+                            <!--                                android:background="@null"-->
+                            <!--                                android:contentDescription="@null"-->
+                            <!--                                android:src="@drawable/format_subscript"-->
+                            <!--                                />-->
 
-<!--                            <ImageButton-->
-<!--                                android:id="@+id/action_superscript"-->
-<!--                                android:layout_width="48dp"-->
-<!--                                android:layout_height="48dp"-->
-<!--                                android:background="@null"-->
-<!--                                android:contentDescription="@null"-->
-<!--                                android:src="@drawable/format_superscript"-->
-<!--                                />-->
+                            <!--                            <ImageButton-->
+                            <!--                                android:id="@+id/action_superscript"-->
+                            <!--                                android:layout_width="48dp"-->
+                            <!--                                android:layout_height="48dp"-->
+                            <!--                                android:background="@null"-->
+                            <!--                                android:contentDescription="@null"-->
+                            <!--                                android:src="@drawable/format_superscript"-->
+                            <!--                                />-->
 
                             <ImageButton
                                 android:id="@+id/action_heading1"
@@ -335,27 +334,27 @@
                                 android:src="@drawable/ic_image"
                                 />
 
-<!--                            <ImageButton-->
-<!--                                android:id="@+id/action_insert_online_image"-->
-<!--                                android:layout_width="48dp"-->
-<!--                                android:layout_height="48dp"-->
-<!--                                android:padding="4dp"-->
-<!--                                android:background="@color/pink"-->
-<!--                                android:tint="@color/artwok_black"-->
-<!--                                android:contentDescription="@null"-->
-<!--                                android:src="@drawable/ic_image"-->
-<!--                                />-->
+                            <!--                            <ImageButton-->
+                            <!--                                android:id="@+id/action_insert_online_image"-->
+                            <!--                                android:layout_width="48dp"-->
+                            <!--                                android:layout_height="48dp"-->
+                            <!--                                android:padding="4dp"-->
+                            <!--                                android:background="@color/pink"-->
+                            <!--                                android:tint="@color/artwok_black"-->
+                            <!--                                android:contentDescription="@null"-->
+                            <!--                                android:src="@drawable/ic_image"-->
+                            <!--                                />-->
 
-<!--                            <ImageButton-->
-<!--                                android:id="@+id/action_insert_video"-->
-<!--                                android:layout_width="48dp"-->
-<!--                                android:layout_height="48dp"-->
-<!--                                android:padding="4dp"-->
-<!--                                android:background="@color/purple"-->
-<!--                                android:tint="@color/artwok_black"-->
-<!--                                android:contentDescription="@null"-->
-<!--                                android:src="@drawable/ic_image"-->
-<!--                                />-->
+                            <!--                            <ImageButton-->
+                            <!--                                android:id="@+id/action_insert_video"-->
+                            <!--                                android:layout_width="48dp"-->
+                            <!--                                android:layout_height="48dp"-->
+                            <!--                                android:padding="4dp"-->
+                            <!--                                android:background="@color/purple"-->
+                            <!--                                android:tint="@color/artwok_black"-->
+                            <!--                                android:contentDescription="@null"-->
+                            <!--                                android:src="@drawable/ic_image"-->
+                            <!--                                />-->
 
 
 
@@ -372,14 +371,14 @@
                         </LinearLayout>
                     </HorizontalScrollView>
 
-<!--                    <ImageView-->
-<!--                        android:id="@+id/image_view_done_rich"-->
-<!--                        android:background="@color/artwok_black"-->
-<!--                        android:padding="10dp"-->
-<!--                        android:layout_alignParentLeft="true"-->
-<!--                        android:src="@drawable/ic_check_white"-->
-<!--                        android:layout_width="48dp"-->
-<!--                        android:layout_height="48dp" />-->
+                    <!--                    <ImageView-->
+                    <!--                        android:id="@+id/image_view_done_rich"-->
+                    <!--                        android:background="@color/artwok_black"-->
+                    <!--                        android:padding="10dp"-->
+                    <!--                        android:layout_alignParentLeft="true"-->
+                    <!--                        android:src="@drawable/ic_check_white"-->
+                    <!--                        android:layout_width="48dp"-->
+                    <!--                        android:layout_height="48dp" />-->
                 </RelativeLayout>
 
 

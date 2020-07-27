@@ -2,10 +2,12 @@ package com.example.artwokmabel.profile.user;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
@@ -13,13 +15,20 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.paging.PagedList;
 
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.FragmentProfilePostsBinding;
 import com.example.artwokmabel.homepage.adapters.PostsAdapter;
+import com.example.artwokmabel.homepage.postsfeed.FirestorePagingAdapterImpl;
 import com.example.artwokmabel.models.MainPost;
+import com.example.artwokmabel.models.User;
 import com.example.artwokmabel.profile.uploadpost.UploadPostActivity;
+import com.example.artwokmabel.repos.FirestoreRepo;
+import com.firebase.ui.firestore.SnapshotParser;
+import com.firebase.ui.firestore.paging.FirestorePagingOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.List;
 
@@ -28,7 +37,7 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 public class ProfilePostsFragment extends Fragment {
     private FragmentProfilePostsBinding binding;
     private ProfilePostsViewModel viewModel;
-    private PostsAdapter adapter;
+    private FirestorePagingAdapterImpl adapter;
     private String userId;
     private FirebaseAuth mAuth;
     private NavController navController;
@@ -52,42 +61,48 @@ public class ProfilePostsFragment extends Fragment {
 
         binding.recyclerview.setHasFixedSize(true);
 
-        adapter = new PostsAdapter(getContext(), Navigation.findNavController(requireActivity(), R.id.nav_host_container));
-        binding.recyclerview.setAdapter(adapter);
+        navController = Navigation.findNavController(requireActivity(), R.id.nav_host_container);
+        viewModel = ViewModelProviders.of(this).get(ProfilePostsViewModel.class);
+        setUpPostsAdapter();
 
         return binding.getRoot();
-    }
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        navController = Navigation.findNavController(requireActivity(), R.id.nav_host_container);
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        viewModel = ViewModelProviders.of(this).get(ProfilePostsViewModel.class);
-
-        observeViewModel(viewModel);
-    }
-
-    private void observeViewModel(ProfilePostsViewModel viewModel) {
-        // Update the list when the data changes
-        viewModel.getUserPostsObeservable(userId).observe(getViewLifecycleOwner(), new Observer<List<MainPost>>() {
-            @Override
-            public void onChanged(@Nullable List<MainPost> categories) {
-                if (categories != null) {
-                    adapter.setPostsList(categories);
-                }
-            }
-        });
     }
 
     public class OnUploadButtonClicked{
         public void onUploadButtonClicked(){
             navController.navigate(R.id.action_profile_graph_to_uploadPostFragment);
         }
+    }
+
+    private void setUpPostsAdapter(){
+        viewModel.getUserOnce(userId).observe(getViewLifecycleOwner(), new Observer<User>() {
+            @Override
+            public void onChanged(User user) {
+                if(user != null){
+                    Log.d("numtimes", "I've been loaded!");
+                    PagedList.Config config = new PagedList.Config.Builder()
+                            .setEnablePlaceholders(false)
+                            .setInitialLoadSizeHint(4)
+                            .setPrefetchDistance(2)
+                            .setPageSize(3)
+                            .build();
+
+                    FirestorePagingOptions<MainPost> options = new FirestorePagingOptions.Builder<MainPost>()
+                            .setQuery(viewModel.getSortedUserPostsQuery(userId), config, new SnapshotParser<MainPost>() {
+                                @NonNull
+                                @Override
+                                public MainPost parseSnapshot(@NonNull DocumentSnapshot snapshot) {
+                                    return FirestoreRepo.getInstance().changeDocToMainPostModel(snapshot);
+                                }
+                            })
+                            .build();
+
+                    adapter = new FirestorePagingAdapterImpl(options, user, getContext(), navController, binding.swipeRefreshLayout);
+                    binding.recyclerview.setAdapter(adapter);
+                    adapter.startListening();
+                }
+            }
+        });
     }
 
 }
