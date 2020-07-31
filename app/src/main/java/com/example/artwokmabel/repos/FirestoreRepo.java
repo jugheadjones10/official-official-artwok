@@ -1389,9 +1389,51 @@ public class FirestoreRepo {
                 });
     }
 
+    public void updateListing(int price, String delivery, String returnExchange, Listing listing){
+        db.collection("Users")
+            .document(listing.getUserid())
+            .collection("Listings")
+            .document(listing.getPostid())
+            .update(
+                    "price", price,
+                    "delivery", delivery,
+                    "return_exchange", returnExchange
+            )
+            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Log.d("updateListing", "Listing successfully updated");
+                }
+            })
+            .addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.w("updateListing", "Listing update not successful", e);
+                }
+            });
+
+    }
+
+    public LiveData<Listing> getListingLiveData(String listingId){
+        final MutableLiveData<Listing> data = new MutableLiveData<>();
+        db.collectionGroup("Listings")
+                .whereEqualTo("postid", listingId)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for(QueryDocumentSnapshot snapshot : queryDocumentSnapshots){
+                            Listing listing = snapshot.toObject(Listing.class);
+                            data.setValue(listing);
+                        }
+                    }
+                });
+        return data;
+    }
+
     public LiveData<List<Notification>> getUserNotifications(String uid) {
-            final MutableLiveData<List<Notification>> data = new MutableLiveData<>();
-            List<Notification> tempData = new ArrayList<>();
+        final MutableLiveData<List<Notification>> data = new MutableLiveData<>();
+        List<Notification> tempData = new ArrayList<>();
 
         db.collection("Users")
                 .document(uid)
@@ -2643,18 +2685,6 @@ public class FirestoreRepo {
     private OrderChat changeListingToMeSell(Listing listing, String buyerId, Message lastMessage){
         //TODO: find a more efficient way to do the below
         return new OrderChat(
-//            listing.getUserid(),
-//            listing.getReturn_exchange(),
-//            listing.getPrice(),
-//            listing.getPhotos(),
-//            listing.getName(),
-//            listing.getHashtags(),
-//            listing.getDesc(),
-//            listing.getDelivery(),
-//            listing.getUsername(),
-//            listing.getPostid(),
-//            listing.getNanopast(),
-//            listing.getCategories(),
             listing,
             lastMessage,
             buyerId
@@ -2663,18 +2693,6 @@ public class FirestoreRepo {
 
     public OrderChat changeListingToMeBuy(Listing listing, Message lastMessage){
         return new OrderChat(
-//                listing.getUserid(),
-//                listing.getReturn_exchange(),
-//                listing.getPrice(),
-//                listing.getPhotos(),
-//                listing.getName(),
-//                listing.getHashtags(),
-//                listing.getDesc(),
-//                listing.getDelivery(),
-//                listing.getUsername(),
-//                listing.getPostid(),
-//                listing.getNanopast(),
-//                listing.getCategories(),
                 listing,
                 lastMessage,
                 listing.getUserid()

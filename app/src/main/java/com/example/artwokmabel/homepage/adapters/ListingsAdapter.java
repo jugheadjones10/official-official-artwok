@@ -82,6 +82,7 @@ public class ListingsAdapter extends RecyclerView.Adapter<ListingsAdapter.myHold
             public void setImageForPosition(int position, ImageView imageView) {
                 //imageView.setImageResource(sampleImages[position]);
 
+
                 Picasso.get()
                         .load(images.get(position))
                         .transform(new RoundedCornersTransformation(10, 0))

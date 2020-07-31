@@ -1,12 +1,18 @@
 package com.example.artwokmabel.chat.personalchat;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
 import android.graphics.Color;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -18,6 +24,8 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.artwokmabel.R;
+import com.example.artwokmabel.Utils.DecimalDigitsInputFilter;
+import com.example.artwokmabel.databinding.LayoutOfferPriceBinding;
 import com.example.artwokmabel.models.ImageMessage;
 import com.example.artwokmabel.models.Message;
 import com.example.artwokmabel.models.OfferMessage;
@@ -33,6 +41,8 @@ import com.squareup.picasso.Picasso;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -42,13 +52,15 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private DatabaseReference usersRef;
     private OrderChat orderChat;
     private Button offerButton;
+    private Context mContext;
 
     private final int OFFER = 0, TALK = 1, IMAGE = 2;
 
-    public MessageAdapter (List<Message> userMessagesList, OrderChat orderChat)
+    public MessageAdapter (List<Message> userMessagesList, OrderChat orderChat, Context mContext)
     {
         this.userMessageList = userMessagesList;
         this.orderChat = orderChat;
+        this.mContext = mContext;
         mAuth = FirebaseAuth.getInstance();
     }
 
@@ -201,7 +213,24 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                             @Override
                             public void onClick(View v) {
 
-                                setAcceptStaus(offerMessage, "accepted");
+                                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+
+                                LayoutOfferPriceBinding offerPriceBinding = DataBindingUtil.inflate(((Activity)mContext).getLayoutInflater(), R.layout.layout_offer_price, null, false);
+                                //offerPriceBinding.setListing(offerMessage.);
+                                //offerPriceBinding.setAgreementDetails(liveAgreementDetails);
+
+                                builder.setView(offerPriceBinding.getRoot());
+
+                                AlertDialog dialog = builder.create();
+                                dialog.show();
+
+                                offerPriceBinding.agreeButton.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        setAcceptStaus(offerMessage, "accepted");
+                                        dialog.dismiss();
+                                    }
+                                });
                             }
                         });
 

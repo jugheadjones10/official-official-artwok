@@ -59,6 +59,7 @@ public class PostFragment extends Fragment {
     private MainPost post;
     private CommentsAdapter commentsAdapter;
     private NavController navController;
+    private ArrayList<String> favs;
 
     private FirebaseAuth mAuth;
 
@@ -105,7 +106,7 @@ public class PostFragment extends Fragment {
             @Override
             public void onChanged(@Nullable User user) {
                 if (user != null) {
-                    ArrayList<String> favs = user.getFav_posts();
+                    favs = user.getFav_posts();
                     Log.d("favfav", favs.toString());
 
                     if (favs.contains(postId)) {
@@ -209,14 +210,20 @@ public class PostFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.favorite:
-                if(((BitmapDrawable)item.getIcon()).getBitmap() == ((BitmapDrawable) ResourcesCompat.getDrawable(getContext().getResources(), R.drawable.like, null)).getBitmap()){
-                    item.setIcon(R.drawable.favourite_post);
-                    viewModel.removeUserPostFavs(postId);
+                if(favs != null && favs.contains(post.getPostId())){
+                    viewModel.removeUserPostFavs(post.getPostId());
                 }else{
-                    item.setIcon(R.drawable.like);
                     viewModel.addUserPostFavs(post.getPostId());
                 }
+//                if(((BitmapDrawable)item.getIcon()).getBitmap() == ((BitmapDrawable) ResourcesCompat.getDrawable(getContext().getResources(), R.drawable.like, null)).getBitmap()){
+//                    item.setIcon(R.drawable.favourite_post);
+//                    viewModel.removeUserPostFavs(postId);
+//                }else{
+//                    item.setIcon(R.drawable.like);
+//                    viewModel.addUserPostFavs(post.getPostId());
+//                }
                 return true;
+
             case R.id.listing_delete:
                 new MaterialAlertDialogBuilder(getContext())
                     .setTitle("Delete Post?")

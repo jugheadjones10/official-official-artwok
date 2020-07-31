@@ -120,7 +120,7 @@ public class ChatFragment extends Fragment {
     }
 
     private void initializeControllers() {
-        messageAdapter = new MessageAdapter(messagesList, new OrderChat());
+        messageAdapter = new MessageAdapter(messagesList, new OrderChat(), getContext());
         linearLayoutManager = new LinearLayoutManager(requireContext());
 
         binding.privateMessagesListOfUsers.setLayoutManager(linearLayoutManager);

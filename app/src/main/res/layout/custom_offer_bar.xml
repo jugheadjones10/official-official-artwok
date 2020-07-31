@@ -2,9 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-        <variable
-            name="orderchat"
-            type="com.example.artwokmabel.models.OrderChat" />
+        <variable name="listing" type="com.example.artwokmabel.models.Listing"/>
         <variable
             name="OfferFragment"
             type="com.example.artwokmabel.chat.offerchat.OfferFragment" />
@@ -31,7 +29,7 @@
             android:layout_alignParentStart="false"
             android:layout_alignParentTop="true"
             android:layout_toEndOf="@id/custom_profile_image"
-            android:text="@{orderchat.listing.name}"
+            android:text="@{listing.name}"
             android:textColor="@android:color/background_light"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -44,7 +42,7 @@
             android:layout_alignParentStart="false"
             android:layout_toEndOf="@id/custom_profile_image"
             android:layout_marginTop="3dp"
-            android:text="@{Long.toString(orderchat.listing.price)}"
+            android:text="@{Long.toString(listing.price)}"
             android:textColor="@android:color/background_light"
             android:textSize="14sp"
             android:textStyle="bold" />

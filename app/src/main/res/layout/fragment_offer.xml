@@ -79,6 +79,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:backgroundTint="@android:color/white"
+                    android:onClick="@{() -> OfferFragment.SendMessage()}"
                     android:src="@drawable/ic_send_24px" />
             </RelativeLayout>
 

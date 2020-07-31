@@ -136,9 +136,6 @@ public class MessageOrdersAdapter extends RecyclerView.Adapter<MessageOrdersAdap
 
     public class OnChatClicked{
         public void onChatClicked(OrderChat orderChat){
-//            Intent orderChatIntent = new Intent(context, OfferActivity.class);
-//            orderChatIntent.putExtra("orderchat", orderChat);
-//            context.startActivity(orderChatIntent);
             MessageFragmentDirections.ActionChatGraphToOfferFragment action =
                     MessageFragmentDirections.actionChatGraphToOfferFragment(orderChat);
             navController.navigate(action);

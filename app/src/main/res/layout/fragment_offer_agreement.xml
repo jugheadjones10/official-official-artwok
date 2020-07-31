@@ -6,6 +6,7 @@
 
     <data>
         <variable name="listing" type="com.example.artwokmabel.models.Listing"/>
+        <variable name="agreementDetails" type="com.example.artwokmabel.models.AgreementDetails"/>
     </data>
 
 <androidx.constraintlayout.widget.ConstraintLayout
@@ -86,17 +87,17 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:boxBackgroundColor="@color/artwok_background_blue"
-        app:counterTextColor="@color/artwok_black"
+        app:boxStrokeColor="@color/artwok_background_blue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/price_text">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/price_edit_text"
+            android:background="@android:color/transparent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/transparent" />
+            android:text="@{Long.toString(listing.price)}"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -116,8 +117,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:boxBackgroundColor="@android:color/transparent"
-        app:counterTextColor="@color/artwok_black"
+        app:boxStrokeColor="@color/artwok_background_blue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/delivery_text">
@@ -126,7 +126,8 @@
             android:id="@+id/delivery_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/transparent" />
+            android:background="@android:color/transparent"
+            android:text="@{listing.delivery}"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -146,8 +147,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:boxBackgroundColor="@android:color/transparent"
-        app:counterTextColor="@color/artwok_black"
+        app:boxStrokeColor="@color/artwok_background_blue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/refund_text">
@@ -156,7 +156,8 @@
             android:id="@+id/refund_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/transparent" />
+            android:background="@android:color/transparent"
+            android:text="@{listing.return_exchange}"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -176,8 +177,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:boxBackgroundColor="@android:color/transparent"
-        app:counterTextColor="@color/artwok_black"
+        app:boxStrokeColor="@color/artwok_background_blue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/shipment_deadline_text">
@@ -186,6 +186,7 @@
             android:id="@+id/shipment_deadline_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@{agreementDetails.deadline}"
             android:background="@android:color/transparent" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -206,8 +207,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:boxBackgroundColor="@android:color/transparent"
-        app:counterTextColor="@color/artwok_black"
+        app:boxStrokeColor="@color/artwok_background_blue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/seller_request_text">
@@ -216,6 +216,7 @@
             android:id="@+id/seller_request_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@{agreementDetails.sellerRequest}"
             android:background="@android:color/transparent" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -236,16 +237,16 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:boxBackgroundColor="@android:color/transparent"
-        app:counterTextColor="@color/artwok_black"
+        app:boxStrokeColor="@color/artwok_background_blue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buyer_request_text">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/seller_buyer_edit_text"
+            android:id="@+id/buyer_request_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@{agreementDetails.buyerRequest}"
             android:background="@android:color/transparent" />
 
     </com.google.android.material.textfield.TextInputLayout>
