@@ -53,7 +53,7 @@ public class DashboardFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_dashboard, container, false);
         mAuth = FirebaseAuth.getInstance();
-        messageAdapter = new MessageAdapter(messagesList, new OrderChat());
+        messageAdapter = new MessageAdapter(messagesList, new OrderChat(), getContext());
         binding.dashboardMessagesRecyclerView.setAdapter(messageAdapter);
 
         //This part might be a problem

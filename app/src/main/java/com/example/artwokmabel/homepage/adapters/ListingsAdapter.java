@@ -70,10 +70,10 @@ public class ListingsAdapter extends RecyclerView.Adapter<ListingsAdapter.myHold
     public void onBindViewHolder(@NonNull myHolder myHolder, int i) {
         Listing data = listingsList.get(i);
 
-            myHolder.binding.setListingclickcallback(new OnListingClicked());
-            //myHolder.binding.setProfilecallback(new OnProfileClicked());
-            myHolder.binding.setListing(data);
-            myHolder.binding.setFavorite(myHolder.binding.normalListingLike);
+        myHolder.binding.setListingclickcallback(new OnListingClicked());
+        //myHolder.binding.setProfilecallback(new OnProfileClicked());
+        myHolder.binding.setListing(data);
+        myHolder.binding.setFavorite(myHolder.binding.normalListingLike);
         myHolder.binding.normalListingLike.bringToFront();
 
         ArrayList<String> images = data.getPhotos();

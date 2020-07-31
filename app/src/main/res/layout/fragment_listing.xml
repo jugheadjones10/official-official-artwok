@@ -41,56 +41,100 @@
             android:id="@+id/indiv_appbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-                <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/indiv_toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/toolbar_height_normal"
-                    app:layout_collapseMode="pin"
-                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/indiv_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                style="@style/Widget.Artwok.Toolbar">
 
-                    <LinearLayout
-                        android:id="@+id/linearLayout3"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profile_picture"
+                    android:layout_width="@dimen/circle_profile_width"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/rjha"
+                    android:onClick="@{() -> ListingFragment.onProfileClicked(user)}"
+                    android:padding="@dimen/spacing_small" />
 
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/profile_picture"
-                            android:layout_width="@dimen/circle_profile_width"
-                            android:layout_height="match_parent"
-                            android:src="@drawable/rjha"
-                            android:onClick="@{() -> ListingFragment.onProfileClicked(user)}"
-                            android:padding="@dimen/spacing_small" />
+                <TextView
+                    android:id="@+id/poster_name"
+                    style="@style/RegularCondensed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="@{user.username}" />
 
-                        <TextView
-                            android:id="@+id/poster_name"
-                            style="@style/RegularCondensed"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:gravity="center_vertical"
-                            android:layout_weight="1"
-                            android:layout_marginStart="@dimen/spacing_small"
-                            android:text="@{user.username}" />
+<!--                <ImageView-->
+<!--                    android:id="@+id/favorite"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:adjustViewBounds="true"-->
+<!--                    android:padding="@dimen/spacing_normal"-->
+<!--                    android:onClick="@{() -> ListingFragment.onFavClicked()}"-->
+<!--                    android:src="@drawable/heart_button" />-->
 
-                        <ImageView
-                            android:id="@+id/favorite"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:adjustViewBounds="true"
-                            android:padding="@dimen/spacing_normal"
-                            android:onClick="@{() -> ListingFragment.onFavClicked()}"
-                            android:src="@drawable/heart_button" />
-
-                    </LinearLayout>
-
-                </androidx.appcompat.widget.Toolbar>
+            </com.google.android.material.appbar.MaterialToolbar>
 
         </com.google.android.material.appbar.AppBarLayout>
+
+<!--        <com.google.android.material.appbar.AppBarLayout-->
+<!--            android:id="@+id/indiv_appbar"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">-->
+
+<!--                <androidx.appcompat.widget.Toolbar-->
+<!--                    android:id="@+id/indiv_toolbar"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="@dimen/toolbar_height_normal"-->
+<!--                    app:layout_collapseMode="pin"-->
+<!--                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light">-->
+
+<!--                    <LinearLayout-->
+<!--                        android:id="@+id/linearLayout3"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:orientation="horizontal"-->
+<!--                        app:layout_constraintEnd_toEndOf="parent"-->
+<!--                        app:layout_constraintStart_toStartOf="parent"-->
+<!--                        app:layout_constraintTop_toTopOf="parent">-->
+
+<!--                        <de.hdodenhof.circleimageview.CircleImageView-->
+<!--                            android:id="@+id/profile_picture"-->
+<!--                            android:layout_width="@dimen/circle_profile_width"-->
+<!--                            android:layout_height="match_parent"-->
+<!--                            android:src="@drawable/rjha"-->
+<!--                            android:onClick="@{() -> ListingFragment.onProfileClicked(user)}"-->
+<!--                            android:padding="@dimen/spacing_small" />-->
+
+<!--                        <TextView-->
+<!--                            android:id="@+id/poster_name"-->
+<!--                            style="@style/RegularCondensed"-->
+<!--                            android:layout_width="0dp"-->
+<!--                            android:layout_height="match_parent"-->
+<!--                            android:gravity="center_vertical"-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:layout_marginStart="@dimen/spacing_small"-->
+<!--                            android:text="@{user.username}" />-->
+
+<!--                        <ImageView-->
+<!--                            android:id="@+id/favorite"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="match_parent"-->
+<!--                            android:adjustViewBounds="true"-->
+<!--                            android:padding="@dimen/spacing_normal"-->
+<!--                            android:onClick="@{() -> ListingFragment.onFavClicked()}"-->
+<!--                            android:src="@drawable/heart_button" />-->
+
+<!--                    </LinearLayout>-->
+
+<!--                </androidx.appcompat.widget.Toolbar>-->
+
+<!--        </com.google.android.material.appbar.AppBarLayout>-->
 
 
         <androidx.core.widget.NestedScrollView

@@ -111,7 +111,7 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void initializeControllers() {
-        messageAdapter = new MessageAdapter(messagesList, new OrderChat());
+        messageAdapter = new MessageAdapter(messagesList, new OrderChat(), this);
         linearLayoutManager = new LinearLayoutManager(this);
 
         binding.privateMessagesListOfUsers.setLayoutManager(linearLayoutManager);

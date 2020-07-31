@@ -58,6 +58,7 @@ public class ListingFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_listing, container, false);
 
         return binding.getRoot();
@@ -71,6 +72,7 @@ public class ListingFragment extends Fragment {
 
         ((AppCompatActivity)requireActivity()).setSupportActionBar(binding.indivToolbar);
         ((AppCompatActivity)requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity) requireActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         navController = Navigation.findNavController(requireActivity(), R.id.nav_host_container);
 
@@ -89,29 +91,17 @@ public class ListingFragment extends Fragment {
             public void onChanged(@Nullable User me) {
                 if (me != null) {
 
-                    if(listing.getUserid().equals(mAuth.getCurrentUser().getUid())){
-                        binding.favorite.setVisibility(View.GONE);
-                    }else{
-                        currentUserListingsFavs = me.getFav_listings();
+                    currentUserListingsFavs = me.getFav_listings();
 
+                    MenuItem favoriteButton = binding.indivToolbar.getMenu().findItem(R.id.favorite);
+                    if(favoriteButton != null){
                         if(currentUserListingsFavs != null && currentUserListingsFavs.contains(listing.getPostid())){
-                            binding.favorite.setImageResource(R.drawable.like);
+                            favoriteButton.setIcon(R.drawable.like);
                         }else{
-                            binding.favorite.setImageResource(R.drawable.heart_button);
+                            favoriteButton.setIcon(R.drawable.heart_button);
                         }
-//                        binding.favoriteButton.setOnClickListener(new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View v) {
-//
-//                                if(favs != null && favs.contains(listing.getPostid())){
-//                                    viewModel.removeUserListingFavs(listing.getPostid());
-//                                }else{
-//                                    viewModel.addUserListingFavs(listing.getPostid());
-//                                }
-//                            }
-//                        });
-
                     }
+
                 }
             }
         });
@@ -215,18 +205,17 @@ public class ListingFragment extends Fragment {
         switch (item.getItemId()) {
             case R.id.listing_delete:
                 new MaterialAlertDialogBuilder(getContext())
-                        .setTitle("Delete Listing?")
-                        .setMessage("This action cannot be reversed!")
-                        .setNeutralButton("Cancel", null)
-                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                viewModel.deleteUserListing(listing.getPostid());
-                                navController.navigateUp();
-                            }
-                        })
-                        .show();
-
+                    .setTitle("Delete Listing?")
+                    .setMessage("This action cannot be reversed!")
+                    .setNeutralButton("Cancel", null)
+                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            viewModel.deleteUserListing(listing.getPostid());
+                            navController.navigateUp();
+                        }
+                    })
+                    .show();
                 return true;
             case R.id.listing_edit:
                 return true;
@@ -246,6 +235,8 @@ public class ListingFragment extends Fragment {
                         .setNeutralButton("Cancel", null)
                         .show();
                 return true;
+            case R.id.favorite:
+                onFavClicked();
             default:
                 return super.onOptionsItemSelected(item);
         }

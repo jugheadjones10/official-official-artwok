@@ -101,7 +101,7 @@ public class OfferActivity extends AppCompatActivity {
 
         initializeControllers();
 
-        offerBarBinding.setOrderchat(orderChat);
+        //offerBarBinding.setOrderchat(orderChat);
         Picasso.get().load(orderChat.getListing().getPhotos().get(0)).into(offerBarBinding.customProfileImage);
 
         binding.sendMessageBtn.setOnClickListener(new View.OnClickListener() {
@@ -140,7 +140,7 @@ public class OfferActivity extends AppCompatActivity {
 
             final View customLayout = getLayoutInflater().inflate(R.layout.layout_offer_price, null);
 
-            EditText priceEdit = customLayout.findViewById(R.id.price_edit);
+            EditText priceEdit = customLayout.findViewById(R.id.edit_price);
             Button offerButton = customLayout.findViewById(R.id.offer_button);
 
             priceEdit.setFilters(new InputFilter[]{new DecimalDigitsInputFilter()});
@@ -161,7 +161,7 @@ public class OfferActivity extends AppCompatActivity {
     }
 
     private void initializeControllers() {
-        messageAdapter = new MessageAdapter(messagesList, orderChat);
+        messageAdapter = new MessageAdapter(messagesList, orderChat, this);
         linearLayoutManager = new LinearLayoutManager(this);
         binding.privateMessagesListOfUsers.setLayoutManager(linearLayoutManager);
         binding.privateMessagesListOfUsers.setAdapter(messageAdapter);

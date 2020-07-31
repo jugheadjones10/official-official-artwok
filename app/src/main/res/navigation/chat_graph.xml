@@ -42,6 +42,9 @@
         <action
             android:id="@+id/action_offerFragment_to_reviewFragment"
             app:destination="@id/reviewFragment" />
+        <action
+            android:id="@+id/action_offerFragment_to_offerAgreementFragment"
+            app:destination="@id/offerAgreementFragment" />
     </fragment>
     <fragment
         android:id="@+id/reviewFragment"
@@ -61,4 +64,12 @@
             app:nullable="true" />
     </fragment>
     <action android:id="@+id/action_global_profileFragment3" app:destination="@id/profileFragment3" />
+    <fragment
+        android:id="@+id/offerAgreementFragment"
+        android:name="com.example.artwokmabel.chat.offerchat.OfferAgreementFragment"
+        android:label="OfferAgreementFragment" >
+        <argument
+            android:name="listingId"
+            app:argType="string" />
+    </fragment>
 </navigation>

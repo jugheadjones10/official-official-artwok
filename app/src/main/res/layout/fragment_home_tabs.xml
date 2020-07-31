@@ -31,10 +31,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="?attr/actionBarSize"
                         app:menu="@menu/home_toolbar"
-                        style="@style/Widget.MaterialComponents.Toolbar.Primary"
-
+                        style="@style/Widget.Artwok.Toolbar"
                         app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
-    <!--                    Added the above line to material toolbar, update styles?-->
 
                         <ImageView
                             android:layout_width="@dimen/icon_artwok_width_normal"
