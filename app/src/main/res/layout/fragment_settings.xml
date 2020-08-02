@@ -39,7 +39,9 @@
                 android:layout_height="wrap_content"
                 android:padding="8dp"
                 android:text="Account"
-                android:textSize="25sp" />
+                android:textColor="@color/grey_darken_30"
+                android:textSize="25sp"
+                android:textStyle="bold" />
 
 
             <com.google.android.material.textfield.TextInputLayout
@@ -62,13 +64,15 @@
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/profile_picture"
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:layout_marginStart="15dp"
                         android:src="@drawable/ic_user" />
 
                     <TextView
                         android:id="@+id/change_profile_pic"
+                        android:textColor="@color/almost_black"
+                        android:textStyle="bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
@@ -98,6 +102,7 @@
 
                 <TextView
                     android:layout_width="match_parent"
+                    android:textStyle="bold"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:onClick="@{() -> SettingsFragment.onUsernameChange()}"
@@ -124,6 +129,7 @@
 
                 <TextView
                     android:layout_width="match_parent"
+                    android:textStyle="bold"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:onClick="@{() -> SettingsFragment.onIntroChange()}"
@@ -171,6 +177,8 @@
                     android:text="********" />
 
                 <TextView
+                    android:textColor="@color/almost_black"
+                    android:textStyle="bold"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -185,7 +193,9 @@
                 android:layout_height="wrap_content"
                 android:padding="8dp"
                 android:text="Settings"
-                android:textSize="25sp" />
+                android:textColor="@color/grey_darken_30"
+                android:textSize="25sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="match_parent"
