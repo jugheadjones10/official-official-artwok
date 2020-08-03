@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools">
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -33,15 +32,6 @@
                     android:layout_height="49dp"
                     android:layout_weight="1"
                     android:orientation="horizontal">
-                    <ImageView
-                        android:layout_width="55dp"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="left|center_vertical"
-                        android:paddingLeft="5dp"
-                        android:paddingTop="5dp"
-                        android:paddingRight="10dp"
-                        android:paddingBottom="5dp"
-                        android:src="@drawable/magnifying_glass" />
 
                     <EditText
                         android:id="@+id/temp_search_edit"
@@ -50,10 +40,10 @@
                         android:layout_gravity="center_horizontal|center_vertical"
                         android:layout_marginRight="15dp"
                         android:layout_weight="1"
-                        android:background="@layout/rounded_border_edittext"
                         android:focusable="false"
-                        android:hint="Search..."
-                        android:paddingLeft="15dp" />
+                        android:hint="Search for Listings and Users"
+                        android:paddingLeft="15dp"
+                        android:textSize="14sp" />
 
                 </LinearLayout>
             </androidx.appcompat.widget.Toolbar>
@@ -72,15 +62,15 @@
 
             <TextView
                 android:id="@+id/heading_label2"
-                android:layout_width="wrap_content"
+                android:layout_width="185dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="264dp"
                 android:fontFamily="@font/roboto_regular"
-                android:text="Search History"
+                android:text="Popular keywords"
                 android:textColor="#555555"
-                android:textSize="18sp" />
+                android:textSize="14sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -100,7 +90,8 @@
                 android:fontFamily="@font/roboto_regular"
                 android:padding="5dp"
                 android:text="Homemade cake"
-                android:textSize="12sp" />
+                android:textColor="#000000"
+                android:textSize="10sp" />
 
             <TextView
                 android:id="@+id/textView7"
@@ -112,7 +103,8 @@
                 android:fontFamily="@font/roboto_regular"
                 android:padding="5dp"
                 android:text="Cheese cake"
-                android:textSize="12sp" />
+                android:textColor="#000000"
+                android:textSize="10sp" />
 
             <TextView
                 android:id="@+id/textView9"
@@ -126,28 +118,14 @@
                 android:fontFamily="@font/roboto_regular"
                 android:padding="5dp"
                 android:text="First anniversary"
-                android:textSize="12sp" />
+                android:textColor="#000000"
+                android:textSize="10sp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="false"
-                android:layout_alignParentLeft="false"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/squarebox_layout"
-                android:fontFamily="@font/roboto_regular"
-                android:padding="5dp"
-                android:text="Birthday gift"
-                android:textSize="12sp" />
-        </LinearLayout>
+            android:orientation="horizontal"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -162,115 +140,22 @@
                 android:layout_alignParentEnd="false"
                 android:layout_alignParentRight="false"
                 android:layout_marginStart="30dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="264dp"
                 android:layout_marginRight="264dp"
                 android:fontFamily="@font/roboto_regular"
-                android:text="Trending"
+                android:text="Today's pick"
                 android:textColor="#555555"
                 android:textSize="18sp" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-
-            <TextView
-                android:id="@+id/textView10"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/heading_label3"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_marginStart="28dp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/squarebox_layout"
-                android:fontFamily="@font/roboto_regular"
-                android:padding="5dp"
-                android:text="Artwok"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/textView12"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/heading_label3"
-                android:layout_marginStart="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_toEndOf="@+id/textView10"
-                android:layout_toRightOf="@+id/textView10"
-                android:background="@drawable/squarebox_layout"
-                android:fontFamily="@font/roboto_regular"
-                android:padding="5dp"
-                android:text="How to bake a cake"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/textView13"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/heading_label3"
-                android:layout_marginStart="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_toEndOf="@+id/textView12"
-                android:layout_toRightOf="@+id/textView12"
-                android:background="@drawable/squarebox_layout"
-                android:fontFamily="@font/roboto_regular"
-                android:padding="5dp"
-                android:text="Mother's day gift"
-                android:textSize="12sp" />
-
-        </LinearLayout>
+            android:orientation="horizontal"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView11"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="false"
-                android:layout_alignParentLeft="false"
-                android:layout_marginStart="30dp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/squarebox_layout"
-                android:fontFamily="@font/roboto_regular"
-                android:padding="5dp"
-                android:text="Couple ring"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/textView14"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/squarebox_layout"
-                android:fontFamily="@font/roboto_regular"
-                android:padding="5dp"
-                android:text="Pottery collection"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/textView15"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="19dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/squarebox_layout"
-                android:fontFamily="@font/roboto_regular"
-                android:padding="5dp"
-                android:text="Welcome package"
-                android:textSize="12sp" />
-        </LinearLayout>
+            android:orientation="horizontal"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -291,7 +176,7 @@
                 android:layout_marginEnd="265dp"
                 android:layout_marginRight="265dp"
                 android:fontFamily="@font/roboto_regular"
-                android:text="Categories"
+                android:text="All Categories"
                 android:textColor="#555555"
                 android:textSize="18sp" />
         </LinearLayout>
