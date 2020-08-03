@@ -37,6 +37,7 @@ import com.example.artwokmabel.homepage.adapters.PostsAdapter;
 import com.example.artwokmabel.homepage.callbacks.MainPostClickCallback;
 import com.example.artwokmabel.homepage.homepagewrapper.HomeTabsFragment;
 import com.example.artwokmabel.models.Listing;
+import com.example.artwokmabel.models.ListingPost;
 import com.example.artwokmabel.models.MainPost;
 import com.example.artwokmabel.models.User;
 import com.example.artwokmabel.repos.FirestoreRepo;
@@ -63,7 +64,7 @@ public class HomeFeedFragment extends Fragment {
     private PostsAdapter postsAdapter;
     private ListingsHomeAdapter listingsAdapter;
     private NavController navController;
-    private FirestorePagingAdapter<MainPost, PostViewHolder> adapter;
+    private FirestorePagingAdapter<ListingPost, RecyclerView.ViewHolder> adapter;
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
 //    private List<MainPost> feedPosts;
@@ -192,12 +193,12 @@ public class HomeFeedFragment extends Fragment {
                             .setPageSize(3)
                             .build();
 
-                    FirestorePagingOptions<MainPost> options = new FirestorePagingOptions.Builder<MainPost>()
-                            .setQuery(viewModel.getFeedPostsQuery(user.getFollowing()), config, new SnapshotParser<MainPost>() {
+                    FirestorePagingOptions<ListingPost> options = new FirestorePagingOptions.Builder<ListingPost>()
+                            .setQuery(viewModel.getFeedPostsQuery(user.getFollowing()), config, new SnapshotParser<ListingPost>() {
                                 @NonNull
                                 @Override
-                                public MainPost parseSnapshot(@NonNull DocumentSnapshot snapshot) {
-                                    return FirestoreRepo.getInstance().changeDocToMainPostModel(snapshot);
+                                public ListingPost parseSnapshot(@NonNull DocumentSnapshot snapshot) {
+                                    return FirestoreRepo.getInstance().changeDocToListingPostModel(snapshot);
                                 }
                             })
                             .build();

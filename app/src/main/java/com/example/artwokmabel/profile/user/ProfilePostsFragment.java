@@ -21,6 +21,7 @@ import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.FragmentProfilePostsBinding;
 import com.example.artwokmabel.homepage.adapters.PostsAdapter;
 import com.example.artwokmabel.homepage.postsfeed.FirestorePagingAdapterImpl;
+import com.example.artwokmabel.homepage.postsfeed.FirestorePagingAdapterProfileImpl;
 import com.example.artwokmabel.models.MainPost;
 import com.example.artwokmabel.models.User;
 import com.example.artwokmabel.profile.uploadpost.UploadPostActivity;
@@ -37,7 +38,7 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 public class ProfilePostsFragment extends Fragment {
     private FragmentProfilePostsBinding binding;
     private ProfilePostsViewModel viewModel;
-    private FirestorePagingAdapterImpl adapter;
+    private FirestorePagingAdapterProfileImpl adapter;
     private String userId;
     private FirebaseAuth mAuth;
     private NavController navController;
@@ -97,7 +98,7 @@ public class ProfilePostsFragment extends Fragment {
                             })
                             .build();
 
-                    adapter = new FirestorePagingAdapterImpl(options, user, getContext(), navController, binding.swipeRefreshLayout);
+                    adapter = new FirestorePagingAdapterProfileImpl(options, user, getContext(), navController, binding.swipeRefreshLayout);
                     binding.recyclerview.setAdapter(adapter);
                     adapter.startListening();
                 }

@@ -27,4 +27,13 @@ public class ListingsAdapterViewModel extends ViewModel {
     public void switchUserFavListingsNonObservable(Listing listing, ImageView favorite){
         FirestoreRepo.getInstance().switchUserFavListings(mAuth.getCurrentUser().getUid(), listing, favorite);
     }
+
+    public void addUserListingFavs(String listingId){
+        FirestoreRepo.getInstance().addUserListingFavs(listingId, mAuth.getCurrentUser().getUid());
+    }
+
+    public void removeUserListingFavs(String listingId){
+        FirestoreRepo.getInstance().removeUserListingFavs(listingId,  mAuth.getCurrentUser().getUid());
+    }
+
 }

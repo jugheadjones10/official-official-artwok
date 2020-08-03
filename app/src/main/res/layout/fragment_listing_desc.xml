@@ -4,9 +4,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/desc_text"
+    <WebView
+        android:id="@+id/listing_desc_web"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="30dp"></TextView>
+        android:layout_height="wrap_content" />
+
+<!--    <TextView-->
+<!--        android:id="@+id/desc_text"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:padding="30dp"></TextView>-->
 </LinearLayout>

@@ -26,6 +26,7 @@ import com.example.artwokmabel.login.RegistrationViewModel;
 import com.example.artwokmabel.login.callbacks.CheckDuplicateCallback;
 import com.example.artwokmabel.models.Comment;
 import com.example.artwokmabel.models.ImageMessage;
+import com.example.artwokmabel.models.ListingPost;
 import com.example.artwokmabel.models.Message;
 import com.example.artwokmabel.models.NormalChat;
 import com.example.artwokmabel.models.Notification;
@@ -69,6 +70,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
+import com.google.firebase.firestore.model.Document;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 
@@ -76,6 +78,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -1969,28 +1972,31 @@ public class FirestoreRepo {
 
 
     public Query getFeedPostsQuery (List<String> followingIds){
-
-//        db.collectionGroup("Posts")
-//            .whereIn("user_id", followingIds)
-//            .orderBy("nanopast", Query.Direction.DESCENDING)
-//            .get()
-//            .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-//                @Override
-//                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-//                    queryDocumentSnapshots.getDocuments().forEach(documentSnapshot -> {
-//                        Log.d("querytest", documentSnapshot.toString());
-//                    });
-//                }
-//            }).addOnFailureListener(new OnFailureListener() {
-//                @Override
-//                public void onFailure(@NonNull Exception e) {
-//                    Log.d("querytest", e.getMessage());
-//                }
-//            });
-
         return db.collectionGroup("Posts")
-            .whereIn("user_id", followingIds)
+            .whereIn("userid", followingIds)
             .orderBy("nanopast", Query.Direction.DESCENDING);
+    }
+
+    public Query getListingPostsQuery (List<String> followingIds){
+
+        db.collection("ListingPosts")
+            .whereIn("userid", followingIds)
+            .orderBy("nanopast", Query.Direction.DESCENDING)
+            .get()
+            .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                @Override
+                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                    for(QueryDocumentSnapshot snapshot : queryDocumentSnapshots){
+                        Log.d("queryretrieval", snapshot.getString("userid"));
+                    }
+                }
+            });
+
+
+
+        return db.collection("ListingPosts")
+                .whereIn("userid", followingIds)
+                .orderBy("nanopast", Query.Direction.DESCENDING);
     }
 
     public LiveData<List<MainPost>> getFeedPosts(String userId){
@@ -2611,6 +2617,26 @@ public class FirestoreRepo {
                 (long)(doc.get("nanopast") == null ? 0L : doc.get("nanopast"))
         );
         return post;
+    }
+
+    public ListingPost changeDocToListingPostModel(DocumentSnapshot doc) {
+        //return exchange is the
+        ListingPost listingPost = new ListingPost(
+                doc.getString("userid"),
+                (long)(doc.get("nanopast") == null ? 0L : doc.get("nanopast")),
+                (ArrayList<String>) doc.get("photos"),
+                doc.getString("hashtags"),
+                doc.getString("desc"),
+                doc.getString("username"),
+                doc.getString("postid"),
+                doc.getString("timestamp"),
+                doc.getString("return_exchange"),
+                (long)(doc.get("price") == null ? 0L : doc.get("price")),
+                doc.getString("name"),
+                doc.getString("delivery"),
+                (ArrayList<String>) (doc.get("categories") == null ? new ArrayList<>(Arrays.asList("none")) : doc.get("categories"))
+        );
+        return listingPost;
     }
 
     private UserUserModel changeDocToUserUserModel(DocumentSnapshot doc){
