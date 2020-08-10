@@ -16,7 +16,6 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.artwokmabel.HomePageActivity;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.ItemRequestBinding;
 import com.example.artwokmabel.models.Request;
@@ -78,7 +77,7 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.myHold
                         .load(images.get(position))
                         .resize(300, 300)
                         .placeholder(R.drawable.loading_image)
-                        .error(R.drawable.rick_and_morty)
+                        .error(R.drawable.placeholder_color_new)
                         .into(imageView);
             }
         };
@@ -109,7 +108,7 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.myHold
                             Picasso.get()
                                     .load(document.getString("profile_url"))
                                     .placeholder(R.drawable.loading_image)
-                                    .error(R.drawable.rick_and_morty)
+                                    .error(R.drawable.placeholder_color_new)
                                     .into(myHolder.binding.profile);
                         } else {
 

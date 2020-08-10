@@ -99,7 +99,7 @@ public class RequestActivity extends AppCompatActivity {
                     Picasso.get()
                             .load(user.getProfile_url())
                             .placeholder(R.drawable.user)
-                            .error(R.drawable.rick_and_morty)
+                            .error(R.drawable.placeholder_color_new)
                             .into(binding.profilePicture);
                 }
             }
@@ -116,7 +116,7 @@ public class RequestActivity extends AppCompatActivity {
                 Picasso.get()
                         .load(images.get(position))
                         .placeholder(R.drawable.user)
-                        .error(R.drawable.rick_and_morty)
+                        .error(R.drawable.placeholder_color_new)
                         .into(imageView);
             }
         });

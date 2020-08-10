@@ -108,7 +108,12 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onChanged(@Nullable User user) {
                 binding.setUser(user);
-                Picasso.get().load(user.getProfile_url()).into(binding.profilePicture);
+
+                Picasso.get()
+                        .load(user.getProfile_url())
+                        .placeholder(R.drawable.placeholder_black_new)
+                        .error(R.drawable.placeholder_color_new)
+                        .into(binding.profilePicture);
 
                 if(!mAuth.getCurrentUser().getUid().equals(userId)){
                     viewModel.getUserObservable(mAuth.getCurrentUser().getUid()).observe(getViewLifecycleOwner(), new Observer<User>() {
@@ -149,7 +154,12 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onDestinationChanged(@NonNull NavController controller,
                                              @NonNull NavDestination destination, @Nullable Bundle arguments) {
-                if(destination.getId() == R.id.uploadPostFragment || destination.getId() == R.id.uploadListingFragment || destination.getId() == R.id.postFragment || destination.getId() == R.id.listingFragment2 || destination.getId() == R.id.chatFragment) {
+                if(destination.getId() == R.id.uploadPostFragment ||
+                    destination.getId() == R.id.uploadListingFragment ||
+                    destination.getId() == R.id.postFragment ||
+                    destination.getId() == R.id.listingFragment2 ||
+                    destination.getId() == R.id.chatFragment ||
+                    destination.getId() == R.id.uploadListingRichTextEditor) {
                     HomePageActivity.Companion.getBottomNavBar().setVisibility(View.GONE);
                 } else {
                     HomePageActivity.Companion.getBottomNavBar().setVisibility(View.VISIBLE);

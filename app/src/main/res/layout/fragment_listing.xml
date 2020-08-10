@@ -56,7 +56,6 @@
                     android:id="@+id/profile_picture"
                     android:layout_width="@dimen/circle_profile_width"
                     android:layout_height="match_parent"
-                    android:src="@drawable/rjha"
                     android:onClick="@{() -> ListingFragment.onProfileClicked(user)}"
                     android:padding="@dimen/spacing_small" />
 

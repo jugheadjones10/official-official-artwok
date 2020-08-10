@@ -51,7 +51,10 @@
         android:name="com.example.artwokmabel.chat.offerchat.ReviewFragment"
         android:label="ReviewFragment" >
         <argument
-            android:name="listing_id"
+            android:name="orderchat"
+            app:argType="com.example.artwokmabel.models.OrderChat" />
+        <argument
+            android:name="lastMessageId"
             app:argType="string" />
     </fragment>
     <fragment

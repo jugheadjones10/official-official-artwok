@@ -80,8 +80,7 @@
                             android:layout_height="match_parent"
                             android:layout_gravity="center"
                             android:onClick="@{() -> profilecallback.onProfileClicked(request)}"
-                            android:padding="0dp"
-                            android:src="@drawable/rjha" />
+                            android:padding="0dp" />
 
                         <TextView
                             android:id="@+id/item_name"

@@ -60,6 +60,9 @@
         <argument
             android:name="listing"
             app:argType="com.example.artwokmabel.models.Listing" />
+        <action
+            android:id="@+id/action_listingFragment_to_offerFragment"
+            app:destination="@id/offerFragment" />
     </fragment>
     <fragment
         android:id="@+id/homeFeedFragment"
@@ -88,4 +91,37 @@
             app:nullable="true" />
     </fragment>
     <action android:id="@+id/action_global_profileFragment" app:destination="@id/profileFragment" />
+    <fragment
+        android:id="@+id/offerFragment"
+        android:name="com.example.artwokmabel.chat.offerchat.OfferFragment"
+        android:label="OfferFragment" >
+        <argument
+            android:name="orderchat"
+            app:argType="com.example.artwokmabel.models.OrderChat" />
+        <action
+            android:id="@+id/action_offerFragment_to_offerAgreementFragment"
+            app:destination="@id/offerAgreementFragment" />
+        <action
+            android:id="@+id/action_offerFragment_to_reviewFragment"
+            app:destination="@id/reviewFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/reviewFragment"
+        android:name="com.example.artwokmabel.chat.offerchat.ReviewFragment"
+        android:label="ReviewFragment">
+        <argument
+            android:name="orderchat"
+            app:argType="com.example.artwokmabel.models.OrderChat" />
+        <argument
+            android:name="lastMessageId"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/offerAgreementFragment"
+        android:name="com.example.artwokmabel.chat.offerchat.OfferAgreementFragment"
+        android:label="OfferAgreementFragment">
+        <argument
+            android:name="listingId"
+            app:argType="string" />
+    </fragment>
 </navigation>

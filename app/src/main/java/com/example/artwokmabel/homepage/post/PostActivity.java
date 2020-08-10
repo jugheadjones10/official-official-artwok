@@ -1,56 +1,29 @@
 package com.example.artwokmabel.homepage.post;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
-import androidx.appcompat.widget.Toolbar;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.widget.NestedScrollView;
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
 
 import com.example.artwokmabel.Utils.TransactFragment;
 import com.example.artwokmabel.databinding.ActivityPost2Binding;
-import com.example.artwokmabel.databinding.ActivityPostBinding;
-import com.example.artwokmabel.homepage.adapters.ListingsAdapter;
-import com.example.artwokmabel.homepage.callbacks.ShareClickCallback;
-import com.example.artwokmabel.homepage.homepagewrapper.HomeTabsFragment;
 import com.example.artwokmabel.R;
-import com.example.artwokmabel.homepage.listing.ListingActivity;
-import com.example.artwokmabel.homepage.listing.ListingActivityViewModel;
 import com.example.artwokmabel.models.Comment;
-import com.example.artwokmabel.models.Listing;
 import com.example.artwokmabel.models.MainPost;
 import com.example.artwokmabel.models.User;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.appbar.AppBarLayout;
-import com.google.android.material.appbar.CollapsingToolbarLayout;
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FieldValue;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.squareup.picasso.Picasso;
-import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.ImageListener;
 
 import java.util.ArrayList;
@@ -271,7 +244,7 @@ public class PostActivity extends AppCompatActivity {
                 Picasso.get()
                         .load(images.get(position))
                         .placeholder(R.drawable.user)
-                        .error(R.drawable.rick_and_morty)
+                        .error(R.drawable.placeholder_color_new)
                         .into(imageView);
             }
         };
@@ -305,7 +278,7 @@ public class PostActivity extends AppCompatActivity {
 //                    Picasso.get()
 //                            .load(images.get(position))
 //                            .placeholder(R.drawable.user)
-//                            .error(R.drawable.rick_and_morty)
+//                            .error(R.drawable.placeholder_color_new)
 //                            .into(imageView);
 //                }
 //            };

@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -63,6 +64,10 @@ public class UploadListingFragment extends Fragment {
         binding.uploadPicL.setVisibility(View.VISIBLE);
         binding.setUploadListingFragment(this);
 
+
+        ((AppCompatActivity)requireActivity()).setSupportActionBar(binding.indivToolbar);
+        ((AppCompatActivity)requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity)requireActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
         setHasOptionsMenu(true);
 
         return binding.getRoot();
@@ -74,9 +79,6 @@ public class UploadListingFragment extends Fragment {
 
         adapter = new UploadListingPagerAdapter(requireActivity());
         binding.pager.setAdapter(adapter);
-
-        ((AppCompatActivity)requireActivity()).setSupportActionBar(binding.indivToolbar);
-        ((AppCompatActivity)requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         viewModel.getUploadSuccess().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
@@ -147,6 +149,8 @@ public class UploadListingFragment extends Fragment {
                             Toast.makeText(requireActivity(), "Upload image failed", Toast.LENGTH_LONG).show();
                         }
                     });
+
+                    viewModel.setResultOk(null);
                 }
             }
         });
@@ -200,8 +204,18 @@ public class UploadListingFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.indiv_listing_menu_mine, menu);
+        inflater.inflate(R.menu.menu_upload_listing, menu);
         super.onCreateOptionsMenu(menu,inflater);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.upload:
+                onUploadListingClicked();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 }

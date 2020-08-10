@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
@@ -22,6 +23,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -61,6 +63,8 @@ import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -477,35 +481,15 @@ public class UploadPostFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                //getActivity().dispatchKeyEvent(KeyC);
-
                 mEditor.checkIfStart((String s) -> {
                     Log.d("isstart", mEditor.getHtml());
                     if(s.equals("true")){
-//                        for(String viewName : selectedViews){
-//                            switch (viewName) {
-//                                case "bold":
-//                                    binding.actionBold.performClick();
-//                                    break;
-//                                case "italic":
-//                                    binding.actionItalic.performClick();
-//                                    break;
-//                                case "strike":
-//                                    binding.actionStrikethrough.performClick();
-//                                    break;
-//                                case "underline":
-//                                    binding.actionUnderline.performClick();
-//                                    break;
-//                            }
-//                        }
-//                        selectedViews.clear();
                         Log.d("isstart", "It's the start");
                     }else{
                         Log.d("isstart", "It's not the start");
                     }
-
                 });
-                //clearAllBackgrounds();
+
                 new ImagePickerCallback(requireActivity(), REQUEST_IMAGE, viewModel, SHOW_ALL_OPTIONS).onImagePickerClicked();
                 viewModel.getImagePath().observe(getViewLifecycleOwner(), new Observer<Uri>() {
                     @Override
@@ -520,7 +504,18 @@ public class UploadPostFragment extends Fragment {
 
                             StorageReference fileToUpload = storageReference.child("Images").child(currentUserId).child(fileName); // randomize name
 
-                            fileToUpload.putFile(fileUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            //Image compression
+                            Bitmap bmp = null;
+                            try {
+                                bmp = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), fileUri);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                            bmp.compress(Bitmap.CompressFormat.JPEG, 10, baos);
+                            byte[] data = baos.toByteArray();
+
+                            fileToUpload.putBytes(data).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                 @Override
                                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                     storageReference.child("Images").child(currentUserId).child(fileName).getDownloadUrl().addOnCompleteListener(task -> {
@@ -539,9 +534,7 @@ public class UploadPostFragment extends Fragment {
                                     Toast.makeText(requireActivity(), "Upload image failed", Toast.LENGTH_LONG).show();
                                 }
                             });
-
                             viewModel.setResultOk(null);
-
                         }
                     }
                 });

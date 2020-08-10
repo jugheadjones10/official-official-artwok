@@ -18,7 +18,6 @@ import androidx.lifecycle.ViewModelProviders;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.Utils.TransactFragment;
 import com.example.artwokmabel.chat.offerchat.OfferActivity;
-import com.example.artwokmabel.chat.personalchat.ChatActivity;
 import com.example.artwokmabel.databinding.ActivityListingBinding;
 import com.example.artwokmabel.homepage.callbacks.ShareClickCallback;
 import com.example.artwokmabel.models.Listing;
@@ -32,7 +31,6 @@ import com.squareup.picasso.Picasso;
 import com.synnapps.carouselview.ImageListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ListingActivity extends AppCompatActivity {
 
@@ -104,7 +102,7 @@ public class ListingActivity extends AppCompatActivity {
                     Picasso.get()
                             .load(user.getProfile_url())
                             .placeholder(R.drawable.user)
-                            .error(R.drawable.rick_and_morty)
+                            .error(R.drawable.placeholder_color_new)
                             .into(binding.profilePicture);
                 }
             }
@@ -123,7 +121,7 @@ public class ListingActivity extends AppCompatActivity {
                 Picasso.get()
                         .load(images.get(position))
                         .placeholder(R.drawable.user)
-                        .error(R.drawable.rick_and_morty)
+                        .error(R.drawable.placeholder_color_new)
                         .into(imageView);
             }
         });

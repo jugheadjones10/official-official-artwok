@@ -683,6 +683,11 @@ public class FirestoreRepo {
 
                         ArrayList<String> followingIds = (ArrayList<String>) snapshot.getData().get("following");
                         //Get array list of user following
+
+                        //Remove myself from the list
+                        if(followingIds.contains(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+                            followingIds.remove(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                        }
                         Log.d("userfollowings", "Following IDs List : " + followingIds.toString());
 
                         tempData.clear();
@@ -2484,6 +2489,9 @@ public class FirestoreRepo {
             @Override
             public void onEvent(@Nullable DocumentSnapshot snapshot, @Nullable FirebaseFirestoreException e) {
                 ArrayList<String> following = (ArrayList<String>) snapshot.get("following");
+                if(following.contains(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+                    following.remove(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                }
 
                 tempData.clear();
                 List<Task> tasks = new ArrayList<>();

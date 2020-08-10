@@ -1,12 +1,7 @@
 package com.example.artwokmabel.homepage.adapters;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Path;
-import android.graphics.RectF;
-import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
@@ -17,21 +12,14 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.artwokmabel.HomeGraphDirections;
-import com.example.artwokmabel.HomePageActivity;
 import com.example.artwokmabel.ProfileGraphDirections;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.ItemNormalListingBinding;
-import com.example.artwokmabel.homepage.listing.ListingActivity;
-import com.example.artwokmabel.homepage.listingstab.ListingsTabFragmentDirections;
-import com.example.artwokmabel.homepage.listingstab.ListingsTabViewModel;
-import com.example.artwokmabel.homepage.user.IndivUserFragment;
 import com.example.artwokmabel.models.Listing;
-import com.example.artwokmabel.profile.settings.SettingsFragmentDirections;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
@@ -87,8 +75,8 @@ public class ListingsAdapter extends RecyclerView.Adapter<ListingsAdapter.myHold
                         .load(images.get(position))
                         .transform(new RoundedCornersTransformation(10, 0))
                         .resize(300, 300)
-                        .placeholder(R.drawable.loading_image_rounded_50)
-                        .error(R.drawable.rick_and_morty)
+                        .placeholder(R.drawable.placeholder_black_new)
+                        .error(R.drawable.placeholder_color_new)
                         .into(imageView);
             }
         };
@@ -119,7 +107,7 @@ public class ListingsAdapter extends RecyclerView.Adapter<ListingsAdapter.myHold
 //                            Picasso.get()
 //                                    .load(document.getString("profile_url"))
 //                                    .placeholder(R.drawable.loading_image)
-//                                    .error(R.drawable.rick_and_morty)
+//                                    .error(R.drawable.placeholder_color_new)
 //                                    .into(myHolder.binding.profile);
 //                        } else {
 //

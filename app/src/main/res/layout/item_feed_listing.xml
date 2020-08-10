@@ -19,7 +19,7 @@
         android:onClick="@{() -> callbacks.onListingClicked.onListingClicked(listing)}"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:background="@android:color/transparent"
         android:layout_marginBottom="@dimen/spacing_tiny"
         android:layout_marginTop="@dimen/spacing_tiny">
 
@@ -29,7 +29,6 @@
             android:layout_height="0dp"
             android:onClick="@{() -> callbacks.onProfileClicked.onProfileClicked(listing)}"
             android:padding="@dimen/spacing_small"
-            android:src="@drawable/rjha"
             app:layout_constraintBottom_toTopOf="@+id/guideline4"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

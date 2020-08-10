@@ -3,14 +3,12 @@ package com.example.artwokmabel.profile.people;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.recyclerview.widget.DiffUtil;
@@ -18,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.artwokmabel.ProfileGraphDirections;
 import com.example.artwokmabel.R;
-import com.example.artwokmabel.Utils.TransactFragment;
 import com.example.artwokmabel.databinding.ItemFollowingBinding;
 import com.example.artwokmabel.models.User;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -101,7 +98,7 @@ public class FollowingAdapter extends RecyclerView.Adapter<FollowingAdapter.myHo
         Picasso.get()
                 .load(data.getProfile_url())
                 .placeholder(R.drawable.loading_image)
-                .error(R.drawable.rick_and_morty)
+                .error(R.drawable.placeholder_color_new)
                 .into(holder.binding.contactPicture);
 
     }

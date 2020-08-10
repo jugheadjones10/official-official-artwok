@@ -30,10 +30,8 @@
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/profile_picture"
                     android:layout_width="@dimen/circle_profile_width"
-                    android:src="@drawable/rjha"
                     android:layout_height="match_parent"
                     android:padding="@dimen/spacing_small" />
-
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -233,6 +231,16 @@
 <!--                                />-->
 
                             <ImageButton
+                                android:id="@+id/action_insert_image"
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
+                                android:background="@null"
+                                android:contentDescription="@null"
+                                android:padding="4dp"
+                                android:src="@drawable/ic_image"
+                                android:tint="@color/artwok_black" />
+
+                            <ImageButton
                                 android:id="@+id/action_heading1"
                                 android:layout_width="48dp"
                                 android:layout_height="48dp"
@@ -324,18 +332,7 @@
                                 android:src="@drawable/ic_format_align_right"
                                 />
 
-                            <ImageButton
-                                android:id="@+id/action_insert_image"
-                                android:layout_width="48dp"
-                                android:layout_height="48dp"
-                                android:padding="4dp"
-                                android:background="@null"
-                                android:tint="@color/artwok_black"
-                                android:contentDescription="@null"
-                                android:src="@drawable/ic_image"
-                                />
-
-<!--                            <ImageButton-->
+                            <!--                            <ImageButton-->
 <!--                                android:id="@+id/action_insert_online_image"-->
 <!--                                android:layout_width="48dp"-->
 <!--                                android:layout_height="48dp"-->

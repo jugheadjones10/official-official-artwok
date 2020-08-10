@@ -11,11 +11,9 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,7 +25,6 @@ import com.example.artwokmabel.R;
 import com.example.artwokmabel.Utils.TimeWrangler;
 import com.example.artwokmabel.databinding.ItemFeedListingBinding;
 import com.example.artwokmabel.databinding.ItemPostBinding;
-import com.example.artwokmabel.homepage.adapters.ListingsAdapter;
 import com.example.artwokmabel.homepage.adapters.ListingsAdapterViewModel;
 import com.example.artwokmabel.homepage.adapters.PostsAdapterViewModel;
 import com.example.artwokmabel.models.Listing;
@@ -44,11 +41,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
-import com.synnapps.carouselview.ImageClickListener;
 import com.synnapps.carouselview.ImageListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 
@@ -192,8 +187,8 @@ public class FirestorePagingAdapterImpl extends FirestorePagingAdapter<ListingPo
 
                                 Picasso.get()
                                         .load(document.getString("profile_url"))
-                                        .placeholder(R.drawable.loading_image)
-                                        .error(R.drawable.loading_image)
+                                        .placeholder(R.drawable.placeholder_black_new)
+                                        .error(R.drawable.placeholder_color_new)
                                         .into(postViewHolder.binding.profile);
                             } else {
 
@@ -277,8 +272,8 @@ public class FirestorePagingAdapterImpl extends FirestorePagingAdapter<ListingPo
 //                    .load(listingModel.getPhotos().get(0))
 //                    .transform(new RoundedCornersTransformation(10, 0))
 //                    .resize(300, 300)
-//                    .placeholder(R.drawable.loading_image_rounded_50)
-//                    .error(R.drawable.rick_and_morty)
+//                    .placeholder(R.drawable.placeholder_black_new)
+//                    .error(R.drawable.placeholder_color_new)
 //                    .into(listingViewHolder.binding.listingImage);
 
             /////////////////////////////////////
@@ -294,11 +289,32 @@ public class FirestorePagingAdapterImpl extends FirestorePagingAdapter<ListingPo
                         .load(images.get(position))
                         .transform(new RoundedCornersTransformation(10, 0))
                         .resize(300, 300)
-                        .placeholder(R.drawable.loading_image_rounded_50)
-                        .error(R.drawable.rick_and_morty)
+                        .placeholder(R.drawable.placeholder_black_new)
+                        .error(R.drawable.placeholder_color_new)
                         .into(imageView);
                 }
             };
+
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            db.collection("Users")
+                    .document(listingModel.getUserid())
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                DocumentSnapshot document = task.getResult();
+
+                                Picasso.get()
+                                        .load(document.getString("profile_url"))
+                                        .placeholder(R.drawable.placeholder_black_new)
+                                        .error(R.drawable.placeholder_color_new)
+                                        .into(listingViewHolder.binding.profile);
+                            } else {
+
+                            }
+                        }
+                    });
 
 //            listingViewHolder.binding.listingImage.setImageClickListener(new ImageClickListener() {
 //                @Override

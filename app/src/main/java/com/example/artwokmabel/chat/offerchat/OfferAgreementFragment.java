@@ -12,26 +12,19 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.Utils.DecimalDigitsInputFilter;
 import com.example.artwokmabel.databinding.FragmentOfferAgreementBinding;
-import com.example.artwokmabel.homepage.adapters.ListingsAdapter;
 import com.example.artwokmabel.models.AgreementDetails;
 import com.example.artwokmabel.models.Listing;
-import com.example.artwokmabel.profile.settings.SetUsernameFragmentArgs;
-import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
-
-import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 
 public class OfferAgreementFragment extends Fragment {
 
@@ -89,8 +82,8 @@ public class OfferAgreementFragment extends Fragment {
                     binding.setListing(listing);
                     Picasso.get()
                             .load(listing.getPhotos().get(0))
-                            .placeholder(R.drawable.loading_image_rounded_50)
-                            .error(R.drawable.rick_and_morty)
+                            .placeholder(R.drawable.placeholder_black_new)
+                            .error(R.drawable.placeholder_color_new)
                             .into(binding.listingPic);
 
                     viewModel.getListing(listingId).removeObserver(this);

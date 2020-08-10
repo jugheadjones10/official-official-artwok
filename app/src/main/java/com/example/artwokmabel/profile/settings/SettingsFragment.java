@@ -21,11 +21,9 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import com.example.artwokmabel.HomePageActivity;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.FragmentSettingsBinding;
 import com.example.artwokmabel.homepage.callbacks.ImagePickerCallback;
-import com.example.artwokmabel.homepage.homepagewrapper.HomeTabsFragment;
 import com.example.artwokmabel.models.User;
 import com.example.artwokmabel.profile.utils.ImagePickerActivity;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -113,8 +111,8 @@ public class SettingsFragment extends Fragment {
                                     viewModel.updateUserProfileUrl(task.getResult().toString());
                                     Picasso.get()
                                             .load(task.getResult().toString())
-                                            .placeholder(R.drawable.loading_image_rounded_50)
-                                            .error(R.drawable.rick_and_morty)
+                                            .placeholder(R.drawable.placeholder_black_new)
+                                            .error(R.drawable.placeholder_color_new)
                                             .into(binding.profilePicture);
                                 }
                             });

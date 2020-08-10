@@ -1,5 +1,6 @@
 package com.example.artwokmabel.chat.offerchat;
 
+import android.net.Uri;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -7,6 +8,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.artwokmabel.UploadViewModel;
 import com.example.artwokmabel.models.AgreementDetails;
 import com.example.artwokmabel.models.Listing;
 import com.example.artwokmabel.models.NormalChat;
@@ -20,7 +22,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class OfferViewModel extends ViewModel {
+public class OfferViewModel extends ViewModel implements UploadViewModel {
+
+    private MutableLiveData<Uri> imagePath = new MutableLiveData<>();
+    private MutableLiveData<Uri> videoPath = new MutableLiveData<>();
 
     private final MutableLiveData<AgreementDetails> agreementDetails = new MutableLiveData<>();
 
@@ -47,4 +52,24 @@ public class OfferViewModel extends ViewModel {
         OfferFragment.getInstance().SendAgreementInfo(deadline, sellerRequest, buyerRequest);
     }
 
+
+    @Override
+    public void setResultOk(Uri imagePath) {
+        this.imagePath.setValue(imagePath);
+    }
+
+    @Override
+    public void setVideoResultOk(Uri videoPath) {
+        this.videoPath.setValue(videoPath);
+    }
+
+    @Override
+    public LiveData<Uri> getImagePath() {
+        return imagePath;
+    }
+
+    @Override
+    public LiveData<Uri> getVideoPath() {
+        return videoPath;
+    }
 }

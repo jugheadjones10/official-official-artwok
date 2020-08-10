@@ -2,20 +2,17 @@ package com.example.artwokmabel.homepage.post;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Base64;
 import android.util.Log;
@@ -33,15 +30,8 @@ import android.widget.Toast;
 import com.example.artwokmabel.HomeGraphDirections;
 import com.example.artwokmabel.ProfileGraphDirections;
 import com.example.artwokmabel.R;
-import com.example.artwokmabel.Utils.TransactFragment;
-import com.example.artwokmabel.databinding.ActivityPost2Binding;
-import com.example.artwokmabel.databinding.FragmentListingBinding;
 import com.example.artwokmabel.databinding.FragmentPostBinding;
-import com.example.artwokmabel.homepage.listing.ListingActivityViewModel;
-import com.example.artwokmabel.homepage.listing.ListingFragmentArgs;
-import com.example.artwokmabel.homepage.listing.ListingPagerAdapter;
 import com.example.artwokmabel.models.Comment;
-import com.example.artwokmabel.models.Listing;
 import com.example.artwokmabel.models.MainPost;
 import com.example.artwokmabel.models.User;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -190,7 +180,7 @@ public class PostFragment extends Fragment {
                 Picasso.get()
                         .load(images.get(position))
                         .placeholder(R.drawable.user)
-                        .error(R.drawable.rick_and_morty)
+                        .error(R.drawable.placeholder_color_new)
                         .into(imageView);
             }
         };

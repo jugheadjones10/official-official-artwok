@@ -12,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.text.TextUtils;
@@ -22,6 +24,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.artwokmabel.R;
+import com.example.artwokmabel.chat.offerchat.OfferViewModel;
 import com.example.artwokmabel.databinding.ActivityChatBinding;
 import com.example.artwokmabel.databinding.CustomChatBarBinding;
 import com.example.artwokmabel.databinding.FragmentChatBinding;
@@ -54,6 +57,7 @@ import java.util.Map;
 import java.util.Random;
 
 import static android.app.Activity.RESULT_OK;
+import static com.example.artwokmabel.profile.utils.ImagePickerActivity.SHOW_IMAGE_OPTIONS_ONLY;
 
 public class ChatFragment extends Fragment {
 
@@ -66,10 +70,14 @@ public class ChatFragment extends Fragment {
     private FirebaseAuth mAuth;
     private DatabaseReference RootRef;
     private StorageReference storageReference;
+    private ChatViewModel chatViewModel;
 
     private LinearLayoutManager linearLayoutManager;
     private MessageAdapter messageAdapter;
     private final List<Message> messagesList = new ArrayList<>();
+
+    private ChildEventListener childrenMessagesListener;
+
 
     private String saveCurrentTime, saveCurrentDate;
 
@@ -78,6 +86,11 @@ public class ChatFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_chat, container, false);
+        binding.setChatFragment(this);
+
+        chatViewModel = new ViewModelProvider(requireActivity()).get(ChatViewModel.class);
+
+        //Firebase
         mAuth = FirebaseAuth.getInstance();
         messageMeId = mAuth.getCurrentUser().getUid();
         RootRef = FirebaseDatabase.getInstance().getReference();
@@ -100,20 +113,6 @@ public class ChatFragment extends Fragment {
         chatBarBinding.customProfileName.setText(messageFollowingUsername);
         Picasso.get().load(messageFollowingProfileImg).placeholder(R.drawable.ic_user).into(chatBarBinding.customProfileImage);
 
-        binding.sendMessageBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view)
-            {
-                SendMessage();
-            }
-        });
-
-        binding.sendFilesBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                new ImagePickerCallback(requireActivity(), UploadListingAcitvity.REQUEST_IMAGE).onImagePickerClicked();
-            }
-        });
 
         //binding.inputMessage.requestFocus();
         //DisplayLastSeen();
@@ -147,63 +146,74 @@ public class ChatFragment extends Fragment {
         actionBar.setCustomView(chatBarBinding.getRoot());
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        RootRef.child("Messages").child(messageMeId).child(messageFollowingId)
+                .removeEventListener(childrenMessagesListener);
+
+    }
 
     @Override
     public void onStart() {
         super.onStart();
+        messagesList.clear();
+
+        childrenMessagesListener = new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+                Message message;
+                if(dataSnapshot.child("type").getValue().equals("image")) {
+                    message = dataSnapshot.getValue(ImageMessage.class);
+                }else{
+                    message = dataSnapshot.getValue(Message.class);
+                }
+
+                //If not this listener(because it runs in the background even though this activity isn't in the foreground)
+                //will keep marking messages as read even though I'm outside the chat activity
+                if(getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.RESUMED)){
+                    if(message.getRead() != null && message.getRead().equals("false")){
+                        Map<String, Object> childUpdates = new HashMap<>();
+                        childUpdates.put("/Messages/" + messageMeId + "/" + messageFollowingId + "/" + message.getMessageID() + "/" + "read", "true");
+                        RootRef.updateChildren(childUpdates);
+                    }
+                }
+
+                messagesList.add(message);
+                messageAdapter.notifyDataSetChanged();
+                binding.privateMessagesListOfUsers.scrollToPosition(binding.privateMessagesListOfUsers.getAdapter().getItemCount() - 1);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
 
         RootRef.child("Messages").child(messageMeId).child(messageFollowingId)
-                .addChildEventListener(new ChildEventListener() {
-                    @Override
-                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-
-                        Message message;
-                        if(dataSnapshot.child("type").getValue().equals("image")) {
-                            message = dataSnapshot.getValue(ImageMessage.class);
-                        }else{
-                            message = dataSnapshot.getValue(Message.class);
-                        }
-
-                        //If not this listener(because it runs in the background even though this activity isn't in the foreground)
-                        //will keep marking messages as read even though I'm outside the chat activity
-                        if(getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.RESUMED)){
-                            if(message.getRead() != null && message.getRead().equals("false")){
-                                Map<String, Object> childUpdates = new HashMap<>();
-                                childUpdates.put("/Messages/" + messageMeId + "/" + messageFollowingId + "/" + message.getMessageID() + "/" + "read", "true");
-                                RootRef.updateChildren(childUpdates);
-                            }
-                        }
-
-                        messagesList.add(message);
-                        messageAdapter.notifyDataSetChanged();
-                        binding.privateMessagesListOfUsers.scrollToPosition(binding.privateMessagesListOfUsers.getAdapter().getItemCount() - 1);
-                    }
-
-                    @Override
-                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                    }
-
-                    @Override
-                    public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                    }
-
-                    @Override
-                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
+                .addChildEventListener(childrenMessagesListener);
     }
 
 
 
-    private void SendMessage() {
+    public void SendMessage() {
         String messageText = binding.inputMessage.getText().toString();
 
         if (TextUtils.isEmpty(messageText))
@@ -253,32 +263,30 @@ public class ChatFragment extends Fragment {
         }
     }
 
+    public void SendMedia(){
+        new ImagePickerCallback(requireActivity(), REQUEST_IMAGE, chatViewModel, SHOW_IMAGE_OPTIONS_ONLY).onImagePickerClicked();
+        chatViewModel.getImagePath().observe(getViewLifecycleOwner(), new Observer<Uri>() {
+            @Override
+            public void onChanged(Uri uri) {
+                if(uri != null){
+                    Log.d("urivalue", uri.toString());
+                    Uri fileUri = uri;
+                    String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-    @Override
-    public void onActivityResult (int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_IMAGE) {
-            if (resultCode == RESULT_OK) {
-                if (data != null) {
-                    Uri fileUri = data.getParcelableExtra("path");
-
-                    Random random = new Random();
-                    int randomNumber = random.nextInt();
+                    int randomNumber = new Random().nextInt();
                     String fileName = Integer.toString(randomNumber);
 
-                    StorageReference fileToUpload = storageReference.child("Images").child(mAuth.getCurrentUser().getUid()).child(fileName); // randomize name
+                    StorageReference fileToUpload = storageReference.child("Images").child(currentUserId).child(fileName); // randomize name
 
                     fileToUpload.putFile(fileUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            storageReference.child("Images").child(mAuth.getCurrentUser().getUid()).child(fileName).getDownloadUrl().addOnCompleteListener(task -> {
+                            storageReference.child("Images").child(currentUserId).child(fileName).getDownloadUrl().addOnCompleteListener(task -> {
                                 if (task.isSuccessful()) {
-
-                                    Log.d("LOG: ", "postImageUris " + task.getResult().toString());
                                     sendImageMessage(task.getResult().toString());
-
                                 }
                             });
+
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
@@ -286,13 +294,53 @@ public class ChatFragment extends Fragment {
                             Toast.makeText(requireActivity(), "Upload image failed", Toast.LENGTH_LONG).show();
                         }
                     });
-
-                } else { // no pics selected
+                    chatViewModel.setResultOk(null);
 
                 }
             }
-        }
+        });
     }
+
+//
+//    @Override
+//    public void onActivityResult (int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (requestCode == REQUEST_IMAGE) {
+//            if (resultCode == RESULT_OK) {
+//                if (data != null) {
+//                    Uri fileUri = data.getParcelableExtra("path");
+//
+//                    Random random = new Random();
+//                    int randomNumber = random.nextInt();
+//                    String fileName = Integer.toString(randomNumber);
+//
+//                    StorageReference fileToUpload = storageReference.child("Images").child(mAuth.getCurrentUser().getUid()).child(fileName); // randomize name
+//
+//                    fileToUpload.putFile(fileUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//                        @Override
+//                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                            storageReference.child("Images").child(mAuth.getCurrentUser().getUid()).child(fileName).getDownloadUrl().addOnCompleteListener(task -> {
+//                                if (task.isSuccessful()) {
+//
+//                                    Log.d("LOG: ", "postImageUris " + task.getResult().toString());
+//                                    sendImageMessage(task.getResult().toString());
+//
+//                                }
+//                            });
+//                        }
+//                    }).addOnFailureListener(new OnFailureListener() {
+//                        @Override
+//                        public void onFailure(@NonNull Exception e) {
+//                            Toast.makeText(requireActivity(), "Upload image failed", Toast.LENGTH_LONG).show();
+//                        }
+//                    });
+//
+//                } else { // no pics selected
+//
+//                }
+//            }
+//        }
+//    }
 
     //Combine this with sendMessage to reduce code length
     private void sendImageMessage(String imageUrl){

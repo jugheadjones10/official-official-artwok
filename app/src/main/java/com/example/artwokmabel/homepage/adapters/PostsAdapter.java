@@ -1,65 +1,37 @@
 package com.example.artwokmabel.homepage.adapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
-import androidx.navigation.NavDestination;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.artwokmabel.ChatGraphDirections;
 import com.example.artwokmabel.HomeGraphDirections;
-import com.example.artwokmabel.HomePageActivity;
 import com.example.artwokmabel.ProfileGraphDirections;
 import com.example.artwokmabel.R;
-import com.example.artwokmabel.Utils.TransactFragment;
 import com.example.artwokmabel.databinding.ItemPostBinding;
 import com.example.artwokmabel.homepage.callbacks.MainPostClickCallback;
-import com.example.artwokmabel.homepage.favorites.FavoritesFragmentDirections;
 import com.example.artwokmabel.homepage.homepagewrapper.HomeTabsFragment;
-import com.example.artwokmabel.homepage.homepagewrapper.HomeTabsFragmentDirections;
-import com.example.artwokmabel.homepage.post.PostActivity;
-import com.example.artwokmabel.homepage.postsfeed.HomeFeedFragmentDirections;
-import com.example.artwokmabel.homepage.search.SearchFragmentDirections;
-import com.example.artwokmabel.homepage.search.TemporarySearchFragmentDirections;
-import com.example.artwokmabel.homepage.user.IndivUserFragment;
-import com.example.artwokmabel.models.Comment;
 import com.example.artwokmabel.models.MainPost;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
-import com.synnapps.carouselview.ImageClickListener;
 import com.synnapps.carouselview.ImageListener;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -141,7 +113,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.myHolder> {
                 Picasso.get()
                 .load(images.get(position))
                 .placeholder(R.drawable.loading_image)
-                .error(R.drawable.rick_and_morty)
+                .error(R.drawable.placeholder_color_new)
                 .into(imageView);
             }
         };
@@ -160,7 +132,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.myHolder> {
 //                        Picasso.get()
 //                                .load(document.getString("profile_url"))
 //                                .placeholder(R.drawable.loading_image)
-//                                .error(R.drawable.rick_and_morty)
+//                                .error(R.drawable.placeholder_color_new)
 //                                .into(holder.binding.profile);
 //                    } else {
 //

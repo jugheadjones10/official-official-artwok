@@ -83,7 +83,7 @@ public class FavoritePostsAdapter extends RecyclerView.Adapter<FavoritePostsAdap
                 Picasso.get()
                         .load(images.get(position))
                         .placeholder(R.drawable.loading_image)
-                        .error(R.drawable.rick_and_morty)
+                        .error(R.drawable.placeholder_color_new)
                         .into(imageView);
             }
         };

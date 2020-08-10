@@ -3,7 +3,6 @@ package com.example.artwokmabel.profile.people;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
@@ -18,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.artwokmabel.HomeGraphDirections;
 import com.example.artwokmabel.ProfileGraphDirections;
 import com.example.artwokmabel.R;
-import com.example.artwokmabel.Utils.TransactFragment;
 import com.example.artwokmabel.databinding.ItemFollowerBinding;
 import com.example.artwokmabel.homepage.search.SearchFragmentDirections;
 import com.example.artwokmabel.models.User;
@@ -138,7 +136,7 @@ public class FollowersAdapter extends RecyclerView.Adapter<FollowersAdapter.myHo
         Picasso.get()
             .load(data.getProfile_url())
             .placeholder(R.drawable.loading_image)
-            .error(R.drawable.rick_and_morty)
+            .error(R.drawable.placeholder_color_new)
             .into(holder.binding.contactPicture);
     }
 

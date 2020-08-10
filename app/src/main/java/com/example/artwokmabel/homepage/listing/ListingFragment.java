@@ -1,7 +1,6 @@
 package com.example.artwokmabel.homepage.listing;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -27,14 +26,11 @@ import android.widget.ImageView;
 import com.example.artwokmabel.HomeGraphDirections;
 import com.example.artwokmabel.ProfileGraphDirections;
 import com.example.artwokmabel.R;
-import com.example.artwokmabel.Utils.TransactFragment;
-import com.example.artwokmabel.chat.offerchat.OfferActivity;
 import com.example.artwokmabel.databinding.FragmentListingBinding;
 import com.example.artwokmabel.homepage.callbacks.ShareClickCallback;
 import com.example.artwokmabel.models.Listing;
 import com.example.artwokmabel.models.Message;
 import com.example.artwokmabel.models.User;
-import com.example.artwokmabel.profile.settings.SetUsernameFragmentArgs;
 import com.example.artwokmabel.repos.FirestoreRepo;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.tabs.TabLayout;
@@ -70,14 +66,17 @@ public class ListingFragment extends Fragment {
         adapter = new ListingPagerAdapter(this);
         mAuth = FirebaseAuth.getInstance();
 
+        navController = Navigation.findNavController(requireActivity(), R.id.nav_host_container);
+
+        setUpToolbar();
+        getIncomingIntent();
+    }
+
+    private void setUpToolbar(){
         ((AppCompatActivity)requireActivity()).setSupportActionBar(binding.indivToolbar);
         ((AppCompatActivity)requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity) requireActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
-
-        navController = Navigation.findNavController(requireActivity(), R.id.nav_host_container);
-
         setHasOptionsMenu(true);
-        getIncomingIntent();
     }
 
     private void getIncomingIntent(){
@@ -114,8 +113,8 @@ public class ListingFragment extends Fragment {
                     Log.d("profileimage", user.getUid() + user.getProfile_url());
                     Picasso.get()
                             .load(user.getProfile_url())
-                            .placeholder(R.drawable.user)
-                            .error(R.drawable.rick_and_morty)
+                            .placeholder(R.drawable.placeholder_black_new)
+                            .error(R.drawable.placeholder_color_new)
                             .into(binding.profilePicture);
                 }
             }
@@ -132,7 +131,7 @@ public class ListingFragment extends Fragment {
                 Picasso.get()
                         .load(images.get(position))
                         .placeholder(R.drawable.user)
-                        .error(R.drawable.rick_and_morty)
+                        .error(R.drawable.placeholder_color_new)
                         .into(imageView);
             }
         });
@@ -171,6 +170,14 @@ public class ListingFragment extends Fragment {
     }
 
     public void onOfferClicked(Listing listing){
+        int currentGraph = navController.getGraph().getId();
+        if(currentGraph == R.id.home_graph){
+            ListingFragmentDirections.ActionListingFragmentToOfferFragment action =
+                    ListingFragmentDirections.actionListingFragmentToOfferFragment(FirestoreRepo.getInstance().changeListingToMeBuy(listing,
+                            new Message("", "", "", "","","", "", 0, "false")));
+
+            navController.navigate(action);
+        }
         //Intent offerIntent = new Intent(ListingActivity.this, OfferActivity.class);
         //offerIntent.putExtra("orderchat", FirestoreRepo.getInstance().changeListingToMeBuy(listing, new Message("", "", "", "","","", "", 0, "false")));
         //startActivity(offerIntent);

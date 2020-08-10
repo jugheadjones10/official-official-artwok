@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <variable name="listing" type="com.example.artwokmabel.models.Listing"/>
         <variable name="OfferFragment" type="com.example.artwokmabel.chat.offerchat.OfferFragment"/>
     </data>
 
@@ -11,17 +12,54 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
-        <androidx.appcompat.widget.Toolbar
+        <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/main_app_bar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:orientation="vertical"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            android:layout_height="?attr/actionBarSize"
+            style="@style/Widget.Artwok.Toolbar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/custom_profile_image"
+                android:layout_width="@dimen/circle_profile_width"
+                android:layout_height="match_parent"
+                android:padding="@dimen/spacing_small" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@{listing.name}" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@{Long.toString(listing.price)}" />
+
+            </LinearLayout>
+
+
+        </com.google.android.material.appbar.MaterialToolbar>
+
+<!--        <androidx.appcompat.widget.Toolbar-->
+<!--            android:id="@+id/main_app_bar"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:background="@color/colorPrimary"-->
+<!--            android:orientation="vertical"-->
+<!--            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent">-->
+<!--        </androidx.appcompat.widget.Toolbar>-->
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/inner_constraint"
@@ -46,42 +84,73 @@
             <RelativeLayout
                 android:id="@+id/chat_linear_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/background_light"
-                android:orientation="horizontal"
+                android:layout_height="50dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
+                app:layout_constraintStart_toStartOf="parent"
+                android:background="@android:color/background_light"
+                android:orientation="horizontal">
 
-                <!--            <ImageButton-->
-                <!--                android:id="@+id/send_files_btn"-->
-                <!--                android:layout_width="60dp"-->
-                <!--                android:layout_height="50dp"-->
-                <!--                android:src="@drawable/send_message"-->
-                <!--                android:layout_alignParentStart="true"-->
-                <!--                android:backgroundTint="@android:color/white"-->
-                <!--                />-->
+                <ImageButton
+                    android:id="@+id/send_files_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentStart="true"
+                    android:adjustViewBounds="true"
+                    android:backgroundTint="@android:color/white"
+                    android:scaleType="fitXY"
+                    android:onClick="@{() -> OfferFragment.SendMedia()}"
+                    android:src="@drawable/send_pic" />
 
 
-                <!--            android:layout_toEndOf="@+id/send_files_btn"-->
                 <EditText
                     android:id="@+id/input_message"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_toStartOf="@+id/send_message_btn"
-                    android:hint="type message here..."
-                    android:maxLines="5"
+                    android:layout_toEndOf="@+id/send_files_btn"
+                    android:background="@null"
                     android:padding="15dp" />
 
                 <ImageButton
                     android:id="@+id/send_message_btn"
-                    android:layout_width="60dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
                     android:backgroundTint="@android:color/white"
                     android:onClick="@{() -> OfferFragment.SendMessage()}"
                     android:src="@drawable/ic_send_24px" />
+
             </RelativeLayout>
+
+<!--            <RelativeLayout-->
+<!--                android:id="@+id/chat_linear_layout"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:background="@android:color/background_light"-->
+<!--                android:orientation="horizontal"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent">-->
+<!--                -->
+<!--                <EditText-->
+<!--                    android:id="@+id/input_message"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_toStartOf="@+id/send_message_btn"-->
+<!--                    android:hint="type message here..."-->
+<!--                    android:maxLines="5"-->
+<!--                    android:padding="15dp" />-->
+
+<!--                <ImageButton-->
+<!--                    android:id="@+id/send_message_btn"-->
+<!--                    android:layout_width="60dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_alignParentEnd="true"-->
+<!--                    android:backgroundTint="@android:color/white"-->
+<!--                    android:onClick="@{() -> OfferFragment.SendMessage()}"-->
+<!--                    android:src="@drawable/ic_send_24px" />-->
+<!--            </RelativeLayout>-->
 
             <Button
                 android:id="@+id/offer_button"

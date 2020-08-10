@@ -2,6 +2,11 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable name="ChatFragment" type="com.example.artwokmabel.chat.personalchat.ChatFragment"/>
+    </data>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -44,6 +49,7 @@
                 android:adjustViewBounds="true"
                 android:backgroundTint="@android:color/white"
                 android:scaleType="fitXY"
+                android:onClick="@{() -> ChatFragment.SendMedia()}"
                 android:src="@drawable/send_pic" />
 
 
@@ -62,6 +68,7 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentEnd="true"
                 android:backgroundTint="@android:color/white"
+                android:onClick="@{() -> ChatFragment.SendMessage()}"
                 android:src="@drawable/ic_send_24px" />
 
         </RelativeLayout>

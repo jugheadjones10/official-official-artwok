@@ -29,7 +29,6 @@
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/profile_picture"
                     android:layout_width="@dimen/circle_profile_width"
-                    android:src="@drawable/rjha"
                     android:layout_height="match_parent"
                     android:padding="@dimen/spacing_small" />
 

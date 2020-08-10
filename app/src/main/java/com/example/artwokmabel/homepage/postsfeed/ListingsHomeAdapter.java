@@ -1,8 +1,6 @@
 package com.example.artwokmabel.homepage.postsfeed;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -17,14 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.artwokmabel.HomeGraphDirections;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.ItemHomeListingBinding;
-import com.example.artwokmabel.HomePageActivity;
-import com.example.artwokmabel.homepage.listing.ListingActivity;
-import com.example.artwokmabel.homepage.listingstab.ListingsTabFragmentDirections;
 import com.example.artwokmabel.models.Listing;
-import com.example.artwokmabel.homepage.user.IndivUserFragment;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 import com.synnapps.carouselview.ImageClickListener;
@@ -73,7 +64,7 @@ public class ListingsHomeAdapter extends RecyclerView.Adapter<ListingsHomeAdapte
                         .transform(new RoundedCornersTransformation(10, 0, RoundedCornersTransformation.CornerType.TOP))
                         .resize(300, 300)
                         .placeholder(R.drawable.loading_image)
-                        .error(R.drawable.rick_and_morty)
+                        .error(R.drawable.placeholder_color_new)
                         .into(imageView);
             }
         };
@@ -104,7 +95,7 @@ public class ListingsHomeAdapter extends RecyclerView.Adapter<ListingsHomeAdapte
 //                            Picasso.get()
 //                                    .load(document.getString("profile_url"))
 //                                    .placeholder(R.drawable.loading_image)
-//                                    .error(R.drawable.rick_and_morty)
+//                                    .error(R.drawable.placeholder_color_new)
 //                                    .into(homeListingsHolder.binding.profile);
 //                        } else {
 //
