@@ -20,15 +20,16 @@ public class SearchPagerAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         if (position == 0) {
             return new SearchListingsFragment();
-        }else if (position == 1){
+        }else {
             return new SearchUsersFragment();
-        }else{
-            return new SearchPostsFragment();
         }
+//        else{
+//            return new SearchPostsFragment();
+//        }
     }
 
     @Override
     public int getItemCount() {
-        return 3;
+        return 2;
     }
 }
