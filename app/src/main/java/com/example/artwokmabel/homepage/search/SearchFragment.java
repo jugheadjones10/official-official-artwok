@@ -78,9 +78,10 @@ public class SearchFragment extends Fragment {
                             tab.setText("Listings");
                         }else if(position == 1){
                             tab.setText("Users");
-                        } else{
-                            tab.setText("Posts");
                         }
+//                        else{
+//                            tab.setText("Posts");
+//                        }
                     }
                 }
         ).attach();
