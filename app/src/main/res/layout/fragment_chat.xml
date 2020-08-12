@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <variable name="username" type="String"/>
         <variable name="ChatFragment" type="com.example.artwokmabel.chat.personalchat.ChatFragment"/>
     </data>
 
@@ -13,15 +14,51 @@
         android:background="@android:color/darker_gray"
         tools:context=".ChatActivity">
 
-        <androidx.appcompat.widget.Toolbar
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
+        <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/main_app_bar"
-            android:background="@color/colorPrimary"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-        </androidx.appcompat.widget.Toolbar>
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            style="@style/Widget.Artwok.Toolbar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/custom_profile_image"
+                android:layout_width="@dimen/circle_profile_width"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="@dimen/spacing_small"
+                android:onClick="@{() -> ChatFragment.goToProfile()}" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@{username}" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Last seen" />
+
+            </LinearLayout>
+        </com.google.android.material.appbar.MaterialToolbar>
+
+<!--        <androidx.appcompat.widget.Toolbar-->
+<!--            xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="vertical"-->
+<!--            android:id="@+id/main_app_bar"-->
+<!--            android:background="@color/colorPrimary"-->
+<!--            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">-->
+<!--        </androidx.appcompat.widget.Toolbar>-->
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/private_messages_list_of_users"

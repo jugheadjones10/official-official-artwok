@@ -70,7 +70,6 @@ public class ListingsAdapter extends RecyclerView.Adapter<ListingsAdapter.myHold
             public void setImageForPosition(int position, ImageView imageView) {
                 //imageView.setImageResource(sampleImages[position]);
 
-
                 Picasso.get()
                         .load(images.get(position))
                         .transform(new RoundedCornersTransformation(10, 0))
@@ -154,14 +153,14 @@ public class ListingsAdapter extends RecyclerView.Adapter<ListingsAdapter.myHold
         public void onProfileClicked(Listing data){
             //Uncomment if we eventually decide to bring back the profile photo in listings outside
 //            int currentDestination = navController.getCurrentDestination().getId();
-//            if(currentDestination == R.id.home_graph || currentDestination == R.id.favoritesFragment){
-//                HomeGraphDirections.ActionGlobalProfileFragment action =
-//                        HomeGraphDirections.actionGlobalProfileFragment(data.getUserid());
-//                navController.navigate(action);
-//            }else if(currentDestination == R.id.profile_graph){
-//                ProfileGraphDirections.ActionProfileGraphSelf action =
-//                        ProfileGraphDirections.actionProfileGraphSelf(data.getUserid());
-//                navController.navigate(action);
+////            if(currentDestination == R.id.home_graph || currentDestination == R.id.favoritesFragment){
+////                HomeGraphDirections.ActionGlobalProfileFragment action =
+////                        HomeGraphDirections.actionGlobalProfileFragment(data.getUserid());
+////                navController.navigate(action);
+////            }else if(currentDestination == R.id.profile_graph){
+////                ProfileGraphDirections.ActionProfileGraphSelf action =
+////                        ProfileGraphDirections.actionProfileGraphSelf(data.getUserid());
+////                navController.navigate(action);
 //            }
         }
     }

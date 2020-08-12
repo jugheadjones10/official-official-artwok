@@ -25,7 +25,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.Utils.DecimalDigitsInputFilter;
+import com.example.artwokmabel.databinding.CustomMessagesLayoutBinding;
+import com.example.artwokmabel.databinding.ItemNormalListingBinding;
+import com.example.artwokmabel.databinding.LayoutImageMessageBinding;
+import com.example.artwokmabel.databinding.LayoutOfferMessageBinding;
 import com.example.artwokmabel.databinding.LayoutOfferPriceBinding;
+import com.example.artwokmabel.homepage.adapters.ListingsAdapter;
 import com.example.artwokmabel.models.ImageMessage;
 import com.example.artwokmabel.models.Message;
 import com.example.artwokmabel.models.OfferMessage;
@@ -45,6 +50,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 
 public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<Message> userMessageList;
@@ -56,8 +62,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     private final int OFFER = 0, TALK = 1, IMAGE = 2;
 
-    public MessageAdapter (List<Message> userMessagesList, OrderChat orderChat, Context mContext)
-    {
+    public MessageAdapter (List<Message> userMessagesList, OrderChat orderChat, Context mContext) {
         this.userMessageList = userMessagesList;
         this.orderChat = orderChat;
         this.mContext = mContext;
@@ -65,65 +70,27 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     public class MessageViewHolder extends RecyclerView.ViewHolder {
-        public TextView senderMessageText, receiverMessageText;
-        public CircleImageView receiverProfileImage;
-        public ImageView messageSenderPicture, messageReceiverPicture;
-        public TextView myTime, friendTime;
-//        public ViewStub dateDivider;
-        public TextView dateText;
-        public LinearLayout dateDividerLayout;
-        public RelativeLayout relativeLayout;
-
-        public MessageViewHolder(@NonNull View itemView) {
-            super(itemView);
-
-            senderMessageText = itemView.findViewById(R.id.sender_messsage_text);
-            receiverMessageText = itemView.findViewById(R.id.receiver_message_text);
-            receiverProfileImage = itemView.findViewById(R.id.message_profile_image);
-            messageReceiverPicture = itemView.findViewById(R.id.message_receiver_image_view);
-            messageSenderPicture = itemView.findViewById(R.id.message_sender_image_view);
-            myTime = itemView.findViewById(R.id.my_time);
-            friendTime = itemView.findViewById(R.id.friend_time);
-            dateDividerLayout = itemView.findViewById(R.id.date_divider_layout);
-            dateText = itemView.findViewById(R.id.dateText);
-            relativeLayout = itemView.findViewById(R.id.chat_relative_layout);
-//            dateDivider = itemView.findViewById(R.id.date_divider);
-//            dateDivider = itemView.findViewById(R.id.text_date_divider);
+        private CustomMessagesLayoutBinding binding;
+        public MessageViewHolder(CustomMessagesLayoutBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
         }
     }
 
     public class OfferMessageViewHolder extends RecyclerView.ViewHolder {
-        public Button acceptButton, declineButton;
-        public CircleImageView receiverProfileImage;
-        public TextView priceText;
-        public LinearLayout acceptDeclineLayout;
-
-        public OfferMessageViewHolder(@NonNull View itemView) {
-            super(itemView);
-
-            acceptButton = itemView.findViewById(R.id.accept_button);
-            declineButton = itemView.findViewById(R.id.decline_button);
-            receiverProfileImage = itemView.findViewById(R.id.message_profile_image);
-            priceText = itemView.findViewById(R.id.offer_price);
-            acceptDeclineLayout = itemView.findViewById(R.id.accept_decline_linear_layout);
+        private LayoutOfferMessageBinding binding;
+        public OfferMessageViewHolder(LayoutOfferMessageBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
         }
     }
 
     public class ImageMessageViewHolder extends RecyclerView.ViewHolder{
-
-        public ImageView myImage, friendImage;
-        public CircleImageView receiverProfileImage;
-        public FrameLayout myImageFrame, friendImageFrame;
-
-        public ImageMessageViewHolder(@NonNull View itemView){
-            super(itemView);
-            myImage = itemView.findViewById(R.id.my_image);
-            friendImage = itemView.findViewById(R.id.friend_image);
-            receiverProfileImage = itemView.findViewById(R.id.message_profile_image);
-            myImageFrame = itemView.findViewById(R.id.my_image_frame);
-            friendImageFrame = itemView.findViewById(R.id.friend_image_frame);
+        private LayoutImageMessageBinding binding;
+        public ImageMessageViewHolder(LayoutImageMessageBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
         }
-
     }
 
     @NonNull
@@ -135,25 +102,23 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         switch (viewType) {
             case OFFER:
-                View offer = inflater.inflate(R.layout.layout_offer_message, viewGroup, false);
-                viewHolder = new OfferMessageViewHolder(offer);
+                LayoutOfferMessageBinding offerMessageBinding = DataBindingUtil.inflate(LayoutInflater.from(viewGroup.getContext()), R.layout.layout_offer_message, viewGroup,false);
+                viewHolder = new OfferMessageViewHolder(offerMessageBinding);
                 break;
             case TALK:
-                View talk = inflater.inflate(R.layout.custom_messages_layout, viewGroup, false);
-                viewHolder = new MessageViewHolder(talk);
+                CustomMessagesLayoutBinding customMessagesLayoutBinding = DataBindingUtil.inflate(LayoutInflater.from(viewGroup.getContext()), R.layout.custom_messages_layout, viewGroup,false);
+                viewHolder = new MessageViewHolder(customMessagesLayoutBinding);
                 break;
             case IMAGE:
-                View image = inflater.inflate(R.layout.layout_image_message, viewGroup, false);
-                viewHolder = new ImageMessageViewHolder(image);
+                LayoutImageMessageBinding layoutImageMessageBinding = DataBindingUtil.inflate(LayoutInflater.from(viewGroup.getContext()), R.layout.layout_image_message, viewGroup,false);
+                viewHolder = new ImageMessageViewHolder(layoutImageMessageBinding);
                 break;
             default:
-                View normal = inflater.inflate(R.layout.custom_messages_layout, viewGroup, false);
-                viewHolder = new MessageViewHolder(normal);
+                CustomMessagesLayoutBinding defaultMessageBinding = DataBindingUtil.inflate(LayoutInflater.from(viewGroup.getContext()), R.layout.custom_messages_layout, viewGroup,false);
+                viewHolder = new MessageViewHolder(defaultMessageBinding);
                 break;
         }
-
         return viewHolder;
-
     }
 
 
@@ -165,51 +130,61 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 OfferMessage offerMessage = (OfferMessage) userMessageList.get(i);
                 OfferMessageViewHolder offerViewHolder = (OfferMessageViewHolder) viewHolder;
 
-                offerViewHolder.priceText.setText(offerMessage.getPrice());
+                //Insert date divider
+                offerViewHolder.binding.dateDividerLayout.setVisibility(View.GONE);
+                if(i != 0){
+                    Message previousMessage = userMessageList.get(i - 1);
+                    SimpleDateFormat sdf = new SimpleDateFormat("E, dd MMMM yyyy");
+                    if(!sdf.format(new Date(offerMessage.getNanopast())).equals(sdf.format(new Date(previousMessage.getNanopast())))) {
 
-                Log.d("seeformyself", offerMessage.getAcceptStatus());
+                        offerViewHolder.binding.dateDividerLayout.setVisibility(View.VISIBLE);
+                        offerViewHolder.binding.dateText.setText(sdf.format(new Date(offerMessage.getNanopast())));
+                    }
+                }
+
+                offerViewHolder.binding.setOfferprice(offerMessage.getPrice());
 
                 if(offerMessage.getAcceptStatus().equals("accepted") || offerMessage.getAcceptStatus().equals("received") || offerMessage.getAcceptStatus().equals("delivered")){
                     Log.d("seeformyself", "ACCEPTED RAN");
-                    offerViewHolder.acceptDeclineLayout.setVisibility(View.VISIBLE);
+                    offerViewHolder.binding.acceptDeclineLinearLayout.setVisibility(View.VISIBLE);
 
-                    offerViewHolder.declineButton.setVisibility(View.GONE);
-                    offerViewHolder.acceptButton.setVisibility(View.VISIBLE);
+                    offerViewHolder.binding.declineButton.setVisibility(View.GONE);
+                    offerViewHolder.binding.acceptButton.setVisibility(View.VISIBLE);
 
-                    offerViewHolder.acceptButton.setText("Accepted");
-                    offerViewHolder.acceptButton.setEnabled(false);
+                    offerViewHolder.binding.acceptButton.setText("Accepted");
+                    offerViewHolder.binding.acceptButton.setEnabled(false);
 
                 }else if(offerMessage.getAcceptStatus().equals("declined")){
 
                     Log.d("seeformyself", "DECLINE RAN");
-                    offerViewHolder.acceptDeclineLayout.setVisibility(View.VISIBLE);
+                    offerViewHolder.binding.acceptDeclineLinearLayout.setVisibility(View.VISIBLE);
 
-                    offerViewHolder.acceptButton.setVisibility(View.GONE);
-                    offerViewHolder.declineButton.setVisibility(View.VISIBLE);
+                    offerViewHolder.binding.acceptButton.setVisibility(View.GONE);
+                    offerViewHolder.binding.declineButton.setVisibility(View.VISIBLE);
 
-                    offerViewHolder.declineButton.setText("Declined");
-                    offerViewHolder.declineButton.setEnabled(false);
+                    offerViewHolder.binding.declineButton.setText("Declined");
+                    offerViewHolder.binding.declineButton.setEnabled(false);
 
                 }else if(offerMessage.getAcceptStatus().equals("pending")){
                     Log.d("seeformyself", "PENDING RAN");
 
                     if(mAuth.getCurrentUser().getUid().equals(offerMessage.getFrom())){
 
-                        offerViewHolder.acceptDeclineLayout.setVisibility(View.GONE);
+                        offerViewHolder.binding.acceptDeclineLinearLayout.setVisibility(View.GONE);
 
                     }else{
 
-                        offerViewHolder.acceptButton.setEnabled(true);
-                        offerViewHolder.declineButton.setEnabled(true);
+                        offerViewHolder.binding.acceptButton.setEnabled(true);
+                        offerViewHolder.binding.declineButton.setEnabled(true);
 
-                        offerViewHolder.acceptDeclineLayout.setVisibility(View.VISIBLE);
-                        offerViewHolder.acceptButton.setVisibility(View.VISIBLE);
-                        offerViewHolder.declineButton.setVisibility(View.VISIBLE);
+                        offerViewHolder.binding.acceptDeclineLinearLayout.setVisibility(View.VISIBLE);
+                        offerViewHolder.binding.acceptButton.setVisibility(View.VISIBLE);
+                        offerViewHolder.binding.declineButton.setVisibility(View.VISIBLE);
 
-                        offerViewHolder.acceptButton.setText("Accept");
-                        offerViewHolder.declineButton.setText("Decline");
+                        offerViewHolder.binding.acceptButton.setText("Accept");
+                        offerViewHolder.binding.declineButton.setText("Decline");
 
-                        offerViewHolder.acceptButton.setOnClickListener(new View.OnClickListener() {
+                        offerViewHolder.binding.acceptButton.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
 
@@ -234,7 +209,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                             }
                         });
 
-                        offerViewHolder.declineButton.setOnClickListener(new View.OnClickListener() {
+                        offerViewHolder.binding.declineButton.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
 
@@ -246,120 +221,74 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     }
                 }
 
-
                 break;
+
             case TALK:
                 String messageSenderId = mAuth.getCurrentUser().getUid();
 
-                Message messages = (Message) userMessageList.get(i);
-
+                Message message = (Message) userMessageList.get(i);
                 MessageViewHolder messageViewHolder = (MessageViewHolder) viewHolder;
 
                 //Insert date dividers
-                messageViewHolder.dateDividerLayout.setVisibility(View.GONE);
-
-                RelativeLayout.LayoutParams linearParams = (RelativeLayout.LayoutParams) messageViewHolder.dateDividerLayout.getLayoutParams();
-                linearParams.setMargins(0, 0, 0, 0);
-                messageViewHolder.dateDividerLayout.setLayoutParams(linearParams);
-
-                messageViewHolder.relativeLayout.setPadding(0,0,0,0);
-//                RecyclerView.LayoutParams relativeParams = (RecyclerView.LayoutParams)messageViewHolder.relativeLayout.getLayoutParams();
-//                relativeParams.setMargins(0, 0, 0, 0);
-//                messageViewHolder.relativeLayout.setLayoutParams(relativeParams);
-
+                messageViewHolder.binding.dateDividerLayout.setVisibility(View.GONE);
                 if(i != 0){
                     Message previousMessage = userMessageList.get(i - 1);
-
                     SimpleDateFormat sdf = new SimpleDateFormat("E, dd MMMM yyyy");
-
-                    if(!sdf.format(new Date(messages.getNanopast())).equals(sdf.format(new Date(previousMessage.getNanopast())))) {
-
-                        messageViewHolder.dateDividerLayout.setVisibility(View.VISIBLE);
-                        messageViewHolder.dateText.setText(sdf.format(new Date(messages.getNanopast())));
-
-                        RelativeLayout.LayoutParams insideLinearParams = (RelativeLayout.LayoutParams) messageViewHolder.dateDividerLayout.getLayoutParams();
-                        insideLinearParams.setMargins(0, -30, 0, 0);
-                        messageViewHolder.dateDividerLayout.setLayoutParams(insideLinearParams);
-
-                        messageViewHolder.relativeLayout.setPadding(0,60,0,0);
-
-                        messageViewHolder.dateDividerLayout.bringToFront();
+                    if(!sdf.format(new Date(message.getNanopast())).equals(sdf.format(new Date(previousMessage.getNanopast())))) {
+                        messageViewHolder.binding.dateDividerLayout.setVisibility(View.VISIBLE);
+                        messageViewHolder.binding.dateText.setText(sdf.format(new Date(message.getNanopast())));
                     }
                 }
 
-                String fromUserID = messages.getFrom();
-                String fromMessageType = messages.getType();
+                String fromUserID = message.getFrom();
+                String fromMessageType = message.getType();
 
-                usersRef = FirebaseDatabase.getInstance().getReference().child("Users").child(fromUserID);
+                messageViewHolder.binding.receiverMessageText.setVisibility(View.GONE);
+                messageViewHolder.binding.senderMessageText.setVisibility(View.GONE);
 
-                usersRef.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.hasChild("image")) {
-                            String receiverImage = dataSnapshot.child("image").getValue().toString();
-
-                            Picasso.get().load(receiverImage).placeholder(R.drawable.ic_user).into(messageViewHolder.receiverProfileImage);
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-
-                messageViewHolder.receiverMessageText.setVisibility(View.GONE);
-                messageViewHolder.senderMessageText.setVisibility(View.GONE);
-
-                messageViewHolder.myTime.setVisibility(View.GONE);
-                messageViewHolder.friendTime.setVisibility(View.GONE);
-
-                messageViewHolder.receiverProfileImage.setVisibility(View.GONE);
-
-                messageViewHolder.messageSenderPicture.setVisibility(View.GONE);
-                messageViewHolder.messageReceiverPicture.setVisibility(View.GONE);
+                messageViewHolder.binding.myTime.setVisibility(View.GONE);
+                messageViewHolder.binding.friendTime.setVisibility(View.GONE);
 
                 if (fromMessageType.equals("text")) {
                     if (fromUserID.equals(messageSenderId)) {
-                        messageViewHolder.senderMessageText.setVisibility(View.VISIBLE);
-                        messageViewHolder.myTime.setVisibility(View.VISIBLE);
+                        //If I sent the message
+                        messageViewHolder.binding.senderMessageText.setVisibility(View.VISIBLE);
+                        messageViewHolder.binding.myTime.setVisibility(View.VISIBLE);
 
-                        messageViewHolder.senderMessageText.setBackgroundResource(R.drawable.sender_messages_layout);
-                        messageViewHolder.senderMessageText.setTextColor(Color.BLACK);
-                        messageViewHolder.senderMessageText.setText(messages.getMessage());
-                        messageViewHolder.myTime.setText(messages.getReadableNanopastDate());
-                        // + "\n \n" + messages.getReadableNanopastDate()
+                        messageViewHolder.binding.senderMessageText.setBackgroundResource(R.drawable.sender_messages_layout);
+                        //messageViewHolder.binding.senderMessageText.setTextColor(Color.BLACK);
+                        messageViewHolder.binding.senderMessageText.setText(message.getMessage());
+                        messageViewHolder.binding.myTime.setText(message.getReadableNanopastDate());
                     } else {
-                        messageViewHolder.receiverProfileImage.setVisibility(View.VISIBLE);
-                        messageViewHolder.receiverMessageText.setVisibility(View.VISIBLE);
-                        messageViewHolder.friendTime.setVisibility(View.VISIBLE);
+                        //If I'm receiving the message
+                        messageViewHolder.binding.receiverMessageText.setVisibility(View.VISIBLE);
+                        messageViewHolder.binding.friendTime.setVisibility(View.VISIBLE);
 
-                        messageViewHolder.receiverMessageText.setBackgroundResource(R.drawable.receiver_messages_layout);
-                        messageViewHolder.receiverMessageText.setTextColor(Color.BLACK);
-                        messageViewHolder.receiverMessageText.setText(messages.getMessage());
-                        messageViewHolder.friendTime.setText(messages.getReadableNanopastDate());
-                        //+ "\n \n" + messages.getReadableNanopastDate()
+                        messageViewHolder.binding.receiverMessageText.setBackgroundResource(R.drawable.receiver_messages_layout);
+                        //messageViewHolder.binding.receiverMessageText.setTextColor(Color.BLACK);
+                        messageViewHolder.binding.receiverMessageText.setText(message.getMessage());
+                        messageViewHolder.binding.friendTime.setText(message.getReadableNanopastDate());
                     }
                 }else{
+                    //FIND OUT WHAT THE POINT OF THIS CLAUSE IS
                     //Checks if the user looking at the thing is the admin or not
-                    if((messages.getFrom().equals(messages.getTo()) && messageSenderId.equals(messages.getFrom()))
-                        || (!messages.getFrom().equals(messages.getTo()) && !messageSenderId.equals(messages.getTo()))){
-                        messageViewHolder.senderMessageText.setVisibility(View.VISIBLE);
-                        messageViewHolder.myTime.setVisibility(View.VISIBLE);
+                    if((message.getFrom().equals(message.getTo()) && messageSenderId.equals(message.getFrom()))
+                        || (!message.getFrom().equals(message.getTo()) && !messageSenderId.equals(message.getTo()))){
+                        messageViewHolder.binding.senderMessageText.setVisibility(View.VISIBLE);
+                        messageViewHolder.binding.myTime.setVisibility(View.VISIBLE);
 
-                        messageViewHolder.senderMessageText.setBackgroundResource(R.drawable.sender_messages_layout);
-                        messageViewHolder.senderMessageText.setTextColor(Color.BLACK);
-                        messageViewHolder.senderMessageText.setText(messages.getMessage());
-                        messageViewHolder.myTime.setText(messages.getReadableNanopastDate());
+                        messageViewHolder.binding.senderMessageText.setBackgroundResource(R.drawable.sender_messages_layout);
+                        messageViewHolder.binding.senderMessageText.setTextColor(Color.BLACK);
+                        messageViewHolder.binding.senderMessageText.setText(message.getMessage());
+                        messageViewHolder.binding.myTime.setText(message.getReadableNanopastDate());
                     }else{
-                        messageViewHolder.receiverProfileImage.setVisibility(View.VISIBLE);
-                        messageViewHolder.receiverMessageText.setVisibility(View.VISIBLE);
-                        messageViewHolder.friendTime.setVisibility(View.VISIBLE);
+                        messageViewHolder.binding.receiverMessageText.setVisibility(View.VISIBLE);
+                        messageViewHolder.binding.friendTime.setVisibility(View.VISIBLE);
 
-                        messageViewHolder.receiverMessageText.setBackgroundResource(R.drawable.receiver_messages_layout);
-                        messageViewHolder.receiverMessageText.setTextColor(Color.BLACK);
-                        messageViewHolder.receiverMessageText.setText(messages.getMessage());
-                        messageViewHolder.friendTime.setText(messages.getReadableNanopastDate());
+                        messageViewHolder.binding.receiverMessageText.setBackgroundResource(R.drawable.receiver_messages_layout);
+                        messageViewHolder.binding.receiverMessageText.setTextColor(Color.BLACK);
+                        messageViewHolder.binding.receiverMessageText.setText(message.getMessage());
+                        messageViewHolder.binding.friendTime.setText(message.getReadableNanopastDate());
                     }
                 }
 
@@ -372,41 +301,44 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 ImageMessage imageMessage = (ImageMessage) userMessageList.get(i);
                 ImageMessageViewHolder imageMessageViewHolder = (ImageMessageViewHolder) viewHolder;
 
-                imageMessageViewHolder.friendImageFrame.setVisibility(View.GONE);
-                imageMessageViewHolder.myImageFrame.setVisibility(View.GONE);
+                //Insert date dividers
+                imageMessageViewHolder.binding.dateDividerLayout.setVisibility(View.GONE);
+                if(i != 0){
+                    Message previousMessage = userMessageList.get(i - 1);
+                    SimpleDateFormat sdf = new SimpleDateFormat("E, dd MMMM yyyy");
+                    if(!sdf.format(new Date(imageMessage.getNanopast())).equals(sdf.format(new Date(previousMessage.getNanopast())))) {
+                        imageMessageViewHolder.binding.dateDividerLayout.setVisibility(View.VISIBLE);
+                        imageMessageViewHolder.binding.dateText.setText(sdf.format(new Date(imageMessage.getNanopast())));
+                    }
+                }
 
-                imageMessageViewHolder.receiverProfileImage.setVisibility(View.GONE);
+                imageMessageViewHolder.binding.friendImageFrame.setVisibility(View.GONE);
+                imageMessageViewHolder.binding.myImageFrame.setVisibility(View.GONE);
 
                 String imageFromUserId = imageMessage.getFrom();
 
                 if (imageFromUserId.equals(myId)) {
-                    imageMessageViewHolder.myImageFrame.setVisibility(View.VISIBLE);
-                    Picasso.get().load(imageMessage.getImageUrl()).into(imageMessageViewHolder.myImage);
+                    //If I'm sending the image
+                    imageMessageViewHolder.binding.myImageFrame.setVisibility(View.VISIBLE);
+                    Picasso.get()
+                            .load(imageMessage.getImageUrl())
+                            .transform(new RoundedCornersTransformation(10, 0))
+                            .resize(300, 300)
+                            .placeholder(R.drawable.placeholder_black_new)
+                            .error(R.drawable.placeholder_color_new)
+                            .into(imageMessageViewHolder.binding.myImage);
 
                 } else {
-                    imageMessageViewHolder.receiverProfileImage.setVisibility(View.VISIBLE);
-                    imageMessageViewHolder.friendImageFrame.setVisibility(View.VISIBLE);
 
-                    Picasso.get().load(imageMessage.getImageUrl()).into(imageMessageViewHolder.friendImage);
-
-                    usersRef = FirebaseDatabase.getInstance().getReference().child("Users").child(imageFromUserId);
-                    usersRef.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            if (dataSnapshot.hasChild("image")) {
-                                String receiverImage = dataSnapshot.child("image").getValue().toString();
-
-                                Picasso.get().load(receiverImage).placeholder(R.drawable.ic_user).into(imageMessageViewHolder.receiverProfileImage);
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
+                    imageMessageViewHolder.binding.friendImageFrame.setVisibility(View.VISIBLE);
+                    Picasso.get()
+                            .load(imageMessage.getImageUrl())
+                            .transform(new RoundedCornersTransformation(10, 0))
+                            .resize(300, 300)
+                            .placeholder(R.drawable.placeholder_black_new)
+                            .error(R.drawable.placeholder_color_new)
+                            .into(imageMessageViewHolder.binding.friendImage);
                 }
-
                 break;
             default:
                 break;

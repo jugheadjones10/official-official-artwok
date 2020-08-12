@@ -25,7 +25,8 @@
                 android:id="@+id/custom_profile_image"
                 android:layout_width="@dimen/circle_profile_width"
                 android:layout_height="match_parent"
-                android:padding="@dimen/spacing_small" />
+                android:onClick="@{() -> OfferFragment.goToListing()}"
+                android:layout_marginEnd="@dimen/spacing_small" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
