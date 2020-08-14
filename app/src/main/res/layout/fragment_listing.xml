@@ -34,6 +34,7 @@
             android:contentDescription="Offer"
             android:text="Offer"
             android:onClick="@{() -> ListingFragment.onOfferClicked(listing)}"
+            android:id="@+id/offer_button"
             android:textAllCaps="false" />
 
 

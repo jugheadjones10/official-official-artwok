@@ -2169,18 +2169,23 @@ public class FirestoreRepo {
                             String listingId = listingSnapshot.getKey();
                             ArrayList<Message> messages = new ArrayList<>();
                             for(DataSnapshot messageSnapshot : listingSnapshot.getChildren()){
-                                //Log.d("hellplz", messageSnapshot.getValue(Message.class).toString());
-                                if(messageSnapshot.child("type").equals("null")){
-                                    messages.add(messageSnapshot.getValue(OfferMessage.class));
-                                }else{
+                                if(messageSnapshot.child("type").getValue().equals("text")){
                                     messages.add(messageSnapshot.getValue(Message.class));
+                                }else{
+                                    //Eventually add last message support for offer, image, etc.
                                 }
                             }
 
-                            Collections.sort(messages, new SortMessages());
-                            Message lastMessage = messages.get(messages.size() - 1);
+                            Log.d("parkseroi", "how many fkin messages " + Integer.toString(messages.size()));
 
-                            Log.d("seroi", "Orders and Sells : This is the current last message" + lastMessage.getMessage());
+                            Collections.sort(messages, new SortMessages());
+                            Message lastMessage;
+                            if(messages.size() > 0){
+                                lastMessage = messages.get(messages.size() - 1);
+                                Log.d("parkseroi", "Orders and Sells : FUCK" + lastMessage.getMessage());
+                            }else{
+                                lastMessage = new Message("", "", "", "", "", "", "", 0, "");
+                            }
 
                             Task task = db.collectionGroup("Listings")
                                 .whereEqualTo("postid", listingId)
@@ -2210,10 +2215,13 @@ public class FirestoreRepo {
                         public void onSuccess(Void aVoid) {
 
                             tempData.clear();
-                            for(int i = 0; i < orderChats.size(); i++) {
-                                tempData.add(orderChats.get(i));
-                            }
+                            tempData.addAll(orderChats);
 
+                            Log.d("whynosort", "BEFORE SORT : " + tempData.get(0).getListing().getName());
+
+                            Collections.sort(tempData, new SortOrderChats());
+
+                            Log.d("whynosort", tempData.get(0).getListing().getName());
                             data.setValue(tempData);
                         }
                     });
@@ -2369,7 +2377,6 @@ public class FirestoreRepo {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 List<Task> getUserTasks = new ArrayList<>();
-
                 List<User> usersList = new ArrayList<>();
 
                 //Looping through the people I am interacting with
@@ -2567,13 +2574,19 @@ public class FirestoreRepo {
 
     class SortNormalChats implements Comparator<NormalChat> {
         public int compare(NormalChat a, NormalChat b){
-            return (int)b.getRawLastInteractionTime() - (int)a.getRawLastInteractionTime();
+            return Math.toIntExact((b.getRawLastInteractionTime() - a.getRawLastInteractionTime())/1000);
+        }
+    }
+
+    class SortOrderChats implements Comparator<OrderChat> {
+        public int compare(OrderChat a, OrderChat b){
+            return Math.toIntExact((b.getLastMessage().getNanopast() - a.getLastMessage().getNanopast())/1000);
         }
     }
 
     class SortMessages implements Comparator<Message> {
         public int compare(Message a, Message b){
-            return (int)b.getNanopast() - (int)a.getNanopast();
+            return Math.toIntExact((a.getNanopast() - b.getNanopast())/1000);
         }
     }
 

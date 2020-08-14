@@ -41,6 +41,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
+import com.synnapps.carouselview.ImageClickListener;
 import com.synnapps.carouselview.ImageListener;
 
 import java.util.ArrayList;
@@ -216,6 +217,21 @@ public class FirestorePagingAdapterImpl extends FirestorePagingAdapter<ListingPo
             listingViewHolder.binding.setListing(listingModel);
             listingViewHolder.binding.setFavorite(listingViewHolder.binding.favorite);
             listingViewHolder.binding.setTime(TimeWrangler.changeNanopastToReadableDate(listingModel.getNanopast()));
+
+            listingViewHolder.binding.listingImage.setImageClickListener(new ImageClickListener() {
+                @Override
+                public void onClick(int position) {
+                    if(navController.getCurrentDestination().getId() == R.id.profile_graph){
+                        ProfileGraphDirections.ActionGlobalListingFragment2 action =
+                                ProfileGraphDirections.actionGlobalListingFragment2(listingModel);
+                        navController.navigate(action);
+                    }else{
+                        HomeGraphDirections.ActionGlobalListingFragment action =
+                                HomeGraphDirections.actionGlobalListingFragment(listingModel);
+                        navController.navigate(action);
+                    }
+                }
+            });
 
             if(listingModel.getPostid().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
                 listingViewHolder.binding.favorite.setImageResource(R.drawable.ic_menu);

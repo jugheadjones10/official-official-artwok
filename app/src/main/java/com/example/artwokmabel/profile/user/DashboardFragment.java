@@ -54,7 +54,7 @@ public class DashboardFragment extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_dashboard, container, false);
         mAuth = FirebaseAuth.getInstance();
         messageAdapter = new MessageAdapter(messagesList, new OrderChat(), getContext());
-        binding.dashboardMessagesRecyclerView.setAdapter(messageAdapter);
+        //binding.dashboardMessagesRecyclerView.setAdapter(messageAdapter);
 
         //This part might be a problem
         viewModel = ViewModelProviders.of(this).get(DashboardFragmentViewModel.class);
@@ -73,21 +73,21 @@ public class DashboardFragment extends Fragment {
     }
 
     private void setUpMessageBar() {
-        binding.sendMessageBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                String messageText = binding.inputMessage.getText().toString();
-
-                if (TextUtils.isEmpty(messageText)) {
-                    Toast.makeText(getActivity(), "first write your message...", Toast.LENGTH_SHORT).show();
-                } else {
-                    viewModel.addDashboardMessage(mAuth.getCurrentUser().getUid(), userId, messageText);
-                }
-
-                binding.inputMessage.setText("");
-            }
-        });
+//        binding.sendMessageBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                String messageText = binding.inputMessage.getText().toString();
+//
+//                if (TextUtils.isEmpty(messageText)) {
+//                    Toast.makeText(getActivity(), "first write your message...", Toast.LENGTH_SHORT).show();
+//                } else {
+//                    viewModel.addDashboardMessage(mAuth.getCurrentUser().getUid(), userId, messageText);
+//                }
+//
+//                binding.inputMessage.setText("");
+//            }
+//        });
     }
 
     @Override
@@ -104,7 +104,7 @@ public class DashboardFragment extends Fragment {
 
                         messagesList.add(message);
                         messageAdapter.notifyDataSetChanged();
-                        binding.dashboardMessagesRecyclerView.scrollToPosition(binding.dashboardMessagesRecyclerView.getAdapter().getItemCount() - 1);
+                        //binding.dashboardMessagesRecyclerView.scrollToPosition(binding.dashboardMessagesRecyclerView.getAdapter().getItemCount() - 1);
                     }
 
                     @Override

@@ -76,7 +76,6 @@ public class MessageFragment extends Fragment implements SearchAnimationToolbar.
         return binding.getRoot();
     }
 
-
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -120,7 +119,6 @@ public class MessageFragment extends Fragment implements SearchAnimationToolbar.
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         int itemId = item.getItemId();
 
         if (itemId == R.id.action_search) {

@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.example.artwokmabel.ChatGraphDirections;
 import com.example.artwokmabel.HomeGraphDirections;
 import com.example.artwokmabel.ProfileGraphDirections;
 import com.example.artwokmabel.R;
@@ -87,14 +88,18 @@ public class FirestorePagingAdapterProfileImpl extends FirestorePagingAdapter<Ma
                 (MainPost post) -> {
                     //TODO: A smarter method to do the below would be to make the original fragment pass in the action to the
                     //adapter, instead of making the adapter do the detective work of finding the action to execute on its own.
-                    int currentDestination = navController.getCurrentDestination().getId();
-                    if(currentDestination == R.id.home_graph || currentDestination == R.id.favoritesFragment){
+                    int currentGraph = navController.getGraph().getId();
+                    if(currentGraph == R.id.home_graph){
                         HomeGraphDirections.ActionGlobalPostFragment action =
                                 HomeGraphDirections.actionGlobalPostFragment(post);
                         navController.navigate(action);
-                    }else if(currentDestination == R.id.profile_graph){
+                    }else if(currentGraph == R.id.profile_graph){
                         ProfileGraphDirections.ActionGlobalPostFragment2 action =
                                 ProfileGraphDirections.actionGlobalPostFragment2(post);
+                        navController.navigate(action);
+                    }else{
+                        ChatGraphDirections.ActionGlobalPostFragment3 action =
+                                ChatGraphDirections.actionGlobalPostFragment3(post);
                         navController.navigate(action);
                     }
                 },
