@@ -23,29 +23,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/custom_profile_image"
-                android:layout_width="@dimen/circle_profile_width"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="@dimen/spacing_small"
-                android:onClick="@{() -> ChatFragment.goToProfile()}" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:gravity="center_vertical"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:textSize="18sp"
+                    android:textColor="@color/almost_black"
+                    android:layout_gravity="center_vertical"
                     android:text="@{username}" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Last seen" />
 
             </LinearLayout>
         </com.google.android.material.appbar.MaterialToolbar>

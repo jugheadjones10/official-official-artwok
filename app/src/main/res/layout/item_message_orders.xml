@@ -134,22 +134,22 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginHorizontal="5dp"
                     android:layout_marginTop="10dp"
                     android:text="@{orderchat.listing.name}"
                     android:textColor="@color/artwok_black"
-                    android:textSize="18dp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/message_chats_textview_lastmessage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/message_chats_textview_title"
-                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginHorizontal="5dp"
                     android:layout_marginTop="5dp"
                     android:text="@{orderchat.lastMessage.message}"
                     android:textColor="@android:color/darker_gray"
-                    android:textSize="15dp" />
+                    android:textSize="12sp" />
 
                 <TextView
                     android:id="@+id/message_chats_textview_timestamp"

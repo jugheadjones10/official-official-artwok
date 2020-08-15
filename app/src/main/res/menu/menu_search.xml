@@ -4,6 +4,6 @@
     <item
         android:id="@+id/action_search"
         android:title=""
-        android:icon="@drawable/search_icon"
+        android:icon="@drawable/search"
         app:showAsAction="always|collapseActionView"/>
 </menu>
