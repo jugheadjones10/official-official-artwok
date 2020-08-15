@@ -30,6 +30,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
         android:orientation="horizontal">
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -40,9 +41,9 @@
             android:onClick="@{() -> onprofileclicked.onProfileClicked(user)}"/>
 
         <RelativeLayout
-            android:layout_width="341dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="left"
+            android:layout_gravity="left|center_vertical"
             android:orientation="vertical">
 
             <TextView
@@ -51,10 +52,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginHorizontal="10dp"
-                android:layout_marginTop="10dp"
-                android:text="@{user.username}"
+                android:gravity="center_vertical"
+                android:text="dfdfdsfd"
                 android:textColor="@color/artwok_black"
-                android:textSize="18dp" />
+                android:textSize="14dp" />
 
             <TextView
                 android:id="@+id/message_chats_textview_lastmessage"
@@ -63,9 +64,9 @@
                 android:layout_below="@+id/message_chats_textview_title"
                 android:layout_marginHorizontal="10dp"
                 android:layout_marginTop="5dp"
-                android:text="@{normalchat.lastMessage}"
+                android:text="dfdfdff"
                 android:textColor="@android:color/darker_gray"
-                android:textSize="15dp" />
+                android:textSize="12dp" />
 
             <TextView
                 android:id="@+id/message_chats_textview_timestamp"

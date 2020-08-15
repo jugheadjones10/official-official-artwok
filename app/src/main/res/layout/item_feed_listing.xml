@@ -16,17 +16,18 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/parent_layout_card"
-        android:onClick="@{() -> callbacks.onListingClicked.onListingClicked(listing)}"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
+        android:layout_marginTop="@dimen/spacing_tiny"
         android:layout_marginBottom="@dimen/spacing_tiny"
-        android:layout_marginTop="@dimen/spacing_tiny">
+        android:background="@android:color/transparent"
+        android:onClick="@{() -> callbacks.onListingClicked.onListingClicked(listing)}">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profile"
             android:layout_width="@dimen/circle_profile_width"
             android:layout_height="0dp"
+            android:layout_marginStart="10dp"
             android:onClick="@{() -> callbacks.onProfileClicked.onProfileClicked(listing)}"
             android:padding="@dimen/spacing_small"
             app:layout_constraintBottom_toTopOf="@+id/guideline4"
@@ -38,9 +39,10 @@
             style="@style/RegularCondensed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/spacing_small"
+            android:layout_marginTop="4dp"
             android:text="@{listing.username}"
-            app:layout_constraintBottom_toTopOf="@+id/post_date"
+            android:textColor="@color/almost_black"
+            android:textSize="14sp"
             app:layout_constraintStart_toEndOf="@+id/profile"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="spread" />
@@ -50,9 +52,10 @@
             style="@style/RegularCondensed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/spacing_small"
+            android:gravity="top|left"
             android:text="@{time}"
-            app:layout_constraintBottom_toTopOf="@+id/guideline4"
+            android:textColor="@color/almost_black"
+            android:textSize="10sp"
             app:layout_constraintStart_toEndOf="@+id/profile"
             app:layout_constraintTop_toBottomOf="@+id/poster_name" />
 
@@ -61,6 +64,7 @@
             android:id="@+id/favorite"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
+            android:layout_marginEnd="12dp"
             android:adjustViewBounds="true"
             android:onClick="@{() -> callbacks.onFavClicked.onFavClicked(listing, favorite)}"
             android:padding="@dimen/spacing_normal"
@@ -69,22 +73,23 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-<!--        <ImageView-->
-<!--            android:id="@+id/listing_image"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="0dp"-->
-<!--            app:layout_constrainedHeight="true"-->
-<!--            app:layout_constraintDimensionRatio="1:1"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintHeight_max="@dimen/post_max_height"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="@+id/guideline4">-->
-<!--        </ImageView>-->
+        <!--        <ImageView-->
+        <!--            android:id="@+id/listing_image"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="0dp"-->
+        <!--            app:layout_constrainedHeight="true"-->
+        <!--            app:layout_constraintDimensionRatio="1:1"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintHeight_max="@dimen/post_max_height"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toTopOf="@+id/guideline4">-->
+        <!--        </ImageView>-->
 
         <com.synnapps.carouselview.CarouselView
             android:id="@+id/listing_image"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginTop="4dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             app:autoPlay="false"
@@ -97,36 +102,51 @@
             app:layout_constraintTop_toTopOf="@+id/guideline4"
             app:pageColor="#00000000"
             app:strokeColor="#FF777777"
-            app:strokeWidth="0dp"
-            />
+            app:strokeWidth="0dp" />
 
         <TextView
             android:id="@+id/listing_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@drawable/home_listing_name_background"
-            android:paddingLeft="@dimen/spacing_small"
-            android:paddingTop="@dimen/spacing_small"
-            android:paddingBottom="@dimen/spacing_small"
+            android:paddingLeft="@dimen/spacing_normal"
+            android:paddingTop="@dimen/spacing_normal"
+            android:paddingBottom="@dimen/spacing_normal"
             android:text="@{listing.name}"
             android:textColor="@color/artwok_white"
             android:textSize="18sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/listing_image"
             app:layout_constraintStart_toStartOf="@+id/listing_image" />
 
-<!--        android:drawableStart="$"-->
+        <!--        android:drawableStart="$"-->
+        <TextView
+            android:id="@+id/dollar_sign"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="$"
+            android:gravity="center_vertical"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/listing_price"
+            app:layout_constraintTop_toTopOf="@+id/listing_name" />
+
         <TextView
             android:id="@+id/listing_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/spacing_small"
-            android:paddingEnd="@dimen/spacing_small"
+            android:paddingEnd="@dimen/spacing_normal"
             android:text="@{Long.toString(listing.price)}"
             android:textColor="@color/white"
             android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="@+id/listing_image"
-            app:layout_constraintTop_toTopOf="@+id/listing_image" />
+            android:textStyle="bold"
+            android:gravity="center_vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/listing_name"
+            app:layout_constraintTop_toTopOf="@+id/listing_name" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline4"
