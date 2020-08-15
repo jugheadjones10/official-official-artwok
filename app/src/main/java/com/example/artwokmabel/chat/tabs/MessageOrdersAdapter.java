@@ -16,6 +16,7 @@ import androidx.navigation.NavController;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.artwokmabel.ChatGraphDirections;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.Utils.TransactFragment;
 import com.example.artwokmabel.chat.MessageFragmentDirections;
@@ -145,7 +146,9 @@ public class MessageOrdersAdapter extends RecyclerView.Adapter<MessageOrdersAdap
     public class OnProfileClicked{
         public void onProfileClicked(OrderChat orderChat){
             //Not sure if buyer id is the correct id to go to - check this part again when doing latest msg and time for orders
-            new TransactFragment().loadFragment(context, orderChat.getBuyerId());
+            ChatGraphDirections.ActionGlobalListingFragment3 action =
+                    ChatGraphDirections.actionGlobalListingFragment3(orderChat.getListing());
+            navController.navigate(action);
         }
     }
 

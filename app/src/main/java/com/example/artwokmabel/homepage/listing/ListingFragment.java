@@ -23,6 +23,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.example.artwokmabel.ChatGraphDirections;
 import com.example.artwokmabel.HomeGraphDirections;
 import com.example.artwokmabel.ProfileGraphDirections;
 import com.example.artwokmabel.R;
@@ -67,6 +68,13 @@ public class ListingFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
 
         navController = Navigation.findNavController(requireActivity(), R.id.nav_host_container);
+
+        //Prevent going to offer screen
+        int currentGraph = navController.getGraph().getId();
+        if(currentGraph == R.id.profile_graph){
+            binding.offerButton.setVisibility(View.GONE);
+        }
+
 
         setUpToolbar();
         getIncomingIntent();
@@ -170,14 +178,13 @@ public class ListingFragment extends Fragment {
     }
 
     public void onOfferClicked(Listing listing){
-        int currentGraph = navController.getGraph().getId();
-        if(currentGraph == R.id.home_graph){
-//            ListingFragmentDirections.ActionListingFragmentToOfferFragment action =
-//                    ListingFragmentDirections.actionListingFragmentToOfferFragment(FirestoreRepo.getInstance().changeListingToMeBuy(listing,
-//                            new Message("", "", "", "","","", "", 0, "false")));
-//
-//            navController.navigate(action);
-        }
+//        int currentGraph = navController.getGraph().getId();
+//        if(currentGraph == R.id.home_graph){
+            ListingFragmentDirections.ActionListingFragmentToOfferFragment action =
+                    ListingFragmentDirections.actionListingFragmentToOfferFragment((FirestoreRepo.getInstance().changeListingToMeBuy(listing,
+                            new Message("", "", "", "","","", "", 0, "false"))));
+            navController.navigate(action);
+//        }
     }
 
     public void onProfileClicked(User user){
@@ -189,6 +196,10 @@ public class ListingFragment extends Fragment {
         }else if(currentGraph == R.id.profile_graph){
             ProfileGraphDirections.ActionProfileGraphSelf action =
                     ProfileGraphDirections.actionProfileGraphSelf(user.getUid());
+            navController.navigate(action);
+        }else{
+            ChatGraphDirections.ActionGlobalProfileFragment3 action =
+                    ChatGraphDirections.actionGlobalProfileFragment3(user.getUid());
             navController.navigate(action);
         }
     }

@@ -14,6 +14,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.text.TextUtils;
@@ -23,6 +25,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.artwokmabel.ChatGraphDirections;
+import com.example.artwokmabel.HomeGraphDirections;
+import com.example.artwokmabel.ProfileGraphDirections;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.chat.offerchat.OfferViewModel;
 import com.example.artwokmabel.databinding.ActivityChatBinding;
@@ -76,8 +81,9 @@ public class ChatFragment extends Fragment {
     private MessageAdapter messageAdapter;
     private final List<Message> messagesList = new ArrayList<>();
 
-    private ChildEventListener childrenMessagesListener;
+    private NavController navController;
 
+    private ChildEventListener childrenMessagesListener;
 
     private String saveCurrentTime, saveCurrentDate;
 
@@ -99,6 +105,7 @@ public class ChatFragment extends Fragment {
         messageFollowingId = ChatFragmentArgs.fromBundle(getArguments()).getFollowingId();
         messageFollowingUsername = ChatFragmentArgs.fromBundle(getArguments()).getFollowingUsername();
         messageFollowingProfileImg = ChatFragmentArgs.fromBundle(getArguments()).getFollowingProfileImg();
+        binding.setUsername(messageFollowingUsername);
 
         return binding.getRoot();
     }
@@ -108,11 +115,10 @@ public class ChatFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        navController = Navigation.findNavController(requireActivity(), R.id.nav_host_container);
+
         inflateChatBar();
         initializeControllers();
-        chatBarBinding.customProfileName.setText(messageFollowingUsername);
-        Picasso.get().load(messageFollowingProfileImg).placeholder(R.drawable.ic_user).into(chatBarBinding.customProfileImage);
-
 
         //binding.inputMessage.requestFocus();
         //DisplayLastSeen();
@@ -136,15 +142,27 @@ public class ChatFragment extends Fragment {
 
     private void inflateChatBar(){
         ((AppCompatActivity)requireActivity()).setSupportActionBar(binding.mainAppBar);
-        ActionBar actionBar =   ((AppCompatActivity)requireActivity()).getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowCustomEnabled(true);
+        ((AppCompatActivity)requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity)requireActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        LayoutInflater layoutInflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        chatBarBinding = DataBindingUtil.inflate(layoutInflater, R.layout.custom_chat_bar, null, false);
-
-        actionBar.setCustomView(chatBarBinding.getRoot());
+        Picasso.get()
+                .load(messageFollowingProfileImg)
+                .placeholder(R.drawable.placeholder_black_new)
+                .error(R.drawable.placeholder_color_new)
+                .into(binding.customProfileImage);
     }
+
+//    private void inflateChatBar(){
+//        ((AppCompatActivity)requireActivity()).setSupportActionBar(binding.mainAppBar);
+//        ActionBar actionBar =   ((AppCompatActivity)requireActivity()).getSupportActionBar();
+//        actionBar.setDisplayHomeAsUpEnabled(true);
+//        actionBar.setDisplayShowCustomEnabled(true);
+//
+//        LayoutInflater layoutInflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//        chatBarBinding = DataBindingUtil.inflate(layoutInflater, R.layout.custom_chat_bar, null, false);
+//
+//        actionBar.setCustomView(chatBarBinding.getRoot());
+//    }
 
     @Override
     public void onStop() {
@@ -211,7 +229,12 @@ public class ChatFragment extends Fragment {
                 .addChildEventListener(childrenMessagesListener);
     }
 
+    public void goToProfile(){
+        ChatGraphDirections.ActionGlobalProfileFragment3 action =
+                ChatGraphDirections.actionGlobalProfileFragment3(messageFollowingId);
+        navController.navigate(action);
 
+    }
 
     public void SendMessage() {
         String messageText = binding.inputMessage.getText().toString();

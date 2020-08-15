@@ -52,13 +52,13 @@
                         app:tabMode="scrollable">
                     </com.google.android.material.tabs.TabLayout>
 
-                    <com.yarolegovich.discretescrollview.DiscreteScrollView
-                        app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
-                        android:id="@+id/horizontal_recycler_view_listings"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingBottom="@dimen/spacing_small"
-                        android:paddingTop="@dimen/spacing_small"/>
+<!--                    <com.yarolegovich.discretescrollview.DiscreteScrollView-->
+<!--                        app:layout_scrollFlags="scroll|enterAlwaysCollapsed"-->
+<!--                        android:id="@+id/horizontal_recycler_view_listings"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:paddingBottom="@dimen/spacing_small"-->
+<!--                        android:paddingTop="@dimen/spacing_small"/>-->
 <!--                        android:layout_marginTop="@dimen/spacing_small"-->
 <!--                        android:layout_marginBottom="@dimen/spacing_small" -->
 

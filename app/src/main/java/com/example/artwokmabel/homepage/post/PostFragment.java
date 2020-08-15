@@ -27,6 +27,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.artwokmabel.ChatGraphDirections;
 import com.example.artwokmabel.HomeGraphDirections;
 import com.example.artwokmabel.ProfileGraphDirections;
 import com.example.artwokmabel.R;
@@ -152,6 +153,10 @@ public class PostFragment extends Fragment {
         }else if(currentGraph == R.id.profile_graph){
             ProfileGraphDirections.ActionProfileGraphSelf action =
                     ProfileGraphDirections.actionProfileGraphSelf(post.getUser_id());
+            navController.navigate(action);
+        }else if(currentGraph == R.id.chat_graph){
+            ChatGraphDirections.ActionGlobalProfileFragment3 action =
+                    ChatGraphDirections.actionGlobalProfileFragment3(post.getUser_id());
             navController.navigate(action);
         }
     }

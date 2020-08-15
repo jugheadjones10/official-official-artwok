@@ -33,6 +33,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.artwokmabel.ChatGraphDirections;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.Utils.DecimalDigitsInputFilter;
 import com.example.artwokmabel.chat.MessageFragmentDirections;
@@ -187,20 +188,13 @@ public class OfferFragment extends Fragment {
     private void inflateChatBar(){
         ((AppCompatActivity)requireActivity()).setSupportActionBar(binding.mainAppBar);
         ((AppCompatActivity)requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //((AppCompatActivity)requireActivity()).getSupportActionBar().setDisplayShowCustomEnabled(true);
         ((AppCompatActivity)requireActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
-
-        //LayoutInflater layoutInflater = (LayoutInflater) requireActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//        offerBarBinding = DataBindingUtil.inflate(layoutInflater, R.layout.custom_offer_bar, null, false);
-        //offerBarBinding.setOfferFragment(this);
 
         Picasso.get()
                 .load(orderChat.getListing().getPhotos().get(0))
                 .placeholder(R.drawable.placeholder_black_new)
                 .error(R.drawable.placeholder_color_new)
                 .into(binding.customProfileImage);
-
-        //((AppCompatActivity)requireActivity()).getSupportActionBar().setCustomView(offerBarBinding.getRoot());
 
         setHasOptionsMenu(true);
 
@@ -221,6 +215,13 @@ public class OfferFragment extends Fragment {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+
+    public void goToListing(){
+        ChatGraphDirections.ActionGlobalListingFragment3 action =
+                ChatGraphDirections.actionGlobalListingFragment3(liveListing);
+        navController.navigate(action);
     }
 
     public void onOfferClicked(){

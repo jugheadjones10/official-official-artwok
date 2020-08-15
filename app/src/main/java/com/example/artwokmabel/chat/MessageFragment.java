@@ -76,7 +76,6 @@ public class MessageFragment extends Fragment implements SearchAnimationToolbar.
         return binding.getRoot();
     }
 
-
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -85,7 +84,11 @@ public class MessageFragment extends Fragment implements SearchAnimationToolbar.
             @Override
             public void onDestinationChanged(@NonNull NavController controller,
                                              @NonNull NavDestination destination, @Nullable Bundle arguments) {
-                if(destination.getId() == R.id.chatFragment || destination.getId() == R.id.offerFragment || destination.getId() == R.id.reviewFragment) {
+                if(destination.getId() == R.id.chatFragment ||
+                        destination.getId() == R.id.offerFragment ||
+                        destination.getId() == R.id.reviewFragment ||
+                        destination.getId() == R.id.listingFragment3||
+                        destination.getId() == R.id.profileFragment3) {
                     HomePageActivity.Companion.getBottomNavBar().setVisibility(View.GONE);
                 } else {
                     HomePageActivity.Companion.getBottomNavBar().setVisibility(View.VISIBLE);
@@ -116,7 +119,6 @@ public class MessageFragment extends Fragment implements SearchAnimationToolbar.
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         int itemId = item.getItemId();
 
         if (itemId == R.id.action_search) {

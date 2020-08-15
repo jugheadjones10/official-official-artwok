@@ -15,6 +15,7 @@ import androidx.navigation.NavController;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.artwokmabel.ChatGraphDirections;
 import com.example.artwokmabel.HomeGraphDirections;
 import com.example.artwokmabel.ProfileGraphDirections;
 import com.example.artwokmabel.R;
@@ -69,7 +70,6 @@ public class ListingsAdapter extends RecyclerView.Adapter<ListingsAdapter.myHold
             @Override
             public void setImageForPosition(int position, ImageView imageView) {
                 //imageView.setImageResource(sampleImages[position]);
-
 
                 Picasso.get()
                         .load(images.get(position))
@@ -138,13 +138,18 @@ public class ListingsAdapter extends RecyclerView.Adapter<ListingsAdapter.myHold
     //Todo: might need to add on clicked to carousel view
     public class OnListingClicked{
         public void onListClicked(Listing data){
-            if(navController.getCurrentDestination().getId() == R.id.profile_graph){
+            int currentGraph = navController.getGraph().getId();
+            if(currentGraph == R.id.profile_graph){
                 ProfileGraphDirections.ActionGlobalListingFragment2 action =
                         ProfileGraphDirections.actionGlobalListingFragment2(data);
                 navController.navigate(action);
-            }else{
+            }else if(currentGraph == R.id.home_graph){
                 HomeGraphDirections.ActionGlobalListingFragment action =
                         HomeGraphDirections.actionGlobalListingFragment(data);
+                navController.navigate(action);
+            }else{
+                ChatGraphDirections.ActionGlobalListingFragment3 action =
+                        ChatGraphDirections.actionGlobalListingFragment3(data);
                 navController.navigate(action);
             }
         }
@@ -154,14 +159,14 @@ public class ListingsAdapter extends RecyclerView.Adapter<ListingsAdapter.myHold
         public void onProfileClicked(Listing data){
             //Uncomment if we eventually decide to bring back the profile photo in listings outside
 //            int currentDestination = navController.getCurrentDestination().getId();
-//            if(currentDestination == R.id.home_graph || currentDestination == R.id.favoritesFragment){
-//                HomeGraphDirections.ActionGlobalProfileFragment action =
-//                        HomeGraphDirections.actionGlobalProfileFragment(data.getUserid());
-//                navController.navigate(action);
-//            }else if(currentDestination == R.id.profile_graph){
-//                ProfileGraphDirections.ActionProfileGraphSelf action =
-//                        ProfileGraphDirections.actionProfileGraphSelf(data.getUserid());
-//                navController.navigate(action);
+////            if(currentDestination == R.id.home_graph || currentDestination == R.id.favoritesFragment){
+////                HomeGraphDirections.ActionGlobalProfileFragment action =
+////                        HomeGraphDirections.actionGlobalProfileFragment(data.getUserid());
+////                navController.navigate(action);
+////            }else if(currentDestination == R.id.profile_graph){
+////                ProfileGraphDirections.ActionProfileGraphSelf action =
+////                        ProfileGraphDirections.actionProfileGraphSelf(data.getUserid());
+////                navController.navigate(action);
 //            }
         }
     }

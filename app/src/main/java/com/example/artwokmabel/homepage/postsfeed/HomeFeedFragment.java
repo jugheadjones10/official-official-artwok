@@ -114,37 +114,37 @@ public class HomeFeedFragment extends Fragment {
         //Todo: bring back listings recycler view
         listingsAdapter = new ListingsHomeAdapter(getContext(), navController);
 
-        DiscreteScrollView horizontalRecyclerViewListings = HomeTabsFragment.getInstance().binding.horizontalRecyclerViewListings;
-        horizontalRecyclerViewListings.setAdapter(listingsAdapter);
-        horizontalRecyclerViewListings.setBackgroundColor(getResources().getColor(R.color.white));
-
-        horizontalRecyclerViewListings.setItemTransformer(new ScaleTransformer.Builder()
-                .setPivotX(Pivot.X.CENTER) // CENTER is a default one
-                .setPivotY(Pivot.Y.CENTER) // CENTER is a default one
-                .build());
-        horizontalRecyclerViewListings.setSlideOnFling(true);
-        horizontalRecyclerViewListings.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
-            @Override
-            public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
-                int action = e.getAction();
-                switch (action) {
-                    case MotionEvent.ACTION_MOVE:
-                        rv.getParent().requestDisallowInterceptTouchEvent(true);
-                        break;
-                }
-                return false;
-            }
-
-            @Override
-            public void onTouchEvent(RecyclerView rv, MotionEvent e) {
-
-            }
-
-            @Override
-            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-
-            }
-        });
+//        DiscreteScrollView horizontalRecyclerViewListings = HomeTabsFragment.getInstance().binding.horizontalRecyclerViewListings;
+//        horizontalRecyclerViewListings.setAdapter(listingsAdapter);
+//        horizontalRecyclerViewListings.setBackgroundColor(getResources().getColor(R.color.white));
+//
+//        horizontalRecyclerViewListings.setItemTransformer(new ScaleTransformer.Builder()
+//                .setPivotX(Pivot.X.CENTER) // CENTER is a default one
+//                .setPivotY(Pivot.Y.CENTER) // CENTER is a default one
+//                .build());
+//        horizontalRecyclerViewListings.setSlideOnFling(true);
+//        horizontalRecyclerViewListings.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+//            @Override
+//            public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+//                int action = e.getAction();
+//                switch (action) {
+//                    case MotionEvent.ACTION_MOVE:
+//                        rv.getParent().requestDisallowInterceptTouchEvent(true);
+//                        break;
+//                }
+//                return false;
+//            }
+//
+//            @Override
+//            public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+//
+//            }
+//
+//            @Override
+//            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+//
+//            }
+//        });
     }
 
     @Override

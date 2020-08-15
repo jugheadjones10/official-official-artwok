@@ -19,6 +19,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 
+import com.example.artwokmabel.HomeGraphDirections;
 import com.example.artwokmabel.HomePageActivity;
 import com.example.artwokmabel.ProfileGraphDirections;
 import com.example.artwokmabel.R;
@@ -166,6 +167,14 @@ public class ProfileFragment extends Fragment {
                 }
             }
         });
+
+        int currentGraph = navController.getGraph().getId();
+        if(currentGraph != R.id.profile_graph){
+            if(toolbarMeBinding != null){
+                toolbarMeBinding.profileGroup.setVisibility(View.GONE);
+                toolbarMeBinding.profileSettings.setVisibility(View.GONE);
+            }
+        }
     }
 
     public class OnPeopleClicked{

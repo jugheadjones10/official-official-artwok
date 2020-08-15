@@ -97,7 +97,8 @@
             app:layout_constraintTop_toTopOf="@+id/guideline4"
             app:pageColor="#00000000"
             app:strokeColor="#FF777777"
-            app:strokeWidth="0dp"></com.synnapps.carouselview.CarouselView>
+            app:strokeWidth="0dp"
+            />
 
         <TextView
             android:id="@+id/listing_name"

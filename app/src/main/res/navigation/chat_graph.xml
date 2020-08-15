@@ -75,4 +75,22 @@
             android:name="listingId"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/listingFragment3"
+        android:name="com.example.artwokmabel.homepage.listing.ListingFragment"
+        android:label="ListingFragment" >
+        <argument
+            android:name="listing"
+            app:argType="com.example.artwokmabel.models.Listing" />
+    </fragment>
+    <action android:id="@+id/action_global_listingFragment3" app:destination="@id/listingFragment3" />
+    <fragment
+        android:id="@+id/postFragment3"
+        android:name="com.example.artwokmabel.homepage.post.PostFragment"
+        android:label="PostFragment" >
+        <argument
+            android:name="post"
+            app:argType="com.example.artwokmabel.models.MainPost" />
+    </fragment>
+    <action android:id="@+id/action_global_postFragment3" app:destination="@id/postFragment3" />
 </navigation>
