@@ -22,7 +22,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.example.artwokmabel.R;
-import com.example.artwokmabel.chat.personalchat.ChatFragmentArgs;
 import com.example.artwokmabel.databinding.FragmentReviewBinding;
 import com.example.artwokmabel.models.OrderChat;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;

@@ -8,8 +8,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
+import com.example.artwokmabel.chat.MessageFragmentDirections
 import com.example.artwokmabel.chat.tabs.MessageChatsViewModel
 import com.example.artwokmabel.chat.tabs.MessageOrdersViewModel
+import com.example.artwokmabel.models.Listing
 import com.example.artwokmabel.repos.FirestoreRepo
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.badge.BadgeDrawable
@@ -40,17 +42,17 @@ class HomePageActivity : AppCompatActivity() {
         mAuth = FirebaseAuth.getInstance()
 
         FirebaseInstanceId.getInstance().instanceId
-                .addOnCompleteListener(OnCompleteListener { task ->
-                    if (!task.isSuccessful) {
-                        Log.w("westchester", "getInstanceId failed", task.exception)
-                        return@OnCompleteListener
-                    }
+            .addOnCompleteListener(OnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    Log.w("westchester", "getInstanceId failed", task.exception)
+                    return@OnCompleteListener
+                }
 
-                    // Get new Instance ID token
-                    val token = task.result!!.token
-                    Log.d("westchester", token)
-                    FirestoreRepo.getInstance().addTokenToFirestore(token)
-                })
+                // Get new Instance ID token
+                val token = task.result!!.token
+                Log.d("westchester", token)
+                FirestoreRepo.getInstance().addTokenToFirestore(token)
+            })
 
         chatsViewModel = ViewModelProviders.of(this).get(MessageChatsViewModel::class.java)
         ordersViewModel = ViewModelProviders.of(this).get(MessageOrdersViewModel::class.java)
@@ -60,6 +62,28 @@ class HomePageActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             setupBottomNavigationBar()
         } // Else, need to wait for onRestoreInstanceState
+
+        val type = intent.getStringExtra("type")
+        if(type == "message"){
+            Log.d("fuckering", "Intent message works")
+            val userId = intent.getStringExtra("fromId")
+            val userUsername = intent.getStringExtra("fromUsername")
+            val userProfile = intent.getStringExtra("fromProfileUrl")
+
+            val action = MessageFragmentDirections.actionChatGraphToChatFragment(userId, userUsername, userProfile);
+            nav_view.selectedItemId = R.id.chat_graph
+            currentNavController?.value?.navigate(action)
+        }else if (type == "listing"){
+            val listing = intent.getSerializableExtra("listing")
+
+            if(listing is Listing){
+                val action = HomeGraphDirections.actionGlobalListingFragment(listing);
+                nav_view.selectedItemId = R.id.home_graph
+                currentNavController?.value?.navigate(action)
+            }
+
+        }
+
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
