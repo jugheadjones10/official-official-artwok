@@ -37,7 +37,6 @@ import com.example.artwokmabel.ChatGraphDirections;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.Utils.DecimalDigitsInputFilter;
 import com.example.artwokmabel.chat.MessageFragmentDirections;
-import com.example.artwokmabel.chat.personalchat.ChatFragmentArgs;
 import com.example.artwokmabel.chat.personalchat.MessageAdapter;
 import com.example.artwokmabel.databinding.ActivityOfferBinding;
 import com.example.artwokmabel.databinding.CustomOfferBarBinding;
