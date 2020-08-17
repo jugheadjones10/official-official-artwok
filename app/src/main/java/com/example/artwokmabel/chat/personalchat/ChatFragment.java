@@ -145,11 +145,11 @@ public class ChatFragment extends Fragment {
         ((AppCompatActivity)requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity)requireActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        Picasso.get()
-                .load(messageFollowingProfileImg)
-                .placeholder(R.drawable.placeholder_black_new)
-                .error(R.drawable.placeholder_color_new)
-                .into(binding.customProfileImage);
+//        Picasso.get()
+//                .load(messageFollowingProfileImg)
+//                .placeholder(R.drawable.placeholder_black_new)
+//                .error(R.drawable.placeholder_color_new)
+//                .into(binding.customProfileImage);
     }
 
 //    private void inflateChatBar(){

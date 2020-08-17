@@ -44,7 +44,7 @@
 
     <!-- Below are the ones that have currently been used   -->
     <dimen name="toolbar_height_normal">45dp</dimen>
-    <dimen name="tabs_height_normal">45dp</dimen>
+    <dimen name="tabs_height_normal">35dp</dimen>
     <dimen name="listing_home_details_height">40dp</dimen>
     <dimen name="listing_inside_details_height">45dp</dimen>
     <dimen name="post_details_height">45dp</dimen>
