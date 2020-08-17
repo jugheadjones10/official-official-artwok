@@ -42,7 +42,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 app:tabGravity="fill"
-                ayo
                 app:tabTextAppearance="@style/CustomTextAppearanceTab"
                 app:tabIndicatorColor="@color/artwok_white"
                 app:tabMode="scrollable">
