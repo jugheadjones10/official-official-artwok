@@ -93,22 +93,6 @@ public class PostFragment extends Fragment {
 
         viewModel = ViewModelProviders.of(this).get(PostActivityViewModel.class);
 
-        viewModel.getUserObservable(mAuth.getCurrentUser().getUid()).observe(getViewLifecycleOwner(), new Observer<User>() {
-            @Override
-            public void onChanged(@Nullable User user) {
-                if (user != null) {
-                    favs = user.getFav_posts();
-                    Log.d("favfav", favs.toString());
-
-                    if (favs.contains(postId)) {
-                        binding.indivToolbar.getMenu().getItem(0).setIcon(R.drawable.like);
-                    } else {
-                        binding.indivToolbar.getMenu().getItem(0).setIcon(R.drawable.heart_button);
-                    }
-                }
-            }
-        });
-
         viewModel.getUserObservable(posterUserId).observe(getViewLifecycleOwner(), new Observer<User>() {
             @Override
             public void onChanged(@Nullable User user) {
@@ -197,7 +181,23 @@ public class PostFragment extends Fragment {
             inflater.inflate(R.menu.indiv_listing_menu_mine, menu);
         }else{
             inflater.inflate(R.menu.indiv_listing_menu_yours, menu);
+            viewModel.getUserObservable(mAuth.getCurrentUser().getUid()).observe(getViewLifecycleOwner(), new Observer<User>() {
+                @Override
+                public void onChanged(@Nullable User user) {
+                    if (user != null) {
+                        favs = user.getFav_posts();
+                        Log.d("favfav", favs.toString());
+
+                        if (favs.contains(postId)) {
+                            binding.indivToolbar.getMenu().findItem(R.id.favorite).setIcon(R.drawable.like);
+                        } else {
+                            binding.indivToolbar.getMenu().findItem(R.id.favorite).setIcon(R.drawable.heart_button);
+                        }
+                    }
+                }
+            });
         }
+
         super.onCreateOptionsMenu(menu,inflater);
     }
 

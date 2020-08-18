@@ -1984,20 +1984,18 @@ public class FirestoreRepo {
 
     public Query getListingPostsQuery (List<String> followingIds){
 
-        db.collection("ListingPosts")
-            .whereIn("userid", followingIds)
-            .orderBy("nanopast", Query.Direction.DESCENDING)
-            .get()
-            .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                @Override
-                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                    for(QueryDocumentSnapshot snapshot : queryDocumentSnapshots){
-                        Log.d("queryretrieval", snapshot.getString("userid"));
-                    }
-                }
-            });
-
-
+//        db.collection("ListingPosts")
+//            .whereIn("userid", followingIds)
+//            .orderBy("nanopast", Query.Direction.DESCENDING)
+//            .get()
+//            .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+//                @Override
+//                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+//                    for(QueryDocumentSnapshot snapshot : queryDocumentSnapshots){
+//                        Log.d("queryretrieval", snapshot.getString("userid"));
+//                    }
+//                }
+//            });
 
         return db.collection("ListingPosts")
                 .whereIn("userid", followingIds)

@@ -94,9 +94,6 @@
         <activity
             android:name=".HomePageActivity"
             android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".profile.uploadlisting.UploadListingAcitvity"
-            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".homepage.favorites.FavoritesActivity" />
         <activity
             android:name=".homepage.listing.ListingActivity"
