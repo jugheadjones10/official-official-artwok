@@ -1447,6 +1447,7 @@ public class FirestoreRepo {
                 .document(uid)
                 .collection("Notifications")
                 .orderBy("timeInMillis", Query.Direction.DESCENDING)
+                .limit(15)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
