@@ -1447,6 +1447,7 @@ public class FirestoreRepo {
                 .document(uid)
                 .collection("Notifications")
                 .orderBy("timeInMillis", Query.Direction.DESCENDING)
+                .limit(15)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
@@ -1984,20 +1985,18 @@ public class FirestoreRepo {
 
     public Query getListingPostsQuery (List<String> followingIds){
 
-        db.collection("ListingPosts")
-            .whereIn("userid", followingIds)
-            .orderBy("nanopast", Query.Direction.DESCENDING)
-            .get()
-            .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                @Override
-                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                    for(QueryDocumentSnapshot snapshot : queryDocumentSnapshots){
-                        Log.d("queryretrieval", snapshot.getString("userid"));
-                    }
-                }
-            });
-
-
+//        db.collection("ListingPosts")
+//            .whereIn("userid", followingIds)
+//            .orderBy("nanopast", Query.Direction.DESCENDING)
+//            .get()
+//            .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+//                @Override
+//                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+//                    for(QueryDocumentSnapshot snapshot : queryDocumentSnapshots){
+//                        Log.d("queryretrieval", snapshot.getString("userid"));
+//                    }
+//                }
+//            });
 
         return db.collection("ListingPosts")
                 .whereIn("userid", followingIds)

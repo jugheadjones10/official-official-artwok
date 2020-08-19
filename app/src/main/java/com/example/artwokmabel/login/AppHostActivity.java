@@ -58,7 +58,6 @@ public class AppHostActivity extends AppCompatActivity {
                     }else if(value.equals("newListing")){
 
                         String listingId = getIntent().getStringExtra("listingId");
-
                         Intent intent = new Intent(this, HomePageActivity.class);
 
                         class OnListingRetrieved implements FirestoreRepo.ListingRetrieved {
@@ -80,22 +79,27 @@ public class AppHostActivity extends AppCompatActivity {
 
                         Intent intent = new Intent(this, PostActivity.class);
 
-                        class OnPostRetrieved implements FirestoreRepo.PostRetrieved {
-                            public void onPostRetrieved (MainPost post){
-
+                        FirestoreRepo.getInstance().getPost(getIntent().getStringExtra("postId"),
+                            (MainPost post) -> {
                                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 intent.putExtra("post", post);
                                 startActivity(intent);
                                 finish();
-                            }
-                        }
-
-                        FirestoreRepo.getInstance().getPost(getIntent().getStringExtra("postId"),
-                                new OnPostRetrieved()
-                        );
+                        });
 
                     }else if(value.equals("newFollower")){
 
+                    }else if(value.equals("newPost")){
+                        Intent intent = new Intent(this, HomePageActivity.class);
+
+                        FirestoreRepo.getInstance().getPost(getIntent().getStringExtra("postId"),
+                            (MainPost post) -> {
+                                intent.putExtra("type", "post");
+                                intent.putExtra("post", post);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(intent);
+                                finish();
+                            });
                     }
                 }
             }

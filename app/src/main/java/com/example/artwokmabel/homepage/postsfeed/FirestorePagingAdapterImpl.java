@@ -94,6 +94,7 @@ public class FirestorePagingAdapterImpl extends FirestorePagingAdapter<ListingPo
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if(viewType == TYPE_POST){
+            Log.d("checkpost", "Yes, me, a post has been verified at onCreateViewHolder");
             ItemPostBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.item_post, parent,false);
             return new PostViewHolder(binding);
         }else{
@@ -105,6 +106,7 @@ public class FirestorePagingAdapterImpl extends FirestorePagingAdapter<ListingPo
     @Override
     protected void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i, @NonNull ListingPost listingPost) {
         if(getItemViewType(i) == TYPE_POST){
+            Log.d("checkpost", "Yes, me, a post has been verified at onBindViewHolder");
             MainPost mainPost = new MainPost(
                 listingPost.getUserid(),
                 listingPost.getDesc(),
@@ -368,9 +370,14 @@ public class FirestorePagingAdapterImpl extends FirestorePagingAdapter<ListingPo
     public int getItemViewType(int position) {
         DocumentSnapshot snapshot = getItem(position);
         ListingPost listingPost = FirestoreRepo.getInstance().changeDocToListingPostModel(snapshot);
+
+        Log.d("checkpost", listingPost.getUsername());
+        Log.d("checkpost", "AWD " + listingPost.getReturn_exchange());
         if (TextUtils.isEmpty(listingPost.getReturn_exchange())) {
+            Log.d("checkpost", "Yes, me, a post has been verified at getItemViewType");
             return TYPE_POST;
         } else {
+            Log.d("checkpost", "Yes, me, listing was seen");
             return TYPE_LISTING;
         }
     }

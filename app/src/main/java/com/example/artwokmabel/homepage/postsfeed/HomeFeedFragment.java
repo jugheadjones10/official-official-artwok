@@ -198,6 +198,7 @@ public class HomeFeedFragment extends Fragment {
                                 @NonNull
                                 @Override
                                 public ListingPost parseSnapshot(@NonNull DocumentSnapshot snapshot) {
+                                    Log.d("checkpost", "Within parse snapshot" + snapshot.getString("username"));
                                     return FirestoreRepo.getInstance().changeDocToListingPostModel(snapshot);
                                 }
                             })
