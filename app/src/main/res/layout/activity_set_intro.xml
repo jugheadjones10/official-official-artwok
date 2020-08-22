@@ -26,8 +26,8 @@
 
                 <ImageView
                     android:id="@+id/tick_button"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="15dp"
                     android:cropToPadding="true"
@@ -77,9 +77,11 @@
             android:id="@+id/textView20"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="10dp"
             android:text="Introduction"
-            android:textSize="25sp"
+            android:textColor="#000000"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/settings_toolbar" />
 
