@@ -36,18 +36,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/new_post_titleL" />
 
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:id="@+id/go_to_rich_editor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center_horizontal"
-            android:layout_marginBottom="@dimen/spacing_enormous"
-            android:padding="@dimen/spacing_small"
-            android:text="Edit description in rich text editor"
-            android:onClick="@{() -> UploadListingDescFragment.onGoToRichTextEditor()}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+<!--        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton-->
+<!--            android:id="@+id/go_to_rich_editor"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="bottom|center_horizontal"-->
+<!--            android:layout_marginBottom="@dimen/spacing_enormous"-->
+<!--            android:padding="@dimen/spacing_small"-->
+<!--            android:text="Edit description in rich text editor"-->
+<!--            android:onClick="@{() -> UploadListingDescFragment.onGoToRichTextEditor()}"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent" />-->
 
 <!--    <EditText-->
 <!--        android:id="@+id/new_post_descL"-->

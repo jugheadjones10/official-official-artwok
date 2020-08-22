@@ -257,38 +257,46 @@ public class FirestoreRepo {
     }
 
     public void uploadNewListing(String postTitle, String postDesc, ArrayList<String> categories, Long price, String delivery, String refund, String currentUserId, ArrayList<String> postImageUris, UploadListingViewModel.UploadListingCallback callback){
-        postTitle = postTitle.substring(0, 1).toUpperCase() + postTitle.substring(1);
+        String finalPostTitle = postTitle.substring(0, 1).toUpperCase() + postTitle.substring(1);
 
-        DocumentReference newListingRef = db.collection("Users").document(currentUserId).collection("Listings").document();
-        Listing newListing = new Listing(
-                currentUserId,
-                refund,
-                price,
-                postImageUris,
-                postTitle,
-                "placeholderhashtags",
-                postDesc,
-                delivery,
-                "temporary username",
-                newListingRef.getId(),
-                System.currentTimeMillis(),
-                categories);
+        db.collection("Users")
+            .document(currentUserId)
+            .get()
+            .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    User user = documentSnapshot.toObject(User.class);
 
-        newListingRef.set(newListing)
-                .addOnSuccessListener(aVoid -> {
-                    callback.uploadListingCallback(true);
-//                    Toast.makeText(activity, "Successfully uploaded ic_dm.", Toast.LENGTH_LONG).show();
-//                    UploadListingAcitvity.getInstance().onUploaded();
-                })
-                .addOnFailureListener(e -> {
-                    callback.uploadListingCallback(false);
-//                    Toast.makeText(activity, "Failed to upload ic_dm. awd", Toast.LENGTH_LONG).show()
-                });
+                    DocumentReference newListingRef = db.collection("Users").document(currentUserId).collection("Listings").document();
+                    Listing newListing = new Listing(
+                            currentUserId,
+                            refund,
+                            price,
+                            postImageUris,
+                            finalPostTitle,
+                            "placeholderhashtags",
+                            postDesc,
+                            delivery,
+                            user.getUsername(),
+                            newListingRef.getId(),
+                            System.currentTimeMillis(),
+                            categories);
 
-        FirebaseDatabase.getInstance().getReference()
-                .child("Listings")
-                .child(newListingRef.getId())
-                .setValue(newListing);
+                    newListingRef.set(newListing)
+                            .addOnSuccessListener(aVoid -> {
+                                callback.uploadListingCallback(true);
+                            })
+                            .addOnFailureListener(e -> {
+                                callback.uploadListingCallback(false);
+                            });
+
+                    FirebaseDatabase.getInstance().getReference()
+                            .child("Listings")
+                            .child(newListingRef.getId())
+                            .setValue(newListing);
+                }
+            });
+
     }
 
     public void uploadNewRequest(String postTitle, String postDesc, String category, Long budget, String currentUserId, ArrayList<String> postImageUris, Activity activity){

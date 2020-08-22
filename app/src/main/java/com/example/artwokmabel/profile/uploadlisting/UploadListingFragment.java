@@ -18,6 +18,8 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.FragmentUploadListingBinding;
@@ -35,7 +37,9 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import static com.example.artwokmabel.profile.utils.ImagePickerActivity.SHOW_ALL_OPTIONS;
@@ -49,6 +53,7 @@ public class UploadListingFragment extends Fragment {
     private UploadListingPagerAdapter adapter;
     private UploadListingViewModel viewModel;
     private ArrayList<String> uploadImageUri = new ArrayList<>();
+    private NavController navController;
 
     private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
 
@@ -73,9 +78,12 @@ public class UploadListingFragment extends Fragment {
         return binding.getRoot();
     }
 
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        navController = Navigation.findNavController(requireActivity(), R.id.nav_host_container);
 
         adapter = new UploadListingPagerAdapter(requireActivity());
         binding.pager.setAdapter(adapter);
@@ -85,6 +93,25 @@ public class UploadListingFragment extends Fragment {
             public void onChanged(Boolean aBoolean) {
                 if(aBoolean == true){
                     binding.uploadProgressL.setVisibility(View.GONE);
+                    navController.navigateUp();
+                }
+            }
+        });
+
+        viewModel.getListingImageUri().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String imageUri) {
+                if(imageUri != null){
+                    if(uploadImageUri.size() == 0){
+                        uploadImageUri.add(imageUri);
+                    }
+                    binding.carouselView.setVisibility(View.VISIBLE);
+                    binding.uploadPicL.setVisibility(View.GONE);
+
+                    binding.carouselView.setImageListener((position, imageView) -> {
+                        Picasso.get().load(uploadImageUri.get(0)).into(imageView);
+                    });
+                    binding.carouselView.setPageCount(1);
                 }
             }
         });
@@ -105,6 +132,10 @@ public class UploadListingFragment extends Fragment {
                 }
             }
         ).attach();
+    }
+
+    private void setCarouselViewImage(){
+
     }
 
     public void onUploadImageClicked(){
@@ -130,15 +161,16 @@ public class UploadListingFragment extends Fragment {
 
                                     String imageUri = task.getResult().toString();
                                     Log.d("imageurl", imageUri);
-                                    uploadImageUri.add(imageUri);
-
-                                    binding.carouselView.setVisibility(View.VISIBLE);
-                                    binding.uploadPicL.setVisibility(View.GONE);
-
-                                    binding.carouselView.setImageListener((position, imageView) -> {
-                                        Picasso.get().load(imageUri).into(imageView);
-                                    });
-                                    binding.carouselView.setPageCount(1);
+                                    viewModel.setListingImageUri(imageUri);
+//                                    uploadImageUri.add(imageUri);
+//
+//                                    binding.carouselView.setVisibility(View.VISIBLE);
+//                                    binding.uploadPicL.setVisibility(View.GONE);
+//
+//                                    binding.carouselView.setImageListener((position, imageView) -> {
+//                                        Picasso.get().load(imageUri).into(imageView);
+//                                    });
+//                                    binding.carouselView.setPageCount(1);
                                 }
                             });
 
@@ -170,7 +202,6 @@ public class UploadListingFragment extends Fragment {
             categories = UploadListingDetailsFragment.getInstance().getCategories();
             budget = UploadListingDetailsFragment.getInstance().getBudget();
         }
-
 
         String deliveryDetails;
         String refundPolicy;

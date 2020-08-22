@@ -175,8 +175,8 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
         public void onProfileClicked(Comment comment){
             int currentGraph = navController.getGraph().getId();
             if(currentGraph == R.id.home_graph){
-                HomeGraphDirections.ActionGlobalProfileFragment action =
-                        HomeGraphDirections.actionGlobalProfileFragment(comment.getUser_id());
+                HomeGraphDirections.ActionGlobalProfileFragment2 action =
+                        HomeGraphDirections.actionGlobalProfileFragment2(comment.getUser_id());
                 navController.navigate(action);
             }else if(currentGraph == R.id.profile_graph){
                 ProfileGraphDirections.ActionProfileGraphSelf action =

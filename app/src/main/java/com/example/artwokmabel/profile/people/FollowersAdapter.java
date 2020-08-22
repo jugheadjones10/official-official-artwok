@@ -89,8 +89,8 @@ public class FollowersAdapter extends RecyclerView.Adapter<FollowersAdapter.myHo
 //                navController.navigate(action);
                 int currentDestination = navController.getCurrentDestination().getId();
                 if(currentDestination == R.id.searchFragment) {
-                    HomeGraphDirections.ActionGlobalProfileFragment action =
-                            HomeGraphDirections.actionGlobalProfileFragment(user.getUid());
+                    HomeGraphDirections.ActionGlobalProfileFragment2 action =
+                            HomeGraphDirections.actionGlobalProfileFragment2(user.getUid());
                     navController.navigate(action);
                 }else if(currentDestination == R.id.peopleFragment){
                     ProfileGraphDirections.ActionProfileGraphSelf action =

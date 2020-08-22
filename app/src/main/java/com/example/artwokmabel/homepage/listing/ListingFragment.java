@@ -178,20 +178,20 @@ public class ListingFragment extends Fragment {
     }
 
     public void onOfferClicked(Listing listing){
-//        int currentGraph = navController.getGraph().getId();
-//        if(currentGraph == R.id.home_graph){
+        int currentGraph = navController.getGraph().getId();
+        if(currentGraph == R.id.home_graph){
 //            ListingFragmentDirections.ActionListingFragmentToOfferFragment action =
 //                    ListingFragmentDirections.actionListingFragmentToOfferFragment((FirestoreRepo.getInstance().changeListingToMeBuy(listing,
 //                            new Message("", "", "", "","","", "", 0, "false"))));
 //            navController.navigate(action);
-////        }
+        }
     }
 
     public void onProfileClicked(User user){
         int currentGraph = navController.getGraph().getId();
         if(currentGraph == R.id.home_graph){
-            HomeGraphDirections.ActionGlobalProfileFragment action =
-                    HomeGraphDirections.actionGlobalProfileFragment(user.getUid());
+            HomeGraphDirections.ActionGlobalProfileFragment2 action =
+                    HomeGraphDirections.actionGlobalProfileFragment2(user.getUid());
             navController.navigate(action);
         }else if(currentGraph == R.id.profile_graph){
             ProfileGraphDirections.ActionProfileGraphSelf action =

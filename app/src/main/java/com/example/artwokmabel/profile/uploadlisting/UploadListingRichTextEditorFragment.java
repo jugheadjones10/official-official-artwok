@@ -142,44 +142,24 @@ public class UploadListingRichTextEditorFragment extends Fragment {
         initView();
     }
 
-//    @Override
-//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-//        //inflater.inflate(R.menu.upload_post_toolbar, menu);
-//        super.onCreateOptionsMenu(menu,inflater);
-//    }
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_upload_listing_rich_text, menu);
+        super.onCreateOptionsMenu(menu,inflater);
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-//            case R.id.upload_post:
-//                onPostUpload();
-//                return true;
-            case android.R.id.home:
-                Log.d("htmlcontent", mEditor.getHtml());
+            case R.id.save:
                 viewModel.setHtmlContent(mEditor.getHtml());
+                navController.navigateUp();
+                return true;
+            case android.R.id.home:
+                //intercept back button
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-    public interface OnPostUploadFinished{
-        void onPostUploadFinished(boolean isSuccessful);
-    }
-
-    public void onPostUpload(){
-        binding.progressBar.setVisibility(View.VISIBLE);
-        //TODO Should the below database call be allowed or should it be put in a view model?
-        String htmlContent = binding.editor.getHtml();
-
-        FirestoreRepo.getInstance().uploadNewPost(htmlContent, mAuth.getCurrentUser().getUid(), (isSuccessful) -> {
-            binding.progressBar.setVisibility(View.GONE);
-            if(isSuccessful){
-                navController.navigateUp();
-            }else{
-                Toast.makeText(requireActivity(), "Failed to upload post", Toast.LENGTH_LONG)
-                        .show();
-            }
-        });
     }
 
     //Set grey bg if not, set not if grey bg
@@ -479,9 +459,9 @@ public class UploadListingRichTextEditorFragment extends Fragment {
 
                 //getActivity().dispatchKeyEvent(KeyC);
 
-                mEditor.checkIfStart((String s) -> {
-                    Log.d("isstart", mEditor.getHtml());
-                    if(s.equals("true")){
+//                mEditor.checkIfStart((String s) -> {
+//                    Log.d("isstart", mEditor.getHtml());
+//                    if(s.equals("true")){
 //                        for(String viewName : selectedViews){
 //                            switch (viewName) {
 //                                case "bold":
@@ -499,12 +479,12 @@ public class UploadListingRichTextEditorFragment extends Fragment {
 //                            }
 //                        }
 //                        selectedViews.clear();
-                        Log.d("isstart", "It's the start");
-                    }else{
-                        Log.d("isstart", "It's not the start");
-                    }
+//                        Log.d("isstart", "It's the start");
+//                    }else{
+//                        Log.d("isstart", "It's not the start");
+//                    }
 
-                });
+//                });
                 //clearAllBackgrounds();
                 new ImagePickerCallback(requireActivity(), REQUEST_IMAGE, viewModel, SHOW_ALL_OPTIONS).onImagePickerClicked();
                 viewModel.getImagePath().observe(getViewLifecycleOwner(), new Observer<Uri>() {

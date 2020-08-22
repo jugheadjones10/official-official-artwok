@@ -107,8 +107,8 @@ public class FirestorePagingAdapterProfileImpl extends FirestorePagingAdapter<Ma
                 (MainPost post) -> {
                     int currentDestination = navController.getCurrentDestination().getId();
                     if(currentDestination == R.id.home_graph || currentDestination == R.id.favoritesFragment){
-                        HomeGraphDirections.ActionGlobalProfileFragment action =
-                                HomeGraphDirections.actionGlobalProfileFragment(post.getUser_id());
+                        HomeGraphDirections.ActionGlobalProfileFragment2 action =
+                                HomeGraphDirections.actionGlobalProfileFragment2(post.getUser_id());
                         navController.navigate(action);
                     }
                 },

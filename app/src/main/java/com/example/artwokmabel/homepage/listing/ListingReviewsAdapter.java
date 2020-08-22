@@ -120,8 +120,8 @@ public class ListingReviewsAdapter extends RecyclerView.Adapter<ListingReviewsAd
         public void onProfileClicked(Review review){
             int currentGraph = navController.getGraph().getId();
             if(currentGraph == R.id.home_graph){
-                HomeGraphDirections.ActionGlobalProfileFragment action =
-                        HomeGraphDirections.actionGlobalProfileFragment(review.getPosterid());
+                HomeGraphDirections.ActionGlobalProfileFragment2 action =
+                        HomeGraphDirections.actionGlobalProfileFragment2(review.getPosterid());
                 navController.navigate(action);
             }else if(currentGraph == R.id.profile_graph){
                 ProfileGraphDirections.ActionProfileGraphSelf action =

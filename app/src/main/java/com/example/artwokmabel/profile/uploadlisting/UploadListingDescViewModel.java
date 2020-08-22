@@ -30,7 +30,6 @@ public class UploadListingDescViewModel extends ViewModel implements UploadViewM
 
     public void setHtmlContent(String html){
         this.htmlContent.setValue(html);
-        Log.d("insideview", htmlContent.getValue());
     }
 
 

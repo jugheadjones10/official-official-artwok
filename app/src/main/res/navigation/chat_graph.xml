@@ -63,8 +63,7 @@
         android:label="ProfileFragment" >
         <argument
             android:name="userId"
-            app:argType="string"
-            app:nullable="true" />
+            app:argType="string" />
     </fragment>
     <action android:id="@+id/action_global_profileFragment3" app:destination="@id/profileFragment3" />
     <fragment
