@@ -131,8 +131,8 @@ public class PostFragment extends Fragment {
     public void onProfileClicked(User user){
         int currentGraph = navController.getGraph().getId();
         if(currentGraph == R.id.home_graph){
-            HomeGraphDirections.ActionGlobalProfileFragment action =
-                    HomeGraphDirections.actionGlobalProfileFragment(post.getUser_id());
+            HomeGraphDirections.ActionGlobalProfileFragment2 action =
+                    HomeGraphDirections.actionGlobalProfileFragment2(post.getUser_id());
             navController.navigate(action);
         }else if(currentGraph == R.id.profile_graph){
             ProfileGraphDirections.ActionProfileGraphSelf action =

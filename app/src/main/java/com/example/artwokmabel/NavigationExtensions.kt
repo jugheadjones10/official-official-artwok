@@ -17,6 +17,7 @@
 package com.example.artwokmabel
 
 import android.content.Intent
+import android.os.Bundle
 import android.util.SparseArray
 import androidx.core.util.forEach
 import androidx.core.util.set
@@ -26,6 +27,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseAuth
+
 
 /**
  * Manages the various graphs needed for a [BottomNavigationView].
@@ -226,12 +229,21 @@ private fun obtainNavHostFragment(
     navGraphId: Int,
     containerId: Int
 ): NavHostFragment {
+    val mAuth : FirebaseAuth = FirebaseAuth.getInstance()
+
     // If the Nav Host fragment exists, return it
     val existingFragment = fragmentManager.findFragmentByTag(fragmentTag) as NavHostFragment?
     existingFragment?.let { return it }
 
     // Otherwise, create it and return it.
-    val navHostFragment = NavHostFragment.create(navGraphId)
+    val navHostFragment: NavHostFragment
+    if(navGraphId == R.id.profile_graph){
+        val bundle = Bundle()
+        bundle.putString("userId", mAuth.currentUser?.uid)
+        navHostFragment = NavHostFragment.create(navGraphId, bundle)
+    }else{
+        navHostFragment = NavHostFragment.create(navGraphId)
+    }
     fragmentManager.beginTransaction()
         .add(containerId, navHostFragment, fragmentTag)
         .commitNow()

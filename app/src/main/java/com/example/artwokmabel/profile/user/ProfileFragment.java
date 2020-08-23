@@ -61,6 +61,9 @@ public class ProfileFragment extends Fragment {
                 userId = mAuth.getCurrentUser().getUid();
             }
         }
+//        else{
+//            userId = mAuth.getCurrentUser().getUid();
+//        }
 
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false);

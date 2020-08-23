@@ -17,6 +17,7 @@ public class UploadListingViewModel extends ViewModel implements UploadViewModel
     private MutableLiveData<Uri> imagePath = new MutableLiveData<>();
     private MutableLiveData<Uri> videoPath = new MutableLiveData<>();
     private MutableLiveData<Boolean> uploadSuccess = new MutableLiveData<>();
+    private MutableLiveData<String> listingImageUri = new MutableLiveData<>();
 
     public UploadListingViewModel(){
 
@@ -48,6 +49,14 @@ public class UploadListingViewModel extends ViewModel implements UploadViewModel
                 uploadSuccess.setValue(false);
             }
         });
+    }
+
+    public void setListingImageUri(String imageUri){
+        listingImageUri.setValue(imageUri);
+    }
+
+    public LiveData<String> getListingImageUri(){
+        return listingImageUri;
     }
 
     public interface UploadListingCallback{

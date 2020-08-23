@@ -4,7 +4,7 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/artwok_background_blue</item>
-        <item name="colorPrimaryDark">@color/white</item>
+        <item name="colorPrimaryDark">@color/artwok_background_blue</item>
         <item name="colorAccent">@color/artwok_background_blue</item>
 
         <!--        Material themes-->
@@ -48,7 +48,6 @@
     <style name="Widget.Artwok.Toolbar" parent="Widget.MaterialComponents.Toolbar.Primary">
         <item name="contentInsetStartWithNavigation">0dp</item>
         <item name="android:elevation">0dp</item>
-        <item name="android:background">@color/white</item>
     </style>
 
     <style name="TextAppearance.Artwok.ToolbarText" parent="MaterialAlertDialog.MaterialComponents.Title.Text">

@@ -1,9 +1,11 @@
 package com.example.artwokmabel.profile.uploadlisting;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -44,6 +46,27 @@ public class UploadListingDescFragment extends Fragment {
         viewModel = new ViewModelProvider(requireActivity()).get(UploadListingDescViewModel.class);
 
         instance = this;
+
+        binding.listingWebView.setOnTouchListener(new View.OnTouchListener() {
+            private final static long MAX_TOUCH_DURATION = 100;
+            private long m_DownTime;
+            @SuppressLint("ClickableViewAccessibility")
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        m_DownTime = event.getEventTime(); //init time
+                        return true;
+                    case MotionEvent.ACTION_UP:
+                        if(event.getEventTime() - m_DownTime <= MAX_TOUCH_DURATION)
+                            onGoToRichTextEditor();
+                        break;
+                    default:
+                        break; //No-Op
+                }
+                return false;
+            }
+        });
 
         return binding.getRoot();
     }
