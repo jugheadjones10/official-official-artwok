@@ -30,8 +30,8 @@
             android:layout_marginBottom="20dp"
             android:backgroundTint="@color/artwok_background_blue"
             android:contentDescription="Offer"
-            android:text="Offer"
             android:onClick="@{() -> onofferclicked.onOfferClicked(listing)}"
+            android:text="Offer"
             android:textAllCaps="false" />
 
 
@@ -129,11 +129,11 @@
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/profile_picture"
-                        android:layout_width="55dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_gravity="left|center_vertical"
                         android:onClick="@{() -> onprofileclicked.onProfileClicked(user)}"
-                        android:padding="8dp" />
+                        android:layout_marginEnd="5dp" />
 
                     <LinearLayout
                         android:layout_width="fill_parent"

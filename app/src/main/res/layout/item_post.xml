@@ -89,6 +89,8 @@
             android:layout_height="match_parent"
             app:layout_constraintHeight_max="@dimen/post_max_height"
             app:layout_constrainedHeight="true"
+            android:paddingStart="10dp"
+            android:paddingEnd="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/guideline4">
