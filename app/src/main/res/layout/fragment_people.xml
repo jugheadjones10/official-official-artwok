@@ -39,30 +39,30 @@
                         android:layout_weight="1"
                         android:orientation="horizontal">
 
-                        <com.google.android.material.textfield.TextInputLayout
-                            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            app:boxStrokeColor="@color/white">
+<!--                        <com.google.android.material.textfield.TextInputLayout-->
+<!--                            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"-->
+<!--                            android:layout_width="0dp"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            app:boxStrokeColor="@color/white">-->
 
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/mainsearchbar"
-                                android:background="@android:color/transparent"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content" />
+<!--                            <com.google.android.material.textfield.TextInputEditText-->
+<!--                                android:id="@+id/mainsearchbar"-->
+<!--                                android:background="@android:color/transparent"-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="wrap_content" />-->
 
-                        </com.google.android.material.textfield.TextInputLayout>
+<!--                        </com.google.android.material.textfield.TextInputLayout>-->
 
-<!--                        <EditText-->
-<!--                            android:id="@+id/mainsearchbar"-->
-<!--                            android:focusable="false"-->
-<!--                            android:layout_width="fill_parent"-->
-<!--                            android:layout_height="36dp"-->
-<!--                            android:layout_gravity="center_horizontal|center_vertical"-->
-<!--                            android:layout_weight="1"-->
-<!--                            android:background="@layout/rounded_border_edittext"-->
-<!--                            android:hint="Search..."-->
-<!--                            android:paddingLeft="15dp" />-->
+                        <EditText
+                            android:id="@+id/mainsearchbar"
+                            android:focusable="false"
+                            android:layout_width="fill_parent"
+                            android:layout_height="36dp"
+                            android:layout_gravity="center_horizontal|center_vertical"
+                            android:layout_weight="1"
+                            android:background="@layout/rounded_border_edittext"
+                            android:hint="Search..."
+                            android:paddingLeft="15dp" />
 
                     </LinearLayout>
                 </androidx.appcompat.widget.Toolbar>
