@@ -69,7 +69,6 @@ public class UploadListingFragment extends Fragment {
         binding.uploadPicL.setVisibility(View.VISIBLE);
         binding.setUploadListingFragment(this);
 
-
         ((AppCompatActivity)requireActivity()).setSupportActionBar(binding.indivToolbar);
         ((AppCompatActivity)requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity)requireActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);

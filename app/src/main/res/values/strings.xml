@@ -50,7 +50,7 @@
 
     <string name="upload">Upload</string>
     <string name="add_listing">Add Listing</string>
-    <string name="item">Item</string>
+    <string name="item">Item name</string>
     <string name="price">Price</string>
     <string name="set_price">Set Price</string>
     <string name="delivery">Delivery</string>
