@@ -185,28 +185,32 @@ public class HomeFeedFragment extends Fragment {
             @Override
             public void onChanged(User user) {
                 if(user != null){
-                    Log.d("numtimes", "I've been loaded!");
-                    PagedList.Config config = new PagedList.Config.Builder()
-                            .setEnablePlaceholders(false)
-                            .setInitialLoadSizeHint(4)
-                            .setPrefetchDistance(2)
-                            .setPageSize(3)
-                            .build();
 
-                    FirestorePagingOptions<ListingPost> options = new FirestorePagingOptions.Builder<ListingPost>()
-                            .setQuery(viewModel.getFeedPostsQuery(user.getFollowing()), config, new SnapshotParser<ListingPost>() {
-                                @NonNull
-                                @Override
-                                public ListingPost parseSnapshot(@NonNull DocumentSnapshot snapshot) {
-                                    Log.d("checkpost", "Within parse snapshot" + snapshot.getString("username"));
-                                    return FirestoreRepo.getInstance().changeDocToListingPostModel(snapshot);
-                                }
-                            })
-                            .build();
+                    if(user.getFollowing().size() > 0){
+                        Log.d("numtimes", "I've been loaded!");
+                        PagedList.Config config = new PagedList.Config.Builder()
+                                .setEnablePlaceholders(false)
+                                .setInitialLoadSizeHint(4)
+                                .setPrefetchDistance(2)
+                                .setPageSize(3)
+                                .build();
 
-                    adapter = new FirestorePagingAdapterImpl(options, user, getContext(), navController, binding.swipeRefreshLayout);
-                    binding.recyclerview.setAdapter(adapter);
-                    adapter.startListening();
+                        FirestorePagingOptions<ListingPost> options = new FirestorePagingOptions.Builder<ListingPost>()
+                                .setQuery(viewModel.getFeedPostsQuery(user.getFollowing()), config, new SnapshotParser<ListingPost>() {
+                                    @NonNull
+                                    @Override
+                                    public ListingPost parseSnapshot(@NonNull DocumentSnapshot snapshot) {
+                                        Log.d("checkpost", "Within parse snapshot" + snapshot.getString("username"));
+                                        return FirestoreRepo.getInstance().changeDocToListingPostModel(snapshot);
+                                    }
+                                })
+                                .build();
+
+                        adapter = new FirestorePagingAdapterImpl(options, user, getContext(), navController, binding.swipeRefreshLayout);
+                        binding.recyclerview.setAdapter(adapter);
+                        adapter.startListening();
+                    }
+
                 }
             }
         });

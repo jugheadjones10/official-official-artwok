@@ -1,6 +1,7 @@
 package com.example.artwokmabel.profile.uploadlisting;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
@@ -74,6 +75,8 @@ public class UploadListingDescFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
         navController = Navigation.findNavController(requireActivity(), R.id.nav_host_container);
+
+        binding.listingWebView.setBackgroundColor(Color.TRANSPARENT);
 
         viewModel.getHtmlContent().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override

@@ -127,6 +127,7 @@
     <style name="ListingsTabsStyles" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">15dp</item>
         <item name="textAllCaps">false</item>
+        <item name="backgroundColor">@color/white</item>
     </style>
 
     <style name="AppTheme.NoActionBar.NoActionBar">

@@ -171,19 +171,25 @@ public class UploadPostFragment extends Fragment {
     }
 
     public void onPostUpload(){
-        binding.progressBar.setVisibility(View.VISIBLE);
         //TODO Should the below database call be allowed or should it be put in a view model?
         String htmlContent = binding.editor.getHtml();
 
-        FirestoreRepo.getInstance().uploadNewPost(htmlContent, mAuth.getCurrentUser().getUid(), (isSuccessful) -> {
-            binding.progressBar.setVisibility(View.GONE);
-            if(isSuccessful){
-                navController.navigateUp();
-            }else{
-                Toast.makeText(requireActivity(), "Failed to upload post", Toast.LENGTH_LONG)
-                        .show();
-            }
-        });
+        if(htmlContent == null){
+            Toast.makeText(requireContext(), "Please write something in your post", Toast.LENGTH_LONG).show();
+        }else{
+            binding.progressBar.setVisibility(View.VISIBLE);
+
+            FirestoreRepo.getInstance().uploadNewPost(htmlContent, mAuth.getCurrentUser().getUid(), (isSuccessful) -> {
+                binding.progressBar.setVisibility(View.GONE);
+                if(isSuccessful){
+                    navController.navigateUp();
+                }else{
+                    Toast.makeText(requireActivity(), "Failed to upload post", Toast.LENGTH_LONG)
+                            .show();
+                }
+            });
+        }
+
     }
 
     //Set grey bg if not, set not if grey bg
