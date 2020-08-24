@@ -6,17 +6,32 @@
     <fragment
         android:id="@+id/notif_graph"
         android:name="com.example.artwokmabel.notifs.NotifsFragment"
-        android:label="NotifsFragment" >
-        <action
-            android:id="@+id/action_notif_graph_to_profileFragment2"
-            app:destination="@id/profileFragment2" />
+        android:label="NotifsFragment" />
+    <fragment
+        android:id="@+id/listingFragment4"
+        android:name="com.example.artwokmabel.homepage.listing.ListingFragment"
+        android:label="ListingFragment" >
+        <argument
+            android:name="listing"
+            app:argType="com.example.artwokmabel.models.Listing" />
     </fragment>
     <fragment
-        android:id="@+id/profileFragment2"
+        android:id="@+id/postFragment4"
+        android:name="com.example.artwokmabel.homepage.post.PostFragment"
+        android:label="PostFragment" >
+        <argument
+            android:name="post"
+            app:argType="com.example.artwokmabel.models.MainPost" />
+    </fragment>
+    <action android:id="@+id/action_global_listingFragment4" app:destination="@id/listingFragment4" />
+    <action android:id="@+id/action_global_postFragment4" app:destination="@id/postFragment4" />
+    <fragment
+        android:id="@+id/profileFragment"
         android:name="com.example.artwokmabel.profile.user.ProfileFragment"
         android:label="ProfileFragment" >
         <argument
             android:name="userId"
             app:argType="string" />
     </fragment>
+    <action android:id="@+id/action_global_profileFragment" app:destination="@id/profileFragment" />
 </navigation>

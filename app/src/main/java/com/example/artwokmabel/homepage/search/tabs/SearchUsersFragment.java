@@ -43,7 +43,6 @@ public class SearchUsersFragment extends Fragment {
         binding.usersList.setHasFixedSize(true);
         binding.usersList.setLayoutManager(new LinearLayoutManager(getContext()));
 
-
         SearchFragment.getInstance().callSearch("", 1);
 
         return binding.getRoot();

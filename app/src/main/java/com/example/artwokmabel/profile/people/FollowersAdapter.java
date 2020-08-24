@@ -72,8 +72,10 @@ public class FollowersAdapter extends RecyclerView.Adapter<FollowersAdapter.myHo
             }
             if(followingIds.contains(data.getUid())){
                 holder.binding.followingButton.setText("Following");
+                holder.binding.followingButton.setBackgroundColor(mContext.getResources().getColor(R.color.category_title_grey));
             }else{
                 holder.binding.followingButton.setText("Follow");
+                holder.binding.followingButton.setBackgroundColor(mContext.getResources().getColor(R.color.artwok_background_blue));
             }
         }else{
             holder.binding.followingButton.setText("Follow");
@@ -84,9 +86,6 @@ public class FollowersAdapter extends RecyclerView.Adapter<FollowersAdapter.myHo
         holder.binding.setCallbacks(new UserItemCallback(
             //On User Clicked
             (User user) -> {
-//                ProfileGraphDirections.ActionProfileGraphSelf action =
-//                        ProfileGraphDirections.actionProfileGraphSelf(user.getUid());
-//                navController.navigate(action);
                 int currentDestination = navController.getCurrentDestination().getId();
                 if(currentDestination == R.id.searchFragment) {
                     HomeGraphDirections.ActionGlobalProfileFragment2 action =
@@ -109,12 +108,14 @@ public class FollowersAdapter extends RecyclerView.Adapter<FollowersAdapter.myHo
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     button.setText("Follow");
+                                    button.setBackgroundColor(mContext.getResources().getColor(R.color.artwok_background_blue));
                                     viewModel.removeUserFollowing(mAuth.getCurrentUser().getUid(), user.getUid());
                                 }
                             })
                             .show();
                 }else{
                     button.setText("Following");
+                    button.setBackgroundColor(mContext.getResources().getColor(R.color.category_title_grey));
                     viewModel.addUserFollowing(mAuth.getCurrentUser().getUid(), user.getUid());
                 }
             },
