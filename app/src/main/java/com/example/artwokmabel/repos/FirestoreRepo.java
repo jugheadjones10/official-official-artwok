@@ -2307,11 +2307,12 @@ public class FirestoreRepo {
                             tempData.clear();
                             tempData.addAll(orderChats);
 
-                            Log.d("whynosort", "BEFORE SORT : " + tempData.get(0).getListing().getName());
+                            //TODO: why does the below give an error?
+                            //Log.d("whynosort", "BEFORE SORT : " + tempData.get(0).getListing().getName());
 
                             Collections.sort(tempData, new SortOrderChats());
 
-                            Log.d("whynosort", tempData.get(0).getListing().getName());
+                            //Log.d("whynosort", tempData.get(0).getListing().getName());
                             data.setValue(tempData);
                         }
                     });
