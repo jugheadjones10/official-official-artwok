@@ -32,11 +32,11 @@ public class FavoriteRequestsFragment extends Fragment {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_favorite_requests, container, false);
 
-        binding.favRequestsRecyclerview.setHasFixedSize(true);
-        binding.favRequestsRecyclerview.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-
-        adapter = new RequestsAdapter(getContext());
-        binding.favRequestsRecyclerview.setAdapter(adapter);
+//        binding.favRequestsRecyclerview.setHasFixedSize(true);
+//        binding.favRequestsRecyclerview.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+//
+//        adapter = new RequestsAdapter(getContext());
+//        binding.favRequestsRecyclerview.setAdapter(adapter);
 
         viewModel = ViewModelProviders.of(this).get(FavoriteRequestsFragmentViewModel.class);
         observeViewModel(viewModel);
@@ -53,7 +53,7 @@ public class FavoriteRequestsFragment extends Fragment {
             public void onChanged(@Nullable List<Request> requests) {
                 if (requests != null) {
 //                    if(listings.size() != 0){
-                    adapter.setRequestsList(requests);
+//                    adapter.setRequestsList(requests);
 //                    }else{
 //                        //List<Listing> altListings = new ArrayList<>(0);
 //                        adapter.setListingsList(listings);
