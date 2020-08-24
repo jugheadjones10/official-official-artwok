@@ -35,8 +35,8 @@ public class FaqFragment extends Fragment {
         expandableListTitle = new ArrayList<String>(expandableListDetail.keySet());
         expandableListAdapter = new FaqFragmentAdapter(getActivity(), expandableListTitle, expandableListDetail);
 
-        binding.sellerExpandableFaq.setAdapter(expandableListAdapter);
-        binding.buyerExpandableFaq.setAdapter(expandableListAdapter);
+//        binding.sellerExpandableFaq.setAdapter(expandableListAdapter);
+//        binding.buyerExpandableFaq.setAdapter(expandableListAdapter);
 
         return binding.getRoot();
     }

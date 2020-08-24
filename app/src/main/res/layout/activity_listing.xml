@@ -170,7 +170,7 @@
                         android:layout_gravity="center_vertical"
                         android:adjustViewBounds="true"
                         android:background="@null"
-                        android:padding="10dp"
+                        android:padding="12dp"
                         android:scaleType="fitCenter"
                         android:id="@+id/favorite_button"
                         app:srcCompat="@drawable/favourite_post" />
