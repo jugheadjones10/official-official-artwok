@@ -24,18 +24,39 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center_horizontal"
-            android:layout_marginBottom="@dimen/spacing_large"
-            android:backgroundTint="@color/artwok_background_blue"
-            android:contentDescription="Offer"
-            android:text="Offer"
-            android:onClick="@{() -> ListingFragment.onOfferClicked(listing)}"
+
+        <Button
             android:id="@+id/offer_button"
-            android:textAllCaps="false" />
+            android:layout_width="140dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="120dp"
+            android:layout_marginEnd="120dp"
+            android:layout_marginBottom="20dp"
+            android:layout_gravity="center_horizontal|bottom"
+            android:alpha="0.95"
+            android:background="@color/artwok_lightblue"
+            android:fontFamily="@string/fontFamily__sans_serif_medium"
+            android:gravity="center_horizontal|center_vertical"
+            android:onClick="@{() -> ListingFragment.onOfferClicked(listing)}"
+            android:text="Offer"
+            android:textAllCaps="false"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+<!--        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton-->
+<!--            android:id="@+id/offer_button"-->
+<!--            style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="bottom|center_horizontal"-->
+<!--            android:layout_marginBottom="@dimen/spacing_large"-->
+<!--            android:backgroundTint="@color/artwok_lightblue"-->
+<!--            android:contentDescription="Offer"-->
+<!--            android:onClick="@{() -> ListingFragment.onOfferClicked(listing)}"-->
+<!--            android:text="Offer"-->
+<!--            android:textAllCaps="false" />-->
 
 
         <com.google.android.material.appbar.AppBarLayout
