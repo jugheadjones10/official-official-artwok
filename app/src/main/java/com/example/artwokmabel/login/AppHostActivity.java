@@ -76,16 +76,24 @@ public class AppHostActivity extends AppCompatActivity {
                         );
 
                     } else if(value.equals("newComment")){
-
-                        Intent intent = new Intent(this, PostActivity.class);
-
+//                        Intent intent = new Intent(this, PostActivity.class);
+//
+//                        FirestoreRepo.getInstance().getPost(getIntent().getStringExtra("postId"),
+//                            (MainPost post) -> {
+//                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                                intent.putExtra("post", post);
+//                                startActivity(intent);
+//                                finish();
+//                        });
+                        Intent intent = new Intent(this, HomePageActivity.class);
                         FirestoreRepo.getInstance().getPost(getIntent().getStringExtra("postId"),
-                            (MainPost post) -> {
-                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                intent.putExtra("post", post);
-                                startActivity(intent);
-                                finish();
-                        });
+                                (MainPost post) -> {
+                                    intent.putExtra("type", "comment");
+                                    intent.putExtra("post", post);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    startActivity(intent);
+                                    finish();
+                                });
 
                     }else if(value.equals("newFollower")){
 

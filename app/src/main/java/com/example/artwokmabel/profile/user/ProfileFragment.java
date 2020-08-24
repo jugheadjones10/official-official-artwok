@@ -55,12 +55,12 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         mAuth = FirebaseAuth.getInstance();
 
-        if(getArguments() != null){
+//        if(getArguments() != null){
             userId = ProfileFragmentArgs.fromBundle(getArguments()).getUserId();
             if(userId == null){
                 userId = mAuth.getCurrentUser().getUid();
             }
-        }
+//        }
 //        else{
 //            userId = mAuth.getCurrentUser().getUid();
 //        }

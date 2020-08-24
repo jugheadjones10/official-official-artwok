@@ -90,6 +90,14 @@ class HomePageActivity : AppCompatActivity() {
                 nav_view.selectedItemId = R.id.home_graph
                 currentNavController?.value?.navigate(action)
             }
+        }else if (type == "comment"){
+            val post = intent.getSerializableExtra("post")
+
+            if(post is MainPost){
+                val action = HomeGraphDirections.actionGlobalPostFragment(post);
+                nav_view.selectedItemId = R.id.home_graph
+                currentNavController?.value?.navigate(action)
+            }
         }
 
     }

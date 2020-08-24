@@ -693,9 +693,7 @@ public class FirestoreRepo {
                         //Get array list of user following
 
                         //Remove myself from the list
-                        if(followingIds.contains(FirebaseAuth.getInstance().getCurrentUser().getUid())){
-                            followingIds.remove(FirebaseAuth.getInstance().getCurrentUser().getUid());
-                        }
+                        followingIds.remove(FirebaseAuth.getInstance().getCurrentUser().getUid());
                         Log.d("userfollowings", "Following IDs List : " + followingIds.toString());
 
                         tempData.clear();
@@ -761,46 +759,58 @@ public class FirestoreRepo {
         final MutableLiveData<List<User>> data = new MutableLiveData<>();
         List<User> tempData = new ArrayList<>();
 
-        Log.d("thestuffreturnedREQUEST", "user id from b4 db call" + userId);
-
         db.collection("Users")
-                .whereArrayContains("following", userId)
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                .document(userId)
+                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
                     @Override
-                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                        if(!queryDocumentSnapshots.isEmpty()){
+                    public void onEvent(@Nullable DocumentSnapshot snapshot,
+                                        @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.w(TAG, "Listen failed.", e);
+                            return;
+                        }
 
-                            ArrayList<String> followersIds = new ArrayList<>();
-                            for(DocumentSnapshot user: queryDocumentSnapshots){
-                                String userId = user.getString("uid");
-                                followersIds.add(userId);
-                            }
+                        if (snapshot != null && snapshot.exists()) {
+
+                            ArrayList<String> followerIds = (ArrayList<String>) snapshot.getData().get("followers");
+
+                            //Remove myself from the list
+                            followerIds.remove(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
                             tempData.clear();
                             List<Task> tasks = new ArrayList<>();
-                            for(int i = 0; i < followersIds.size(); i++) {
-                                Log.d("thestuffreturnedREQUEST", "I'm inside the for loop now  " + followersIds.get(0));
+                            for(int i = 0; i < followerIds.size(); i++) {
 
                                 Task task =  db.collection("Users")
-                                        .whereEqualTo("uid", followersIds.get(i))
+                                        .whereEqualTo("uid", followerIds.get(i))
                                         .get()
                                         .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                                             @Override
                                             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                                                Log.d("thestuffreturnedREQUEST", "I'm below the query snapshot  " + Integer.toString(queryDocumentSnapshots.size()));
+                                                Log.d("userfollowings", "Size of query document snapshot : " + Integer.toString(queryDocumentSnapshots.size()));
 
                                                 if(!queryDocumentSnapshots.isEmpty()){
                                                     for(DocumentSnapshot user: queryDocumentSnapshots){
                                                         User userObject = changeDocToUserModel(user);
-                                                        Log.d("thestuffreturnedREQUEST", "middleman within the for loop" + userObject.getUid());
-                                                        tempData.add(userObject);
+                                                        Log.d("userfollowings", "Single Following ID within for loop : " + userObject.getUid());
+
+                                                        //Ensure same user is not added to the list
+                                                        //Didn't need this before... don't know why we suddenly need it
+                                                        ArrayList<String> tempDataIDs = new ArrayList<>();
+                                                        for(User tempUser : tempData){
+                                                            tempDataIDs.add(tempUser.getUid());
+                                                        }
+                                                        if(!tempDataIDs.contains(userObject.getUid())){
+                                                            tempData.add(userObject);
+                                                        }
+                                                        Log.d("userfollowings", "Single Following ID within for loop : " + userObject.getUid());
                                                     }
                                                 }
                                             }
                                         }).addOnFailureListener(new OnFailureListener() {
                                             @Override
                                             public void onFailure(@NonNull Exception e) {
-                                                Log.d("thestuffreturnedREQUEST", "THE DB CALL FAILED");
+                                                Log.d("userfollowings", "THE DB CALL FAILED");
                                             }
                                         });
                                 tasks.add(task);
@@ -810,17 +820,90 @@ public class FirestoreRepo {
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
-                                            Log.d("thestuffreturnedREQUEST", "final resulting temp data" + tempData.toString());
+                                            Log.d("userfollowings", "final resulting temp data" + tempData.toString());
+
                                             Collections.sort(tempData, new SortUsersByName());
                                             data.setValue(tempData);
                                         }
                                     });
-
+                        } else {
+                            Log.d(TAG, " data: null");
                         }
                     }
                 });
+
         return data;
     }
+
+
+//    public LiveData<List<User>> getUserFollowers(String userId){
+//        final MutableLiveData<List<User>> data = new MutableLiveData<>();
+//        List<User> tempData = new ArrayList<>();
+//
+//        Log.d("thestuffreturnedREQUEST", "user id from b4 db call" + userId);
+//
+//        db.collection("Users")
+//                .whereArrayContains("following", userId)
+//                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+//                        if(!queryDocumentSnapshots.isEmpty()){
+//
+//                            ArrayList<String> followersIds = new ArrayList<>();
+//                            for(DocumentSnapshot user: queryDocumentSnapshots){
+//                                String userId = user.getString("uid");
+//                                followersIds.add(userId);
+//                            }
+//
+//                            if(followersIds.size() > 0){
+//                                followersIds.remove(FirebaseAuth.getInstance().getCurrentUser().getUid());
+//                            }
+//
+//                            tempData.clear();
+//                            List<Task> tasks = new ArrayList<>();
+//                            for(int i = 0; i < followersIds.size(); i++) {
+//                                Log.d("thestuffreturnedREQUEST", "I'm inside the for loop now  " + followersIds.get(0));
+//
+//                                Task task =  db.collection("Users")
+//                                        .whereEqualTo("uid", followersIds.get(i))
+//                                        .get()
+//                                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+//                                            @Override
+//                                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+//                                                Log.d("thestuffreturnedREQUEST", "I'm below the query snapshot  " + Integer.toString(queryDocumentSnapshots.size()));
+//
+//                                                if(!queryDocumentSnapshots.isEmpty()){
+//                                                    for(DocumentSnapshot user: queryDocumentSnapshots){
+//                                                        User userObject = changeDocToUserModel(user);
+//                                                        Log.d("thestuffreturnedREQUEST", "middleman within the for loop" + userObject.getUid());
+//                                                        tempData.add(userObject);
+//                                                    }
+//                                                }
+//                                            }
+//                                        }).addOnFailureListener(new OnFailureListener() {
+//                                            @Override
+//                                            public void onFailure(@NonNull Exception e) {
+//                                                Log.d("thestuffreturnedREQUEST", "THE DB CALL FAILED");
+//                                            }
+//                                        });
+//                                tasks.add(task);
+//                            }
+//
+//                            Tasks.whenAll(tasks.toArray(new Task[0]))
+//                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                                        @Override
+//                                        public void onSuccess(Void aVoid) {
+//                                            Log.d("thestuffreturnedREQUEST", "final resulting temp data" + tempData.toString());
+//                                            Collections.sort(tempData, new SortUsersByName());
+//                                            data.setValue(tempData);
+//                                        }
+//                                    });
+//
+//                        }
+//                    }
+//                });
+//        return data;
+//    }
 
     public LiveData<List<String>> getUserFavRequests(String userId){
         final MutableLiveData<List<String>> data = new MutableLiveData<>();

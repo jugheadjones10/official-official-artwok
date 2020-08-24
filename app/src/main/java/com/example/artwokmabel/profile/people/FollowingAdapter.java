@@ -65,34 +65,37 @@ public class FollowingAdapter extends RecyclerView.Adapter<FollowingAdapter.myHo
         holder.binding.setButton(holder.binding.followingButton);
 
         holder.binding.setButtontext("Following");
+        holder.binding.followingButton.setBackgroundColor(mContext.getResources().getColor(R.color.category_title_grey));
+
         holder.binding.setCallbacks(new UserItemCallback(
-                //On User Clicked
-                (User user) -> {
-                    ProfileGraphDirections.ActionProfileGraphSelf action =
-                            ProfileGraphDirections.actionProfileGraphSelf(user.getUid());
-                    navController.navigate(action);
-                },
-                //On Button Clicked
-                (Button button, User user) -> {
-                    new MaterialAlertDialogBuilder(mContext)
-                            .setTitle("Unfollow user?")
-                            .setMessage("")
-                            .setNeutralButton("Cancel", null)
-                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    button.setText("Follow");
-                                    viewModel.removeUserFollowing(mAuth.getCurrentUser().getUid(), user.getUid());
-                                }
-                            })
-                            .show();
-                },
-                //On Chat Clicked
-                (User user) -> {
-                    PeopleFragmentDirections.ActionPeopleFragmentToChatFragment action =
-                            PeopleFragmentDirections.actionPeopleFragmentToChatFragment(user.getUid(), user.getUsername(), user.getProfile_url());
-                    navController.navigate(action);
-                }
+            //On User Clicked
+            (User user) -> {
+                ProfileGraphDirections.ActionProfileGraphSelf action =
+                        ProfileGraphDirections.actionProfileGraphSelf(user.getUid());
+                navController.navigate(action);
+            },
+            //On Button Clicked
+            (Button button, User user) -> {
+                new MaterialAlertDialogBuilder(mContext)
+                        .setTitle("Unfollow user?")
+                        .setMessage("")
+                        .setNeutralButton("Cancel", null)
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                button.setText("Follow");
+                                button.setBackgroundColor(mContext.getResources().getColor(R.color.artwok_background_blue));
+                                viewModel.removeUserFollowing(mAuth.getCurrentUser().getUid(), user.getUid());
+                            }
+                        })
+                        .show();
+            },
+            //On Chat Clicked
+            (User user) -> {
+                PeopleFragmentDirections.ActionPeopleFragmentToChatFragment action =
+                        PeopleFragmentDirections.actionPeopleFragmentToChatFragment(user.getUid(), user.getUsername(), user.getProfile_url());
+                navController.navigate(action);
+            }
         ));
 
         Picasso.get()

@@ -3,6 +3,7 @@ package com.example.artwokmabel.notifs;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import androidx.navigation.NavController;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.artwokmabel.NotifGraphDirections;
 import com.example.artwokmabel.Utils.TransactFragment;
 import com.example.artwokmabel.databinding.ItemFollowerBinding;
 import com.example.artwokmabel.databinding.ItemNotifBinding;
@@ -73,33 +75,42 @@ public class NotifsAdapter extends RecyclerView.Adapter<NotifsAdapter.NotifViewH
     public class OnNotifcationClicked{
         public void onNotificationClicked(Notification notif){
 
-            Intent intent;
             if(notif.getAction() == Notification.COMMENT){
-                intent = new Intent(mContext, PostActivity.class);
+                Log.d("notifhunter", "Comment was pressed");
                 FirestoreRepo.getInstance().getPost(notif.getProtagId(), new FirestoreRepo.PostRetrieved() {
                     @Override
                     public void onPostRetrieved(MainPost post) {
-                        intent.putExtra("post", post);
-                        mContext.startActivity(intent);
+                        NotifGraphDirections.ActionGlobalPostFragment4 action =
+                                NotifGraphDirections.actionGlobalPostFragment4(post);
+                        navController.navigate(action);
                     }
                 });
+
             }else if (notif.getAction() == Notification.FOLLOWED){
-
-                NotifsFragmentDirections.ActionNotifGraphToProfileFragment2 action =
-                        NotifsFragmentDirections.actionNotifGraphToProfileFragment2(notif.getProtagId());
+                Log.d("notifhunter", "followed was pressed");
+                NotifGraphDirections.ActionGlobalProfileFragment action =
+                        NotifGraphDirections.actionGlobalProfileFragment(notif.getProtagId());
                 navController.navigate(action);
-
             }else if(notif.getAction() == Notification.OTHERS_UPLOAD_LISTING){
-                intent = new Intent(mContext, ListingActivity.class);
+                Log.d("notifhunter", "Others listing was pressed");
                 FirestoreRepo.getInstance().getListing(notif.getProtagId(), new FirestoreRepo.ListingRetrieved() {
                     @Override
                     public void onListingRetrieved(Listing listing) {
-                        intent.putExtra("listing", listing);
-                        mContext.startActivity(intent);
+                        NotifGraphDirections.ActionGlobalListingFragment4 action =
+                                NotifGraphDirections.actionGlobalListingFragment4(listing);
+                        navController.navigate(action);
                     }
                 });
-            }else{
-
+            }else if(notif.getAction() == Notification.OTHERS_UPLOAD_POST){
+                Log.d("notifhunter", "Others post was pressed");
+                FirestoreRepo.getInstance().getPost(notif.getProtagId(), new FirestoreRepo.PostRetrieved() {
+                    @Override
+                    public void onPostRetrieved(MainPost post) {
+                        NotifGraphDirections.ActionGlobalPostFragment4 action =
+                                NotifGraphDirections.actionGlobalPostFragment4(post);
+                        navController.navigate(action);
+                    }
+                });
             }
         }
     }
