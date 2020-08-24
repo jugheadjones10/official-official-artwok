@@ -27,7 +27,7 @@ public class HomeTabsPagerAdapter extends FragmentStateAdapter {
         String tabName = categoriesList.get(position);
         Fragment tabFragment;
         switch(tabName){
-            case "feed":
+            case "Feed":
                 tabFragment = new HomeFeedFragment();
                 break;
             case "gifts":
