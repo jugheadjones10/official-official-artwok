@@ -121,7 +121,7 @@ public class HomeTabsFragment extends Fragment {
     private void observeViewModel(HomeTabsViewModel viewModel) {
 
         tabCategories = new ArrayList<>();
-        tabCategories.add("feed");
+        tabCategories.add("Feed");
         tabCategories.add("gifts");
         tabCategories.add("handmade");
         tabCategories.add("flowers");
