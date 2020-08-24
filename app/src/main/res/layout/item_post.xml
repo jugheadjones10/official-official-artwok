@@ -38,6 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/spacing_small"
             android:text="@{post.username}"
+            android:textColor="@color/almost_black"
             app:layout_constraintBottom_toTopOf="@+id/post_date"
             app:layout_constraintStart_toEndOf="@+id/profile"
             app:layout_constraintTop_toTopOf="parent"
