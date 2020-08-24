@@ -204,7 +204,14 @@
             android:paddingLeft="30dp"
             android:paddingTop="30dp"
             android:paddingRight="30dp"
-            android:text=""
+            android:text="Buyer can request 100% refund from the seller if:
+\n - delivered item/service is vastly different from implied or promised
+\n - delivery/postage by the seller takes abnormally long. \n \n
+Buyer cannot request refund for: \n
+- undelivered/damaged item/service due to unforeseeable events (i.e. Natural disaster, delivery mix up by third party delivery service)\n
+While it is not upon seller to refund the item/service, we recommend the seller to partially refund for the undelivered/unsatisfactory good. \n \n
+By uploading a listing on Artwok, seller agrees to abide by this agreement. Examples to the above statements can be found in the FAQ. we recommend buyers and sellers to communicate and send images where applicable to ensure a pleasant experience for everyone on our platform.
+"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
