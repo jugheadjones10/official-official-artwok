@@ -212,7 +212,7 @@ public class UploadListingFragment extends Fragment {
             refundPolicy = UploadListingDeliveryFragment.getInstance().getRefund();
         }
 
-        if(postDesc.isEmpty()){
+        if(postDesc==null){
             Toast.makeText(requireContext(), "Please fill the description for your listing.", Toast.LENGTH_LONG).show();
         } else if(postTitle.isEmpty()){
             Toast.makeText(requireContext(), "Please fill the title for your listing.", Toast.LENGTH_LONG).show();
