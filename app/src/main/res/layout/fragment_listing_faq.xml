@@ -1,70 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-
-<LinearLayout
+<ScrollView
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="10dp">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="50px"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp">
 
-        <TextView
-            android:id="@+id/seller_faq"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Seller FAQ"
-            android:textColor="#000000"
-            android:textSize="20dp"></TextView>
+            android:layout_marginBottom="50px"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/buyer_faq_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="1. Are there any fees for the transaction?
+            <TextView
+                android:id="@+id/seller_faq"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Seller FAQ"
+                android:textColor="#000000"
+                android:textSize="20dp"></TextView>
+
+            <TextView
+                android:id="@+id/buyer_faq_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="1. Are there any fees for the transaction?
             \n \nThere are no fees for any transaction made through this app! All transactional services are free.
             \n \n 2. Do I need to pay for tax on incomes earned on Artwok?
             \n \n It is the responsibility of the sellers to verify their tax obligation and report as required by the local law and regulations.
             \n \n 3. What happens if there is a dispute?
-            \n \n The transacation is soley between the seller and buyer amd Artwok does not personally endorse any buyer or seller. Please exercise caution and refer to the agreement. If you require our help please send us an email to Artwok.official@gmail.com
+            \n \n The transacation is soley between the seller and buyer and Artwok does not personally endorse any buyer or seller. Please exercise caution and refer to the agreement. If you require our help please send us an email to Artwok.official@gmail.com
 "
 
-            android:textColor="@color/almost_black" />
+                android:textColor="@color/almost_black" />
 
 
-        <!--        <ExpandableListView-->
-        <!--            android:id="@+id/seller_expandable_faq"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="match_parent"-->
-        <!--            android:divider="@android:color/darker_gray"-->
-        <!--            android:dividerHeight="0.5dp"-->
-        <!--            android:layoutDirection="rtl"/>-->
-        <!--        android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft"-->
+            <!--        <ExpandableListView-->
+            <!--            android:id="@+id/seller_expandable_faq"-->
+            <!--            android:layout_width="match_parent"-->
+            <!--            android:layout_height="match_parent"-->
+            <!--            android:divider="@android:color/darker_gray"-->
+            <!--            android:dividerHeight="0.5dp"-->
+            <!--            android:layoutDirection="rtl"/>-->
+            <!--        android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft"-->
 
-    </LinearLayout>
+        </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Buyer FAQ"
-            android:textColor="#000000"
-            android:textSize="20dp"></TextView>
-        <TextView
-            android:id="@+id/seller_faq_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/almost_black"
-            android:text="1. Are there any fees for the transaction?
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Buyer FAQ"
+                android:textColor="#000000"
+                android:textSize="20dp"></TextView>
+            <TextView
+                android:id="@+id/seller_faq_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/almost_black"
+                android:text="1. Are there any fees for the transaction?
             \n \nThere are no fees for any transaction made through this app! All transactional services are free.
             \n \n 2. Do I need to pay for tax on incomes earned on Artwok?
             \n \n It is the responsibility of the sellers to verify their tax obligation and report as required by the local law and regulations.
@@ -73,18 +76,21 @@
 "/>
 
 
-<!--        <ExpandableListView-->
-<!--            android:id="@+id/buyer_expandable_faq"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:divider="@android:color/darker_gray"-->
-<!--            android:dividerHeight="0.5dp"-->
-<!--            android:footerDividersEnabled="false"-->
-<!--            android:headerDividersEnabled="false"-->
-<!--            android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft" />-->
+            <!--        <ExpandableListView-->
+            <!--            android:id="@+id/buyer_expandable_faq"-->
+            <!--            android:layout_width="match_parent"-->
+            <!--            android:layout_height="match_parent"-->
+            <!--            android:divider="@android:color/darker_gray"-->
+            <!--            android:dividerHeight="0.5dp"-->
+            <!--            android:footerDividersEnabled="false"-->
+            <!--            android:headerDividersEnabled="false"-->
+            <!--            android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft" />-->
+
+        </LinearLayout>
 
     </LinearLayout>
 
-</LinearLayout>
+
+</ScrollView>
 
 </layout>
