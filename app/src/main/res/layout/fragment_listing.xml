@@ -84,8 +84,10 @@
                 <TextView
                     android:id="@+id/poster_name"
                     style="@style/RegularCondensed"
+                    android:textColor="@color/almost_black"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:textStyle="bold"
                     android:gravity="center_vertical"
                     android:text="@{user.username}" />
 
@@ -173,10 +175,17 @@
                 <com.synnapps.carouselview.CarouselView
                     android:id="@+id/listing_image"
                     android:layout_width="match_parent"
-                    android:layout_height="300dp"
+                    android:layout_height="350dp"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@+id/item_photo_bottom_bar"
                     app:indicatorVisibility="gone"
                     app:autoPlay="false"
-                    app:layout_collapseMode="parallax"/>
+                    app:layout_collapseMode="parallax"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="5dp"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -194,15 +203,29 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textColor="@color/almost_black"
+                            android:textSize="16sp"
                             android:text="@{listing.name}"
                             android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{Long.toString(listing.price)}">
-                        </TextView>
-
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/almost_black"
+                                android:textStyle="bold"
+                                android:textSize="16sp"
+                                android:text="$ "/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/almost_black"
+                                android:textSize="15sp"
+                                android:textStyle="bold"
+                                android:text="@{Long.toString(listing.price)}">
+                            </TextView>
+                        </LinearLayout>
                     </LinearLayout>
 
                     <View android:layout_width="0dp"

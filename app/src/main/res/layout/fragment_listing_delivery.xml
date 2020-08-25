@@ -3,11 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="30dp">
+    android:padding="10dp">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/almost_black"
         android:text="Delivery details"></TextView>
 
     <View
@@ -19,7 +20,7 @@
         android:id="@+id/delivery_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp">
+        android:layout_marginBottom="20dp">
 
     </TextView>
 
@@ -28,6 +29,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/almost_black"
         android:text="Refund policy">
     </TextView>
 

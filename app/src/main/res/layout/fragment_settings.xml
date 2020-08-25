@@ -13,6 +13,7 @@
         android:layout_height="match_parent"
         tools:context=".profile.settings.SettingsActivity">
 
+
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/settings_toolbar"
             android:layout_width="match_parent"
@@ -34,15 +35,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/settings_toolbar">
 
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:text="Account"
+                android:paddingTop="8dp"
+                android:text="Settings"
                 android:textColor="@color/grey_darken_30"
                 android:textSize="25sp"
                 android:textStyle="bold" />
-
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/edit_profile"
@@ -60,6 +61,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:gravity="center_vertical"
+                    android:layout_marginVertical="10dp"
                     android:orientation="horizontal">
 
                     <de.hdodenhof.circleimageview.CircleImageView
@@ -90,12 +92,13 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="40dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="100dp"
+                    android:textColor="@color/almost_black"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
                     android:text="Username" />
@@ -105,6 +108,7 @@
                     android:textStyle="bold"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
+                    android:textColor="@color/almost_black"
                     android:onClick="@{() -> SettingsFragment.onUsernameChange()}"
                     android:text="@{user.username}" />
 
@@ -117,12 +121,13 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="40dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="100dp"
+                    android:textColor="@color/almost_black"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
                     android:text="Introduction" />
@@ -132,6 +137,7 @@
                     android:textStyle="bold"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
+                    android:textColor="@color/almost_black"
                     android:onClick="@{() -> SettingsFragment.onIntroChange()}"
                     android:text="@{user.introduction}" />
 
@@ -139,12 +145,13 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="40dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="100dp"
+                    android:textColor="@color/almost_black"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
                     android:text="Email" />
@@ -159,12 +166,13 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="40dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="100dp"
+                    android:textColor="@color/almost_black"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
                     android:text="Password" />
@@ -176,30 +184,26 @@
                     android:gravity="center_vertical"
                     android:text="********" />
 
-                <TextView
-                    android:textColor="@color/almost_black"
-                    android:textStyle="bold"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center|center_vertical"
-                    android:text="reset password?"
-                    android:onClick="@{() -> SettingsFragment.onPasswordChange()}"/>
+<!--                <TextView-->
+<!--                    android:textColor="@color/almost_black"-->
+<!--                    android:textStyle="bold"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:gravity="center|center_vertical"-->
+<!--                    android:text="reset password?"-->
+<!--                    android:onClick="@{() -> SettingsFragment.onPasswordChange()}"/>-->
 
             </LinearLayout>
 
-            <TextView
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:text="Settings"
-                android:textColor="@color/grey_darken_30"
-                android:textSize="25sp"
-                android:textStyle="bold" />
+                android:layout_height="1dp"
+                android:background="@color/cat_bar_grey" />
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="40dp"
                 android:layout_marginLeft="8dp"
                 android:gravity="center_vertical"
                 android:text="FAQ"
@@ -209,7 +213,7 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="40dp"
                 android:layout_marginLeft="8dp"
                 android:gravity="center_vertical"
                 android:textStyle="bold"
@@ -220,7 +224,7 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="40dp"
                 android:layout_marginLeft="8dp"
                 android:gravity="center_vertical"
                 android:textStyle="bold"
@@ -229,30 +233,34 @@
 
 
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginLeft="8dp"
-                android:gravity="center_vertical"
-                android:text="Logout"
-                android:textColor="@color/artwok_black"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:onClick="@{() -> SettingsFragment.onLogout()}"/>
 
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginLeft="8dp"
-                android:gravity="center_vertical"
-                android:text="Deactivate Account"
-                android:textColor="@color/red"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:onClick="@{() -> SettingsFragment.onDeactivate()}"/>
 
         </LinearLayout>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center_vertical|center_horizontal"
+            android:onClick="@{() -> SettingsFragment.onLogout()}"
+            android:text="Logout"
+            android:textColor="@color/artwok_black"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/deactivate" />
+
+
+        <TextView
+            android:id="@+id/deactivate"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginBottom="20dp"
+            android:gravity="center_vertical|center_horizontal"
+            android:onClick="@{() -> SettingsFragment.onDeactivate()}"
+            android:text="Deactivate Account"
+            android:textColor="@color/red"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:layout_editor_absoluteX="8dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
