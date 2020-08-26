@@ -43,6 +43,7 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
+
         <androidx.core.widget.NestedScrollView
             android:id="@+id/nested_scroll"
             android:layout_width="match_parent"
@@ -51,8 +52,10 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:layout_constraintBottom_toTopOf="@+id/add_comment"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/indiv_appbar">
+            app:layout_constraintTop_toBottomOf="@+id/indiv_appbar"
+            app:layout_constraintVertical_bias="0.0">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -63,16 +66,28 @@
                     android:id="@+id/post_web_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/almost_black" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Comments"
+                    android:textSize="16sp"
+                    android:layout_marginLeft="@dimen/spacing_small"
+                    android:fontFamily="@string/fontFamily__sans_serif_medium"
+                    android:layout_marginVertical="5dp"
+                    android:textColor="@color/almost_black"/>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/comments_recycler_view"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                />
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
-
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/add_comment"

@@ -39,6 +39,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/spacing_small"
                 android:paddingTop="8dp"
                 android:text="Settings"
                 android:textColor="@color/grey_darken_30"
@@ -100,7 +101,7 @@
                     android:layout_width="100dp"
                     android:textColor="@color/almost_black"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
+                    android:layout_marginLeft="@dimen/spacing_small"
                     android:text="Username" />
 
                 <TextView
@@ -129,7 +130,7 @@
                     android:layout_width="100dp"
                     android:textColor="@color/almost_black"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
+                    android:layout_marginLeft="@dimen/spacing_small"
                     android:text="Introduction" />
 
                 <TextView
@@ -153,7 +154,7 @@
                     android:layout_width="100dp"
                     android:textColor="@color/almost_black"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
+                    android:layout_marginLeft="@dimen/spacing_small"
                     android:text="Email" />
 
                 <TextView
@@ -174,7 +175,7 @@
                     android:layout_width="100dp"
                     android:textColor="@color/almost_black"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
+                    android:layout_marginLeft="@dimen/spacing_small"
                     android:text="Password" />
 
                 <TextView
@@ -204,7 +205,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:layout_marginLeft="8dp"
+                android:layout_marginLeft="@dimen/spacing_small"
                 android:gravity="center_vertical"
                 android:text="FAQ"
                 android:textSize="14sp"
@@ -214,7 +215,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:layout_marginLeft="8dp"
+                android:layout_marginLeft="@dimen/spacing_small"
                 android:gravity="center_vertical"
                 android:textStyle="bold"
                 android:text="Contact"
@@ -225,7 +226,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:layout_marginLeft="8dp"
+                android:layout_marginLeft="@dimen/spacing_small"
                 android:gravity="center_vertical"
                 android:textStyle="bold"
                 android:text="Terms of Use and Privacy Policy"

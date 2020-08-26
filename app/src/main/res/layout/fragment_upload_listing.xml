@@ -47,7 +47,8 @@
                 <ImageView
                     android:id="@+id/uploadPicL"
                     android:layout_width="match_parent"
-                    android:layout_height="314dp"
+                    android:layout_height="match_parent"
+
                     android:layout_gravity="center"
                     android:onClick="@{() -> UploadListingFragment.onUploadImageClicked()}"
                     android:padding="100dp"
