@@ -54,6 +54,7 @@
                 android:layout_marginHorizontal="5dp"
                 android:gravity="center_vertical"
                 android:text="@{user.username}"
+                android:textStyle="normal"
                 android:textColor="@color/artwok_black"
                 android:textSize="14sp" />
 

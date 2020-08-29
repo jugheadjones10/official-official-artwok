@@ -43,6 +43,7 @@
             android:id="@+id/messageItem_textview_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/almost_black"
             android:text="Username"
             android:textSize="14dp"
             android:visibility="@{currentid.equals(comment.senderId) ? View.INVISIBLE : View.VISIBLE}"/>

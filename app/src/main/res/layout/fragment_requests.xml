@@ -60,7 +60,7 @@
                 android:onClick="@{() -> callback.onAddRequestClick()}"
                 android:text="Add Requests"
                 android:textColor="@color/artwok_black"
-                android:textSize="14sp"
+                android:textSize="0sp"
                 android:textStyle="bold" />
 
         </LinearLayout>

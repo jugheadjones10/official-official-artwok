@@ -16,9 +16,10 @@
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/main_app_bar"
+            style="@style/Widget.Artwok.Toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            style="@style/Widget.Artwok.Toolbar"
+            android:background="@color/artwok_background_blue"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -33,11 +34,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textStyle="normal"
-                    android:textSize="18sp"
-                    android:textColor="@color/almost_black"
                     android:layout_gravity="center_vertical"
-                    android:text="@{username}" />
+                    android:text="@{username}"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"
+                    android:textStyle="normal" />
 
             </LinearLayout>
         </com.google.android.material.appbar.MaterialToolbar>

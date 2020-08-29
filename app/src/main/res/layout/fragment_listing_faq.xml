@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -10,32 +11,60 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="50px"
+            android:layout_marginBottom="30dp"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/seller_faq"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Seller FAQ"
+                android:text="@string/seller_faq"
                 android:textColor="#000000"
+                android:textStyle="bold"
                 android:layout_marginBottom="10dp"
-                android:textSize="20dp"></TextView>
+                android:textSize="20sp" />
 
             <TextView
-                android:id="@+id/buyer_faq_description"
+                android:id="@+id/seller_faq_description10"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="1. Are there any fees for the transaction?
-            \n \nThere are no fees for any transaction made through this app! All transactional services are free.
-            \n \n 2. Do I need to pay for tax on incomes earned on Artwok?
-            \n \n It is the responsibility of the sellers to verify their tax obligation and report as required by the local law and regulations.
-            \n \n 3. What happens if there is a dispute?
-            \n \n The transacation is soley between the seller and buyer and Artwok does not personally endorse any buyer or seller. Please exercise caution and refer to the agreement. If you require our help please send us an email to Artwok.official@gmail.com
-    "
-
+                android:textStyle="bold"
+                android:text="@string/faq_des10"
+                android:textColor="@color/almost_black" />
+            <TextView
+                android:id="@+id/seller_faq_description11"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/almost_black"
+                android:text="@string/faq_des11"
+/>
+            <TextView
+                android:id="@+id/seller_faq_description2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="@string/faq_des2"
                 android:textColor="@color/almost_black" />
 
+            <TextView
+                android:id="@+id/seller_faq_description21"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/faq_des21"
+                android:textColor="@color/almost_black" />
+            <TextView
+                android:id="@+id/seller_faq_description3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/faq_des3"
+                android:textStyle="bold"
+                android:textColor="@color/almost_black" />
+            <TextView
+                android:id="@+id/seller_faq_description31"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/faq_des31"
+                android:textColor="@color/almost_black" />
 
             <!--        <ExpandableListView-->
             <!--            android:id="@+id/seller_expandable_faq"-->
@@ -56,24 +85,52 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Buyer FAQ"
+                android:text="@string/buyer_faq"
                 android:textColor="#000000"
+                android:textStyle="bold"
                 android:layout_marginBottom="10dp"
-                android:textSize="20dp"></TextView>
+                android:textSize="20sp" />
             <TextView
-                android:id="@+id/seller_faq_description"
+                android:id="@+id/buyer_faq_description1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/almost_black"
-                android:text="1. Are there any fees for the transaction?
-            \n \nThere are no fees for any transaction made through this app! All transactional services are free.
-            \n \n 2. Do I need to pay for tax on incomes earned on Artwok?
-            \n \n It is the responsibility of the sellers to verify their tax obligation and report as required by the local law and regulations.
-            \n \n 3. What happens if there is a dispute?
-            \n \n The transacation is soley between the seller and buyer amd Artwok does not personally endorse any buyer or seller. Please exercise caution and refer to the agreement. If you require our help please send us an email to Artwok.official@gmail.com
-    "/>
+                android:textStyle="bold"
+                android:text="@string/buyer_faq_desc1"/>
 
-
+            <TextView
+                android:id="@+id/buyer_faq_description11"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/almost_black"
+                android:text="@string/buyer_faq_desc11"
+                tools:ignore="DuplicateIds" />
+            <TextView
+                android:id="@+id/buyer_faq_description2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/almost_black"
+                android:textStyle="bold"
+                android:text="@string/buyer_faq_desc2"/>
+            <TextView
+                android:id="@+id/buyer_faq_description21"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/almost_black"
+                android:text="@string/buyer_faq_desc21"/>
+            <TextView
+                android:id="@+id/buyer_faq_description3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/almost_black"
+                android:textStyle="bold"
+                android:text="@string/buyer_faq_desc3"/>
+            <TextView
+                android:id="@+id/buyer_faq_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/almost_black"
+                android:text="@string/buyer_faq_desc31"/>
             <!--        <ExpandableListView-->
             <!--            android:id="@+id/buyer_expandable_faq"-->
             <!--            android:layout_width="match_parent"-->

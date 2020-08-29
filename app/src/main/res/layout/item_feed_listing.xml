@@ -21,7 +21,8 @@
         android:layout_marginTop="@dimen/spacing_tiny"
         android:layout_marginBottom="@dimen/spacing_tiny"
         android:background="@android:color/transparent"
-        android:onClick="@{() -> callbacks.onListingClicked.onListingClicked(listing)}">
+        android:onClick="@{() -> callbacks.onListingClicked.onListingClicked(listing)}"
+        tools:ignore="MissingClass">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profile"
@@ -111,6 +112,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/home_listing_name_background"
             android:paddingLeft="@dimen/spacing_normal"
+            android:paddingRight="50dp"
             android:paddingTop="@dimen/spacing_small"
             android:paddingBottom="@dimen/spacing_small"
             android:text="@{listing.name}"

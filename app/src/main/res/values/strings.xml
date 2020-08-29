@@ -131,4 +131,18 @@
     <string name="title_activity_view_other_user">ViewOtherUserActivity</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_app_host">AppHostActivity</string>
+    <string name="faq_des10">1. Are there any fees for the transaction?</string>
+    <string name="faq_des11">There are no fees for any transaction made through this app! All transactional services are free.</string>
+    <string name="faq_des2">\n 2. Do I need to pay for tax on incomes earned on Artwok?</string>
+    <string name="faq_des21">It is the responsibility of the sellers to verify their tax obligation and report as required by the local law and regulations.</string>
+    <string name="faq_des3">\n3. What happens if there is a dispute?</string>
+    <string name="faq_des31">The transacation is soley between the seller and buyer and Artwok does not personally endorse any buyer or seller. Please exercise caution and refer to the agreement. If you require our help please send us an email to Artwok.official@gmail.com</string>
+    <string name="buyer_faq">Buyer FAQ</string>
+    <string name="seller_faq">Seller FAQ</string>
+    <string name="buyer_faq_desc1">1. Are there any fees for the transaction?</string>
+    <string name="buyer_faq_desc11">There are no fees for any transaction made through this app! All transactional services are free.</string>
+    <string name="buyer_faq_desc2">\n2. Do I need to pay for tax on incomes earned on Artwok?</string>
+    <string name="buyer_faq_desc21">It is the responsibility of the sellers to verify their tax obligation and report as required by the local law and regulations.</string>
+    <string name="buyer_faq_desc3">\n3. What happens if there is a dispute?</string>
+    <string name="buyer_faq_desc31">The transacation is soley between the seller and buyer amd Artwok does not personally endorse any buyer or seller. Please exercise caution and refer to the agreement. If you require our help please send us an email to Artwok.official@gmail.com</string>
 </resources>

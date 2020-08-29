@@ -37,6 +37,7 @@
                     android:layout_height="30dp"
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="15dp"
+                    android:padding="4dp"
                     android:cropToPadding="true"
                     android:onClick="@{() -> SetIntroFragment.onTickButtonClicked()}"
                     android:src="@drawable/tick" />
@@ -85,9 +86,12 @@
             android:id="@+id/textView20"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="8dp"
+            android:padding="0dp"
             android:text="Introduction"
-            android:textSize="25sp"
+            android:textSize="20sp"
+            android:layout_marginTop="@dimen/spacing_normal"
+            android:layout_marginStart="@dimen/spacing_normal"
+            android:textColor="@color/artwok_black"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/settings_toolbar" />
 
