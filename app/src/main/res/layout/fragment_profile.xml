@@ -109,10 +109,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
+                    android:fontFamily="@font/polite_type"
                     android:gravity="bottom"
                     android:paddingBottom="3dp"
-                    android:textColor="@color/almost_black"
                     android:text="@{user.username}"
+                    android:textColor="@color/almost_black"
                     android:textSize="14sp"
                     android:textStyle="bold" />
 
@@ -123,6 +124,7 @@
                     android:textColor="@color/artwok_black"
                     android:paddingTop="3dp"
                     android:text="@{user.introduction}"
+                    android:fontFamily="@font/polite_type"
                     android:textSize="12sp" />
 
             </LinearLayout>

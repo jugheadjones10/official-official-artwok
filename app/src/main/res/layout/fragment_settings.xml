@@ -110,6 +110,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:textColor="@color/almost_black"
+                    android:fontFamily="@font/polite_type"
                     android:onClick="@{() -> SettingsFragment.onUsernameChange()}"
                     android:text="@{user.username}" />
 
@@ -139,6 +140,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:textColor="@color/almost_black"
+                    android:fontFamily="@font/polite_type"
                     android:onClick="@{() -> SettingsFragment.onIntroChange()}"
                     android:text="@{user.introduction}" />
 

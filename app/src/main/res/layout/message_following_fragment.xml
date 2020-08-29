@@ -47,6 +47,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:textColor="@color/almost_black"
+                    android:fontFamily="@font/polite_type"
                     android:text="@{user.username}"
                     android:textStyle="bold" />
 
@@ -55,6 +56,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
+                    android:fontFamily="@font/polite_type"
                     android:text="@{user.introduction}"
                     android:textSize="12sp" />
             </LinearLayout>

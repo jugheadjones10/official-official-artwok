@@ -57,7 +57,8 @@
                 android:id="@+id/messageItem_textview_message"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16dp" />
+                android:fontFamily="@font/polite_type"
+                android:textSize="16sp" />
 
 <!--            <TextView-->
 <!--                android:text="@{Math.toIntExact(comment.timestamp)}"-->
