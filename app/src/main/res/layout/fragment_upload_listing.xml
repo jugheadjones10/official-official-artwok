@@ -34,28 +34,38 @@
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
                 <!--            the above applies a cool fade-in fade-out effect-->
 
-                <com.synnapps.carouselview.CarouselView
-                    android:id="@+id/carouselView"
-                    android:layout_width="match_parent"
-                    android:layout_height="314dp"
-                    app:autoPlay="false"
-                    app:indicatorVisibility="gone"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/uploadPicL" />
 
-                <ImageView
-                    android:id="@+id/uploadPicL"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content">
 
-                    android:layout_gravity="center"
-                    android:onClick="@{() -> UploadListingFragment.onUploadImageClicked()}"
-                    android:padding="100dp"
-                    android:src="@drawable/upload_pic_btn"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    <com.synnapps.carouselview.CarouselView
+                        android:id="@+id/carouselView"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        app:autoPlay="false"
+                        app:indicatorVisibility="gone"
+                        app:layout_constraintBottom_toBottomOf="@+id/uploadPicL"
+                        app:layout_constraintDimensionRatio="1:1"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/uploadPicL" />
+
+                    <ImageView
+                        android:id="@+id/uploadPicL"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_gravity="center"
+                        android:onClick="@{() -> UploadListingFragment.onUploadImageClicked()}"
+                        android:padding="150dp"
+                        android:src="@drawable/upload_pic_btn"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintDimensionRatio="1:1"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <com.google.android.material.appbar.MaterialToolbar
                     android:id="@+id/indiv_toolbar"

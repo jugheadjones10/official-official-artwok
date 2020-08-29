@@ -3,6 +3,7 @@ package com.example.artwokmabel.profile.people;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
@@ -20,6 +21,7 @@ import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.ItemFollowerBinding;
 import com.example.artwokmabel.homepage.search.SearchFragmentDirections;
 import com.example.artwokmabel.models.User;
+import com.example.artwokmabel.repos.FirestoreRepo;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
@@ -79,6 +81,11 @@ public class FollowersAdapter extends RecyclerView.Adapter<FollowersAdapter.myHo
             }
         }else{
             holder.binding.followingButton.setText("Follow");
+        }
+
+        if(data.getUid().equals(mAuth.getCurrentUser().getUid()) || data.getUid().equals(FirestoreRepo.artwokId)){
+            holder.binding.followingButton.setVisibility(View.GONE);
+            holder.binding.chatButton.setVisibility(View.GONE);
         }
 
         holder.binding.setUser(data);

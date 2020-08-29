@@ -124,8 +124,9 @@ public class HomeTabsFragment extends Fragment {
         tabCategories.add("Feed");
         tabCategories.add("gifts");
         tabCategories.add("handmade");
-        tabCategories.add("flowers");
-        tabCategories.add("troll");
+        tabCategories.add("fashion");
+        tabCategories.add("delights");
+        tabCategories.add("services");
         tabCategories.add("requests");
         adapter.setCategoriesList(tabCategories);
 

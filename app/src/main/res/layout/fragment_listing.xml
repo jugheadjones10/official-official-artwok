@@ -172,20 +172,24 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <com.synnapps.carouselview.CarouselView
-                    android:id="@+id/listing_image"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="350dp"
-                    app:layout_constraintDimensionRatio="1:1"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="@+id/item_photo_bottom_bar"
-                    app:indicatorVisibility="gone"
-                    app:autoPlay="false"
-                    app:layout_collapseMode="parallax"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="5dp"/>
+                    android:layout_height="wrap_content">
+
+                    <com.synnapps.carouselview.CarouselView
+                        android:id="@+id/listing_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        app:autoPlay="false"
+                        app:indicatorVisibility="gone"
+                        app:layout_collapseMode="parallax"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintDimensionRatio="1:1"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"

@@ -59,7 +59,6 @@ public class RegistrationViewModel extends ViewModel {
                 registrationState.setValue(RegistrationState.REGISTRATION_FAILED);
             }
         });
-
     }
 
     public boolean userCancelledRegistration() {

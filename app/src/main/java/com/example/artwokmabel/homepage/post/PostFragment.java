@@ -2,6 +2,8 @@ package com.example.artwokmabel.homepage.post;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -23,6 +25,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -157,6 +162,20 @@ public class PostFragment extends Fragment {
 
         post = PostFragmentArgs.fromBundle(getArguments()).getPost();
         String encoded = Base64.encodeToString(post.getDesc().getBytes(), Base64.DEFAULT);
+
+        binding.postWebView.setWebViewClient(new WebViewClient(){
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                final Uri uri = request.getUrl();
+                String url = uri.toString();
+                if (url != null && (url.startsWith("http://") || url.startsWith("https://"))) {
+                    view.getContext().startActivity(
+                            new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+                    return true;
+                } else {
+                    return true;
+                }
+            }
+        });
         binding.postWebView.loadData(encoded, "text/html", "base64");
 
         postId = post.getPostId();

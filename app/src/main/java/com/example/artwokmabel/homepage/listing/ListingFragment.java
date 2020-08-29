@@ -92,6 +92,10 @@ public class ListingFragment extends Fragment {
         listing = ListingFragmentArgs.fromBundle(getArguments()).getListing();
         viewModel = ViewModelProviders.of(this).get(ListingActivityViewModel.class);
 
+        if(mAuth.getCurrentUser().getUid().equals(listing.getUserid())){
+            binding.offerButton.setVisibility(View.GONE);
+        }
+
         //TODO: Change retrieval of whole user to retrieval of userFavListings. Only retrieve what you need.
         viewModel.getUserObservable(mAuth.getCurrentUser().getUid()).observe(getViewLifecycleOwner(), new Observer<User>() {
             @Override
@@ -138,7 +142,7 @@ public class ListingFragment extends Fragment {
             public void setImageForPosition(int position, ImageView imageView) {
                 Picasso.get()
                         .load(images.get(position))
-                        .placeholder(R.drawable.user)
+                        .placeholder(R.drawable.placeholder_black_new)
                         .error(R.drawable.placeholder_color_new)
                         .into(imageView);
             }

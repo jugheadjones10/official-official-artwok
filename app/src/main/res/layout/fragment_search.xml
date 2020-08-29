@@ -51,6 +51,7 @@
                     android:id="@+id/search_results_tabs"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    app:tabTextAppearance="@style/CustomTextAppearanceTab"
                     app:tabGravity="fill"
                     app:tabIndicatorColor="@color/artwok_white"
                     app:tabMode="fixed">

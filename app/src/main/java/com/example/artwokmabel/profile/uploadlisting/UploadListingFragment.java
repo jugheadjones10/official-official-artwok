@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -54,6 +55,7 @@ public class UploadListingFragment extends Fragment {
     private UploadListingViewModel viewModel;
     private ArrayList<String> uploadImageUri = new ArrayList<>();
     private NavController navController;
+    private UploadListingDescViewModel uploadListingDescViewModel;
 
     private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
 
@@ -63,6 +65,8 @@ public class UploadListingFragment extends Fragment {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_upload_listing, container, false);
         viewModel = ViewModelProviders.of(this).get(UploadListingViewModel.class);
+        uploadListingDescViewModel = new ViewModelProvider(requireActivity()).get(UploadListingDescViewModel.class);
+
 
         binding.uploadProgressL.setVisibility(View.GONE);
         binding.carouselView.setVisibility(View.GONE);
@@ -108,7 +112,11 @@ public class UploadListingFragment extends Fragment {
                     binding.uploadPicL.setVisibility(View.GONE);
 
                     binding.carouselView.setImageListener((position, imageView) -> {
-                        Picasso.get().load(uploadImageUri.get(0)).into(imageView);
+                        Picasso.get()
+                                .load(uploadImageUri.get(0))
+                                .placeholder(R.drawable.placeholder_black_new)
+                                .error(R.drawable.placeholder_color_new)
+                                .into(imageView);
                     });
                     binding.carouselView.setPageCount(1);
                 }
@@ -229,6 +237,7 @@ public class UploadListingFragment extends Fragment {
         }else{
             binding.uploadProgressL.setVisibility(View.VISIBLE);
             viewModel.uploadNewListing(postTitle, postDesc, categories, budget, deliveryDetails, refundPolicy, FirebaseAuth.getInstance().getCurrentUser().getUid(), uploadImageUri);
+            uploadListingDescViewModel.setHtmlContent(null);
         }
     }
 

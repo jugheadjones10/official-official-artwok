@@ -89,6 +89,7 @@ public class FirestoreRepo {
     private final String TAG = "FirestoreRepo";
     private FirebaseFirestore db;
     private static FirestoreRepo firestoreRepo;
+    public final static String artwokId = "eyD9ukYHXmbIZMrgzZiknveTABP2";
 
     public FirestoreRepo() {
         db = FirebaseFirestore.getInstance();
@@ -354,6 +355,12 @@ public class FirestoreRepo {
                     }
                 }
             });
+
+        FirebaseDatabase.getInstance().getReference()
+                .child("Listings")
+                .child(listingId)
+                .removeValue();
+
     }
 
     public void logIntoAccount(String email, String password, LoginViewModel.LoginCallback callback){
@@ -401,11 +408,17 @@ public class FirestoreRepo {
                                             // Log and toast
                                             Log.d("notives", token);
 
+                                            ArrayList<String> following = new ArrayList<String>();
+                                            //Following this master id by default
+                                            following.add(artwokId);
+                                            //Following yourself by default
+                                            following.add(uid);
+
                                             User userObject = new User(
                                                     username.toLowerCase(),
                                                     uid,
                                                     "https://firebasestorage.googleapis.com/v0/b/artwok-database.appspot.com/o/Default_images%2Faccount.png?alt=media&token=8c34c02a-4c2c-4708-a802-73af4978b7d0",
-                                                    new ArrayList<String>(),
+                                                    following,
                                                     new ArrayList<String>(),
                                                     new ArrayList<String>(),
                                                     new ArrayList<String>(),
@@ -413,7 +426,7 @@ public class FirestoreRepo {
                                                     new ArrayList<String>(),
                                                     new ArrayList<String>(),
                                                     email,
-                                                    "",
+                                                    "Hello there!",
                                                     token
                                             );
 
@@ -658,7 +671,8 @@ public class FirestoreRepo {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         tempData.clear();
                         for(DataSnapshot user : dataSnapshot.getChildren()){
-                            tempData.add(user.getValue(User.class));
+                            User finalUser = user.getValue(User.class);
+                            tempData.add(finalUser);
                         }
                         data.setValue(tempData);
                     }
@@ -1259,6 +1273,12 @@ public class FirestoreRepo {
                 .addOnFailureListener((aVoid) -> {
                     isSuccessful.isSuccessful(false);
                 });
+
+        FirebaseDatabase.getInstance().getReference()
+                .child("Users")
+                .child(userId)
+                .child("introduction")
+                .setValue(intro);
     }
 
     public void sendResetPasswordEmail(String emailAddress){
@@ -1302,29 +1322,9 @@ public class FirestoreRepo {
 
         FirebaseDatabase.getInstance().getReference()
                 .child("Users")
-                .orderByChild("uid")
-                .equalTo(userId)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                        for(DataSnapshot user : dataSnapshot.getChildren()){
-                            FirebaseDatabase.getInstance().getReference()
-                                    .child("Users")
-                                    .child(user.getKey())
-                                    .child("username")
-                                    .setValue(username);
-                        }
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
-
-
+                .child(userId)
+                .child("username")
+                .setValue(username);
     }
 
     public void updateUserProfileUrl(String profile_url, String userId){
@@ -1334,28 +1334,9 @@ public class FirestoreRepo {
 
         FirebaseDatabase.getInstance().getReference()
                 .child("Users")
-                .orderByChild("uid")
-                .equalTo(userId)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                        for(DataSnapshot user : dataSnapshot.getChildren()){
-                            FirebaseDatabase.getInstance().getReference()
-                                    .child("Users")
-                                    .child(user.getKey())
-                                    .child("profile_url")
-                                    .setValue(profile_url);
-                        }
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
-
+                .child(userId)
+                .child("profile_url")
+                .setValue(profile_url);
     }
 
     public void deleteCurrentUser(){
@@ -1430,23 +1411,24 @@ public class FirestoreRepo {
         final MutableLiveData<User> data = new MutableLiveData<>();
 
         db.collection("Users")
-                .document(uid)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
-                            if (document.exists()) {
-                                User user = document.toObject(User.class);
-                                data.setValue(user);
-                            } else {
-                            }
+            .document(uid)
+            .get()
+            .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            User user = document.toObject(User.class);
+                            data.setValue(user);
                         } else {
-                            Log.d(TAG, "get failed with ", task.getException());
+
                         }
+                    } else {
+                        Log.d(TAG, "get failed with ", task.getException());
                     }
-                });
+                }
+            });
 
         return data;
     }
@@ -2587,9 +2569,8 @@ public class FirestoreRepo {
             @Override
             public void onEvent(@Nullable DocumentSnapshot snapshot, @Nullable FirebaseFirestoreException e) {
                 ArrayList<String> following = (ArrayList<String>) snapshot.get("following");
-                if(following.contains(FirebaseAuth.getInstance().getCurrentUser().getUid())){
-                    following.remove(FirebaseAuth.getInstance().getCurrentUser().getUid());
-                }
+                following.remove(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                following.remove(artwokId);
 
                 tempData.clear();
                 List<Task> tasks = new ArrayList<>();
@@ -2615,6 +2596,7 @@ public class FirestoreRepo {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 Log.d("thestuffreturnedREQUEST", "final resulting temp data" + tempData.toString());
+                                Collections.sort(tempData, new SortUsersByName());
                                 data.setValue(tempData);
                             }
                         });

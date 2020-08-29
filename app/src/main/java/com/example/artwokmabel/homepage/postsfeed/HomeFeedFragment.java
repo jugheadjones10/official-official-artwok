@@ -150,14 +150,15 @@ public class HomeFeedFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        if(adapter != null) {
+            adapter.startListening();
+        }
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        if(adapter != null){
-            adapter.stopListening();
-        }
+        adapter.stopListening();
     }
 
     private void observeViewModel(HomeFeedViewModel viewModel) {
@@ -188,32 +189,31 @@ public class HomeFeedFragment extends Fragment {
             public void onChanged(User user) {
                 if(user != null){
 
-                    if(user.getFollowing().size() > 0){
-                        Log.d("numtimes", "I've been loaded!");
-                        PagedList.Config config = new PagedList.Config.Builder()
-                                .setEnablePlaceholders(false)
-                                .setInitialLoadSizeHint(4)
-                                .setPrefetchDistance(2)
-                                .setPageSize(3)
-                                .build();
+                    Log.d("numtimes", "I've been loaded!");
+                    PagedList.Config config = new PagedList.Config.Builder()
+                            .setEnablePlaceholders(false)
+                            .setInitialLoadSizeHint(4)
+                            .setPrefetchDistance(2)
+                            .setPageSize(3)
+                            .build();
 
-                        FirestorePagingOptions<ListingPost> options = new FirestorePagingOptions.Builder<ListingPost>()
-                                .setQuery(viewModel.getFeedPostsQuery(user.getFollowing()), config, new SnapshotParser<ListingPost>() {
-                                    @NonNull
-                                    @Override
-                                    public ListingPost parseSnapshot(@NonNull DocumentSnapshot snapshot) {
-                                        Log.d("checkpost", "Within parse snapshot" + snapshot.getString("username"));
-                                        return FirestoreRepo.getInstance().changeDocToListingPostModel(snapshot);
-                                    }
-                                })
-                                .build();
+                    FirestorePagingOptions<ListingPost> options = new FirestorePagingOptions.Builder<ListingPost>()
+                            .setQuery(viewModel.getFeedPostsQuery(user.getFollowing()), config, new SnapshotParser<ListingPost>() {
+                                @NonNull
+                                @Override
+                                public ListingPost parseSnapshot(@NonNull DocumentSnapshot snapshot) {
+                                    Log.d("checkpost", "Within parse snapshot" + snapshot.getString("username"));
+                                    return FirestoreRepo.getInstance().changeDocToListingPostModel(snapshot);
+                                }
+                            })
+                            .build();
 
-                        adapter = new FirestorePagingAdapterImpl(options, user, getContext(), navController, binding.swipeRefreshLayout);
-                        binding.recyclerview.setAdapter(adapter);
-                        adapter.startListening();
-                    }
-
+                    adapter = new FirestorePagingAdapterImpl(options, user, getContext(), navController, binding.swipeRefreshLayout);
+                    binding.recyclerview.setAdapter(adapter);
+                    adapter.startListening();
                 }
+
+
             }
         });
     }
