@@ -55,15 +55,11 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         mAuth = FirebaseAuth.getInstance();
 
-//        if(getArguments() != null){
-            userId = ProfileFragmentArgs.fromBundle(getArguments()).getUserId();
-            if(userId == null){
-                userId = mAuth.getCurrentUser().getUid();
-            }
-//        }
-//        else{
-//            userId = mAuth.getCurrentUser().getUid();
-//        }
+        userId = ProfileFragmentArgs.fromBundle(getArguments()).getUserId();
+        if(userId == null){
+            userId = mAuth.getCurrentUser().getUid();
+        }
+
 
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false);

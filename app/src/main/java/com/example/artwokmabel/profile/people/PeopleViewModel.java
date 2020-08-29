@@ -17,7 +17,9 @@ public class PeopleViewModel extends ViewModel {
 
     public PeopleViewModel() {
         mAuth = FirebaseAuth.getInstance();
-        followingUsersObservable = FirestoreRepo.getInstance().getUserFollowings(mAuth.getCurrentUser().getUid());
+        followingUsersObservable = FirestoreRepo.getInstance().getFollowings(mAuth.getCurrentUser().getUid());
+//        followingUsersObservable = FirestoreRepo.getInstance().getUserFollowings(mAuth.getCurrentUser().getUid());
+
         followersUsersObservable = FirestoreRepo.getInstance().getUserFollowers(mAuth.getCurrentUser().getUid());
     }
 

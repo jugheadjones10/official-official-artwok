@@ -48,16 +48,16 @@ public class HomeTabsPagerAdapter extends FragmentStateAdapter {
                 args4.putString("category", "Handmade");
                 tabFragment.setArguments(args4);
                 break;
-            case "troll":
+            case "delights":
                 tabFragment = new ListingsTabFragment();
                 Bundle args5 = new Bundle();
-                args5.putString("category", "Troll");
+                args5.putString("category", "Delights");
                 tabFragment.setArguments(args5);
                 break;
-            case "flowers":
+            case "fashion":
                 tabFragment = new ListingsTabFragment();
                 Bundle args6 = new Bundle();
-                args6.putString("category", "Flowers");
+                args6.putString("category", "Fashion");
                 tabFragment.setArguments(args6);
                 break;
             case "requests":

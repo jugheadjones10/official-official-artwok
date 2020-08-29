@@ -53,11 +53,15 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 import static com.example.artwokmabel.profile.utils.ImagePickerActivity.SHOW_ALL_OPTIONS;
 
 public class UploadListingRichTextEditorFragment extends Fragment {
+
+    public static final List<String> palette_colors = Arrays.asList("#000000", "#ED2423", "#F5A525", "#2B3585", "#3134E8", "#01BBD4",
+            "#9BDAF6", "#8B8B8B", "#E7E7E7", "#F2F2F2");
 
     private NavController navController;
     private FragmentUploadPostBinding binding;
@@ -376,8 +380,7 @@ public class UploadListingRichTextEditorFragment extends Fragment {
                         currentTextColor,
                         ColorSwatch._300,
                         ColorShape.SQAURE,
-                        new ArrayList<String>(Arrays.asList("#000000", "#f6e58d", "#ffbe76", "#ff7979", "#badc58", "#dff9fb",
-                                "#7ed6df", "#e056fd", "#686de0", "#30336b", "#95afc0"))
+                        palette_colors
                 )
                         .build()
                         .show();
@@ -403,8 +406,7 @@ public class UploadListingRichTextEditorFragment extends Fragment {
                         currentBgColor,
                         ColorSwatch._300,
                         ColorShape.SQAURE,
-                        new ArrayList<String>(Arrays.asList("#000000", "#f6e58d", "#ffbe76", "#ff7979", "#badc58", "#dff9fb",
-                                "#7ed6df", "#e056fd", "#686de0", "#30336b", "#95afc0"))
+                        palette_colors
                 )
                         .build()
                         .show();
@@ -545,7 +547,7 @@ public class UploadListingRichTextEditorFragment extends Fragment {
                                     storageReference.child("Images").child(currentUserId).child(fileName).getDownloadUrl().addOnCompleteListener(task -> {
                                         if (task.isSuccessful()) {
                                             mEditor.insertVideo(task.getResult().toString(), task.getResult().toString());
-                                            clearAllBackgrounds();
+//                                            clearAllBackgrounds();
                                             Log.d("newmethod", task.getResult().toString());
                                         }
                                     });
@@ -660,7 +662,7 @@ public class UploadListingRichTextEditorFragment extends Fragment {
                         String i = one.getText().toString();
                         String j = two.getText().toString();
                         mEditor.insertLink(j,i);
-                        clearAllBackgrounds();
+//                        clearAllBackgrounds();
                     }
                 });
 

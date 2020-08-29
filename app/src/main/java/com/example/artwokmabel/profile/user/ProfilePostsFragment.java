@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.paging.PagedList;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.FragmentProfilePostsBinding;
@@ -64,6 +65,13 @@ public class ProfilePostsFragment extends Fragment {
 
         navController = Navigation.findNavController(requireActivity(), R.id.nav_host_container);
         viewModel = ViewModelProviders.of(this).get(ProfilePostsViewModel.class);
+
+        binding.swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                adapter.refresh();
+            }
+        });
         setUpPostsAdapter();
 
         return binding.getRoot();
@@ -73,6 +81,20 @@ public class ProfilePostsFragment extends Fragment {
         public void onUploadButtonClicked(){
             navController.navigate(R.id.action_profile_graph_to_uploadPostFragment);
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if(adapter != null) {
+            adapter.startListening();
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        adapter.stopListening();
     }
 
     private void setUpPostsAdapter(){

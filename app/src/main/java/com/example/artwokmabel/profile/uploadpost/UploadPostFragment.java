@@ -46,6 +46,7 @@ import com.example.artwokmabel.Utils.TimeWrangler;
 import com.example.artwokmabel.databinding.FragmentUploadPostBinding;
 import com.example.artwokmabel.homepage.callbacks.ImagePickerCallback;
 import com.example.artwokmabel.models.User;
+import com.example.artwokmabel.profile.uploadlisting.UploadListingRichTextEditorFragment;
 import com.example.artwokmabel.profile.user.ProfileFragmentViewModel;
 import com.example.artwokmabel.repos.FirestoreRepo;
 import com.github.dhaval2404.colorpicker.MaterialColorPickerDialog;
@@ -406,8 +407,7 @@ public class UploadPostFragment extends Fragment {
                         currentTextColor,
                         ColorSwatch._300,
                         ColorShape.SQAURE,
-                        new ArrayList<String>(Arrays.asList("#000000", "#f6e58d", "#ffbe76", "#ff7979", "#badc58", "#dff9fb",
-                                "#7ed6df", "#e056fd", "#686de0", "#30336b", "#95afc0"))
+                        UploadListingRichTextEditorFragment.palette_colors
                 )
                 .build()
                 .show();
@@ -433,8 +433,7 @@ public class UploadPostFragment extends Fragment {
                         currentBgColor,
                         ColorSwatch._300,
                         ColorShape.SQAURE,
-                        new ArrayList<String>(Arrays.asList("#000000", "#f6e58d", "#ffbe76", "#ff7979", "#badc58", "#dff9fb",
-                                "#7ed6df", "#e056fd", "#686de0", "#30336b", "#95afc0"))
+                        UploadListingRichTextEditorFragment.palette_colors
                 )
                 .build()
                 .show();
@@ -486,15 +485,6 @@ public class UploadPostFragment extends Fragment {
         binding.actionInsertImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                mEditor.checkIfStart((String s) -> {
-                    Log.d("isstart", mEditor.getHtml());
-                    if(s.equals("true")){
-                        Log.d("isstart", "It's the start");
-                    }else{
-                        Log.d("isstart", "It's not the start");
-                    }
-                });
 
                 new ImagePickerCallback(requireActivity(), REQUEST_IMAGE, viewModel, SHOW_ALL_OPTIONS).onImagePickerClicked();
                 viewModel.getImagePath().observe(getViewLifecycleOwner(), new Observer<Uri>() {
@@ -564,7 +554,7 @@ public class UploadPostFragment extends Fragment {
                                     storageReference.child("Images").child(currentUserId).child(fileName).getDownloadUrl().addOnCompleteListener(task -> {
                                         if (task.isSuccessful()) {
                                             mEditor.insertVideo(task.getResult().toString(), task.getResult().toString());
-                                            clearAllBackgrounds();
+//                                            clearAllBackgrounds();
                                             Log.d("newmethod", task.getResult().toString());
                                         }
                                     });
@@ -679,7 +669,7 @@ public class UploadPostFragment extends Fragment {
                         String i = one.getText().toString();
                         String j = two.getText().toString();
                         mEditor.insertLink(j,i);
-                        clearAllBackgrounds();
+//                        clearAllBackgrounds();
                     }
                 });
 
