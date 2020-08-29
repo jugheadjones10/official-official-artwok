@@ -19,6 +19,7 @@
                 android:layout_height="wrap_content"
                 android:text="Seller FAQ"
                 android:textColor="#000000"
+                android:layout_marginBottom="10dp"
                 android:textSize="20dp"></TextView>
 
             <TextView
@@ -57,6 +58,7 @@
                 android:layout_height="wrap_content"
                 android:text="Buyer FAQ"
                 android:textColor="#000000"
+                android:layout_marginBottom="10dp"
                 android:textSize="20dp"></TextView>
             <TextView
                 android:id="@+id/seller_faq_description"

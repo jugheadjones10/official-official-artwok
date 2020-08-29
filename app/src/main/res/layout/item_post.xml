@@ -26,17 +26,19 @@
             android:layout_width="@dimen/circle_profile_width"
             android:layout_height="0dp"
             android:onClick="@{() -> callbacks.onProfileClicked.onProfileClicked(post)}"
-            android:padding="@dimen/spacing_small"
+            android:padding="@dimen/spacing_tiny"
+            android:layout_marginStart="@dimen/spacing_small"
             app:layout_constraintBottom_toTopOf="@+id/guideline4"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/poster_name"
-            style="@style/RegularCondensed"
+            android:fontFamily="@string/fontFamily__sans_serif_medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/spacing_small"
+            android:layout_marginTop="4dp"
+            android:layout_marginLeft="6dp"
             android:text="@{post.username}"
             android:textColor="@color/almost_black"
             app:layout_constraintBottom_toTopOf="@+id/post_date"
@@ -49,9 +51,11 @@
             style="@style/RegularCondensed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/spacing_small"
+            android:layout_marginLeft="6dp"
+            android:textColor="@color/almost_black"
+            android:textSize="10sp"
             android:text="@{time}"
-            app:layout_constraintBottom_toTopOf="@+id/guideline4"
+
             app:layout_constraintStart_toEndOf="@+id/profile"
             app:layout_constraintTop_toBottomOf="@+id/poster_name" />
 

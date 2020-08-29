@@ -84,8 +84,10 @@
                 <TextView
                     android:id="@+id/poster_name"
                     style="@style/RegularCondensed"
+                    android:textColor="@color/almost_black"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:textStyle="bold"
                     android:gravity="center_vertical"
                     android:text="@{user.username}" />
 
@@ -205,15 +207,29 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textColor="@color/almost_black"
+                            android:textSize="16sp"
                             android:text="@{listing.name}"
                             android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{Long.toString(listing.price)}">
-                        </TextView>
-
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/almost_black"
+                                android:textStyle="bold"
+                                android:textSize="16sp"
+                                android:text="$ "/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/almost_black"
+                                android:textSize="15sp"
+                                android:textStyle="bold"
+                                android:text="@{Long.toString(listing.price)}">
+                            </TextView>
+                        </LinearLayout>
                     </LinearLayout>
 
                     <View android:layout_width="0dp"
