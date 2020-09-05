@@ -83,8 +83,8 @@
 
                 <TextView
                     android:id="@+id/poster_name"
-                    style="@style/RegularCondensed"
-                    android:textColor="@color/almost_black"
+                    android:fontFamily="@font/polite_type"
+                    style="@style/TextAppearance.Artwok.ToolbarText"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:textStyle="bold"

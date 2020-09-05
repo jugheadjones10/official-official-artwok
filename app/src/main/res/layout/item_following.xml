@@ -49,6 +49,7 @@
 
             <TextView
                 android:id="@+id/item_following_username"
+                android:fontFamily="@font/polite_type"
                 style="@style/RegularCondensed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -63,6 +64,7 @@
             <TextView
                 android:id="@+id/item_following_desc"
                 style="@style/RegularCondensed"
+                android:fontFamily="@font/polite_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/spacing_small"

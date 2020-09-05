@@ -36,6 +36,7 @@
 
                 <TextView
                     android:id="@+id/poster_username"
+                    android:fontFamily="@font/polite_type"
                     style="@style/TextAppearance.Artwok.ToolbarText"
                     android:text="@{user.username}" />
 
@@ -66,11 +67,11 @@
                     android:id="@+id/post_web_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="5dp"
-                    android:background="@color/almost_black" />
+<!--                <View-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="1dp"-->
+<!--                    android:layout_marginTop="5dp"-->
+<!--                    android:background="@color/almost_black" />-->
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

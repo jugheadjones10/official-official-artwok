@@ -35,6 +35,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/polite_type"
                     android:text="@{username}"
                     android:textColor="#FFFFFF"
                     android:textSize="18sp"
