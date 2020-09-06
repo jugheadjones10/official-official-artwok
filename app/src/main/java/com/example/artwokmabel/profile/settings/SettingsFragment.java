@@ -21,9 +21,12 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.example.artwokmabel.HomePageActivity;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.FragmentSettingsBinding;
 import com.example.artwokmabel.homepage.callbacks.ImagePickerCallback;
+import com.example.artwokmabel.login.AppHostActivity;
+import com.example.artwokmabel.login.LoginOptionsActivity;
 import com.example.artwokmabel.models.User;
 import com.example.artwokmabel.profile.utils.ImagePickerActivity;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -154,13 +157,13 @@ public class SettingsFragment extends Fragment {
     }
 
     public void onLogout(){
-//        FirebaseAuth.getInstance().signOut();
+        FirebaseAuth.getInstance().signOut();
 //        HomePageActivity.Companion.getBottomNavBar().setSelectedItemId(R.id.home_graph);
-//        navController.popBackStack()
+//        navController.popBackStack();
 
-//        Intent intent = new Intent(SettingsActivity.this, LoginOptionsActivity.class);
-//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//        startActivity(intent);
+        Intent intent = new Intent(getContext(), AppHostActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
     }
 
     public void onDeactivate(){

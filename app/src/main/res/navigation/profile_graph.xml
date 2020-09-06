@@ -32,9 +32,7 @@
             app:destination="@id/uploadPostFragment" />
         <argument
             android:name="userId"
-            app:argType="string"
-            app:nullable="true"
-            android:defaultValue="@null" />
+            app:argType="string" />
         <action
             android:id="@+id/action_profile_graph_to_uploadListingFragment"
             app:destination="@id/uploadListingFragment" />

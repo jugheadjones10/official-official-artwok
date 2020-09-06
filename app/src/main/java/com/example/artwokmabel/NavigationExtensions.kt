@@ -18,6 +18,7 @@ package com.example.artwokmabel
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.util.SparseArray
 import androidx.core.util.forEach
 import androidx.core.util.set
@@ -237,7 +238,7 @@ private fun obtainNavHostFragment(
 
     // Otherwise, create it and return it.
     val navHostFragment: NavHostFragment
-    if(navGraphId == R.id.profile_graph){
+    if(navGraphId == R.navigation.profile_graph){
         val bundle = Bundle()
         bundle.putString("userId", mAuth.currentUser?.uid)
         navHostFragment = NavHostFragment.create(navGraphId, bundle)
