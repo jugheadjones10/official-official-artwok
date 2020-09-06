@@ -34,7 +34,7 @@
 
         <TextView
             android:id="@+id/poster_name"
-            android:fontFamily="@string/fontFamily__sans_serif_medium"
+            android:fontFamily="@font/polite_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
