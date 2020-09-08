@@ -54,18 +54,21 @@
         </com.google.android.material.appbar.AppBarLayout>
 
         <RelativeLayout
-            android:elevation="10dp"
+            android:elevation="0dp"
             android:id="@+id/relativeLayout_rich_box"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <com.example.artwokmabel.profile.uploadpost.RichEditor
-                android:layout_above="@+id/lin_con"
-                android:background="@drawable/edit_text_bg"
                 android:id="@+id/editor"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                />
+                android:layout_above="@+id/lin_con"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/edit_text_bg" />
 
             <ProgressBar
                 android:id="@+id/progressBar"
