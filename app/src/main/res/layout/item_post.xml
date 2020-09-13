@@ -40,6 +40,7 @@
             android:layout_marginTop="4dp"
             android:layout_marginLeft="6dp"
             android:text="@{post.username}"
+            android:onClick="@{() -> callbacks.onProfileClicked.onProfileClicked(post)}"
             android:textColor="@color/almost_black"
             app:layout_constraintBottom_toTopOf="@+id/post_date"
             app:layout_constraintStart_toEndOf="@+id/profile"

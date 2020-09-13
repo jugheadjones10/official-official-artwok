@@ -55,10 +55,10 @@ public class CreateAccountEmailFragment extends Fragment {
         viewModel = new ViewModelProvider(requireActivity()).get(RegistrationViewModel.class);
         navController = Navigation.findNavController(view);
 
-        AppBarConfiguration appBarConfiguration =
-                new AppBarConfiguration.Builder(navController.getGraph()).build();
-        NavigationUI.setupWithNavController(
-                binding.zeroUiToolbar, navController, appBarConfiguration);
+//        AppBarConfiguration appBarConfiguration =
+//                new AppBarConfiguration.Builder(navController.getGraph()).build();
+//        NavigationUI.setupWithNavController(
+//                binding.zeroUiToolbar, navController, appBarConfiguration);
 
         binding.emailEditText.requestFocus();
         InputMethodManager imm = (InputMethodManager)
@@ -67,8 +67,8 @@ public class CreateAccountEmailFragment extends Fragment {
         binding.setCreateAccountEmailFragment(this);
         binding.progressBar.setVisibility(View.GONE);
 
-//        ((AppCompatActivity)requireActivity()).setSupportActionBar(binding.zeroUiToolbar);
-//        ((AppCompatActivity)requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity)requireActivity()).setSupportActionBar(binding.zeroUiToolbar);
+        ((AppCompatActivity)requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         viewModel.getRegistrationState().observe(getViewLifecycleOwner(), state -> {
             binding.progressBar.setVisibility(View.GONE);
@@ -82,15 +82,15 @@ public class CreateAccountEmailFragment extends Fragment {
             }
         });
 
-        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                viewModel.userCancelledRegistration();
-                //Compare the below two
-                //navController.popBackStack(R.id.loginFragment, false);
-                navController.popBackStack();
-            }
-        });
+//        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
+//            @Override
+//            public void handleOnBackPressed() {
+//                viewModel.userCancelledRegistration();
+//                Compare the below two
+//                navController.popBackStack(R.id.loginOptionsFragment, false);
+//                navController.navigateUp();
+//            }
+//        });
     }
 
     public void emailOnNextClicked(){

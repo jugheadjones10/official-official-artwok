@@ -54,10 +54,10 @@ public class CreateAccountPasswordFragment extends Fragment {
         loginViewModel = provider.get(LoginViewModel.class);
         navController = Navigation.findNavController(view);
 
-        AppBarConfiguration appBarConfiguration =
-                new AppBarConfiguration.Builder(navController.getGraph()).build();
-        NavigationUI.setupWithNavController(
-                binding.zeroUiToolbar, navController, appBarConfiguration);
+//        AppBarConfiguration appBarConfiguration =
+//                new AppBarConfiguration.Builder(navController.getGraph()).build();
+//        NavigationUI.setupWithNavController(
+//                binding.zeroUiToolbar, navController, appBarConfiguration);
 
         binding.passwordEditText.requestFocus();
         InputMethodManager imm = (InputMethodManager)
@@ -83,15 +83,15 @@ public class CreateAccountPasswordFragment extends Fragment {
             }
         });
 
-        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                registrationViewModel.userCancelledRegistration();
-                //Compare the below two
-                //navController.popBackStack(R.id.loginFragment, false);
-                navController.popBackStack();
-            }
-        });
+//        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
+//            @Override
+//            public void handleOnBackPressed() {
+//                registrationViewModel.userCancelledRegistration();
+//                //Compare the below two
+//                //navController.popBackStack(R.id.loginFragment, false);
+//                navController.navigateUp();
+//            }
+//        });
     }
 
     public void onCreateAccountClicked(){
