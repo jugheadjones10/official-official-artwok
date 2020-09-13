@@ -27,6 +27,10 @@ import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.FragmentCreateAccountEmailBinding;
 import com.example.artwokmabel.databinding.FragmentCreateAccountUsernameBinding;
 import com.example.artwokmabel.repos.FirestoreRepo;
+import com.google.zxing.common.StringUtils;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class CreateAccountUsernameFragment extends Fragment {
 
@@ -57,13 +61,13 @@ public class CreateAccountUsernameFragment extends Fragment {
         binding.setCreateAccountUsernameFragment(this);
         binding.progressBar.setVisibility(View.GONE);
 
-        ((AppCompatActivity)requireActivity()).setSupportActionBar(binding.zeroUiToolbar);
-        ((AppCompatActivity)requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        ((AppCompatActivity)requireActivity()).setSupportActionBar(binding.zeroUiToolbar);
+//        ((AppCompatActivity)requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        appBarConfiguration =
-                new AppBarConfiguration.Builder(navController.getGraph()).build();
-        NavigationUI.setupWithNavController(
-                binding.zeroUiToolbar, navController, appBarConfiguration);
+//        appBarConfiguration =
+//                new AppBarConfiguration.Builder(navController.getGraph()).build();
+//        NavigationUI.setupWithNavController(
+//                binding.zeroUiToolbar, navController, appBarConfiguration);
 
         viewModel.getRegistrationState().observe(getViewLifecycleOwner(), state -> {
             binding.progressBar.setVisibility(View.GONE);
@@ -77,19 +81,26 @@ public class CreateAccountUsernameFragment extends Fragment {
             }
         });
 
-        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                viewModel.userCancelledRegistration();
-                navController.popBackStack();
-            }
-        });
+//        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
+//            @Override
+//            public void handleOnBackPressed() {
+//                viewModel.userCancelledRegistration();
+//                navController.navigateUp();
+//            }
+//        });
     }
 
     public void onUsernameNextClicked(){
         String username = binding.usernameEditText.getText().toString().trim();
+
+        Pattern pattern = Pattern.compile("\\s");
+        Matcher matcher = pattern.matcher(username);
+        boolean found = matcher.find();
+
         if(username.length() == 0) {
             binding.usernameEditText.setError("Please enter a username");
+        }else if(found){
+            binding.usernameEditText.setError("Username cannot contain any spaces");
         }else{
             binding.progressBar.setVisibility(View.VISIBLE);
             viewModel.collectUserUsername(username);

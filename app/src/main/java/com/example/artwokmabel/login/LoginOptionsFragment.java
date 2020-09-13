@@ -50,7 +50,7 @@ public class LoginOptionsFragment extends Fragment {
     }
 
     public void onCreateAccountClicked(){
-        navController.navigate(R.id.action_loginOptionsFragment_to_registrationGraph);
+        navController.navigate(R.id.action_loginOptionsFragment_to_createAccountEmailFragment);
     }
 
     //Uncomment when Google time comes

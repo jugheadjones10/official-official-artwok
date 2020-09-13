@@ -20,6 +20,7 @@ import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.FragmentUploadListingDetailsBinding;
 import com.example.artwokmabel.models.Category;
 import com.example.artwokmabel.homepage.request.upload.UploadRequestDetailsViewModel;
+import com.google.android.play.core.internal.s;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -102,14 +103,23 @@ public class UploadListingDetailsFragment extends Fragment {
 
             builder.setPositiveButton("Ok", new DialogInterface.OnClickListener(){
                 public void onClick(DialogInterface dialog, int which){
+
+                    String finalCategoriesString = "";
                     for(int i=0; i < checkedCategoriesArray.length; i++){
                         if(checkedCategoriesArray[i]){
                             String capitalized = categories[i].substring(0, 1).toUpperCase() + categories[i].substring(1);
-                            finalizedCategories.add(capitalized);
+                            finalCategoriesString += capitalized + ",";
+//                            finalizedCategories.add(capitalized);
                         }
                     }
-                    binding.chooseCategories.setText(finalizedCategories.get(0));
+
+                    if(finalCategoriesString.length() != 0){
+                        finalCategoriesString = finalCategoriesString.substring(0, finalCategoriesString.length()-1);
+                    }
+
+                    binding.chooseCategories.setText(finalCategoriesString);
                 }
+
             });
 
             builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

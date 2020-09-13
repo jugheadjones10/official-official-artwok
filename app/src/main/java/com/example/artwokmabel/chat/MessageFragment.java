@@ -57,7 +57,10 @@ public class MessageFragment extends Fragment implements SearchAnimationToolbar.
 
         // Adapter Setup
         binding.messageViewpager.setAdapter(adapter);
-        //binding.messageTabs.setupWithViewPager(binding.messageViewpager);
+
+        //Setting default tab as the message tab
+        binding.messageViewpager.setCurrentItem(1);
+
         new TabLayoutMediator(binding.messageTabs, binding.messageViewpager,
                 new TabLayoutMediator.TabConfigurationStrategy() {
                     @Override

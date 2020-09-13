@@ -77,6 +77,8 @@ public class UploadListingDescFragment extends Fragment {
         navController = Navigation.findNavController(requireActivity(), R.id.nav_host_container);
 
         binding.listingWebView.setBackgroundColor(Color.TRANSPARENT);
+        binding.listingWebView.loadData("Click to edit description", "text/html", "utf-8");
+
 
         viewModel.getHtmlContent().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override

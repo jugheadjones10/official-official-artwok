@@ -244,31 +244,12 @@
                                 android:tint="@color/artwok_black" />
 
                             <ImageButton
-                                android:id="@+id/action_heading1"
+                                android:id="@+id/action_insert_link"
                                 android:layout_width="48dp"
                                 android:layout_height="48dp"
                                 android:background="@null"
                                 android:contentDescription="@null"
-                                android:src="@drawable/format_header_1"
-                                />
-
-                            <ImageButton
-                                android:id="@+id/action_heading2"
-                                android:layout_width="48dp"
-                                android:layout_height="48dp"
-                                android:background="@null"
-                                android:contentDescription="@null"
-                                android:src="@drawable/format_header_2"
-                                />
-
-                            <ImageButton
-                                android:id="@+id/action_heading3"
-                                android:layout_width="48dp"
-                                android:layout_height="48dp"
-                                android:background="@null"
-                                android:contentDescription="@null"
-                                android:src="@drawable/format_header_3"
-                                />
+                                android:src="@drawable/ic_link" />
 
 
                             <ImageButton
@@ -335,6 +316,30 @@
                                 android:src="@drawable/ic_format_align_right"
                                 />
 
+                            <ImageButton
+                                android:id="@+id/action_heading1"
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
+                                android:background="@null"
+                                android:contentDescription="@null"
+                                android:src="@drawable/format_header_1" />
+
+                            <ImageButton
+                                android:id="@+id/action_heading2"
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
+                                android:background="@null"
+                                android:contentDescription="@null"
+                                android:src="@drawable/format_header_2" />
+
+                            <ImageButton
+                                android:id="@+id/action_heading3"
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
+                                android:background="@null"
+                                android:contentDescription="@null"
+                                android:src="@drawable/format_header_3" />
+
                             <!--                            <ImageButton-->
 <!--                                android:id="@+id/action_insert_online_image"-->
 <!--                                android:layout_width="48dp"-->
@@ -356,17 +361,6 @@
 <!--                                android:contentDescription="@null"-->
 <!--                                android:src="@drawable/ic_image"-->
 <!--                                />-->
-
-
-
-                            <ImageButton
-                                android:id="@+id/action_insert_link"
-                                android:layout_width="48dp"
-                                android:layout_height="48dp"
-                                android:background="@null"
-                                android:contentDescription="@null"
-                                android:src="@drawable/ic_link"
-                                />
 
 
                         </LinearLayout>
