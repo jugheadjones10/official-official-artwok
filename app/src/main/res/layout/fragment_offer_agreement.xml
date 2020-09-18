@@ -40,15 +40,18 @@
                 style="@style/RegularCondensed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{listing.name}"
-                tools:layout_editor_absoluteX="61dp"
-                tools:layout_editor_absoluteY="18dp" />
+                android:textColor="@color/almost_black"
+                android:text="@{listing.name}"/>
+<!--                tools:layout_editor_absoluteX="61dp"-->
+<!--                tools:layout_editor_absoluteY="18dp" -->
+                />
 
             <TextView
                 android:id="@+id/post_date"
                 style="@style/RegularCondensed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/almost_black"
                 android:text="@{Long.toString(listing.price)}"
                 tools:layout_editor_absoluteX="180dp"
                 tools:layout_editor_absoluteY="18dp" />
@@ -64,7 +67,8 @@
         android:layout_height="wrap_content"
         android:padding="8dp"
         android:text="Seller-Buyer Agreement"
-        android:textSize="25sp"
+        android:textColor="@color/almost_black"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
@@ -75,7 +79,8 @@
         android:layout_height="wrap_content"
         android:padding="8dp"
         android:text="Price"
-        android:textSize="20sp"
+        android:textSize="14sp"
+        android:textColor="@color/almost_black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title" />
@@ -106,7 +111,8 @@
         android:layout_height="wrap_content"
         android:padding="8dp"
         android:text="Delivery"
-        android:textSize="20sp"
+        android:textSize="14sp"
+        android:textColor="@color/almost_black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_price" />
@@ -136,7 +142,8 @@
         android:layout_height="wrap_content"
         android:padding="8dp"
         android:text="Refund"
-        android:textSize="20sp"
+        android:textSize="14sp"
+        android:textColor="@color/almost_black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_delivery" />
@@ -166,7 +173,8 @@
     android:layout_height="wrap_content"
     android:padding="8dp"
     android:text="Shipment/Delivery Deadline"
-    android:textSize="20sp"
+    android:textSize="14sp"
+    android:textColor="@color/almost_black"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@+id/edit_refund" />
@@ -196,7 +204,8 @@
         android:layout_height="wrap_content"
         android:padding="8dp"
         android:text="Seller Request"
-        android:textSize="20sp"
+        android:textSize="14sp"
+        android:textColor="@color/almost_black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_shipment_deadline" />
@@ -226,7 +235,8 @@
         android:layout_height="wrap_content"
         android:padding="8dp"
         android:text="Buyer Request"
-        android:textSize="20sp"
+        android:textSize="14sp"
+        android:textColor="@color/almost_black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_seller_request" />

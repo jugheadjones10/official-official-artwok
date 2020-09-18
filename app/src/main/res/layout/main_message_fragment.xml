@@ -30,7 +30,7 @@
                 <ImageView
                     android:layout_width="@dimen/icon_artwok_width_normal"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="18dp"
+                    android:layout_marginStart="16dp"
                     android:id="@+id/artwok_icon"
                     android:src="@drawable/artwok_login_icon" />
 

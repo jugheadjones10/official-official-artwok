@@ -20,11 +20,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:textSize="12sp"
-            android:textStyle="bold"
             android:layout_gravity="center_vertical"
-            android:text="Recent" />
+            android:text="Recent"
+            android:textColor="@color/grey_disabled"
+            android:textSize="12sp"
+            android:textStyle="bold" />
 
         <ImageView
             android:layout_width="@dimen/default_indicator_margin_vertical"
@@ -36,12 +36,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:textSize="12sp"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dp"
-            android:text="Filter" />
+            android:text="Filter"
+            android:textColor="@color/grey_disabled"
+            android:textSize="12sp"
+            android:textStyle="bold" />
 
         <ImageView
             android:layout_width="@dimen/default_indicator_margin_vertical"
