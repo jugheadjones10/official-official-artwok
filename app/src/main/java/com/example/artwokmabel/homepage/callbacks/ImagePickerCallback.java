@@ -61,7 +61,7 @@ public class ImagePickerCallback {
     }
 
     private void showImagePickerOptions(){
-        ImagePickerActivity.showImagePickerOptions(activity, showOptions,new ImagePickerActivity.PickerOptionListener() {
+        ImagePickerActivity.showImagePickerOptions(activity, showOptions, new ImagePickerActivity.PickerOptionListener() {
             @Override
             public void onTakeCameraSelected() {
                 launchCameraIntent();

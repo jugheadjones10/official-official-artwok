@@ -6,7 +6,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:paddingStart="10dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -18,33 +20,34 @@
                 android:id="@+id/seller_faq"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:text="@string/seller_faq"
                 android:textColor="#000000"
-                android:textStyle="bold"
-                android:layout_marginBottom="10dp"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/seller_faq_description10"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
                 android:text="@string/faq_des10"
-                android:textColor="@color/almost_black" />
+                android:textColor="@color/almost_black"
+                android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/seller_faq_description11"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/almost_black"
                 android:text="@string/faq_des11"
-/>
+                android:textColor="@color/almost_black" />
+
             <TextView
                 android:id="@+id/seller_faq_description2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
                 android:text="@string/faq_des2"
-                android:textColor="@color/almost_black" />
+                android:textColor="@color/almost_black"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/seller_faq_description21"
@@ -52,13 +55,15 @@
                 android:layout_height="wrap_content"
                 android:text="@string/faq_des21"
                 android:textColor="@color/almost_black" />
+
             <TextView
                 android:id="@+id/seller_faq_description3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/faq_des3"
-                android:textStyle="bold"
-                android:textColor="@color/almost_black" />
+                android:textColor="@color/almost_black"
+                android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/seller_faq_description31"
                 android:layout_width="match_parent"
@@ -85,52 +90,57 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:text="@string/buyer_faq"
                 android:textColor="#000000"
-                android:textStyle="bold"
-                android:layout_marginBottom="10dp"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/buyer_faq_description1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="@string/buyer_faq_desc1"
                 android:textColor="@color/almost_black"
-                android:textStyle="bold"
-                android:text="@string/buyer_faq_desc1"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/buyer_faq_description11"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/almost_black"
                 android:text="@string/buyer_faq_desc11"
+                android:textColor="@color/almost_black"
                 tools:ignore="DuplicateIds" />
+
             <TextView
                 android:id="@+id/buyer_faq_description2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="@string/buyer_faq_desc2"
                 android:textColor="@color/almost_black"
-                android:textStyle="bold"
-                android:text="@string/buyer_faq_desc2"/>
+                android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/buyer_faq_description21"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/almost_black"
-                android:text="@string/buyer_faq_desc21"/>
+                android:text="@string/buyer_faq_desc21"
+                android:textColor="@color/almost_black" />
+
             <TextView
                 android:id="@+id/buyer_faq_description3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="@string/buyer_faq_desc3"
                 android:textColor="@color/almost_black"
-                android:textStyle="bold"
-                android:text="@string/buyer_faq_desc3"/>
+                android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/buyer_faq_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/almost_black"
-                android:text="@string/buyer_faq_desc31"/>
+                android:text="@string/buyer_faq_desc31"
+                android:textColor="@color/almost_black" />
             <!--        <ExpandableListView-->
             <!--            android:id="@+id/buyer_expandable_faq"-->
             <!--            android:layout_width="match_parent"-->

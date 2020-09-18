@@ -176,22 +176,22 @@ public class ImagePickerActivity extends AppCompatActivity {
 
     private void chooseImageFromGallery() {
         Dexter.withActivity(this)
-                .withPermissions(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                .withListener(new MultiplePermissionsListener() {
-                    @Override
-                    public void onPermissionsChecked(MultiplePermissionsReport report) {
-                        if (report.areAllPermissionsGranted()) {
-                            Intent pickPhoto = new Intent(Intent.ACTION_PICK,
-                                    android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                            startActivityForResult(pickPhoto, REQUEST_GALLERY_IMAGE);
-                        }
+            .withPermissions(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            .withListener(new MultiplePermissionsListener() {
+                @Override
+                public void onPermissionsChecked(MultiplePermissionsReport report) {
+                    if (report.areAllPermissionsGranted()) {
+                        Intent pickPhoto = new Intent(Intent.ACTION_PICK,
+                                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        startActivityForResult(pickPhoto, REQUEST_GALLERY_IMAGE);
                     }
+                }
 
-                    @Override
-                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
-                        token.continuePermissionRequest();
-                    }
-                }).check();
+                @Override
+                public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+                    token.continuePermissionRequest();
+                }
+            }).check();
     }
 
     private void chooseVideoFromGallery(){
@@ -220,6 +220,9 @@ public class ImagePickerActivity extends AppCompatActivity {
                 break;
             case REQUEST_GALLERY_IMAGE:
                 if (resultCode == RESULT_OK) {
+
+                    Log.d("chooseImage", "We have received A OK from request gallery image on Activity Result");
+
                     Uri imageUri = data.getData();
                     cropImage(imageUri);
                 } else {
@@ -236,14 +239,17 @@ public class ImagePickerActivity extends AppCompatActivity {
                 break;
             case UCrop.REQUEST_CROP:
                 if (resultCode == RESULT_OK) {
+                    Log.d("chooseImage", "We have received AOK from UCrop result OK");
                     handleUCropResult(data);
                 } else {
+                    Log.d("chooseImage", "Result of REQUEST_CROP is not RESULT_OK");
                     setResultCancelled();
                 }
                 break;
             case UCrop.RESULT_ERROR:
                 final Throwable cropError = UCrop.getError(data);
                 Log.e(TAG, "Crop error: " + cropError);
+                Log.d("chooseImage", "Crop error: " + cropError);
                 setResultCancelled();
                 break;
             default:
@@ -252,6 +258,9 @@ public class ImagePickerActivity extends AppCompatActivity {
     }
 
     private void cropImage(Uri sourceUri) {
+
+        Log.d("chooseImage", "We have entered cropImage");
+
         Uri destinationUri = Uri.fromFile(new File(getCacheDir(), queryName(getContentResolver(), sourceUri)));
         UCrop.Options options = new UCrop.Options();
         options.setCompressionQuality(IMAGE_COMPRESSION);
@@ -267,6 +276,8 @@ public class ImagePickerActivity extends AppCompatActivity {
         if (setBitmapMaxWidthHeight)
             options.withMaxResultSize(bitmapMaxWidth, bitmapMaxHeight);
 
+        Log.d("chooseImage", "We are right before UCrop start");
+
         UCrop.of(sourceUri, destinationUri)
                 .withOptions(options)
                 .start(this);
@@ -274,6 +285,7 @@ public class ImagePickerActivity extends AppCompatActivity {
 
     private void handleUCropResult(Intent data) {
         if (data == null) {
+            Log.d("chooseImage", "Data from UCROP is null");
             setResultCancelled();
             return;
         }
@@ -285,6 +297,8 @@ public class ImagePickerActivity extends AppCompatActivity {
 //        Intent intent = new Intent();
 //        intent.putExtra("path", imagePath);
 //        setResult(Activity.RESULT_OK, intent);
+        Log.d("chooseImage", "Result is all ok, on the way to sending to view model");
+
         viewModel.setResultOk(imagePath);
         finish();
     }
@@ -299,6 +313,7 @@ public class ImagePickerActivity extends AppCompatActivity {
 //        setResult(Activity.RESULT_CANCELED, intent);
 
 //        viewModel.setResultCancelled();
+        Log.d("chooseImage", "Result has been cancelled");
         finish();
     }
 
