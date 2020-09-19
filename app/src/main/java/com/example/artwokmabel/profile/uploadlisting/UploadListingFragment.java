@@ -229,7 +229,7 @@ public class UploadListingFragment extends Fragment {
         } else if(refundPolicy.isEmpty()){
             Toast.makeText(requireContext(), "Please enter your refund policy", Toast.LENGTH_LONG).show();
         } else if(categories == null || categories.size() == 0){
-            Toast.makeText(requireContext(), "Please select the category for your request.", Toast.LENGTH_LONG).show();
+            Toast.makeText(requireContext(), "Please select the category for your listing", Toast.LENGTH_LONG).show();
         } else if(budget == -1){
             Toast.makeText(requireContext(), "Please enter the price.", Toast.LENGTH_LONG).show();
         } else if(uploadImageUri.isEmpty() || uploadImageUri == null){

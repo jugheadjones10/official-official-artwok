@@ -109,12 +109,12 @@ public class UploadListingDetailsFragment extends Fragment {
                         if(checkedCategoriesArray[i]){
                             String capitalized = categories[i].substring(0, 1).toUpperCase() + categories[i].substring(1);
                             finalCategoriesString += capitalized + ",";
-//                            finalizedCategories.add(capitalized);
                         }
                     }
 
                     if(finalCategoriesString.length() != 0){
                         finalCategoriesString = finalCategoriesString.substring(0, finalCategoriesString.length()-1);
+                        finalizedCategories.add(finalCategoriesString);
                     }
 
                     binding.chooseCategories.setText(finalCategoriesString);

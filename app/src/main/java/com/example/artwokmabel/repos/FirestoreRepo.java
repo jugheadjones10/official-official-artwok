@@ -242,13 +242,17 @@ public class FirestoreRepo {
                                         System.currentTimeMillis()
                                 );
 
+                                //Sync with ListingPosts collection
+                                db.collection("ListingPosts")
+                                        .add(newPost);
+
+
                                 newPostRef.set(newPost)
                                         .addOnSuccessListener(aVoid -> {
                                             callback.onPostUploadFinished(true);
                                         }).addOnFailureListener(e ->
                                         callback.onPostUploadFinished(false));
 
-                            } else {
                             }
                         } else {
                             Log.d(TAG, "get failed with ", task.getException());
@@ -282,6 +286,9 @@ public class FirestoreRepo {
                             newListingRef.getId(),
                             System.currentTimeMillis(),
                             categories);
+
+                    db.collection("ListingPosts")
+                            .add(newListing);
 
                     newListingRef.set(newListing)
                             .addOnSuccessListener(aVoid -> {
@@ -321,8 +328,7 @@ public class FirestoreRepo {
                     UploadRequestActivity.getInstance().onUploaded();
                 })
                 .addOnFailureListener(e ->
-                        Toast.makeText(activity, "Failed to upload ic_dm. awd", Toast.LENGTH_LONG)
-                                .show());
+                        Toast.makeText(activity, "Failed to upload ic_dm. awd", Toast.LENGTH_LONG).show());
 
         db.collection("Users")
             .document(currentUserId)
@@ -341,10 +347,38 @@ public class FirestoreRepo {
                     }
                 }
             });
+
+        //Delete from the synced ListingPosts collection
+        db.collection("ListingPosts")
+            .whereEqualTo("postId", postId)
+            .get()
+            .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                @Override
+                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                    for(QueryDocumentSnapshot snapshot : queryDocumentSnapshots){
+                        snapshot.getReference().delete();
+                    }
+                }
+            });
+
+
     }
 
     public void deleteUserListing(String listingId){
         db.collectionGroup("Listings")
+            .whereEqualTo("postid", listingId)
+            .get()
+            .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                @Override
+                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                    for(QueryDocumentSnapshot snapshot : queryDocumentSnapshots){
+                        snapshot.getReference().delete();
+                    }
+                }
+            });
+
+        //Delete from the synced ListingPosts collection
+        db.collection("ListingPosts")
             .whereEqualTo("postid", listingId)
             .get()
             .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -2716,13 +2750,13 @@ public class FirestoreRepo {
     public ListingPost changeDocToListingPostModel(DocumentSnapshot doc) {
         //return exchange is the
         ListingPost listingPost = new ListingPost(
-                doc.getString("userid"),
+                doc.getString("userid") == null ? doc.getString("user_id") : doc.getString("userid"),
                 (long)(doc.get("nanopast") == null ? 0L : doc.get("nanopast")),
                 (ArrayList<String>) doc.get("photos"),
                 doc.getString("hashtags"),
                 doc.getString("desc"),
                 doc.getString("username"),
-                doc.getString("postid"),
+                doc.getString("postid") == null ? doc.getString("postId") : doc.getString("postid"),
                 doc.getString("timestamp"),
                 doc.getString("return_exchange"),
                 (long)(doc.get("price") == null ? 0L : doc.get("price")),
