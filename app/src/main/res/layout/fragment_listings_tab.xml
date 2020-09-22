@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:text="Recent"
-            android:textColor="@color/grey_disabled"
+            android:textColor="@color/artwok_white"
             android:textSize="12sp"
             android:textStyle="bold" />
 
@@ -39,7 +39,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dp"
             android:text="Filter"
-            android:textColor="@color/grey_disabled"
+            android:textColor="@color/artwok_white"
             android:textSize="12sp"
             android:textStyle="bold" />
 
