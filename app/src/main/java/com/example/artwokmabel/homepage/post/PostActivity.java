@@ -235,7 +235,7 @@ public class PostActivity extends AppCompatActivity {
         post = (MainPost) getIntent().getSerializableExtra("post");
 
         postId = post.getPostId();
-        posterUserId = post.getUser_id();
+        posterUserId = post.getUserid();
 
         ArrayList<String> images = post.getPhotos();
         ImageListener imageListener = new ImageListener() {

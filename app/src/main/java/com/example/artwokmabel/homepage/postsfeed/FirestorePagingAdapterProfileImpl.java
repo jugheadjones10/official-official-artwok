@@ -3,7 +3,6 @@ package com.example.artwokmabel.homepage.postsfeed;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.drawable.BitmapDrawable;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
@@ -38,7 +36,6 @@ import com.firebase.ui.firestore.paging.LoadingState;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
@@ -142,7 +139,7 @@ public class FirestorePagingAdapterProfileImpl extends FirestorePagingAdapter<Ma
                     int currentDestination = navController.getCurrentDestination().getId();
                     if(currentDestination == R.id.home_graph || currentDestination == R.id.favoritesFragment){
                         HomeGraphDirections.ActionGlobalProfileFragment2 action =
-                                HomeGraphDirections.actionGlobalProfileFragment2(post.getUser_id());
+                                HomeGraphDirections.actionGlobalProfileFragment2(post.getUserid());
                         navController.navigate(action);
                     }
                 },
@@ -207,7 +204,7 @@ public class FirestorePagingAdapterProfileImpl extends FirestorePagingAdapter<Ma
         //Change this later on by adding profile url at the point of upload
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("Users")
-                .document(mainPost.getUser_id())
+                .document(mainPost.getUserid())
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
@@ -216,10 +213,10 @@ public class FirestorePagingAdapterProfileImpl extends FirestorePagingAdapter<Ma
                             DocumentSnapshot document = task.getResult();
 
                             Picasso.get()
-                                    .load(document.getString("profile_url"))
-                                    .placeholder(R.drawable.loading_image)
-                                    .error(R.drawable.loading_image)
-                                    .into(postViewHolder.binding.profile);
+                                .load(document.getString("profile_url"))
+                                .placeholder(R.drawable.loading_image)
+                                .error(R.drawable.loading_image)
+                                .into(postViewHolder.binding.profile);
                         } else {
 
                         }

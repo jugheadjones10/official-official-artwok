@@ -102,7 +102,7 @@ public class FavoritePostsAdapter extends RecyclerView.Adapter<FavoritePostsAdap
                 intent.putExtra("description", fav.getDesc());
                 intent.putExtra("hashtags", fav.getHashtags());
                 intent.putExtra("postid", fav.getPostId());
-                intent.putExtra("userid", fav.getUser_id());
+                intent.putExtra("userid", fav.getUserid());
                 intent.putExtra("username", fav.getUsername());
                 intent.putExtra("photos", fav.getPhotos());
                 context.startActivity(intent);

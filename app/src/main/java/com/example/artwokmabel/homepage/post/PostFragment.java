@@ -137,15 +137,15 @@ public class PostFragment extends Fragment {
         int currentGraph = navController.getGraph().getId();
         if(currentGraph == R.id.home_graph){
             HomeGraphDirections.ActionGlobalProfileFragment2 action =
-                    HomeGraphDirections.actionGlobalProfileFragment2(post.getUser_id());
+                    HomeGraphDirections.actionGlobalProfileFragment2(post.getUserid());
             navController.navigate(action);
         }else if(currentGraph == R.id.profile_graph){
             ProfileGraphDirections.ActionProfileGraphSelf action =
-                    ProfileGraphDirections.actionProfileGraphSelf(post.getUser_id());
+                    ProfileGraphDirections.actionProfileGraphSelf(post.getUserid());
             navController.navigate(action);
         }else if(currentGraph == R.id.chat_graph){
             ChatGraphDirections.ActionGlobalProfileFragment3 action =
-                    ChatGraphDirections.actionGlobalProfileFragment3(post.getUser_id());
+                    ChatGraphDirections.actionGlobalProfileFragment3(post.getUserid());
             navController.navigate(action);
         }
     }
@@ -179,7 +179,7 @@ public class PostFragment extends Fragment {
         binding.postWebView.loadData(encoded, "text/html", "base64");
 
         postId = post.getPostId();
-        posterUserId = post.getUser_id();
+        posterUserId = post.getUserid();
 
         ArrayList<String> images = post.getPhotos();
         ImageListener imageListener = new ImageListener() {
@@ -196,7 +196,7 @@ public class PostFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        if(mAuth.getCurrentUser().getUid().equals(post.getUser_id())){
+        if(mAuth.getCurrentUser().getUid().equals(post.getUserid())){
             inflater.inflate(R.menu.indiv_listing_menu_mine, menu);
         }else{
             inflater.inflate(R.menu.indiv_listing_menu_yours, menu);

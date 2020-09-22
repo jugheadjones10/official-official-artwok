@@ -19,7 +19,6 @@ import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.recyclerview.widget.RecyclerView;
@@ -151,7 +150,7 @@ public class FirestorePagingAdapterImpl extends FirestorePagingAdapter<ListingPo
             postViewHolder.binding.setTime(TimeWrangler.changeNanopastToReadableDate(mainPost.getNanopast()));
             postViewHolder.binding.setFavorite(postViewHolder.binding.favorite);
 
-            if(mainPost.getUser_id().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+            if(mainPost.getUserid().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
                 postViewHolder.binding.favorite.setImageResource(R.drawable.ic_menu);
             }else {
                 if(user.getFav_posts().contains(mainPost.getPostId())){
@@ -193,7 +192,7 @@ public class FirestorePagingAdapterImpl extends FirestorePagingAdapter<ListingPo
                         int currentDestination = navController.getCurrentDestination().getId();
                         if(currentDestination == R.id.home_graph || currentDestination == R.id.favoritesFragment){
                             HomeGraphDirections.ActionGlobalProfileFragment2 action =
-                                    HomeGraphDirections.actionGlobalProfileFragment2(post.getUser_id());
+                                    HomeGraphDirections.actionGlobalProfileFragment2(post.getUserid());
                             navController.navigate(action);
                         }
                     },
@@ -203,7 +202,7 @@ public class FirestorePagingAdapterImpl extends FirestorePagingAdapter<ListingPo
                     },
                     //On fav clicked
                     (MainPost post, ImageView favorite) -> {
-                        if(mainPost.getUser_id().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+                        if(mainPost.getUserid().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
                             String[] items = {"Delete", "Report"};
                             new MaterialAlertDialogBuilder(mContext)
                                 .setItems(items, (dialog, which) -> {
@@ -258,7 +257,7 @@ public class FirestorePagingAdapterImpl extends FirestorePagingAdapter<ListingPo
             //Change this later on by adding profile url at the point of upload
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             db.collection("Users")
-                .document(mainPost.getUser_id())
+                .document(mainPost.getUserid())
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override

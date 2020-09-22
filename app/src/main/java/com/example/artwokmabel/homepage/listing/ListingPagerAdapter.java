@@ -51,8 +51,7 @@ public class ListingPagerAdapter extends FragmentStateAdapter {
 
             return fragment;
         }else{
-            Fragment fragment = new FaqFragment();
-            return fragment;
+            return new FaqFragment();
         }
     }
 

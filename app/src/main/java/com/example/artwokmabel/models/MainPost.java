@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import javax.annotation.Nullable;
 
 public class MainPost implements Serializable {
-    private String user_id;
+    private String userid;
     private String desc;
     private String hashtags;
     private String postid;
@@ -31,11 +31,11 @@ public class MainPost implements Serializable {
         this.timestamp = timestamp;
     }
 
-    public String getUser_id() {
-        return user_id;
+    public String getUserid() {
+        return userid;
     }
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
+    public void setUserid(String userid) {
+        this.userid = userid;
     }
 
     public String getDesc() {
@@ -78,8 +78,8 @@ public class MainPost implements Serializable {
 
     }
 
-    public MainPost(String user_id, String desc, String hashtags, String postid, String username, ArrayList<String> photos, String timestamp, @Nullable long nanopast) {
-        this.user_id = user_id;
+    public MainPost(String userid, String desc, String hashtags, String postid, String username, ArrayList<String> photos, String timestamp, @Nullable long nanopast) {
+        this.userid = userid;
         this.desc = desc;
         this.hashtags = hashtags;
         this.postid = postid;

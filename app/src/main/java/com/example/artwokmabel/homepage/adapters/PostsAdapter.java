@@ -142,7 +142,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.myHolder> {
 
         //CHECK THIS PART AFTER MAKING BOTH YOURS AND OTHERS POSTS APPEAR
         //Todo: huge rearchitecture of favorites functionality
-        if(data.getUser_id().equals(mAuth.getCurrentUser().getUid())){
+        if(data.getUserid().equals(mAuth.getCurrentUser().getUid())){
             holder.binding.favorite.setImageResource(R.drawable.ic_menu);
         }else{
 //            holder.binding.setOnfavpostclicked(new OnFavPostClicked());
@@ -266,7 +266,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.myHolder> {
             int currentDestination = navController.getCurrentDestination().getId();
             if(currentDestination == R.id.home_graph || currentDestination == R.id.favoritesFragment){
                 HomeGraphDirections.ActionGlobalProfileFragment2 action =
-                        HomeGraphDirections.actionGlobalProfileFragment2(post.getUser_id());
+                        HomeGraphDirections.actionGlobalProfileFragment2(post.getUserid());
                 navController.navigate(action);
             }
         }

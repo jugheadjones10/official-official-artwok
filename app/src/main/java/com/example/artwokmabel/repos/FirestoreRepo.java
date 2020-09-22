@@ -2735,7 +2735,7 @@ public class FirestoreRepo {
 
     public MainPost changeDocToMainPostModel(DocumentSnapshot doc){
         MainPost post = new MainPost(
-                doc.getString("user_id"),
+                doc.getString("userid"),
                 doc.getString("desc"),
                 doc.getString("hashtags"),
                 doc.getId(),
@@ -2750,7 +2750,7 @@ public class FirestoreRepo {
     public ListingPost changeDocToListingPostModel(DocumentSnapshot doc) {
         //return exchange is the
         ListingPost listingPost = new ListingPost(
-                doc.getString("userid") == null ? doc.getString("user_id") : doc.getString("userid"),
+                doc.getString("userid"),
                 (long)(doc.get("nanopast") == null ? 0L : doc.get("nanopast")),
                 (ArrayList<String>) doc.get("photos"),
                 doc.getString("hashtags"),
