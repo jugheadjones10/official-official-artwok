@@ -44,7 +44,7 @@
                 app:tabGravity="fill"
                 app:tabTextAppearance="@style/CustomTextAppearanceTab"
                 app:tabIndicatorColor="@color/artwok_white"
-                app:tabMode="scrollable">
+                app:tabMode="fixed">
             </com.google.android.material.tabs.TabLayout>
         </com.google.android.material.appbar.AppBarLayout>
 
