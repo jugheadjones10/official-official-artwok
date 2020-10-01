@@ -29,7 +29,6 @@ import com.squareup.picasso.Picasso;
 public class OfferAgreementFragment extends Fragment {
 
     private FragmentOfferAgreementBinding binding;
-    private String listingId;
     private Listing listing;
     private AgreementDetails agreementDetails;
     private OfferViewModel viewModel;
@@ -47,7 +46,8 @@ public class OfferAgreementFragment extends Fragment {
         binding.priceEditText.setFilters(new InputFilter[]{new DecimalDigitsInputFilter()});
 
         viewModel = new ViewModelProvider(requireActivity()).get(OfferViewModel.class);
-        listingId = OfferAgreementFragmentArgs.fromBundle(getArguments()).getListingId();
+        listing = OfferAgreementFragmentArgs.fromBundle(getArguments()).getListing();
+        agreementDetails = OfferAgreementFragmentArgs.fromBundle(getArguments()).getAgreementDetails();
 
         setHasOptionsMenu(true);
 
@@ -63,33 +63,41 @@ public class OfferAgreementFragment extends Fragment {
         ((AppCompatActivity)requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity)requireActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        viewModel.getAgreementDetails().observe(getViewLifecycleOwner(), new Observer<AgreementDetails>() {
-            @Override
-            public void onChanged(AgreementDetails agreementDetails) {
-                if(agreementDetails != null){
-                    binding.setAgreementDetails(agreementDetails);
-                    viewModel.getAgreementDetails().removeObserver(this);
-                }
-            }
-        });
+        binding.setListing(listing);
+        binding.setAgreementDetails(agreementDetails);
+        Picasso.get()
+                .load(listing.getPhotos().get(0))
+                .placeholder(R.drawable.placeholder_black_new)
+                .error(R.drawable.placeholder_color_new)
+                .into(binding.listingPic);
 
-        viewModel.getListing(listingId).observe(getViewLifecycleOwner(), new Observer<Listing>() {
-            @Override
-            public void onChanged(Listing liveListing) {
-                if(liveListing != null){
-                    listing = liveListing;
+//        viewModel.getAgreementDetails().observe(getViewLifecycleOwner(), new Observer<AgreementDetails>() {
+//            @Override
+//            public void onChanged(AgreementDetails agreementDetails) {
+//                if(agreementDetails != null){
+//                    binding.setAgreementDetails(agreementDetails);
+//                    viewModel.getAgreementDetails().removeObserver(this);
+//                }
+//            }
+//        });
 
-                    binding.setListing(listing);
-                    Picasso.get()
-                            .load(listing.getPhotos().get(0))
-                            .placeholder(R.drawable.placeholder_black_new)
-                            .error(R.drawable.placeholder_color_new)
-                            .into(binding.listingPic);
-
-                    viewModel.getListing(listingId).removeObserver(this);
-                }
-            }
-        });
+//        viewModel.getListing(listingId).observe(getViewLifecycleOwner(), new Observer<Listing>() {
+//            @Override
+//            public void onChanged(Listing liveListing) {
+//                if(liveListing != null){
+//                    listing = liveListing;
+//
+//                    binding.setListing(listing);
+//                    Picasso.get()
+//                            .load(listing.getPhotos().get(0))
+//                            .placeholder(R.drawable.placeholder_black_new)
+//                            .error(R.drawable.placeholder_color_new)
+//                            .into(binding.listingPic);
+//
+//                    viewModel.getListing(listingId).removeObserver(this);
+//                }
+//            }
+//        });
     }
 
 
@@ -103,17 +111,25 @@ public class OfferAgreementFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.save) {
-            viewModel.updateListing(
-                    Integer.parseInt(binding.priceEditText.getText().toString()),
-                    binding.deliveryEditText.getText().toString(),
-                    binding.refundEditText.getText().toString(),
-                    listing
-            );
+
+            //Below is commented because we aren't actually changing the original listing details here.
+            //We're only setting the details for this transaction
+//            viewModel.updateListing(
+//                    Integer.parseInt(binding.priceEditText.getText().toString()),
+//                    binding.deliveryEditText.getText().toString(),
+//                    binding.refundEditText.getText().toString(),
+//                    listing
+//            );
 
             viewModel.updateOfferDetails(
+                new AgreementDetails(
+                    Long.parseLong(binding.priceEditText.getText().toString()),
+                    binding.deliveryEditText.getText().toString(),
+                    binding.refundEditText.getText().toString(),
                     binding.shipmentDeadlineEditText.getText().toString(),
                     binding.sellerRequestEditText.getText().toString(),
                     binding.buyerRequestEditText.getText().toString()
+                )
             );
 
             navController.navigateUp();

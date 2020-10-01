@@ -14,6 +14,9 @@ import android.view.ViewGroup;
 
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.FragmentFavoritesBinding;
+import com.example.artwokmabel.profile.people.PeoplePagerAdapter;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 
 public class FavoritesFragment extends Fragment {
 
@@ -35,15 +38,23 @@ public class FavoritesFragment extends Fragment {
         ((AppCompatActivity)getActivity()).setSupportActionBar(binding.favToolbar);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        FavoritesPagerAdapter adapter = new FavoritesPagerAdapter(requireActivity().getSupportFragmentManager());
-
-        // Adding Fragments
-        adapter.addFragment(new FavoriteListingsFragment(),"Listings");
-        adapter.addFragment(new FavoritePostsFragment(),"Posts");
-        adapter.addFragment(new FavoriteRequestsFragment(),"Requests");
-
-        // Adapter Setup
+        FavoritesPagerAdapter adapter = new FavoritesPagerAdapter(this);
         binding.favViewpager.setAdapter(adapter);
-        binding.favTabs.setupWithViewPager(binding.favViewpager);
+
+        new TabLayoutMediator(binding.favTabs, binding.favViewpager,
+                new TabLayoutMediator.TabConfigurationStrategy() {
+                    @Override
+                    public void onConfigureTab(TabLayout.Tab tab, int position) {
+                        if(position == 0){
+                            tab.setText("Listings");
+                        }else if(position == 1){
+                            tab.setText("Posts");
+                        }else{
+                            tab.setText("Requests");
+                        }
+                    }
+                }
+        ).attach();
+
     }
 }

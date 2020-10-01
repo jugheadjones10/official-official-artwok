@@ -71,8 +71,11 @@
         android:name="com.example.artwokmabel.chat.offerchat.OfferAgreementFragment"
         android:label="OfferAgreementFragment" >
         <argument
-            android:name="listingId"
-            app:argType="string" />
+            android:name="agreementDetails"
+            app:argType="com.example.artwokmabel.models.AgreementDetails" />
+        <argument
+            android:name="listing"
+            app:argType="com.example.artwokmabel.models.Listing" />
     </fragment>
     <fragment
         android:id="@+id/listingFragment3"

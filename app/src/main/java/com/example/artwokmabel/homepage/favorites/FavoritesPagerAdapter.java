@@ -1,35 +1,37 @@
 package com.example.artwokmabel.homepage.favorites;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+
+import com.example.artwokmabel.profile.people.FollowersFragment;
+import com.example.artwokmabel.profile.people.FollowingFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FavoritesPagerAdapter extends FragmentPagerAdapter {
+public class FavoritesPagerAdapter extends FragmentStateAdapter {
 
-    private final List<Fragment> mFragmentList = new ArrayList<>();
-    private final List<String> mFragmentTitleList = new ArrayList<>();
+    public FavoritesPagerAdapter(Fragment fragment) {
+        super(fragment);
+    }
 
-    public void addFragment(Fragment fragment, String title){
-        mFragmentList.add(fragment);
-        mFragmentTitleList.add(title);
-    }
-    public CharSequence getPageTitle(int position) {
-        return mFragmentTitleList.get(position);
-    }
-    public FavoritesPagerAdapter(FragmentManager fm){
-        super(fm);
-    }
-    @Override
-    public Fragment getItem(int position) {
-        return mFragmentList.get(position);
+    @NonNull
+    @Override public Fragment createFragment(int position) {
+        if(position == 0){
+            return new FavoriteListingsFragment();
+        }else if(position == 1){
+            return new FavoritePostsFragment();
+        }else{
+            return new FavoriteRequestsFragment();
+        }
     }
 
     @Override
-    public int getCount() {
-        return mFragmentList.size() ;
+    public int getItemCount() {
+        return 3;
     }
 
 }

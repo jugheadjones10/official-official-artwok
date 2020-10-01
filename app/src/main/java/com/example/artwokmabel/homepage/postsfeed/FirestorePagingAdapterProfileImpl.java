@@ -3,6 +3,7 @@ package com.example.artwokmabel.homepage.postsfeed;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.drawable.BitmapDrawable;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
@@ -36,10 +38,12 @@ import com.firebase.ui.firestore.paging.LoadingState;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
+//This adapter is being used for favorite posts also.
 public class FirestorePagingAdapterProfileImpl extends FirestorePagingAdapter<MainPost, PostViewHolder> {
 
     private User user;
@@ -95,15 +99,15 @@ public class FirestorePagingAdapterProfileImpl extends FirestorePagingAdapter<Ma
         postViewHolder.binding.setTime(TimeWrangler.changeNanopastToReadableDate(mainPost.getNanopast()));
         postViewHolder.binding.setFavorite(postViewHolder.binding.favorite);
 
-//        if(mainPost.getUser_id().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+        if(mainPost.getUserid().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
             postViewHolder.binding.favorite.setImageResource(R.drawable.ic_menu);
-//        }else {
-//            if(user.getFav_posts().contains(mainPost.getPostId())){
-//                postViewHolder.binding.favorite.setImageResource(R.drawable.like);
-//            }else{
-//                postViewHolder.binding.favorite.setImageResource(R.drawable.heart_button);
-//            }
-//        }
+        }else {
+            if(user.getFav_posts().contains(mainPost.getPostId())){
+                postViewHolder.binding.favorite.setImageResource(R.drawable.like);
+            }else{
+                postViewHolder.binding.favorite.setImageResource(R.drawable.heart_button);
+            }
+        }
 
         postViewHolder.binding.postWebView.setOnTouchListener(new View.OnTouchListener() {
             private final static long MAX_TOUCH_DURATION = 100;
@@ -149,7 +153,7 @@ public class FirestorePagingAdapterProfileImpl extends FirestorePagingAdapter<Ma
                 },
                 //On fav clicked
                 (MainPost post, ImageView favorite) -> {
-//                    if(mainPost.getUser_id().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+                    if(mainPost.getUserid().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
                         String[] items = {"Delete", "Report"};
                         new MaterialAlertDialogBuilder(mContext)
                                 .setItems(items, (dialog, which) -> {
@@ -185,16 +189,15 @@ public class FirestorePagingAdapterProfileImpl extends FirestorePagingAdapter<Ma
                                     }
                                 })
                                 .show();
-//                    }else {
-//                        if(((BitmapDrawable)favorite.getDrawable()).getBitmap() == ((BitmapDrawable) ResourcesCompat.getDrawable(mContext.getResources(), R.drawable.like, null)).getBitmap()){
-//                            favorite.setImageResource(R.drawable.heart_button);
-//                            postsViewModel.removeUserPostFavs(post.getPostId());
-//                        }else{
-//                            favorite.setImageResource(R.drawable.like);
-//                            postsViewModel.addUserPostFavs(post.getPostId());
-//                        }
-//                    }
-
+                    }else {
+                        if(((BitmapDrawable)favorite.getDrawable()).getBitmap() == ((BitmapDrawable) ResourcesCompat.getDrawable(mContext.getResources(), R.drawable.like, null)).getBitmap()){
+                            favorite.setImageResource(R.drawable.heart_button);
+                            postsViewModel.removeUserPostFavs(post.getPostId());
+                        }else{
+                            favorite.setImageResource(R.drawable.like);
+                            postsViewModel.addUserPostFavs(post.getPostId());
+                        }
+                    }
                 }
         ));
 

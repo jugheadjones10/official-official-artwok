@@ -101,7 +101,7 @@
             android:background="@android:color/transparent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{Long.toString(listing.price)}"/>
+            android:text="@{Long.toString(agreementDetails.price)}"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -132,7 +132,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:text="@{listing.delivery}"/>
+            android:text="@{agreementDetails.delivery}"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -163,7 +163,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:text="@{listing.return_exchange}"/>
+            android:text="@{agreementDetails.refund}"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 

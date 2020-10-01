@@ -31,8 +31,7 @@
                 app:contentInsetLeft="0dp"
                 app:contentInsetStartWithNavigation="0dp"
                 app:layout_scrollFlags="scroll|enterAlways"
-                app:popupTheme="@style/AppTheme.PopupOverlay"
-                android:background="?attr/colorPrimary">
+                app:popupTheme="@style/AppTheme.PopupOverlay">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -49,20 +48,20 @@
                 android:id="@+id/fav_tabs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:tabGravity="fill"
                 app:tabIndicatorColor="@color/artwok_white"
+                app:tabTextAppearance="@style/CustomTextAppearanceTab"
+                app:tabGravity="fill"
                 app:tabMode="fixed">
             </com.google.android.material.tabs.TabLayout>
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.viewpager.widget.ViewPager
-            android:layout_marginTop="8dp"
+        <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/fav_viewpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
-        </androidx.viewpager.widget.ViewPager>
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
