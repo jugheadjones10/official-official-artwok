@@ -40,11 +40,24 @@
                     android:textColor="@color/almost_black"
                     android:text="@{listing.name}" />
 
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/almost_black"
-                    android:text="@{Long.toString(listing.price)}" />
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/almost_black"
+                        android:text="$"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/almost_black"
+                        android:text="@{Long.toString(listing.price)}" />
+
+                </LinearLayout>
 
             </LinearLayout>
 

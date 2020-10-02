@@ -2,6 +2,8 @@ package com.example.artwokmabel.homepage.postsfeed;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Parcelable;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,6 +26,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.paging.PagedList;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.example.artwokmabel.HomeGraphDirections;
@@ -58,6 +61,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class HomeFeedFragment extends Fragment {
+
+    private static final String KEY_RECYCLER_STATE = "123";
+    private Bundle recyclerViewState;
+    private Parcelable mListState;
+
 
     private FragmentHomeFeedBinding binding;
     private HomeFeedViewModel viewModel;
@@ -147,6 +155,34 @@ public class HomeFeedFragment extends Fragment {
 //        });
     }
 
+    //Below is an attempt to save scroll state
+//    @Override
+//    public void onPause() {
+//        super.onPause();
+//        recyclerViewState = new Bundle();
+//        mListState = binding.recyclerview.getLayoutManager().onSaveInstanceState();
+//        recyclerViewState.putParcelable(KEY_RECYCLER_STATE, mListState);
+//    }
+//
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        if (recyclerViewState != null) {
+//            new Handler().postDelayed(new Runnable() {
+//
+//                @Override
+//                public void run() {
+//                    mListState = recyclerViewState.getParcelable(KEY_RECYCLER_STATE);
+//                    binding.recyclerview.getLayoutManager().onRestoreInstanceState(mListState);
+//
+//                }
+//            }, 50);
+//        }
+//
+//        binding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
+//
+//    }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -209,6 +245,7 @@ public class HomeFeedFragment extends Fragment {
                             .build();
 
                     adapter = new FirestorePagingAdapterImpl(options, user, getContext(), navController, binding.swipeRefreshLayout);
+
                     binding.recyclerview.setAdapter(adapter);
                     adapter.startListening();
                 }

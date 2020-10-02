@@ -21,17 +21,25 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.Utils.DecimalDigitsInputFilter;
+import com.example.artwokmabel.chat.offerchat.OfferFragment;
+import com.example.artwokmabel.chat.offerchat.OfferViewModel;
 import com.example.artwokmabel.databinding.CustomMessagesLayoutBinding;
 import com.example.artwokmabel.databinding.ItemNormalListingBinding;
 import com.example.artwokmabel.databinding.LayoutImageMessageBinding;
 import com.example.artwokmabel.databinding.LayoutOfferMessageBinding;
 import com.example.artwokmabel.databinding.LayoutOfferPriceBinding;
 import com.example.artwokmabel.homepage.adapters.ListingsAdapter;
+import com.example.artwokmabel.models.AgreementDetails;
 import com.example.artwokmabel.models.ImageMessage;
+import com.example.artwokmabel.models.Listing;
 import com.example.artwokmabel.models.Message;
 import com.example.artwokmabel.models.OfferMessage;
 import com.example.artwokmabel.models.OrderChat;
@@ -68,6 +76,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         this.mContext = mContext;
         mAuth = FirebaseAuth.getInstance();
     }
+
 
     public class MessageViewHolder extends RecyclerView.ViewHolder {
         private CustomMessagesLayoutBinding binding;
@@ -132,10 +141,10 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
                 //Insert date divider
                 offerViewHolder.binding.dateDividerLayout.setVisibility(View.GONE);
-                if(i != 0){
+                if (i != 0) {
                     Message previousMessage = userMessageList.get(i - 1);
                     SimpleDateFormat sdf = new SimpleDateFormat("E, dd MMMM yyyy");
-                    if(!sdf.format(new Date(offerMessage.getNanopast())).equals(sdf.format(new Date(previousMessage.getNanopast())))) {
+                    if (!sdf.format(new Date(offerMessage.getNanopast())).equals(sdf.format(new Date(previousMessage.getNanopast())))) {
 
                         offerViewHolder.binding.dateDividerLayout.setVisibility(View.VISIBLE);
                         offerViewHolder.binding.dateText.setText(sdf.format(new Date(offerMessage.getNanopast())));
@@ -144,7 +153,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
                 offerViewHolder.binding.setOfferprice(offerMessage.getPrice());
 
-                if(offerMessage.getAcceptStatus().equals("accepted") || offerMessage.getAcceptStatus().equals("received") || offerMessage.getAcceptStatus().equals("delivered")){
+                if (offerMessage.getAcceptStatus().equals("accepted") || offerMessage.getAcceptStatus().equals("received") || offerMessage.getAcceptStatus().equals("delivered") || offerMessage.getAcceptStatus().equals("reviewed")) {
                     Log.d("seeformyself", "ACCEPTED RAN");
                     offerViewHolder.binding.acceptDeclineLinearLayout.setVisibility(View.VISIBLE);
 
@@ -153,6 +162,20 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
                     offerViewHolder.binding.acceptButton.setText("Accepted");
                     offerViewHolder.binding.acceptButton.setEnabled(false);
+
+                }else if(offerMessage.getAcceptStatus().equals("invalid")){
+
+                    if(!mAuth.getCurrentUser().getUid().equals(offerMessage.getFrom())){
+                        offerViewHolder.binding.acceptDeclineLinearLayout.setVisibility(View.VISIBLE);
+
+                        offerViewHolder.binding.declineButton.setVisibility(View.VISIBLE);
+                        offerViewHolder.binding.acceptButton.setVisibility(View.VISIBLE);
+
+                        offerViewHolder.binding.acceptButton.setEnabled(false);
+                        offerViewHolder.binding.declineButton.setEnabled(false);
+                    }else{
+                        offerViewHolder.binding.acceptDeclineLinearLayout.setVisibility(View.GONE);
+                    }
 
                 }else if(offerMessage.getAcceptStatus().equals("declined")){
 
@@ -191,8 +214,26 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                                 AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 
                                 LayoutOfferPriceBinding offerPriceBinding = DataBindingUtil.inflate(((Activity)mContext).getLayoutInflater(), R.layout.layout_offer_price, null, false);
-                                //offerPriceBinding.setListing(offerMessage.);
-                                //offerPriceBinding.setAgreementDetails(liveAgreementDetails);
+
+                                OfferViewModel viewModel = new ViewModelProvider((ViewModelStoreOwner) mContext).get(OfferViewModel.class);
+
+                                viewModel.getAgreementDetails().observe((LifecycleOwner) mContext, new Observer<AgreementDetails>() {
+                                    @Override
+                                    public void onChanged(AgreementDetails agreementDetails) {
+                                        if(agreementDetails != null){
+                                            offerPriceBinding.setAgreementDetails(agreementDetails);
+                                        }
+                                    }
+                                });
+
+//                                viewModel.getAgreementDetails().observe((LifecycleOwner) mContext, new Observer<AgreementDetails>() {
+//                                    @Override
+//                                    public void onChanged(AgreementDetails agreementDetails) {
+//                                        if(agreementDetails != null){
+                                    offerPriceBinding.setAgreementDetails(OfferFragment.getInstance().agreementDetails);
+//                                        }
+//                                    }
+//                                });
 
                                 builder.setView(offerPriceBinding.getRoot());
 

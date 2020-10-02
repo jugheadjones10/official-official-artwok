@@ -16,7 +16,8 @@
         android:roundIcon="@drawable/official_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".login.AppHostActivity">
+        <activity android:name=".login.AppHostActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,10 +26,6 @@
             <nav-graph android:value="@navigation/chat_graph" />
 
         </activity>
-        <activity
-            android:name=".profile.people.ViewOtherUserActivity"
-            android:label="@string/title_activity_view_other_user"
-            android:theme="@style/AppTheme.NoActionBar.NoActionBar" />
 
         <service
             android:name=".MyFirebaseMessagingService"
@@ -38,18 +35,6 @@
             </intent-filter>
         </service>
 
-        <activity
-            android:name=".profile.settings.SettingsActivity"
-            android:parentActivityName=".HomePageActivity" />
-        <activity
-            android:name=".profile.settings.SetIntroActivity"
-            android:parentActivityName=".profile.settings.SettingsActivity" />
-        <activity
-            android:name=".profile.settings.SetUsernameActivity"
-            android:parentActivityName=".profile.settings.SettingsActivity" />
-        <activity android:name=".chat.offerchat.OfferActivity" />
-        <activity android:name=".chat.personalchat.ChatActivity" />
-        <activity android:name=".login.LoginOptionsActivity" />
 <!--        <activity android:name=".login.SplashActivity">-->
 <!--            <intent-filter>-->
 <!--                <action android:name="android.intent.action.MAIN" />-->
@@ -64,6 +49,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
@@ -93,30 +79,15 @@
         <!-- https://stackoverflow.com/questions/42051956/how-to-hide-the-bottomnavigationview-below-keyboard-with-adjustresize-set -->
         <activity
             android:name=".HomePageActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".homepage.favorites.FavoritesActivity" />
-        <activity
-            android:name=".homepage.listing.ListingActivity"
-            android:parentActivityName=".HomePageActivity" />
+
         <activity android:name=".homepage.request.indiv.RequestActivity" />
         <activity
             android:name=".homepage.request.upload.UploadRequestActivity"
             android:windowSoftInputMode="adjustNothing" />
-        <activity
-            android:name=".login.CreateAccountEmailActivity"
-            android:parentActivityName=".login.LoginOptionsActivity" />
-        <activity
-            android:name=".login.CreateAccountUsernameActivity"
-            android:parentActivityName=".login.CreateAccountEmailActivity" />
-        <activity
-            android:name=".login.CreateAccountPasswordActivity"
-            android:parentActivityName=".login.CreateAccountUsernameActivity" />
-        <activity android:name=".login.LoginActivity" />
-        <activity
-            android:name=".login.ForgotPasswordActivity"
-            android:parentActivityName=".login.LoginActivity" />
-        <activity android:name=".profile.people.PeopleActivity" /> <!-- PUSH NOTIFICATIONS -->
-        <activity android:name=".homepage.search.SearchActivity" /> <!-- <service -->
+
+
         <!-- android:name="MyFirebaseMessagingService" -->
         <!-- android:exported="false"> -->
         <!-- <intent-filter> -->
@@ -125,10 +96,6 @@
         <!-- </service> -->
         <activity android:name="com.onegravity.rteditor.media.choose.MediaChooserActivity" />
         <activity android:name="com.onegravity.rteditor.media.crop.CropImageActivity" />
-        <activity
-            android:name=".homepage.post.PostActivity"
-            android:parentActivityName=".HomePageActivity"
-            android:windowSoftInputMode="adjustPan" /> <!-- Above is attempt to make comment bar move above keyboard when comment bar is pressed -->
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_application_id" /> <!-- Image Picker activity -->

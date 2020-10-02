@@ -2275,11 +2275,24 @@ public class FirestoreRepo {
                             String listingId = listingSnapshot.getKey();
                             ArrayList<Message> messages = new ArrayList<>();
                             for(DataSnapshot messageSnapshot : listingSnapshot.getChildren()){
-                                if(messageSnapshot.child("type").getValue().equals("text")){
-                                    messages.add(messageSnapshot.getValue(Message.class));
-                                }else{
-                                    //Eventually add last message support for offer, image, etc.
-                                }
+                                messages.add(messageSnapshot.getValue(Message.class));
+
+//                                if(messageSnapshot.child("type").getValue().equals("text")){
+//                                    messages.add(messageSnapshot.getValue(Message.class));
+//                                }else if(messageSnapshot.child("type").getValue().equals("null")){
+//                                    //Eventually add last message support for offer, image, etc.
+//                                    messages.add(new Message(
+//                                        (String)messageSnapshot.child("from").getValue(),
+//                                        "--💰--",
+//                                        (String)messageSnapshot.child("type").getValue(),
+//                                        (String)messageSnapshot.child("to").getValue(),
+//                                        (String)messageSnapshot.child("messageID").getValue(),
+//                                    "",
+//                                    "",
+//                                        (long)messageSnapshot.child("nanopast").getValue(),
+//                                        (String)messageSnapshot.child("read").getValue()
+//                                    ));
+//                                }
                             }
 
                             Log.d("parkseroi", "how many fkin messages " + Integer.toString(messages.size()));
@@ -2302,7 +2315,6 @@ public class FirestoreRepo {
 
                                         for(QueryDocumentSnapshot snapshot : queryDocumentSnapshots){
                                             Listing listing = snapshot.toObject(Listing.class);
-
                                             if(listing.getUserid().equals(userId)){
                                                 orderChats.add(changeListingToMeSell(listing, otherUserId, lastMessage));
                                             }else{
@@ -2312,7 +2324,6 @@ public class FirestoreRepo {
                                     }
                                 });
                             tasks.add(task);
-
                         }
 
                     }
@@ -2665,6 +2676,13 @@ public class FirestoreRepo {
         return userPostsQuery;
     }
 
+    public Query getSortedUserFavPostsQuery(ArrayList<String> userFavPostIds){
+        Query userFavPostsQuery = db.collection("ListingPosts")
+                .whereIn("postid", userFavPostIds)
+                .orderBy("nanopast", Query.Direction.DESCENDING);
+        return userFavPostsQuery;
+    }
+
     public Query getUserListingsQuery(String userId){
         Query userListingsTask = db.collection("Users")
                 .document(userId)
@@ -2738,7 +2756,7 @@ public class FirestoreRepo {
                 doc.getString("userid"),
                 doc.getString("desc"),
                 doc.getString("hashtags"),
-                doc.getId(),
+                doc.getString("postid") == null ? doc.getString("postId") : doc.getString("postid"),
                 doc.getString("username"),
                 (ArrayList<String>) doc.get("photos"),
                 doc.getString("timestamp"),

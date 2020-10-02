@@ -27,10 +27,21 @@ public class OfferViewModel extends ViewModel implements UploadViewModel {
     private MutableLiveData<Uri> imagePath = new MutableLiveData<>();
     private MutableLiveData<Uri> videoPath = new MutableLiveData<>();
 
+    private String listingsId;
+
     private final MutableLiveData<AgreementDetails> agreementDetails = new MutableLiveData<>();
 
     public OfferViewModel() {
     }
+
+    public String getListingsId() {
+        return listingsId;
+    }
+
+    public void setListingsId(String listingsId) {
+        this.listingsId = listingsId;
+    }
+
 
     public void setAgreementDetails(AgreementDetails agreementDetails){
         this.agreementDetails.setValue(agreementDetails);
@@ -48,8 +59,9 @@ public class OfferViewModel extends ViewModel implements UploadViewModel {
         FirestoreRepo.getInstance().updateListing(price, delivery, returnExchange, listing);
     }
 
-    public void updateOfferDetails(String deadline, String sellerRequest, String buyerRequest){
-        OfferFragment.getInstance().SendAgreementInfo(deadline, sellerRequest, buyerRequest);
+    public void updateOfferDetails(AgreementDetails agreementDetails){
+        setAgreementDetails(agreementDetails);
+//        OfferFragment.getInstance().SendAgreementInfo(deadline, sellerRequest, buyerRequest);
     }
 
 

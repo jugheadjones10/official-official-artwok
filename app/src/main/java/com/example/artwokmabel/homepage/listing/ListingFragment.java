@@ -75,6 +75,7 @@ public class ListingFragment extends Fragment {
             binding.offerButton.setVisibility(View.GONE);
         }
 
+        binding.indivToolbar.bringToFront();
 
         setUpToolbar();
         getIncomingIntent();

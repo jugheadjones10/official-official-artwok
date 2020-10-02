@@ -77,10 +77,10 @@
                     android:id="@+id/tabs"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:tabGravity="fill"
                     app:tabIndicatorColor="@color/artwok_white"
                     app:tabTextAppearance="@style/CustomTextAppearanceTab"
-                    app:tabMode="scrollable">
+                    app:tabGravity="fill"
+                    app:tabMode="fixed">
                 </com.google.android.material.tabs.TabLayout>
 
             </com.google.android.material.appbar.AppBarLayout>

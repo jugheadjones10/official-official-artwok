@@ -75,6 +75,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import static com.example.artwokmabel.profile.utils.ImagePickerActivity.SHOW_ALL_OPTIONS;
 import static com.example.artwokmabel.profile.utils.ImagePickerActivity.SHOW_IMAGE_OPTIONS_ONLY;
@@ -90,9 +91,10 @@ public class OfferFragment extends Fragment {
     private String theOtherId;
     private OrderChat orderChat;
     private Listing liveListing;
-    private AgreementDetails liveAgreementDetails;
     private OfferViewModel offerViewModel;
     private StorageReference storageReference;
+
+    public AgreementDetails agreementDetails;
 
     private FirebaseAuth mAuth;
     private DatabaseReference RootRef;
@@ -129,6 +131,7 @@ public class OfferFragment extends Fragment {
         //Receive argument
         orderChat = OfferFragmentArgs.fromBundle(getArguments()).getOrderchat();
         binding.setListing(orderChat.getListing());
+        liveListing = orderChat.getListing();
 
         //If I am selling, the theOtherId is set to the buyerId (from the order chat)
         //If I am buying, then theOtherId is set to the sellerId (from the listing)
@@ -164,11 +167,16 @@ public class OfferFragment extends Fragment {
     }
 
     private void connectToViewModels(){
+
+        //This is so that message adapter can access listing id and then use that to access listing information
+        offerViewModel.setListingsId(orderChat.getListing().getPostid());
+
         offerViewModel.getListing(orderChat.getListing().getPostid()).observe(getViewLifecycleOwner(), new Observer<Listing>() {
             @Override
             public void onChanged(Listing listing) {
                 if(listing != null){
-                    binding.setListing(listing);
+                    //Below is commented because we want the top listing price to display the original price
+                    //binding.setListing(listing);
                     liveListing = listing;
                 }
             }
@@ -178,7 +186,8 @@ public class OfferFragment extends Fragment {
             @Override
             public void onChanged(AgreementDetails agreementDetails) {
                 if(agreementDetails != null){
-                    liveAgreementDetails = agreementDetails;
+                    //liveAgreementDetails = agreementDetails;
+                    SendAgreementInfo(agreementDetails);
                 }
             }
         });
@@ -196,7 +205,6 @@ public class OfferFragment extends Fragment {
                 .into(binding.customProfileImage);
 
         setHasOptionsMenu(true);
-
     }
 
     @Override
@@ -216,7 +224,6 @@ public class OfferFragment extends Fragment {
         }
     }
 
-
     public void goToListing(){
         ChatGraphDirections.ActionGlobalListingFragment3 action =
                 ChatGraphDirections.actionGlobalListingFragment3(liveListing);
@@ -229,8 +236,7 @@ public class OfferFragment extends Fragment {
 
         //final View customLayout = getLayoutInflater().inflate(R.layout.layout_offer_price, null);
         offerPriceBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.layout_offer_price, null, false);
-        offerPriceBinding.setListing(liveListing);
-        offerPriceBinding.setAgreementDetails(liveAgreementDetails);
+        offerPriceBinding.setAgreementDetails(agreementDetails);
 
         builder.setView(offerPriceBinding.getRoot());
 
@@ -248,7 +254,7 @@ public class OfferFragment extends Fragment {
 
     public void onDocumentClicked(){
         OfferFragmentDirections.ActionOfferFragmentToOfferAgreementFragment action =
-                OfferFragmentDirections.actionOfferFragmentToOfferAgreementFragment(liveListing.getPostid());
+                OfferFragmentDirections.actionOfferFragmentToOfferAgreementFragment(agreementDetails, liveListing);
         navController.navigate(action);
     }
 
@@ -279,17 +285,39 @@ public class OfferFragment extends Fragment {
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                     if(snapshot.child("type").getValue().equals("null")){
                         messages.add(snapshot.getValue(OfferMessage.class));
-                    }else if(snapshot.child("type").getValue().equals("agreement-details")){
-                        offerViewModel.setAgreementDetails(snapshot.getValue(AgreementDetails.class));
+                    }else if(snapshot.child("type").getValue().equals("agreement-details")) {
+                        agreementDetails = snapshot.getValue(AgreementDetails.class);
+//                        offerViewModel.setAgreementDetails(snapshot.getValue(AgreementDetails.class));
+
                         //What if I press go to document before the agreementDetails data is loaded?
                         //May need to pass agreementDetails data to ViewModel
                     }
                 }
 
+                if(agreementDetails == null){
+                    agreementDetails = new AgreementDetails(
+                            liveListing.getPrice(),
+                            liveListing.getDelivery(),
+                            liveListing.getReturn_exchange(),
+                            "",
+                            "",
+                            ""
+                    );
+                }
+
                 if(messages.size() != 0){
+
                     OfferMessage lastMessage = messages.get(messages.size() - 1);
 
-                    if(lastMessage.getAcceptStatus().equals("accepted")){
+                    List<OfferMessage> acceptedMessageList = messages.stream()
+                        .filter(message -> message.getAcceptStatus().equals("accepted"))
+                        .collect(Collectors.toList());
+
+                    if(acceptedMessageList.size() == 1){
+
+                        //Disable changing agreement details after deal is accepted
+                        binding.mainAppBar.getMenu().getItem(0).setEnabled(false);
+
                         //If I am the seller, I am given the option to deliver, and indicate as delivered
                         if(messageMeId.equals(orderChat.getListing().getUserid())) {
                             binding.offerButton.setText("Delivered");
@@ -482,7 +510,7 @@ public class OfferFragment extends Fragment {
         messageTextBody.put("price", price);
         messageTextBody.put("acceptStatus", "pending");
 
-        messageTextBody.put("message", "null");
+        messageTextBody.put("message", "\uD83D\uDCB0");
         messageTextBody.put("type", "null");
         messageTextBody.put("from", messageMeId);
         messageTextBody.put("to", theOtherId);
@@ -499,11 +527,59 @@ public class OfferFragment extends Fragment {
 
         RootRef.updateChildren(messageBodyDetails).addOnCompleteListener(new OnCompleteListener() {
             @Override
-            public void onComplete(@NonNull Task task)
-            {
-                if (task.isSuccessful())
-                {
+            public void onComplete(@NonNull Task task) {
+                if (task.isSuccessful()) {
                     //Toast.makeText(OfferActivity.this, "Message Sent Successfully...", Toast.LENGTH_SHORT).show();
+                    FirebaseDatabase.getInstance().getReference()
+                            .child("Offers")
+                            .child(messageMeId)
+                            .child(theOtherId)
+                            .child(orderChat.getListing().getPostid())
+                            .orderByChild("type")
+                            .equalTo("null")
+                            .addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    for (DataSnapshot typeNullMessage : snapshot.getChildren()) {
+                                        if(typeNullMessage.child("acceptStatus").getValue(String.class).equals("pending")
+                                            &&
+                                            !typeNullMessage.child("messageID").getValue(String.class).equals(messagePushID)){
+
+                                            typeNullMessage.child("acceptStatus").getRef().setValue("invalid");
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+
+                    FirebaseDatabase.getInstance().getReference()
+                            .child("Offers")
+                            .child(theOtherId)
+                            .child(messageMeId)
+                            .child(orderChat.getListing().getPostid())
+                            .orderByChild("type")
+                            .equalTo("null")
+                            .addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    for (DataSnapshot typeNullMessage : snapshot.getChildren()) {
+                                        if(typeNullMessage.child("acceptStatus").getValue(String.class).equals("pending")
+                                                &&
+                                                !typeNullMessage.child("messageID").getValue(String.class).equals(messagePushID)){
+                                            typeNullMessage.child("acceptStatus").getRef().setValue("invalid");
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
                 }
                 else
                 {
@@ -675,11 +751,10 @@ public class OfferFragment extends Fragment {
                 @Override
                 public void onComplete(@NonNull Task task)
                 {
-                    if (task.isSuccessful())
-                    {
+                    if (task.isSuccessful()) {
+
                     }
-                    else
-                    {
+                    else {
                         Toast.makeText(requireActivity(), "Error", Toast.LENGTH_SHORT).show();
                     }
                     binding.inputMessage.setText("");
@@ -688,60 +763,74 @@ public class OfferFragment extends Fragment {
         }
     }
 
-    public void SendAgreementInfo(String deadline, String sellerRequest, String buyerRequest) {
+    public void SendAgreementInfo(AgreementDetails agreementDetails) {
 
-        Map messageBodyDetails = new HashMap();
+        RootRef.child("Offers")
+            .child(messageMeId)
+            .child(theOtherId)
+            .child(orderChat.getListing().getPostid())
+            .orderByChild("type")
+            .equalTo("agreement-details")
+            .addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-        String messageSenderRef = "Offers/" + messageMeId + "/" + theOtherId + "/" + orderChat.getListing().getPostid();
-        String messageReceiverRef = "Offers/" + theOtherId + "/" + messageMeId + "/" + orderChat.getListing().getPostid();
+                    Map messageBodyDetails = new HashMap();
 
-        String messagePushID;
+                    String messageSenderRef = "Offers/" + messageMeId + "/" + theOtherId + "/" + orderChat.getListing().getPostid();
+                    String messageReceiverRef = "Offers/" + theOtherId + "/" + messageMeId + "/" + orderChat.getListing().getPostid();
 
-        if(liveAgreementDetails == null){
-            DatabaseReference userMessageKeyRef = RootRef.child("Offers")
-                    .child(messageMeId).child(theOtherId).child(orderChat.getListing().getPostid()).push();
-            messagePushID = userMessageKeyRef.getKey();
-            Log.d("agreementpush", "The agreement was null" + messagePushID);
-        }else{
-            messagePushID = liveAgreementDetails.getMessageID();
-            Log.d("agreementpush", "The agreement was not null" + messagePushID);
-        }
+                    String messagePushID = "";
+
+                    if(!snapshot.exists()){
+                        DatabaseReference userMessageKeyRef = RootRef.child("Offers")
+                                .child(messageMeId).child(theOtherId).child(orderChat.getListing().getPostid()).push();
+                        messagePushID = userMessageKeyRef.getKey();
+                    }else{
+                        for (DataSnapshot agreementMesssage : snapshot.getChildren()) {
+                            messagePushID = agreementMesssage.child("messageID").getValue(String.class);
+                        }
+                    }
+
+                    Map messageTextBody = new HashMap();
+                    messageTextBody.put("type", "agreement-details");
+                    messageTextBody.put("messageID", messagePushID);
+                    messageTextBody.put("nanopast", System.currentTimeMillis());
+
+                    messageTextBody.put("price", agreementDetails.getPrice());
+                    messageTextBody.put("delivery", agreementDetails.getDelivery());
+                    messageTextBody.put("refund", agreementDetails.getRefund());
+
+                    messageTextBody.put("deadline", agreementDetails.getDeadline());
+                    messageTextBody.put("sellerRequest", agreementDetails.getSellerRequest());
+                    messageTextBody.put("buyerRequest", agreementDetails.getBuyerRequest());
 
 
-        Map messageTextBody = new HashMap();
+                    messageBodyDetails = new HashMap();
+                    messageBodyDetails.put(messageSenderRef + "/" + messagePushID, messageTextBody);
+                    messageBodyDetails.put( messageReceiverRef + "/" + messagePushID, messageTextBody);
 
-        //messageTextBody.put("message", "");
-        messageTextBody.put("type", "agreement-details");
-        //messageTextBody.put("from", messageMeId);
-        //messageTextBody.put("to", theOtherId);
-        messageTextBody.put("messageID", messagePushID);
-        messageTextBody.put("deadline", deadline);
-        messageTextBody.put("sellerRequest", sellerRequest);
-        messageTextBody.put("buyerRequest", buyerRequest);
-        //messageTextBody.put("time", saveCurrentTime);
-        //messageTextBody.put("date", saveCurrentDate);
-        //messageTextBody.put("nanopast", System.currentTimeMillis());
-        //messageTextBody.put("read", "false");
+                    RootRef.updateChildren(messageBodyDetails).addOnCompleteListener(new OnCompleteListener() {
+                        @Override
+                        public void onComplete(@NonNull Task task) {
+                            if (task.isSuccessful())
+                            {
+                                //Log.d("agreementpush", task.getResult().toString());
+                            }
+                            else
+                            {
+                                Toast.makeText(requireActivity(), "Error", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
 
-        messageBodyDetails = new HashMap();
-        messageBodyDetails.put(messageSenderRef + "/" + messagePushID, messageTextBody);
-        messageBodyDetails.put( messageReceiverRef + "/" + messagePushID, messageTextBody);
-
-        RootRef.updateChildren(messageBodyDetails).addOnCompleteListener(new OnCompleteListener() {
-            @Override
-            public void onComplete(@NonNull Task task)
-            {
-                if (task.isSuccessful())
-                {
-                    //Log.d("agreementpush", task.getResult().toString());
                 }
-                else
-                {
-                    Toast.makeText(requireActivity(), "Error", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
 
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
     }
 
 }

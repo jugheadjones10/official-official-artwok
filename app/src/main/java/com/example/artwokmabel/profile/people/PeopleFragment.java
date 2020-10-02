@@ -53,6 +53,5 @@ public class PeopleFragment extends Fragment {
                     }
                 }
         ).attach();
-        binding.tabs.setTabMode(TabLayout.MODE_SCROLLABLE);
     }
 }
