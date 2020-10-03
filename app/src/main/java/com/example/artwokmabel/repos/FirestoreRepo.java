@@ -2120,11 +2120,6 @@ public class FirestoreRepo {
             @Override
             public void onEvent(@Nullable DocumentSnapshot snapshot, @Nullable FirebaseFirestoreException e) {
                 ArrayList<String> following = (ArrayList<String>) snapshot.get("following");
-
-                if(following == null){
-                    following = new ArrayList<>();
-                }
-
                 following.add(userId);
                 ///////////////////////////////////////////////////////////////
 
@@ -2207,9 +2202,6 @@ public class FirestoreRepo {
             public void onEvent(@Nullable DocumentSnapshot snapshot, @Nullable FirebaseFirestoreException e) {
                 ArrayList<String> following = (ArrayList<String>) snapshot.get("following");
 
-                if(following == null){
-                    following = new ArrayList<>();
-                }
                 following.add(userId);
                 ///////////////////////////////////////////////////////////////
                 tempData.clear();

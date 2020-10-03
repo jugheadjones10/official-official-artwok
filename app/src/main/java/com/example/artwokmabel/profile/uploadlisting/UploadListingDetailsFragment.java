@@ -108,14 +108,15 @@ public class UploadListingDetailsFragment extends Fragment {
                     for(int i=0; i < checkedCategoriesArray.length; i++){
                         if(checkedCategoriesArray[i]){
                             String capitalized = categories[i].substring(0, 1).toUpperCase() + categories[i].substring(1);
+                            finalizedCategories.add(capitalized);
                             finalCategoriesString += capitalized + ",";
                         }
                     }
 
-                    if(finalCategoriesString.length() != 0){
-                        finalCategoriesString = finalCategoriesString.substring(0, finalCategoriesString.length()-1);
-                        finalizedCategories.add(finalCategoriesString);
-                    }
+//                    if(finalCategoriesString.length() != 0){
+//                        finalCategoriesString = finalCategoriesString.substring(0, finalCategoriesString.length()-1);
+//                        finalizedCategories.add(finalCategoriesString);
+//                    }
 
                     binding.chooseCategories.setText(finalCategoriesString);
                 }

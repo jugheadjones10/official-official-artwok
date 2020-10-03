@@ -67,7 +67,6 @@ public class SettingsActivityViewModel extends ViewModel implements UploadViewMo
 
     public void deleteUser(){
         FirestoreRepo.getInstance().deleteCurrentUser();
-
     }
 
     //For the pick image callback
