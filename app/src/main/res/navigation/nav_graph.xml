@@ -8,7 +8,7 @@
         android:name="com.example.artwokmabel.login.CreateAccountEmailFragment"
         android:label="CreateAccountEmailFragment">
         <action
-            android:id="@+id/action_createAccountEmailFragment_to_createAccountUsernameFragment2"
+            android:id="@+id/action_createAccountEmailFragment_to_createAccountUsernameFragment"
             app:destination="@id/createAccountUsernameFragment" />
     </fragment>
     <fragment
@@ -20,7 +20,7 @@
         android:name="com.example.artwokmabel.login.CreateAccountUsernameFragment"
         android:label="CreateAccountUsernameFragment">
         <action
-            android:id="@+id/action_createAccountUsernameFragment_to_createAccountPasswordFragment2"
+            android:id="@+id/action_createAccountUsernameFragment_to_createAccountPasswordFragment"
             app:destination="@id/createAccountPasswordFragment" />
     </fragment>
     <fragment
