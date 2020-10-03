@@ -55,6 +55,6 @@ public class SearchUsersFragment extends Fragment {
         //Below is a tricky line - take note of it. Why won't it work with the single argument version of findNavController?
         navController = Navigation.findNavController(requireActivity(), R.id.nav_host_container);
         adapter = new FollowersAdapter(getContext(), "searchpage", navController);
-        binding.usersList.setAdapter(adapter);
+        binding.usersList.setAdapter(adapter);  
     }
 }

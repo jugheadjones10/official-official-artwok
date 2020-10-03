@@ -89,7 +89,7 @@ public class FirestoreRepo {
     private final String TAG = "FirestoreRepo";
     private FirebaseFirestore db;
     private static FirestoreRepo firestoreRepo;
-    public final static String artwokId = "eyD9ukYHXmbIZMrgzZiknveTABP2";
+    public final static String artwokId = "79XPyNUe0bTvluv8NywZMe9c5Vl1";
 
     public FirestoreRepo() {
         db = FirebaseFirestore.getInstance();
