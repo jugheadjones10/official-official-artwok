@@ -41,7 +41,6 @@
                 android:layout_height="0dp"
                 android:onClick="@{() -> callbacks.onUserClicked.onUserClicked(user)}"
                 android:padding="@dimen/spacing_small"
-                android:src="@drawable/budget_details_lady"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
