@@ -1430,7 +1430,6 @@ public class FirestoreRepo {
                             Log.w("TAG", "Listen failed.", e);
                             return;
                         }
-
                         User user = snapshot.toObject(User.class);
                         data.setValue(user);
                     }

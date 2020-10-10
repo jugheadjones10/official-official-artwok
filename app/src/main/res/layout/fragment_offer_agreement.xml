@@ -61,204 +61,203 @@
     </com.google.android.material.appbar.MaterialToolbar>
 
 
-    <TextView
-        android:id="@+id/title"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:text="Seller-Buyer Agreement"
-        android:textColor="@color/almost_black"
-        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
-    <TextView
-        android:id="@+id/price_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:text="Price"
-        android:textSize="14sp"
-        android:textColor="@color/almost_black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title" />
-
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/edit_price"
-        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:boxStrokeColor="@color/artwok_background_blue"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/price_text">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/price_edit_text"
-            android:background="@android:color/transparent"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{Long.toString(agreementDetails.price)}"/>
+            android:orientation="vertical">
 
-    </com.google.android.material.textfield.TextInputLayout>
 
-    <TextView
-        android:id="@+id/delivery_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:text="Delivery"
-        android:textSize="14sp"
-        android:textColor="@color/almost_black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_price" />
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="Seller-Buyer Agreement"
+                android:textColor="@color/almost_black"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/edit_delivery"
-        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:boxStrokeColor="@color/artwok_background_blue"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/delivery_text">
+            <TextView
+                android:id="@+id/price_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="Price"
+                android:textColor="@color/almost_black"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/title" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/delivery_edit_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:text="@{agreementDetails.delivery}"/>
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edit_price"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxStrokeColor="@color/artwok_background_blue">
 
-    <TextView
-        android:id="@+id/refund_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:text="Refund"
-        android:textSize="14sp"
-        android:textColor="@color/almost_black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_delivery" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/price_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:text="@{Long.toString(agreementDetails.price)}" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/edit_refund"
-        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:boxStrokeColor="@color/artwok_background_blue"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/refund_text">
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/refund_edit_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:text="@{agreementDetails.refund}"/>
+            <TextView
+                android:id="@+id/delivery_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="Delivery"
+                android:textColor="@color/almost_black"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edit_price" />
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edit_delivery"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxStrokeColor="@color/artwok_background_blue">
 
-    <TextView
-    android:id="@+id/shipment_deadline_text"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="8dp"
-    android:text="Shipment/Delivery Deadline"
-    android:textSize="14sp"
-    android:textColor="@color/almost_black"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/edit_refund" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/delivery_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:text="@{agreementDetails.delivery}" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/edit_shipment_deadline"
-        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:boxStrokeColor="@color/artwok_background_blue"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/shipment_deadline_text">
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/shipment_deadline_edit_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@{agreementDetails.deadline}"
-            android:background="@android:color/transparent" />
+            <TextView
+                android:id="@+id/refund_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="Refund"
+                android:textColor="@color/almost_black"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edit_delivery" />
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edit_refund"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxStrokeColor="@color/artwok_background_blue">
 
-    <TextView
-        android:id="@+id/seller_request_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:text="Seller Request"
-        android:textSize="14sp"
-        android:textColor="@color/almost_black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_shipment_deadline" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/refund_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:text="@{agreementDetails.refund}" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/edit_seller_request"
-        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:boxStrokeColor="@color/artwok_background_blue"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/seller_request_text">
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/seller_request_edit_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@{agreementDetails.sellerRequest}"
-            android:background="@android:color/transparent" />
+            <TextView
+                android:id="@+id/shipment_deadline_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="Shipment/Delivery Deadline"
+                android:textColor="@color/almost_black"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edit_refund" />
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edit_shipment_deadline"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxStrokeColor="@color/artwok_background_blue">
 
-    <TextView
-        android:id="@+id/buyer_request_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:text="Buyer Request"
-        android:textSize="14sp"
-        android:textColor="@color/almost_black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_seller_request" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/shipment_deadline_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:text="@{agreementDetails.deadline}" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/edit_buyer_request"
-        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:boxStrokeColor="@color/artwok_background_blue"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buyer_request_text">
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/buyer_request_edit_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@{agreementDetails.buyerRequest}"
-            android:background="@android:color/transparent" />
+            <TextView
+                android:id="@+id/seller_request_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="Seller Request"
+                android:textColor="@color/almost_black"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edit_shipment_deadline" />
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edit_seller_request"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxStrokeColor="@color/artwok_background_blue">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/seller_request_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:text="@{agreementDetails.sellerRequest}" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/buyer_request_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="Buyer Request"
+                android:textColor="@color/almost_black"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edit_seller_request" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edit_buyer_request"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxStrokeColor="@color/artwok_background_blue">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/buyer_request_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:text="@{agreementDetails.buyerRequest}" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

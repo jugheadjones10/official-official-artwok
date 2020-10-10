@@ -75,6 +75,7 @@ public class SettingsFragment extends Fragment {
 
         ((AppCompatActivity)requireActivity()).setSupportActionBar(binding.settingsToolbar);
         ((AppCompatActivity)requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity)requireActivity()).getSupportActionBar().setTitle("");
 
         observeViewModel();
     }
