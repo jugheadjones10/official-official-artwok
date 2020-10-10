@@ -12,37 +12,20 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
-import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.paging.PagedList;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.example.artwokmabel.HomePageActivity;
 import com.example.artwokmabel.databinding.FragmentFavoritePostsBinding;
-import com.example.artwokmabel.homepage.adapters.PostsAdapter;
 import com.example.artwokmabel.homepage.postsfeed.FirestorePagingAdapterProfileImpl;
-import com.example.artwokmabel.homepage.postsfeed.HomeFeedViewModel;
 import com.example.artwokmabel.models.MainPost;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.models.User;
 import com.example.artwokmabel.repos.FirestoreRepo;
 import com.firebase.ui.firestore.SnapshotParser;
 import com.firebase.ui.firestore.paging.FirestorePagingOptions;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QuerySnapshot;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class FavoritePostsFragment extends Fragment {
     private FirestorePagingAdapterProfileImpl postsAdapter;

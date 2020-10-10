@@ -1,22 +1,16 @@
 package com.example.artwokmabel.login;
 
 
-import android.app.ActivityOptions;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,8 +20,6 @@ import android.widget.Toast;
 
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.FragmentCreateAccountPasswordBinding;
-import com.example.artwokmabel.databinding.FragmentCreateAccountUsernameBinding;
-import com.example.artwokmabel.repos.FirestoreRepo;
 
 public class CreateAccountPasswordFragment extends Fragment {
 

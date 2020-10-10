@@ -1,9 +1,7 @@
 package com.example.artwokmabel.chat.offerchat;
 
 import android.net.Uri;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -11,16 +9,7 @@ import androidx.lifecycle.ViewModel;
 import com.example.artwokmabel.UploadViewModel;
 import com.example.artwokmabel.models.AgreementDetails;
 import com.example.artwokmabel.models.Listing;
-import com.example.artwokmabel.models.NormalChat;
 import com.example.artwokmabel.repos.FirestoreRepo;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class OfferViewModel extends ViewModel implements UploadViewModel {
 

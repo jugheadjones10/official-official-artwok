@@ -1,17 +1,9 @@
 package com.example.artwokmabel.login;
 
-import android.app.ActivityOptions;
-import android.content.Intent;
-import android.view.View;
-
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.artwokmabel.HomePageActivity;
-import com.example.artwokmabel.R;
 import com.example.artwokmabel.repos.FirestoreRepo;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 

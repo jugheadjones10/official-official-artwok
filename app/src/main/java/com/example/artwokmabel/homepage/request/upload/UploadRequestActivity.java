@@ -17,7 +17,6 @@ import androidx.databinding.DataBindingUtil;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.repos.FirestoreRepo;
 import com.example.artwokmabel.databinding.ActivityUploadRequestBinding;
-import com.example.artwokmabel.homepage.callbacks.ImagePickerCallback;
 import com.example.artwokmabel.HomePageActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -47,7 +46,7 @@ public class UploadRequestActivity extends AppCompatActivity {
 
 
     //Todo: edit ucrop library to allow for editing of multiple images
-    int numPostArray[] = {0};
+    int[] numPostArray = {0};
 
     String[] imageURIs = {"","","","",""};
 

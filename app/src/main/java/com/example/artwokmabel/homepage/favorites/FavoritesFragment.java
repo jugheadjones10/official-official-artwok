@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.FragmentFavoritesBinding;
-import com.example.artwokmabel.profile.people.PeoplePagerAdapter;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 

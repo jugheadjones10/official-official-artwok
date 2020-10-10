@@ -8,7 +8,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
@@ -23,10 +22,8 @@ import androidx.navigation.Navigation;
 import com.example.artwokmabel.HomePageActivity;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.chat.tabs.MessageChatsAdapter;
-import com.example.artwokmabel.chat.tabs.MessageChatsFragment;
 import com.example.artwokmabel.chat.tabs.MessageFollowingAdapter;
 import com.example.artwokmabel.chat.tabs.MessageOrdersAdapter;
-import com.example.artwokmabel.chat.tabs.MessageOrdersFragment;
 import com.example.artwokmabel.chat.tabs.MessageFollowingFragment;
 import com.example.artwokmabel.databinding.MainMessageFragmentBinding;
 import com.google.android.material.tabs.TabLayout;

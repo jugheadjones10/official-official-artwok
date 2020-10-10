@@ -7,30 +7,18 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.artwokmabel.HomePageActivity;
 import com.example.artwokmabel.R;
-import com.example.artwokmabel.chat.personalchat.ChatActivity;
-import com.example.artwokmabel.login.CreateAccountEmailActivity;
-import com.example.artwokmabel.login.CreateAccountPasswordActivity;
-import com.example.artwokmabel.login.CreateAccountUsernameActivity;
-import com.example.artwokmabel.login.DuplicateUsernameChecker;
-import com.example.artwokmabel.login.LoginActivity;
-import com.example.artwokmabel.chat.models.UserUserModel;
 import com.example.artwokmabel.login.LoginViewModel;
 import com.example.artwokmabel.login.RegistrationViewModel;
 import com.example.artwokmabel.login.callbacks.CheckDuplicateCallback;
 import com.example.artwokmabel.models.Comment;
-import com.example.artwokmabel.models.ImageMessage;
 import com.example.artwokmabel.models.ListingPost;
 import com.example.artwokmabel.models.Message;
 import com.example.artwokmabel.models.NormalChat;
 import com.example.artwokmabel.models.Notification;
-import com.example.artwokmabel.models.OfferMessage;
 import com.example.artwokmabel.models.OrderChat;
 import com.example.artwokmabel.models.Report;
 import com.example.artwokmabel.models.Request;
@@ -41,8 +29,8 @@ import com.example.artwokmabel.models.MainPost;
 import com.example.artwokmabel.models.Review;
 import com.example.artwokmabel.models.User;
 import com.example.artwokmabel.profile.settings.SettingsActivityViewModel;
+import com.example.artwokmabel.profile.settings.SettingsFragment;
 import com.example.artwokmabel.profile.uploadlisting.UploadListingViewModel;
-import com.example.artwokmabel.profile.uploadpost.UploadPostActivity;
 import com.example.artwokmabel.profile.uploadpost.UploadPostFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -53,13 +41,11 @@ import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.database.snapshot.Index;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -69,13 +55,8 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.SetOptions;
-import com.google.firebase.firestore.model.Document;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -755,7 +736,7 @@ public class FirestoreRepo {
                                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                                     @Override
                                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                                        Log.d("userfollowings", "Size of query document snapshot : " + Integer.toString(queryDocumentSnapshots.size()));
+                                        Log.d("userfollowings", "Size of query document snapshot : " + queryDocumentSnapshots.size());
 
                                         if(!queryDocumentSnapshots.isEmpty()){
                                             for(DocumentSnapshot user: queryDocumentSnapshots){
@@ -835,7 +816,7 @@ public class FirestoreRepo {
                                         .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                                             @Override
                                             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                                                Log.d("userfollowings", "Size of query document snapshot : " + Integer.toString(queryDocumentSnapshots.size()));
+                                                Log.d("userfollowings", "Size of query document snapshot : " + queryDocumentSnapshots.size());
 
                                                 if(!queryDocumentSnapshots.isEmpty()){
                                                     for(DocumentSnapshot user: queryDocumentSnapshots){
@@ -1032,7 +1013,7 @@ public class FirestoreRepo {
                                         .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                                             @Override
                                             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                                                Log.d("thestuffreturnedREQUEST", "I'm below the query snapshot  " + Integer.toString(queryDocumentSnapshots.size()));
+                                                Log.d("thestuffreturnedREQUEST", "I'm below the query snapshot  " + queryDocumentSnapshots.size());
 
                                                 if(!queryDocumentSnapshots.isEmpty()){
                                                     for(DocumentSnapshot request: queryDocumentSnapshots){
@@ -1373,7 +1354,7 @@ public class FirestoreRepo {
                 .setValue(profile_url);
     }
 
-    public void deleteCurrentUser(){
+    public void deleteCurrentUser(SettingsFragment.OnAccountDeactivated callback){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         user.delete()
@@ -1381,7 +1362,9 @@ public class FirestoreRepo {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if (task.isSuccessful()) {
-                        Log.d(TAG, "User account deleted.");
+                        callback.onAccountDeactivated(true);
+                    }else{
+                        callback.onAccountDeactivated(false);
                     }
                 }
             });
@@ -1669,6 +1652,7 @@ public class FirestoreRepo {
         List<Category> tempData = new ArrayList<>();
 
         db.collection("Categories")
+            .orderBy("position", Query.Direction.ASCENDING)
             .get()
             .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                 @Override
@@ -1741,20 +1725,20 @@ public class FirestoreRepo {
             tabsList.add(category.getName());
         }
         db.collection("Users")
-                .document(userId)
-                .update("tab_categories", tabsList)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "DocumentSnapshot successfully updated!");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error updating document", e);
-                    }
-                });
+            .document(userId)
+            .update("tab_categories", tabsList)
+            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Log.d(TAG, "DocumentSnapshot successfully updated!");
+                }
+            })
+            .addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.w(TAG, "Error updating document", e);
+                }
+            });
     }
 
     public String setNewChatroom(ArrayList<String> participants){
@@ -2295,7 +2279,7 @@ public class FirestoreRepo {
 //                                }
                             }
 
-                            Log.d("parkseroi", "how many fkin messages " + Integer.toString(messages.size()));
+                            Log.d("parkseroi", "how many fkin messages " + messages.size());
 
                             Collections.sort(messages, new SortMessages());
                             Message lastMessage;
@@ -2572,7 +2556,7 @@ public class FirestoreRepo {
                                             Log.d("messagestuckpoint", "This is what's in messagesnapshot, AFTER tampering by getValue : " + message.getMessage());
 
 
-                                            Log.d("messagestuckpoint", "The message nanopast : " + Long.toString(message.getNanopast()));
+                                            Log.d("messagestuckpoint", "The message nanopast : " + message.getNanopast());
                                             Log.d("messagestuckpoint", "The message text : " + message.getMessage());
 
                                             User user = usersList.get(i);
@@ -2656,38 +2640,33 @@ public class FirestoreRepo {
 
     //Database call "HEADS"
     public DocumentReference getUserRef(String userId){
-        DocumentReference followingsTask = db.collection("Users")
+        return db.collection("Users")
                 .document(userId);
-        return followingsTask;
     }
 
     public Query getUserPostsQuery(String userId){
-        Query userPostsTask = db.collection("Users")
+        return db.collection("Users")
                 .document(userId)
                 .collection("Posts");
-        return userPostsTask;
     }
 
     public Query getSortedUserPostsQuery(String userId){
-        Query userPostsQuery = db.collection("Users")
+        return db.collection("Users")
                 .document(userId)
                 .collection("Posts")
                 .orderBy("nanopast", Query.Direction.DESCENDING);
-        return userPostsQuery;
     }
 
     public Query getSortedUserFavPostsQuery(ArrayList<String> userFavPostIds){
-        Query userFavPostsQuery = db.collection("ListingPosts")
+        return db.collection("ListingPosts")
                 .whereIn("postId", userFavPostIds)
                 .orderBy("nanopast", Query.Direction.DESCENDING);
-        return userFavPostsQuery;
     }
 
     public Query getUserListingsQuery(String userId){
-        Query userListingsTask = db.collection("Users")
+        return db.collection("Users")
                 .document(userId)
                 .collection("Listings");
-        return userListingsTask;
     }
 
     //Utils
@@ -2752,7 +2731,7 @@ public class FirestoreRepo {
 //    }
 
     public MainPost changeDocToMainPostModel(DocumentSnapshot doc){
-        MainPost post = new MainPost(
+        return new MainPost(
                 doc.getString("userid"),
                 doc.getString("desc"),
                 doc.getString("hashtags"),
@@ -2762,12 +2741,11 @@ public class FirestoreRepo {
                 doc.getString("timestamp"),
                 (long)(doc.get("nanopast") == null ? 0L : doc.get("nanopast"))
         );
-        return post;
     }
 
     public ListingPost changeDocToListingPostModel(DocumentSnapshot doc) {
         //return exchange is the
-        ListingPost listingPost = new ListingPost(
+        return new ListingPost(
                 doc.getString("userid"),
                 (long)(doc.get("nanopast") == null ? 0L : doc.get("nanopast")),
                 (ArrayList<String>) doc.get("photos"),
@@ -2781,16 +2759,6 @@ public class FirestoreRepo {
                 doc.getString("name"),
                 doc.getString("delivery"),
                 (ArrayList<String>) (doc.get("categories") == null ? new ArrayList<>(Arrays.asList("none")) : doc.get("categories"))
-        );
-        return listingPost;
-    }
-
-    private UserUserModel changeDocToUserUserModel(DocumentSnapshot doc){
-        return new UserUserModel(
-                doc.getString("username"),
-                doc.getString("profile_url"),
-                doc.getString("uid"),
-                (ArrayList<String>) doc.get("chatrooms")
         );
     }
 

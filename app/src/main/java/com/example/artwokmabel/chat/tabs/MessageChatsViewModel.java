@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.artwokmabel.models.NormalChat;
-import com.example.artwokmabel.models.User;
 import com.example.artwokmabel.repos.FirestoreRepo;
 import com.google.firebase.auth.FirebaseAuth;
 

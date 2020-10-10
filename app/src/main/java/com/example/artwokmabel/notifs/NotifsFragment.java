@@ -1,10 +1,6 @@
 package com.example.artwokmabel.notifs;
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,24 +13,12 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.artwokmabel.InternalStorage;
 import com.example.artwokmabel.R;
-import com.example.artwokmabel.chat.tabs.MessageFollowingAdapter;
 import com.example.artwokmabel.databinding.FragmentNotifsBinding;
-import com.example.artwokmabel.login.LoginOptionsActivity;
-import com.example.artwokmabel.login.SplashActivity;
 import com.example.artwokmabel.models.Notification;
-import com.example.artwokmabel.models.User;
-import com.example.artwokmabel.profile.people.PeopleViewModel;
-import com.google.firebase.auth.FirebaseAuth;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class NotifsFragment extends Fragment {
 

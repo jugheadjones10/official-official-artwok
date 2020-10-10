@@ -1,7 +1,6 @@
 package com.example.artwokmabel.chat.tabs;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,16 +17,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.artwokmabel.ChatGraphDirections;
 import com.example.artwokmabel.R;
-import com.example.artwokmabel.Utils.TransactFragment;
 import com.example.artwokmabel.chat.MessageFragmentDirections;
-import com.example.artwokmabel.chat.offerchat.OfferActivity;
-import com.example.artwokmabel.chat.personalchat.ChatActivity;
-import com.example.artwokmabel.databinding.ItemMessageChatsBinding;
 import com.example.artwokmabel.databinding.ItemMessageOrdersBinding;
-import com.example.artwokmabel.models.NormalChat;
 import com.example.artwokmabel.models.OrderChat;
 import com.example.artwokmabel.models.User;
-import com.example.artwokmabel.profile.people.PeopleAdapterViewModel;
 import com.example.artwokmabel.repos.FirestoreRepo;
 import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;

@@ -1,14 +1,11 @@
 package com.example.artwokmabel.chat.tabs;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,16 +15,12 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.viewpager.widget.ViewPager;
 
 import com.example.artwokmabel.chat.MessageFragment;
 import com.example.artwokmabel.R;
-import com.example.artwokmabel.databinding.MessageChatsFragmentBinding;
 import com.example.artwokmabel.databinding.MessageOrdersFragmentBinding;
 import com.example.artwokmabel.models.OrderChat;
-import com.example.artwokmabel.models.User;
 import com.google.android.material.badge.BadgeDrawable;
-import com.weiwangcn.betterspinner.library.BetterSpinner;
 
 import java.util.List;
 

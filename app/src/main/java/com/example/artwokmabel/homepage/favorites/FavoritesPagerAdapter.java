@@ -2,15 +2,7 @@ package com.example.artwokmabel.homepage.favorites;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
-
-import com.example.artwokmabel.profile.people.FollowersFragment;
-import com.example.artwokmabel.profile.people.FollowingFragment;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class FavoritesPagerAdapter extends FragmentStateAdapter {
 

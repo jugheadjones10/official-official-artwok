@@ -1,7 +1,6 @@
 package com.example.artwokmabel.profile.uploadpost;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -11,14 +10,10 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.ViewGroup;
-import android.webkit.JavascriptInterface;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-
-import androidx.fragment.app.FragmentActivity;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;

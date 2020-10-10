@@ -3,7 +3,6 @@ package com.example.artwokmabel.chat.tabs;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.artwokmabel.models.Listing;
 import com.example.artwokmabel.models.OrderChat;
 import com.example.artwokmabel.models.User;
 import com.example.artwokmabel.repos.FirestoreRepo;

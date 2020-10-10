@@ -7,11 +7,6 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.artwokmabel.UploadViewModel;
-import com.example.artwokmabel.models.Listing;
-import com.example.artwokmabel.models.User;
-import com.example.artwokmabel.repos.FirestoreRepo;
-
-import java.util.List;
 
 public class UploadPostViewModel extends ViewModel implements UploadViewModel {
 

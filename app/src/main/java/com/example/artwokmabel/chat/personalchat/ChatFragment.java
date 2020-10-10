@@ -1,13 +1,10 @@
 package com.example.artwokmabel.chat.personalchat;
 
-import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
@@ -26,11 +23,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.artwokmabel.ChatGraphDirections;
-import com.example.artwokmabel.HomeGraphDirections;
-import com.example.artwokmabel.ProfileGraphDirections;
 import com.example.artwokmabel.R;
-import com.example.artwokmabel.chat.offerchat.OfferViewModel;
-import com.example.artwokmabel.databinding.ActivityChatBinding;
 import com.example.artwokmabel.databinding.CustomChatBarBinding;
 import com.example.artwokmabel.databinding.FragmentChatBinding;
 import com.example.artwokmabel.homepage.callbacks.ImagePickerCallback;
@@ -51,7 +44,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -61,7 +53,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import static android.app.Activity.RESULT_OK;
 import static com.example.artwokmabel.profile.utils.ImagePickerActivity.SHOW_IMAGE_OPTIONS_ONLY;
 
 public class ChatFragment extends Fragment {
@@ -70,9 +61,9 @@ public class ChatFragment extends Fragment {
     private FragmentChatBinding binding;
     public static final int REQUEST_IMAGE = 100;
 
-    private String messageFollowingId, messageFollowingUsername, messageFollowingProfileImg, messageMeId;
+    private String messageFollowingId;
+    private String messageMeId;
 
-    private FirebaseAuth mAuth;
     private DatabaseReference RootRef;
     private StorageReference storageReference;
     private ChatViewModel chatViewModel;
@@ -97,14 +88,14 @@ public class ChatFragment extends Fragment {
         chatViewModel = new ViewModelProvider(requireActivity()).get(ChatViewModel.class);
 
         //Firebase
-        mAuth = FirebaseAuth.getInstance();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
         messageMeId = mAuth.getCurrentUser().getUid();
         RootRef = FirebaseDatabase.getInstance().getReference();
         storageReference = FirebaseStorage.getInstance().getReference();
 
         messageFollowingId = ChatFragmentArgs.fromBundle(getArguments()).getFollowingId();
-        messageFollowingUsername = ChatFragmentArgs.fromBundle(getArguments()).getFollowingUsername();
-        messageFollowingProfileImg = ChatFragmentArgs.fromBundle(getArguments()).getFollowingProfileImg();
+        String messageFollowingUsername = ChatFragmentArgs.fromBundle(getArguments()).getFollowingUsername();
+        String messageFollowingProfileImg = ChatFragmentArgs.fromBundle(getArguments()).getFollowingProfileImg();
         binding.setUsername(messageFollowingUsername);
 
         return binding.getRoot();
@@ -293,7 +284,6 @@ public class ChatFragment extends Fragment {
             public void onChanged(Uri uri) {
                 if(uri != null){
                     Log.d("urivalue", uri.toString());
-                    Uri fileUri = uri;
                     String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
                     int randomNumber = new Random().nextInt();
@@ -301,7 +291,7 @@ public class ChatFragment extends Fragment {
 
                     StorageReference fileToUpload = storageReference.child("Images").child(currentUserId).child(fileName); // randomize name
 
-                    fileToUpload.putFile(fileUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    fileToUpload.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             storageReference.child("Images").child(currentUserId).child(fileName).getDownloadUrl().addOnCompleteListener(task -> {

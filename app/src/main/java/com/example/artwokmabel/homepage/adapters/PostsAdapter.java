@@ -86,7 +86,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.myHolder> {
 //                        }
 //                    }
 //                });
-                Log.d("myHeight", "parsed JSResult : " + Float.toString(webViewHeight));
+                Log.d("myHeight", "parsed JSResult : " + webViewHeight);
             }
         }
         holder.binding.postWebView.addJavascriptInterface(new JsObject(), "HTMLOUT");

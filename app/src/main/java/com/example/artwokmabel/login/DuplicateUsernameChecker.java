@@ -2,5 +2,5 @@ package com.example.artwokmabel.login;
 
 public interface DuplicateUsernameChecker {
 
-    public void isUsernameDuplicateCallback(boolean isUsernameDuplicateDatabase);
+    void isUsernameDuplicateCallback(boolean isUsernameDuplicateDatabase);
 }

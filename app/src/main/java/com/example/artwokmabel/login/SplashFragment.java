@@ -1,7 +1,6 @@
 package com.example.artwokmabel.login;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,20 +12,13 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
 import com.example.artwokmabel.R;
-import com.example.artwokmabel.chat.personalchat.ChatActivity;
 import com.example.artwokmabel.databinding.FragmentSplashBinding;
-import com.example.artwokmabel.homepage.listing.ListingActivity;
-import com.example.artwokmabel.homepage.post.PostActivity;
-import com.example.artwokmabel.models.Listing;
-import com.example.artwokmabel.models.MainPost;
-import com.example.artwokmabel.repos.FirestoreRepo;
 
 public class SplashFragment extends Fragment {
 

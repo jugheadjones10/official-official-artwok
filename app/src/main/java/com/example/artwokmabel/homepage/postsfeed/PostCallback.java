@@ -1,11 +1,8 @@
 package com.example.artwokmabel.homepage.postsfeed;
 
-import android.widget.Button;
 import android.widget.ImageView;
 
 import com.example.artwokmabel.models.MainPost;
-import com.example.artwokmabel.models.User;
-import com.example.artwokmabel.profile.people.UserItemCallback;
 
 public class PostCallback {
 

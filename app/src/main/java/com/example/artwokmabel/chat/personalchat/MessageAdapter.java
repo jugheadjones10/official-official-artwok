@@ -4,20 +4,11 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Color;
-import android.text.InputFilter;
-import android.text.Spanned;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewStub;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -28,36 +19,26 @@ import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.artwokmabel.R;
-import com.example.artwokmabel.Utils.DecimalDigitsInputFilter;
 import com.example.artwokmabel.chat.offerchat.OfferFragment;
 import com.example.artwokmabel.chat.offerchat.OfferViewModel;
 import com.example.artwokmabel.databinding.CustomMessagesLayoutBinding;
-import com.example.artwokmabel.databinding.ItemNormalListingBinding;
 import com.example.artwokmabel.databinding.LayoutImageMessageBinding;
 import com.example.artwokmabel.databinding.LayoutOfferMessageBinding;
 import com.example.artwokmabel.databinding.LayoutOfferPriceBinding;
-import com.example.artwokmabel.homepage.adapters.ListingsAdapter;
 import com.example.artwokmabel.models.AgreementDetails;
 import com.example.artwokmabel.models.ImageMessage;
-import com.example.artwokmabel.models.Listing;
 import com.example.artwokmabel.models.Message;
 import com.example.artwokmabel.models.OfferMessage;
 import com.example.artwokmabel.models.OrderChat;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 
 public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {

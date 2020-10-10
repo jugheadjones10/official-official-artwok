@@ -1,6 +1,5 @@
 package com.example.artwokmabel.profile.user;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,21 +19,14 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.FragmentProfilePostsBinding;
-import com.example.artwokmabel.homepage.adapters.PostsAdapter;
-import com.example.artwokmabel.homepage.postsfeed.FirestorePagingAdapterImpl;
 import com.example.artwokmabel.homepage.postsfeed.FirestorePagingAdapterProfileImpl;
 import com.example.artwokmabel.models.MainPost;
 import com.example.artwokmabel.models.User;
-import com.example.artwokmabel.profile.uploadpost.UploadPostActivity;
 import com.example.artwokmabel.repos.FirestoreRepo;
 import com.firebase.ui.firestore.SnapshotParser;
 import com.firebase.ui.firestore.paging.FirestorePagingOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
-
-import java.util.List;
-
-import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class ProfilePostsFragment extends Fragment {
     private FragmentProfilePostsBinding binding;

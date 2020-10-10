@@ -15,18 +15,12 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
-import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 
-import com.example.artwokmabel.HomePageActivity;
 import com.example.artwokmabel.R;
-import com.example.artwokmabel.databinding.FragmentUploadListingDeliveryBinding;
 import com.example.artwokmabel.databinding.FragmentUploadRequestDescBinding;
-import com.example.artwokmabel.profile.uploadpost.UploadPostViewModel;
 
 public class UploadListingDescFragment extends Fragment {
 

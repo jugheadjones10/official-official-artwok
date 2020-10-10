@@ -66,16 +66,7 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".profile.uploadpost.UploadPostActivity">
-
-            <!-- <intent-filter> -->
-
-
-            <!-- <action android:name="android.intent.action.SEND_MULTIPLE" /> -->
-            <!-- &lt;!&ndash;<category android:name="android.intent.category.DEFAULT" />&ndash;&gt; -->
-            <!-- <data android:mimeType="image/*" /> -->
-            <!-- </intent-filter> -->
-        </activity> <!-- BELOW ADJUST PAN MIGHT BE A PROBLEM WHEN USING SCROLL VIEW -->
+        <!-- BELOW ADJUST PAN MIGHT BE A PROBLEM WHEN USING SCROLL VIEW -->
         <!-- https://stackoverflow.com/questions/42051956/how-to-hide-the-bottomnavigationview-below-keyboard-with-adjustresize-set -->
         <activity
             android:name=".HomePageActivity"

@@ -1,8 +1,6 @@
 package com.example.artwokmabel.chat.tabs;
 
-import android.app.ActivityOptions;
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -17,13 +15,9 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.artwokmabel.ChatGraphDirections;
-import com.example.artwokmabel.Utils.TransactFragment;
-import com.example.artwokmabel.chat.personalchat.ChatActivity;
-import com.example.artwokmabel.chat.models.UserUserModel;
 import com.example.artwokmabel.R;
+import com.example.artwokmabel.chat.MessageFragmentDirections;
 import com.example.artwokmabel.databinding.ItemMessageFollowingBinding;
-import com.example.artwokmabel.databinding.MessageFollowingFragmentBinding;
-import com.example.artwokmabel.models.MainPost;
 import com.example.artwokmabel.models.User;
 import com.example.artwokmabel.profile.people.PeopleAdapterViewModel;
 import com.google.firebase.auth.FirebaseAuth;
@@ -136,11 +130,9 @@ public class MessageFollowingAdapter extends RecyclerView.Adapter<MessageFollowi
 
     public class OnChatClicked{
         public void onChatClicked(User user){
-            Intent chatIntent = new Intent(context, ChatActivity.class);
-            chatIntent.putExtra("message_following_id", user.getUid());
-            chatIntent.putExtra("message_following_username", user.getUsername());
-            chatIntent.putExtra("message_following_profile_img", user.profile_url);
-            context.startActivity(chatIntent);
+            MessageFragmentDirections.ActionChatGraphToChatFragment action =
+                    MessageFragmentDirections.actionChatGraphToChatFragment(user.getUid(), user.getUsername(), user.getProfile_url());
+            navController.navigate(action);
         }
     }
 

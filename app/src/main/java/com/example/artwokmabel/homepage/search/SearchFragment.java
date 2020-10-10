@@ -10,23 +10,18 @@ import androidx.appcompat.widget.SearchView;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.artwokmabel.R;
-import com.example.artwokmabel.databinding.ActivitySearchBinding;
 import com.example.artwokmabel.databinding.FragmentSearchBinding;
 import com.example.artwokmabel.homepage.search.tabs.SearchListingsFragment;
 import com.example.artwokmabel.homepage.search.tabs.SearchUsersFragment;
-import com.example.artwokmabel.login.LoginViewModel;
 import com.example.artwokmabel.models.Listing;
 import com.example.artwokmabel.models.User;
 import com.google.android.material.tabs.TabLayout;

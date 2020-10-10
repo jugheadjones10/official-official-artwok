@@ -1,42 +1,27 @@
 package com.example.artwokmabel.notifs;
 
-import android.app.NotificationManager;
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.artwokmabel.NotifGraphDirections;
-import com.example.artwokmabel.Utils.TransactFragment;
-import com.example.artwokmabel.databinding.ItemFollowerBinding;
 import com.example.artwokmabel.databinding.ItemNotifBinding;
-import com.example.artwokmabel.homepage.adapters.ListingsAdapter;
-import com.example.artwokmabel.homepage.adapters.ListingsAdapterViewModel;
-import com.example.artwokmabel.homepage.listing.ListingActivity;
-import com.example.artwokmabel.homepage.post.PostActivity;
 import com.example.artwokmabel.models.Listing;
 import com.example.artwokmabel.models.MainPost;
 import com.example.artwokmabel.models.Notification;
 import com.example.artwokmabel.R;
-import com.example.artwokmabel.profile.people.FollowersAdapter;
 import com.example.artwokmabel.repos.FirestoreRepo;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class NotifsAdapter extends RecyclerView.Adapter<NotifsAdapter.NotifViewHolder> {

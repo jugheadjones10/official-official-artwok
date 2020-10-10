@@ -1,25 +1,13 @@
 package com.example.artwokmabel.login;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.NavDeepLinkBuilder;
-import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 
-import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
 import com.example.artwokmabel.HomePageActivity;
 import com.example.artwokmabel.R;
-import com.example.artwokmabel.chat.MessageFragmentDirections;
-import com.example.artwokmabel.chat.personalchat.ChatActivity;
-import com.example.artwokmabel.databinding.ActivityAppHostBinding;
-import com.example.artwokmabel.homepage.listing.ListingActivity;
-import com.example.artwokmabel.homepage.post.PostActivity;
 import com.example.artwokmabel.models.Listing;
 import com.example.artwokmabel.models.MainPost;
 import com.example.artwokmabel.repos.FirestoreRepo;
@@ -33,6 +21,11 @@ public class AppHostActivity extends AppCompatActivity {
         setContentView(R.layout.activity_app_host);
 
         //Check for intent so that when user clicks on push notification, goes immediately to the relevant view in the app
+
+        if (getIntent().getBooleanExtra("LOGOUT", false)) {
+            finish();
+        }
+
         if (getIntent().getExtras() != null) {
             for (String key : getIntent().getExtras().keySet()) {
                 String value = getIntent().getExtras().getString(key);

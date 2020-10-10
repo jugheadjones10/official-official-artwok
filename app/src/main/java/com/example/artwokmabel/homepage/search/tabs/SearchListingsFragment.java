@@ -18,7 +18,6 @@ import android.view.ViewGroup;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.FragmentSearchListingsBinding;
 import com.example.artwokmabel.homepage.adapters.ListingsAdapter;
-import com.example.artwokmabel.homepage.search.SearchActivity;
 import com.example.artwokmabel.homepage.search.SearchFragment;
 
 public class SearchListingsFragment extends Fragment {

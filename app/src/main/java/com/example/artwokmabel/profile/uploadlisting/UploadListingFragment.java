@@ -25,9 +25,6 @@ import androidx.navigation.Navigation;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.FragmentUploadListingBinding;
 import com.example.artwokmabel.homepage.callbacks.ImagePickerCallback;
-import com.example.artwokmabel.profile.people.PeoplePagerAdapter;
-import com.example.artwokmabel.profile.uploadpost.UploadPostViewModel;
-import com.example.artwokmabel.repos.FirestoreRepo;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.tabs.TabLayout;
@@ -38,12 +35,9 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
-import static com.example.artwokmabel.profile.utils.ImagePickerActivity.SHOW_ALL_OPTIONS;
 import static com.example.artwokmabel.profile.utils.ImagePickerActivity.SHOW_IMAGE_OPTIONS_ONLY;
 
 public class UploadListingFragment extends Fragment {
@@ -94,7 +88,7 @@ public class UploadListingFragment extends Fragment {
         viewModel.getUploadSuccess().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
-                if(aBoolean == true){
+                if(aBoolean){
                     binding.uploadProgressL.setVisibility(View.GONE);
                     navController.navigateUp();
                 }

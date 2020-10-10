@@ -16,23 +16,17 @@ public class HomeFeedViewModel extends ViewModel {
     //Todo: change view models to the format in the Android docs
 
     private FirebaseAuth mAuth;
-    private final LiveData<List<MainPost>> feedPostsObeservable;
-    private final LiveData<List<Listing>> feedListingsObeservable;
+//    private final LiveData<List<Listing>> feedListingsObeservable;
 
     public HomeFeedViewModel() {
 
         mAuth = FirebaseAuth.getInstance();
-        feedPostsObeservable = FirestoreRepo.getInstance().getFeedPosts(mAuth.getCurrentUser().getUid());
-        feedListingsObeservable = FirestoreRepo.getInstance().getFeedListings(mAuth.getCurrentUser().getUid());
+//        feedListingsObeservable = FirestoreRepo.getInstance().getFeedListings(mAuth.getCurrentUser().getUid());
     }
 
-    public LiveData<List<MainPost>> getFeedPostsObeservable() {
-        return feedPostsObeservable;
-    }
-
-    public LiveData<List<Listing>> getFeedListingObservable() {
-        return feedListingsObeservable;
-    }
+//    public LiveData<List<Listing>> getFeedListingObservable() {
+//        return feedListingsObeservable;
+//    }
 
     public LiveData<List<String>> getUserFavPostsObservable() {
         return FirestoreRepo.getInstance().getUserFavPosts(mAuth.getCurrentUser().getUid());

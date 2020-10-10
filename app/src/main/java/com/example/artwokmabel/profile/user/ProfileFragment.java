@@ -1,6 +1,5 @@
 package com.example.artwokmabel.profile.user;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,26 +11,22 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 
-import com.example.artwokmabel.HomeGraphDirections;
 import com.example.artwokmabel.HomePageActivity;
-import com.example.artwokmabel.ProfileGraphDirections;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.FragmentProfileBinding;
 import com.example.artwokmabel.databinding.ViewProfileToolbarMeBinding;
 import com.example.artwokmabel.databinding.ViewProfileToolbarOthersBinding;
-import com.example.artwokmabel.homepage.post.PostFragmentArgs;
 import com.example.artwokmabel.models.User;
-import com.example.artwokmabel.profile.people.PeopleActivity;
-import com.example.artwokmabel.profile.settings.SettingsActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 public class ProfileFragment extends Fragment {
 
@@ -106,9 +101,29 @@ public class ProfileFragment extends Fragment {
 
         viewModel = ViewModelProviders.of(this).get(ProfileFragmentViewModel.class);
         viewModel.getUserObservable(userId).observe(getViewLifecycleOwner(), new Observer<User>() {
+            private User user;
+
             @Override
             public void onChanged(@Nullable User user) {
-                binding.setUser(user);
+//                if(user == null){
+//                    user = new User(
+//                        "deleted user",
+//                        "",
+//                        "https://firebasestorage.googleapis.com/v0/b/artwok-database.appspot.com/o/Images%2F3T7wbXsgYSOT85JNLbfpieDilHd2%2FpromoTab-bg-idMe.jpg?alt=media&token=a08fbb37-6dfa-4bea-b557-c5bccafca81a",
+//                        new ArrayList<String>(),
+//                        new ArrayList<String>(),
+//                        new ArrayList<String>(),
+//                        new ArrayList<String>(),
+//                        new ArrayList<String>(),
+//                        new ArrayList<String>(),
+//                        new ArrayList<String>(),
+//                        "deleted user",
+//                        "deleted user",
+//                        ""
+//                    );
+//                }
+
+                binding.setUser(this.user);
 
                 Picasso.get()
                         .load(user.getProfile_url())

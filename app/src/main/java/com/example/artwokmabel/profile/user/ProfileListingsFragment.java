@@ -1,6 +1,5 @@
 package com.example.artwokmabel.profile.user;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,8 +22,6 @@ import com.example.artwokmabel.models.Listing;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
-
-import static com.facebook.FacebookSdk.getApplicationContext;
 
 
 public class ProfileListingsFragment extends Fragment {

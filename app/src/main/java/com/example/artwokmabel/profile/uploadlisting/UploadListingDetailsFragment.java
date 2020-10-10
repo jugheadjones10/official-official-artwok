@@ -20,7 +20,6 @@ import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.FragmentUploadListingDetailsBinding;
 import com.example.artwokmabel.models.Category;
 import com.example.artwokmabel.homepage.request.upload.UploadRequestDetailsViewModel;
-import com.google.android.play.core.internal.s;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -65,7 +64,7 @@ public class UploadListingDetailsFragment extends Fragment {
                     }
                     UploadListingDetailsFragment.this.categories = allCategories.toArray(new String[allCategories.size()]);
 
-                    boolean checkedArray[] = new boolean[allCategories.size()];
+                    boolean[] checkedArray = new boolean[allCategories.size()];
                     Arrays.fill(checkedArray, false);
                     UploadListingDetailsFragment.this.checkedCategoriesArray = checkedArray;
 

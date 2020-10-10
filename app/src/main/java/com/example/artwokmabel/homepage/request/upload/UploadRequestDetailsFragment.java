@@ -62,7 +62,7 @@ public class UploadRequestDetailsFragment extends Fragment {
                     UploadRequestDetailsFragment.this.categories = allCategories.toArray(new String[allCategories.size()]);
 
 //                    if(UploadRequestDetailsFragment.this.checkedCategoriesArray.length == 0){
-                        boolean checkedArray[] = new boolean[allCategories.size()];
+                        boolean[] checkedArray = new boolean[allCategories.size()];
                         Arrays.fill(checkedArray, false);
                         UploadRequestDetailsFragment.this.checkedCategoriesArray = checkedArray;
 //                    }

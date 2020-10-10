@@ -3,12 +3,8 @@ package com.example.artwokmabel.homepage.callbacks;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
-import android.provider.MediaStore;
-
-import androidx.lifecycle.ViewModel;
 
 import com.example.artwokmabel.UploadViewModel;
-import com.example.artwokmabel.profile.uploadpost.UploadPostViewModel;
 import com.example.artwokmabel.profile.utils.ImagePickerActivity;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;

@@ -112,7 +112,7 @@
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
                     android:inputType="numberDecimal"
-                    android:text="@{Long.toString(agreementDetails.price)}" />
+                    android:text="@{Double.toString(agreementDetails.price)}" />
 
             </com.google.android.material.textfield.TextInputLayout>
 

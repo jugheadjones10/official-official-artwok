@@ -2,12 +2,9 @@ package com.example.artwokmabel.profile.user;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProviders;
 
-import com.example.artwokmabel.models.MainPost;
 import com.example.artwokmabel.models.Message;
 import com.example.artwokmabel.repos.FirestoreRepo;
-import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
 

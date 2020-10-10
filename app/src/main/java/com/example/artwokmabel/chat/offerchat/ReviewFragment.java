@@ -1,11 +1,8 @@
 package com.example.artwokmabel.chat.offerchat;
 
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
@@ -19,12 +16,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.FragmentReviewBinding;
 import com.example.artwokmabel.models.OrderChat;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 public class ReviewFragment extends Fragment {
 

@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.artwokmabel.repos.FirestoreRepo;
 import com.example.artwokmabel.models.User;
-import com.google.firebase.auth.FirebaseAuth;
 
 public class ProfileFragmentViewModel extends ViewModel {
 

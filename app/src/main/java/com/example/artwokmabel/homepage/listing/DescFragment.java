@@ -10,14 +10,12 @@ import android.view.ViewGroup;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.artwokmabel.R;
-import com.example.artwokmabel.homepage.post.PostFragmentArgs;
 
 public class DescFragment extends Fragment {
     private View view;

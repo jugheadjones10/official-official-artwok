@@ -21,12 +21,10 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import com.example.artwokmabel.HomePageActivity;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.FragmentSettingsBinding;
 import com.example.artwokmabel.homepage.callbacks.ImagePickerCallback;
 import com.example.artwokmabel.login.AppHostActivity;
-import com.example.artwokmabel.login.LoginOptionsActivity;
 import com.example.artwokmabel.models.User;
 import com.example.artwokmabel.profile.utils.ImagePickerActivity;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -84,10 +82,12 @@ public class SettingsFragment extends Fragment {
         viewModel.getUserObservable().observe(getViewLifecycleOwner(), new Observer<User>() {
             @Override
             public void onChanged(User user) {
-                binding.setUser(user);
+                if(user != null){
+                    binding.setUser(user);
 
-                SettingsFragment.this.user = user;
-                Picasso.get().load(user.getProfile_url()).into(binding.profilePicture);
+                    SettingsFragment.this.user = user;
+                    Picasso.get().load(user.getProfile_url()).into(binding.profilePicture);
+                }
             }
         });
     }
@@ -167,12 +167,28 @@ public class SettingsFragment extends Fragment {
         startActivity(intent);
     }
 
+    public interface OnAccountDeactivated{
+        void onAccountDeactivated(boolean isSuccessful);
+    }
+
     public void onDeactivate(){
         AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
         builder.setMessage("This will delete every post, listing, comment, review, message by you and you will be unable to recover them! Deactive anyway?")
                 .setPositiveButton("Deactivate", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        viewModel.deleteUser();
+                        viewModel.deleteUser(new OnAccountDeactivated() {
+                            @Override
+                            public void onAccountDeactivated(boolean isSuccessful) {
+                                if(isSuccessful){
+                                    Intent intent = new Intent(getActivity(), AppHostActivity.class);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    intent.putExtra("LOGOUT", true);
+                                    startActivity(intent);
+
+//                                    getActivity().finish();
+                                }
+                            }
+                        });
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -180,8 +196,8 @@ public class SettingsFragment extends Fragment {
                         dialog.cancel();
                     }
                 });
-        AlertDialog alertdialog = builder.create();
 
+        AlertDialog alertdialog = builder.create();
         alertdialog.setOnShowListener( new DialogInterface.OnShowListener() {
             @Override
             public void onShow(DialogInterface arg0) {

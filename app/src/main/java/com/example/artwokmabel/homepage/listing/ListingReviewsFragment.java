@@ -7,23 +7,17 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.FragmentListingReviewsBinding;
-import com.example.artwokmabel.homepage.post.CommentsAdapter;
 import com.example.artwokmabel.models.Listing;
 import com.example.artwokmabel.models.Review;
-import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
 

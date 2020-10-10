@@ -1,47 +1,31 @@
 package com.example.artwokmabel.homepage.postsfeed;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.Parcelable;
-import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.JavascriptInterface;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.ImageView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.paging.PagedList;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import com.example.artwokmabel.HomeGraphDirections;
+
 import com.example.artwokmabel.HomePageActivity;
-import com.example.artwokmabel.ProfileGraphDirections;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.FragmentHomeFeedBinding;
-import com.example.artwokmabel.databinding.ItemPostBinding;
-import com.example.artwokmabel.homepage.adapters.ListingsAdapter;
 import com.example.artwokmabel.homepage.adapters.PostsAdapter;
-import com.example.artwokmabel.homepage.callbacks.MainPostClickCallback;
-import com.example.artwokmabel.homepage.homepagewrapper.HomeTabsFragment;
 import com.example.artwokmabel.models.Listing;
 import com.example.artwokmabel.models.ListingPost;
-import com.example.artwokmabel.models.MainPost;
 import com.example.artwokmabel.models.User;
 import com.example.artwokmabel.repos.FirestoreRepo;
 import com.firebase.ui.firestore.SnapshotParser;
@@ -49,16 +33,8 @@ import com.firebase.ui.firestore.paging.FirestorePagingAdapter;
 import com.firebase.ui.firestore.paging.FirestorePagingOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.squareup.picasso.Picasso;
-import com.synnapps.carouselview.ImageListener;
-import com.yarolegovich.discretescrollview.DiscreteScrollView;
-import com.yarolegovich.discretescrollview.InfiniteScrollAdapter;
-import com.yarolegovich.discretescrollview.transform.Pivot;
-import com.yarolegovich.discretescrollview.transform.ScaleTransformer;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class HomeFeedFragment extends Fragment {
 
@@ -120,7 +96,7 @@ public class HomeFeedFragment extends Fragment {
         });
 
         //Todo: bring back listings recycler view
-        listingsAdapter = new ListingsHomeAdapter(getContext(), navController);
+//        listingsAdapter = new ListingsHomeAdapter(getContext(), navController);
 
 //        DiscreteScrollView horizontalRecyclerViewListings = HomeTabsFragment.getInstance().binding.horizontalRecyclerViewListings;
 //        horizontalRecyclerViewListings.setAdapter(listingsAdapter);
@@ -198,25 +174,14 @@ public class HomeFeedFragment extends Fragment {
     }
 
     private void observeViewModel(HomeFeedViewModel viewModel) {
-        // Update the list when the data changes
-//        viewModel.getFeedPostsObeservable().observe(getViewLifecycleOwner(), new Observer<List<MainPost>>() {
+//        viewModel.getFeedListingObservable().observe(getViewLifecycleOwner(), new Observer<List<Listing>>() {
 //            @Override
-//            public void onChanged(@Nullable List<MainPost> posts) {
-//                if(posts != null){
-//                    Log.d("ADDDD", posts.toString());
-//                    postsAdapter.setPostsList(posts);
+//            public void onChanged(@Nullable List<Listing> listings) {
+//                if (listings != null) {
+//                    listingsAdapter.setListingsList(listings);
 //                }
 //            }
 //        });
-
-        viewModel.getFeedListingObservable().observe(getViewLifecycleOwner(), new Observer<List<Listing>>() {
-            @Override
-            public void onChanged(@Nullable List<Listing> listings) {
-                if (listings != null) {
-                    listingsAdapter.setListingsList(listings);
-                }
-            }
-        });
     }
 
     private void setUpPostsAdapter(){

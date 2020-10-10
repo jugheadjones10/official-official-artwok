@@ -8,13 +8,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -121,18 +121,31 @@ public class OfferAgreementFragment extends Fragment {
 //                    listing
 //            );
 
-            viewModel.updateOfferDetails(
-                new AgreementDetails(
-                    Long.parseLong(binding.priceEditText.getText().toString()),
-                    binding.deliveryEditText.getText().toString(),
-                    binding.refundEditText.getText().toString(),
-                    binding.shipmentDeadlineEditText.getText().toString(),
-                    binding.sellerRequestEditText.getText().toString(),
-                    binding.buyerRequestEditText.getText().toString()
-                )
-            );
+            String price = binding.priceEditText.getText().toString();
+            String delivery = binding.deliveryEditText.getText().toString();
+            String refund = binding.refundEditText.getText().toString();
 
-            navController.navigateUp();
+            if(price.isEmpty()){
+                Toast.makeText(requireContext(), "Please input a price", Toast.LENGTH_LONG).show();
+            }else if(delivery.isEmpty()){
+                Toast.makeText(requireContext(), "Please input delivery details", Toast.LENGTH_LONG).show();
+            }else if(refund.isEmpty()){
+                Toast.makeText(requireContext(), "Please input refund details", Toast.LENGTH_LONG).show();
+            }else{
+                viewModel.updateOfferDetails(
+                    new AgreementDetails(
+                        Double.parseDouble(price),
+                        delivery,
+                        refund,
+                        binding.shipmentDeadlineEditText.getText().toString(),
+                        binding.sellerRequestEditText.getText().toString(),
+                        binding.buyerRequestEditText.getText().toString()
+                    )
+                );
+
+                navController.navigateUp();
+            }
+
             return true;
         }
         return super.onOptionsItemSelected(item);

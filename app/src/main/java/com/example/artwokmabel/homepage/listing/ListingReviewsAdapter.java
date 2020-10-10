@@ -3,14 +3,10 @@ package com.example.artwokmabel.homepage.listing;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,21 +14,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.artwokmabel.HomeGraphDirections;
 import com.example.artwokmabel.ProfileGraphDirections;
 import com.example.artwokmabel.Utils.TimeWrangler;
-import com.example.artwokmabel.Utils.TransactFragment;
-import com.example.artwokmabel.databinding.ItemCommentBinding;
 import com.example.artwokmabel.databinding.ItemReviewBinding;
-import com.example.artwokmabel.homepage.post.CommentsAdapter;
-import com.example.artwokmabel.homepage.post.CommentsViewModel;
 import com.example.artwokmabel.models.Comment;
 import com.example.artwokmabel.models.Review;
 import com.example.artwokmabel.R;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ListingReviewsAdapter extends RecyclerView.Adapter<ListingReviewsAdapter.ReviewHolder> {
     private static final String TAG = "CommentListAdapter";

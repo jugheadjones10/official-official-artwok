@@ -8,13 +8,13 @@ public class AgreementDetails implements Serializable {
     private String sellerRequest;
     private String buyerRequest;
 
-    private long price;
+    private double price;
     private String delivery;
     private String refund;
 
 //    private long nanopast;
 
-    public AgreementDetails(long price, String delivery, String refund, String deadline, String sellerRequest, String buyerRequest) {
+    public AgreementDetails(double price, String delivery, String refund, String deadline, String sellerRequest, String buyerRequest) {
         this.deadline = deadline;
         this.sellerRequest = sellerRequest;
         this.buyerRequest = buyerRequest;
@@ -36,11 +36,11 @@ public class AgreementDetails implements Serializable {
 //    }
 
 
-    public long getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(long price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

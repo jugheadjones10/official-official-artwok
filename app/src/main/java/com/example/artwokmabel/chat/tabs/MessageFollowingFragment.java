@@ -15,9 +15,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.example.artwokmabel.ChatGraphDirections;
-import com.example.artwokmabel.ProfileGraphDirections;
 import com.example.artwokmabel.R;
-import com.example.artwokmabel.Utils.TransactFragment;
 import com.example.artwokmabel.databinding.MessageFollowingFragmentBinding;
 import com.example.artwokmabel.models.User;
 import com.squareup.picasso.Picasso;

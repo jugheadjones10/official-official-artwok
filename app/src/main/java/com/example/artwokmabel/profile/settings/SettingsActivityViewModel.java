@@ -65,8 +65,8 @@ public class SettingsActivityViewModel extends ViewModel implements UploadViewMo
         FirestoreRepo.getInstance().updateUserEmail(email, mAuth.getCurrentUser().getUid());
     }
 
-    public void deleteUser(){
-        FirestoreRepo.getInstance().deleteCurrentUser();
+    public void deleteUser(SettingsFragment.OnAccountDeactivated callback){
+        FirestoreRepo.getInstance().deleteCurrentUser(callback);
     }
 
     //For the pick image callback

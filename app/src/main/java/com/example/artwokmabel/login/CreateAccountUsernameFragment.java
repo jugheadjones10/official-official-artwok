@@ -1,22 +1,17 @@
 package com.example.artwokmabel.login;
 
 
-import android.app.ActivityOptions;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,10 +19,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 
 import com.example.artwokmabel.R;
-import com.example.artwokmabel.databinding.FragmentCreateAccountEmailBinding;
 import com.example.artwokmabel.databinding.FragmentCreateAccountUsernameBinding;
-import com.example.artwokmabel.repos.FirestoreRepo;
-import com.google.zxing.common.StringUtils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

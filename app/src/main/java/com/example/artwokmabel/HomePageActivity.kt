@@ -71,14 +71,14 @@ class HomePageActivity : AppCompatActivity() {
             val userUsername = intent.getStringExtra("fromUsername")
             val userProfile = intent.getStringExtra("fromProfileUrl")
 
-            val action = MessageFragmentDirections.actionChatGraphToChatFragment(userId, userUsername, userProfile);
+            val action = MessageFragmentDirections.actionChatGraphToChatFragment(userId, userUsername, userProfile)
             nav_view.selectedItemId = R.id.chat_graph
             currentNavController?.value?.navigate(action)
         }else if (type == "listing"){
             val listing = intent.getSerializableExtra("listing")
 
             if(listing is Listing){
-                val action = HomeGraphDirections.actionGlobalListingFragment(listing);
+                val action = HomeGraphDirections.actionGlobalListingFragment(listing)
                 nav_view.selectedItemId = R.id.home_graph
                 currentNavController?.value?.navigate(action)
             }
@@ -86,7 +86,7 @@ class HomePageActivity : AppCompatActivity() {
             val post = intent.getSerializableExtra("post")
 
             if(post is MainPost){
-                val action = HomeGraphDirections.actionGlobalPostFragment(post);
+                val action = HomeGraphDirections.actionGlobalPostFragment(post)
                 nav_view.selectedItemId = R.id.home_graph
                 currentNavController?.value?.navigate(action)
             }
@@ -94,7 +94,7 @@ class HomePageActivity : AppCompatActivity() {
             val post = intent.getSerializableExtra("post")
 
             if(post is MainPost){
-                val action = HomeGraphDirections.actionGlobalPostFragment(post);
+                val action = HomeGraphDirections.actionGlobalPostFragment(post)
                 nav_view.selectedItemId = R.id.home_graph
                 currentNavController?.value?.navigate(action)
             }

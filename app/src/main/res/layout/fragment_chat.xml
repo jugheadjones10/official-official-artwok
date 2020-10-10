@@ -61,7 +61,7 @@
             android:layout_above="@+id/chat_linear_layout"
             android:layout_below="@+id/main_app_bar"
             android:layout_marginTop="5dp"
-            android:layout_marginBottom="1dp"></androidx.recyclerview.widget.RecyclerView>
+            android:layout_marginBottom="1dp" />
 
         <RelativeLayout
             android:id="@+id/chat_linear_layout"

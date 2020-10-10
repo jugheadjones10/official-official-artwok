@@ -1,6 +1,5 @@
 package com.example.artwokmabel.profile.settings;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.artwokmabel.HomePageActivity;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.FragmentSetUsernameBinding;
 import com.example.artwokmabel.repos.FirestoreRepo;

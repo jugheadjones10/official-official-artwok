@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable name="agreementDetails" type="com.example.artwokmabel.models.AgreementDetails"/>
@@ -55,7 +54,7 @@
             android:id="@+id/price_edit_text"
             android:enabled="false"
             android:background="@android:color/transparent"
-            android:text="@{Long.toString(agreementDetails.price)}"
+            android:text="@{Double.toString(agreementDetails.price)}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
