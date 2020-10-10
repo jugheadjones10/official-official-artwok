@@ -189,11 +189,6 @@ public class ListingFragment extends Fragment {
                     ListingFragmentDirections.actionListingFragmentToOfferFragment((FirestoreRepo.getInstance().changeListingToMeBuy(listing,
                             new Message("", "", "", "","","", "", 0, "false"))));
             navController.navigate(action);
-
-//            ListingFragmentDirections.ActionListingFragmentToOfferFragment action =
-//                    ListingFragmentDirections.actionListingFragmentToOfferFragment((FirestoreRepo.getInstance().changeListingToMeBuy(listing,
-//                            new Message("", "", "", "","","", "", 0, "false"))));
-//            navController.navigate(action);
         }
     }
 
