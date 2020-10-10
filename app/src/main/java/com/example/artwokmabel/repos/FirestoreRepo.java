@@ -2678,7 +2678,7 @@ public class FirestoreRepo {
 
     public Query getSortedUserFavPostsQuery(ArrayList<String> userFavPostIds){
         Query userFavPostsQuery = db.collection("ListingPosts")
-                .whereIn("postid", userFavPostIds)
+                .whereIn("postId", userFavPostIds)
                 .orderBy("nanopast", Query.Direction.DESCENDING);
         return userFavPostsQuery;
     }
