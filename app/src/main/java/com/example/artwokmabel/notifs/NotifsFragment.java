@@ -40,7 +40,6 @@ public class NotifsFragment extends Fragment {
                 }
             }
         });
-
         return binding.getRoot();
     }
 

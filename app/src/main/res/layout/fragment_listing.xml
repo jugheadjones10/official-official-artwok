@@ -70,6 +70,7 @@
                     <com.google.android.material.appbar.MaterialToolbar
                         android:id="@+id/indiv_toolbar"
                         style="@style/Widget.Artwok.Toolbar"
+                        app:contentInsetStartWithNavigation="0dp"
                         android:layout_width="match_parent"
                         android:layout_height="?attr/actionBarSize"
                         app:layout_scrollFlags="scroll|exitUntilCollapsed"

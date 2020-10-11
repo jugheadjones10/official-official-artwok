@@ -1,6 +1,7 @@
 package com.example.artwokmabel.notifs;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -12,8 +13,10 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
 import com.example.artwokmabel.NotifGraphDirections;
+import com.example.artwokmabel.databinding.ItemListingNotifBinding;
 import com.example.artwokmabel.databinding.ItemNotifBinding;
 import com.example.artwokmabel.models.Listing;
 import com.example.artwokmabel.models.MainPost;
@@ -24,7 +27,10 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class NotifsAdapter extends RecyclerView.Adapter<NotifsAdapter.NotifViewHolder> {
+public class NotifsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+    private static int TYPE_LISTING = 1;
+    private static int TYPE_OTHERS = 2;
 
     private Context mContext;
     private List<Notification> notifsList;
@@ -43,18 +49,32 @@ public class NotifsAdapter extends RecyclerView.Adapter<NotifsAdapter.NotifViewH
     }
 
     @Override
-    public NotifViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ItemNotifBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.item_notif, parent,false);
-        return new NotifViewHolder(binding);
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        if (viewType == TYPE_LISTING) {
+            ItemListingNotifBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.item_listing_notif, parent,false);
+            return new ListingNotifViewHolder(binding);
+        } else {
+            ItemNotifBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.item_notif, parent,false);
+            return new NotifViewHolder(binding);
+        }
     }
 
     @Override
-    public void onBindViewHolder(@NonNull NotifViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         Notification data = notifsList.get(position);
 
-        holder.binding.setOnnotifclicked(new OnNotifcationClicked());
-        holder.binding.setNotification(data);
-        Picasso.get().load(data.getProtagPic()).into(holder.binding.notifProtagImg);
+        if(holder.getItemViewType() == TYPE_LISTING){
+            ListingNotifViewHolder listingNotifViewHolder = (ListingNotifViewHolder)holder;
+            listingNotifViewHolder.binding.setOnnotifclicked(new OnNotifcationClicked());
+            listingNotifViewHolder.binding.setNotification(data);
+            Picasso.get().load(data.getProtagPic()).into(listingNotifViewHolder.binding.notifProtagImg);
+        }else{
+            NotifViewHolder notifViewHolder = (NotifViewHolder)holder;
+            notifViewHolder.binding.setOnnotifclicked(new OnNotifcationClicked());
+            notifViewHolder.binding.setNotification(data);
+            Picasso.get().load(data.getProtagPic()).into(notifViewHolder.binding.notifProtagImg);
+        }
+
     }
 
     public class OnNotifcationClicked{
@@ -135,11 +155,28 @@ public class NotifsAdapter extends RecyclerView.Adapter<NotifsAdapter.NotifViewH
         }
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        if (notifsList.get(position).getAction() == Notification.OTHERS_UPLOAD_LISTING) {
+            return TYPE_LISTING;
+        } else {
+            return TYPE_OTHERS;
+        }
+    }
 
     public class NotifViewHolder extends RecyclerView.ViewHolder {
         ItemNotifBinding binding;
 
         public NotifViewHolder(@NonNull ItemNotifBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
+        }
+    }
+
+    public class ListingNotifViewHolder extends RecyclerView.ViewHolder {
+        ItemListingNotifBinding binding;
+
+        public ListingNotifViewHolder(@NonNull ItemListingNotifBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }
