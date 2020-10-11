@@ -13,6 +13,8 @@ import com.example.artwokmabel.chat.tabs.MessageChatsViewModel
 import com.example.artwokmabel.chat.tabs.MessageOrdersViewModel
 import com.example.artwokmabel.models.Listing
 import com.example.artwokmabel.models.MainPost
+import com.example.artwokmabel.models.Message
+import com.example.artwokmabel.models.OrderChat
 import com.example.artwokmabel.repos.FirestoreRepo
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.badge.BadgeDrawable
@@ -96,6 +98,29 @@ class HomePageActivity : AppCompatActivity() {
             if(post is MainPost){
                 val action = HomeGraphDirections.actionGlobalPostFragment(post)
                 nav_view.selectedItemId = R.id.home_graph
+                currentNavController?.value?.navigate(action)
+            }
+        }else if(type == "offer"){
+            val listing = intent.getSerializableExtra("listing")
+            val buyerId = intent.getStringExtra("buyerId")
+
+            if(listing is Listing){
+                val action = MessageFragmentDirections.actionChatGraphToOfferFragment(OrderChat(
+                    listing,
+                    Message(
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        0L,
+                        ""
+                    ),
+                    buyerId
+                ))
+                nav_view.selectedItemId = R.id.chat_graph
                 currentNavController?.value?.navigate(action)
             }
         }

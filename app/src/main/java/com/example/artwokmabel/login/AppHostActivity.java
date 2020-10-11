@@ -101,6 +101,28 @@ public class AppHostActivity extends AppCompatActivity {
                                 startActivity(intent);
                                 finish();
                             });
+
+                    }else if(value.equals("newOffer")){
+                        Intent intent = new Intent(this, HomePageActivity.class);
+
+                        String buyerId = getIntent().getStringExtra("buyerId");
+                        String listingId = getIntent().getStringExtra("listingId");
+
+                        class OnListingRetrieved implements FirestoreRepo.ListingRetrieved {
+                            public void onListingRetrieved (Listing listing){
+                                intent.putExtra("type", "offer");
+                                intent.putExtra("listing", listing);
+                                intent.putExtra("buyerId", buyerId);
+
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(intent);
+                                finish();
+                            }
+                        }
+
+                        FirestoreRepo.getInstance().getListing(listingId,
+                                new OnListingRetrieved()
+                        );
                     }
                 }
             }
