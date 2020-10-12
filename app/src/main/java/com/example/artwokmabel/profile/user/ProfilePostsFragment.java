@@ -86,7 +86,9 @@ public class ProfilePostsFragment extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
-        adapter.stopListening();
+        if(adapter != null) {
+            adapter.stopListening();
+        }
     }
 
     private void setUpPostsAdapter(){

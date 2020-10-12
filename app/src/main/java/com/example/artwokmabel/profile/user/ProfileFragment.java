@@ -101,29 +101,30 @@ public class ProfileFragment extends Fragment {
 
         viewModel = ViewModelProviders.of(this).get(ProfileFragmentViewModel.class);
         viewModel.getUserObservable(userId).observe(getViewLifecycleOwner(), new Observer<User>() {
-            private User user;
+            private User userOutside;
 
             @Override
             public void onChanged(@Nullable User user) {
-//                if(user == null){
-//                    user = new User(
-//                        "deleted user",
-//                        "",
-//                        "https://firebasestorage.googleapis.com/v0/b/artwok-database.appspot.com/o/Images%2F3T7wbXsgYSOT85JNLbfpieDilHd2%2FpromoTab-bg-idMe.jpg?alt=media&token=a08fbb37-6dfa-4bea-b557-c5bccafca81a",
-//                        new ArrayList<String>(),
-//                        new ArrayList<String>(),
-//                        new ArrayList<String>(),
-//                        new ArrayList<String>(),
-//                        new ArrayList<String>(),
-//                        new ArrayList<String>(),
-//                        new ArrayList<String>(),
-//                        "deleted user",
-//                        "deleted user",
-//                        ""
-//                    );
-//                }
+                if(user == null){
+                    user = new User(
+                        "deleted user",
+                        "",
+                        "https://firebasestorage.googleapis.com/v0/b/artwok-database.appspot.com/o/Images%2F3T7wbXsgYSOT85JNLbfpieDilHd2%2FpromoTab-bg-idMe.jpg?alt=media&token=a08fbb37-6dfa-4bea-b557-c5bccafca81a",
+                        new ArrayList<String>(),
+                        new ArrayList<String>(),
+                        new ArrayList<String>(),
+                        new ArrayList<String>(),
+                        new ArrayList<String>(),
+                        new ArrayList<String>(),
+                        new ArrayList<String>(),
+                        "deleted user",
+                        "deleted user",
+                        ""
+                    );
+                }
 
-                binding.setUser(this.user);
+                binding.setUser(user);
+                this.userOutside = user;
 
                 Picasso.get()
                         .load(user.getProfile_url())
@@ -131,17 +132,19 @@ public class ProfileFragment extends Fragment {
                         .error(R.drawable.placeholder_color_new)
                         .into(binding.profilePicture);
 
-                if(!mAuth.getCurrentUser().getUid().equals(userId)){
-                    viewModel.getUserObservable(mAuth.getCurrentUser().getUid()).observe(getViewLifecycleOwner(), new Observer<User>() {
-                        @Override
-                        public void onChanged(User me) {
-                            if(me.getFollowing().contains(user.getUid())){
-                                toolbarOthersBinding.follButton.setText("Following");
-                            }else{
-                                toolbarOthersBinding.follButton.setText("Follow");
+                if(!user.getUid().isEmpty()){
+                    if(!mAuth.getCurrentUser().getUid().equals(userId)){
+                        viewModel.getUserObservable(mAuth.getCurrentUser().getUid()).observe(getViewLifecycleOwner(), new Observer<User>() {
+                            @Override
+                            public void onChanged(User me) {
+                                if(me.getFollowing().contains(userOutside.getUid())){
+                                    toolbarOthersBinding.follButton.setText("Following");
+                                }else{
+                                    toolbarOthersBinding.follButton.setText("Follow");
+                                }
                             }
-                        }
-                    });
+                        });
+                    }
                 }
             }
         });

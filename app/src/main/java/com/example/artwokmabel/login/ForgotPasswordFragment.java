@@ -14,6 +14,7 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.FragmentForgotPasswordBinding;
@@ -45,16 +46,26 @@ public class ForgotPasswordFragment extends Fragment {
 //        }else{
 //            binding.emailForgotPassword.requestFocus();
 //        }
-        binding.emailForgotPassword.requestFocus();
+        //binding.emailForgotPassword.requestFocus();
 
         //No better way to do the below?
+
         ((AppCompatActivity)requireActivity()).setSupportActionBar(binding.zeroUiToolbar);
         ((AppCompatActivity)requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+    public interface OnResetPasswordSent{
+        void onResetPasswordSent(boolean isSuccessful);
+    }
 
     public void onResetPasswordClicked(){
-        FirestoreRepo.getInstance().sendResetPasswordEmail(binding.emailForgotPassword.getText().toString());
+        FirestoreRepo.getInstance().sendResetPasswordEmail(binding.emailForgotPassword.getText().toString(),
+            isSuccessful -> {
+                if(isSuccessful){
+                    Toast.makeText(requireContext(), "Reset password email has been sent.", Toast.LENGTH_LONG).show();
+                }
+            }
+        );
         navController.popBackStack();
     }
 

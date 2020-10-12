@@ -11,6 +11,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.artwokmabel.R;
+import com.example.artwokmabel.login.ForgotPasswordFragment;
 import com.example.artwokmabel.login.LoginViewModel;
 import com.example.artwokmabel.login.RegistrationViewModel;
 import com.example.artwokmabel.login.callbacks.CheckDuplicateCallback;
@@ -1296,7 +1297,7 @@ public class FirestoreRepo {
                 .setValue(intro);
     }
 
-    public void sendResetPasswordEmail(String emailAddress){
+    public void sendResetPasswordEmail(String emailAddress, ForgotPasswordFragment.OnResetPasswordSent callback){
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
         mAuth.sendPasswordResetEmail(emailAddress.trim())
@@ -1304,7 +1305,10 @@ public class FirestoreRepo {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
+                            callback.onResetPasswordSent(true);
                             Log.d(TAG, "Email sent.");
+                        }else{
+                            callback.onResetPasswordSent(false);
                         }
                     }
                 });
