@@ -1306,7 +1306,6 @@ public class FirestoreRepo {
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
                             callback.onResetPasswordSent(true);
-                            Log.d(TAG, "Email sent.");
                         }else{
                             callback.onResetPasswordSent(false);
                         }

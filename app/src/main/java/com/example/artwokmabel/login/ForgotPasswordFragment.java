@@ -62,11 +62,11 @@ public class ForgotPasswordFragment extends Fragment {
         FirestoreRepo.getInstance().sendResetPasswordEmail(binding.emailForgotPassword.getText().toString(),
             isSuccessful -> {
                 if(isSuccessful){
-                    Toast.makeText(requireContext(), "Reset password email has been sent.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "Reset password email has been sent.", Toast.LENGTH_LONG).show();
+                    navController.popBackStack();
                 }
             }
         );
-        navController.popBackStack();
     }
 
 }
