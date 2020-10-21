@@ -312,7 +312,8 @@ public class OfferFragment extends Fragment {
                     if(acceptedMessageList.size() == 1){
 
                         //Disable changing agreement details after deal is accepted
-                        binding.mainAppBar.getMenu().getItem(0).setEnabled(false);
+                        //binding.mainAppBar.getMenu().getItem(0).setEnabled(false);
+                        offerViewModel.setIsTransactionFinished(true);
 
                         //If I am the seller, I am given the option to deliver, and indicate as delivered
                         if(messageMeId.equals(orderChat.getListing().getUserid())) {
@@ -396,8 +397,6 @@ public class OfferFragment extends Fragment {
                     }else if(lastMessage.getAcceptStatus().equals("reviewed")){
                         binding.offerButton.setText("Reviewed 👌");
                         binding.reviewButton.setVisibility(View.GONE);
-
-                        offerViewModel.setIsTransactionFinished(true);
                     }
                 }
             }
