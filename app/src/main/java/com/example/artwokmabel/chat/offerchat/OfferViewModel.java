@@ -15,6 +15,7 @@ public class OfferViewModel extends ViewModel implements UploadViewModel {
 
     private MutableLiveData<Uri> imagePath = new MutableLiveData<>();
     private MutableLiveData<Uri> videoPath = new MutableLiveData<>();
+    private MutableLiveData<Boolean> isTransactionFinished = new MutableLiveData<>(false);
 
     private String listingsId;
 
@@ -39,6 +40,15 @@ public class OfferViewModel extends ViewModel implements UploadViewModel {
     public LiveData<AgreementDetails> getAgreementDetails(){
         return agreementDetails;
     }
+
+    public MutableLiveData<Boolean> getIsTransactionFinished() {
+        return isTransactionFinished;
+    }
+
+    public void setIsTransactionFinished(Boolean isTransactionFinished) {
+        this.isTransactionFinished.setValue(isTransactionFinished);
+    }
+
 
     public LiveData<Listing> getListing(String listingId){
         return FirestoreRepo.getInstance().getListingLiveData(listingId);

@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -70,6 +71,18 @@ public class OfferAgreementFragment extends Fragment {
                 .placeholder(R.drawable.placeholder_black_new)
                 .error(R.drawable.placeholder_color_new)
                 .into(binding.listingPic);
+
+        viewModel.getIsTransactionFinished().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if(aBoolean != null){
+                    //If transaction is finished
+                    if(aBoolean){
+                        binding.toolbar.getMenu().removeItem(R.id.save);
+                    }
+                }
+            }
+        });
 
 //        viewModel.getAgreementDetails().observe(getViewLifecycleOwner(), new Observer<AgreementDetails>() {
 //            @Override

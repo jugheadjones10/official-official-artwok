@@ -73,8 +73,11 @@ public class MessageFollowingFragment extends Fragment {
         viewModel.getUserObservable().observe(getViewLifecycleOwner(), new Observer<User>() {
             @Override
             public void onChanged(@Nullable User user) {
-                binding.setUser(user);
-                Picasso.get().load(user.getProfile_url()).into(binding.contactPicture);
+                if(user != null){
+                    binding.setUser(user);
+                    Picasso.get().load(user.getProfile_url()).into(binding.contactPicture);
+                }
+
             }
         });
     }

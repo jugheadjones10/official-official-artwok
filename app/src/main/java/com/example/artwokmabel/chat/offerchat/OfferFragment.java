@@ -185,6 +185,8 @@ public class OfferFragment extends Fragment {
                 }
             }
         });
+
+
     }
 
     private void inflateChatBar(){
@@ -393,9 +395,9 @@ public class OfferFragment extends Fragment {
                         }
                     }else if(lastMessage.getAcceptStatus().equals("reviewed")){
                         binding.offerButton.setText("Reviewed 👌");
-                        binding.offerButton.setEnabled(false);
-
                         binding.reviewButton.setVisibility(View.GONE);
+
+                        offerViewModel.setIsTransactionFinished(true);
                     }
                 }
             }

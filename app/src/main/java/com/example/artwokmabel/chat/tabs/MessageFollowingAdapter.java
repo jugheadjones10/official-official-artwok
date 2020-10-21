@@ -1,6 +1,7 @@
 package com.example.artwokmabel.chat.tabs;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -20,6 +21,7 @@ import com.example.artwokmabel.chat.MessageFragmentDirections;
 import com.example.artwokmabel.databinding.ItemMessageFollowingBinding;
 import com.example.artwokmabel.models.User;
 import com.example.artwokmabel.profile.people.PeopleAdapterViewModel;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
 
@@ -109,6 +111,21 @@ public class MessageFollowingAdapter extends RecyclerView.Adapter<MessageFollowi
     public class OnFollowingClicked{
         public void onFollowingClicked(Button followingButton, User user){
             if(followingButton.getText().toString().equals("Following")){
+
+//                new MaterialAlertDialogBuilder(get)
+//                        .setTitle("Unfollow user?")
+//                        .setMessage("")
+//                        .setNeutralButton("Cancel", null)
+//                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                button.setText("Follow");
+//                                button.setBackgroundColor(mContext.getResources().getColor(R.color.artwok_background_blue));
+//                                viewModel.removeUserFollowing(mAuth.getCurrentUser().getUid(), user.getUid());
+//                            }
+//                        })
+//                        .show();
+
                 followingButton.setText("Follow");
 
                 viewModel.removeUserFollowing(mAuth.getCurrentUser().getUid(), user.getUid());
