@@ -95,29 +95,38 @@ public class ProfilePostsFragment extends Fragment {
         viewModel.getUserOnce(userId).observe(getViewLifecycleOwner(), new Observer<User>() {
             @Override
             public void onChanged(User user) {
-                if(user != null){
-                    Log.d("numtimes", "I've been loaded!");
-                    PagedList.Config config = new PagedList.Config.Builder()
-                            .setEnablePlaceholders(false)
-                            .setInitialLoadSizeHint(4)
-                            .setPrefetchDistance(2)
-                            .setPageSize(3)
-                            .build();
 
-                    FirestorePagingOptions<MainPost> options = new FirestorePagingOptions.Builder<MainPost>()
-                            .setQuery(viewModel.getSortedUserPostsQuery(userId), config, new SnapshotParser<MainPost>() {
-                                @NonNull
-                                @Override
-                                public MainPost parseSnapshot(@NonNull DocumentSnapshot snapshot) {
-                                    return FirestoreRepo.getInstance().changeDocToMainPostModel(snapshot);
-                                }
-                            })
-                            .build();
+                viewModel.getUserOnce(mAuth.getCurrentUser().getUid()).observe(getViewLifecycleOwner(), new Observer<User>() {
+                    @Override
+                    public void onChanged(User currentUser){
 
-                    adapter = new FirestorePagingAdapterProfileImpl(options, user, getContext(), navController, binding.swipeRefreshLayout);
-                    binding.recyclerview.setAdapter(adapter);
-                    adapter.startListening();
-                }
+                        if(user != null && currentUser != null){
+                            Log.d("numtimes", "I've been loaded!");
+                            PagedList.Config config = new PagedList.Config.Builder()
+                                    .setEnablePlaceholders(false)
+                                    .setInitialLoadSizeHint(4)
+                                    .setPrefetchDistance(2)
+                                    .setPageSize(3)
+                                    .build();
+
+                            FirestorePagingOptions<MainPost> options = new FirestorePagingOptions.Builder<MainPost>()
+                                    .setQuery(viewModel.getSortedUserPostsQuery(userId), config, new SnapshotParser<MainPost>() {
+                                        @NonNull
+                                        @Override
+                                        public MainPost parseSnapshot(@NonNull DocumentSnapshot snapshot) {
+                                            return FirestoreRepo.getInstance().changeDocToMainPostModel(snapshot);
+                                        }
+                                    })
+                                    .build();
+
+                            adapter = new FirestorePagingAdapterProfileImpl(options, user, currentUser, getContext(), navController, binding.swipeRefreshLayout);
+                            binding.recyclerview.setAdapter(adapter);
+                            adapter.startListening();
+                        }
+
+                    }
+                });
+
             }
         });
     }

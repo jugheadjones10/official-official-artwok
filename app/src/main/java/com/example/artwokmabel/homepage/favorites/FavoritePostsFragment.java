@@ -107,7 +107,7 @@ public class FavoritePostsFragment extends Fragment {
                             })
                             .build();
 
-                    postsAdapter = new FirestorePagingAdapterProfileImpl(options, user, getContext(), navController, binding.swipeRefreshLayout);
+                    postsAdapter = new FirestorePagingAdapterProfileImpl(options, user, user, getContext(), navController, binding.swipeRefreshLayout);
                     binding.catRecyclerView.setAdapter(postsAdapter);
                     postsAdapter.startListening();
                 }

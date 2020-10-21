@@ -47,18 +47,20 @@ import com.squareup.picasso.Picasso;
 public class FirestorePagingAdapterProfileImpl extends FirestorePagingAdapter<MainPost, PostViewHolder> {
 
     private User user;
+    private User currentUser;
     private Context mContext;
     private PostsAdapterViewModel postsViewModel;
     private PostActivityViewModel postViewModel;
     private NavController navController;
     private SwipeRefreshLayout swipeRefreshLayout;
 
-    public FirestorePagingAdapterProfileImpl(FirestorePagingOptions<MainPost> options, User user, Context mContext, NavController navController, SwipeRefreshLayout swipeRefreshLayout){
+    public FirestorePagingAdapterProfileImpl(FirestorePagingOptions<MainPost> options, User user, User currentUser, Context mContext, NavController navController, SwipeRefreshLayout swipeRefreshLayout){
         super(options);
         this.user = user;
         this.mContext = mContext;
         this.navController = navController;
         this.swipeRefreshLayout = swipeRefreshLayout;
+        this.currentUser = currentUser;
         postsViewModel = ViewModelProviders.of((FragmentActivity)mContext).get(PostsAdapterViewModel.class);
         postViewModel = ViewModelProviders.of((FragmentActivity)mContext).get(PostActivityViewModel.class);
 
@@ -102,7 +104,7 @@ public class FirestorePagingAdapterProfileImpl extends FirestorePagingAdapter<Ma
         if(mainPost.getUserid().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
             postViewHolder.binding.favorite.setImageResource(R.drawable.ic_menu);
         }else {
-            if(user.getFav_posts().contains(mainPost.getPostId())){
+            if(currentUser.getFav_posts().contains(mainPost.getPostId())){
                 postViewHolder.binding.favorite.setImageResource(R.drawable.like);
             }else{
                 postViewHolder.binding.favorite.setImageResource(R.drawable.heart_button);
