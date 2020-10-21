@@ -98,9 +98,12 @@ public class NotifsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 navController.navigate(action);
             }else if(notif.getAction() == Notification.OTHERS_UPLOAD_LISTING){
                 Log.d("notifhunter", "Others listing was pressed");
+
                 FirestoreRepo.getInstance().getListing(notif.getProtagId(), new FirestoreRepo.ListingRetrieved() {
                     @Override
                     public void onListingRetrieved(Listing listing) {
+                        Log.d("notifhunter", "Listings was retrieved" + listing.getPostid());
+
                         NotifGraphDirections.ActionGlobalListingFragment4 action =
                                 NotifGraphDirections.actionGlobalListingFragment4(listing);
                         navController.navigate(action);

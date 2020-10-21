@@ -47,7 +47,7 @@ public class SplashFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         viewModel = new ViewModelProvider(requireActivity()).get(LoginViewModel.class);
 
-        final NavController navController = Navigation.findNavController(view);
+        final NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
         viewModel.authenticationState.observe(getViewLifecycleOwner(),
             new Observer<LoginViewModel.AuthenticationState>() {
                 @Override

@@ -154,14 +154,7 @@ public class OfferFragment extends Fragment {
 
         //This is so that message adapter can access listing id and then use that to access listing information
         offerViewModel.setListingsId(orderChat.getListing().getPostid());
-        offerViewModel.setAgreementDetails(new AgreementDetails(
-                liveListing.getPrice(),
-                liveListing.getDelivery(),
-                liveListing.getReturn_exchange(),
-                "",
-                "",
-                ""
-        ));
+
 
         offerViewModel.getListing(orderChat.getListing().getPostid()).observe(getViewLifecycleOwner(), new Observer<Listing>() {
             @Override
@@ -180,6 +173,15 @@ public class OfferFragment extends Fragment {
                 if(agreementDetails != null){
                     //liveAgreementDetails = agreementDetails;
                     SendAgreementInfo(agreementDetails);
+                }else{
+                    offerViewModel.setAgreementDetails(new AgreementDetails(
+                            liveListing.getPrice(),
+                            liveListing.getDelivery(),
+                            liveListing.getReturn_exchange(),
+                            "",
+                            "",
+                            ""
+                    ));
                 }
             }
         });
