@@ -1378,8 +1378,7 @@ public class FirestoreRepo {
 
         FirebaseDatabase.getInstance().getReference()
                 .child("Users")
-                .orderByChild("uid")
-                .equalTo(user.getUid())
+                .child(user.getUid())
                 .getRef()
                 .removeValue();
     }
@@ -2601,37 +2600,43 @@ public class FirestoreRepo {
             @Override
             public void onEvent(@Nullable DocumentSnapshot snapshot, @Nullable FirebaseFirestoreException e) {
                 ArrayList<String> following = (ArrayList<String>) snapshot.get("following");
-                following.remove(FirebaseAuth.getInstance().getCurrentUser().getUid());
-                following.remove(artwokId);
+                if(following != null){
+                    if(following.contains(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+                        following.remove(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                    }
 
-                tempData.clear();
-                List<Task> tasks = new ArrayList<>();
-                for(int i = 0; i < following.size(); i++) {
+                    following.remove(artwokId);
 
-                    Task task = FirestoreRepo.getInstance()
-                            .getUserRef(following.get(i))
-                            .get()
-                            .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                @Override
-                                public void onSuccess(DocumentSnapshot snapshot) {
-                                    if(snapshot.exists()){
-                                        User user = changeDocToUserModel(snapshot);
-                                        tempData.add(user);
+                    tempData.clear();
+                    List<Task> tasks = new ArrayList<>();
+                    for(int i = 0; i < following.size(); i++) {
+
+                        Task task = FirestoreRepo.getInstance()
+                                .getUserRef(following.get(i))
+                                .get()
+                                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onSuccess(DocumentSnapshot snapshot) {
+                                        if(snapshot.exists()){
+                                            User user = changeDocToUserModel(snapshot);
+                                            tempData.add(user);
+                                        }
                                     }
+                                });
+                        tasks.add(task);
+                    }
+
+                    Tasks.whenAll(tasks.toArray(new Task[0]))
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Log.d("thestuffreturnedREQUEST", "final resulting temp data" + tempData.toString());
+                                    Collections.sort(tempData, new SortUsersByName());
+                                    data.setValue(tempData);
                                 }
                             });
-                    tasks.add(task);
                 }
 
-                Tasks.whenAll(tasks.toArray(new Task[0]))
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Log.d("thestuffreturnedREQUEST", "final resulting temp data" + tempData.toString());
-                                Collections.sort(tempData, new SortUsersByName());
-                                data.setValue(tempData);
-                            }
-                        });
 
                 //Todo: find method of using diff util-like logic so that i don't need to rebuild the tempdata everytime the data changes
             }

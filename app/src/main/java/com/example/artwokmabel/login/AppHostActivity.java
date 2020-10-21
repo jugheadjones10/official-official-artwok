@@ -90,6 +90,15 @@ public class AppHostActivity extends AppCompatActivity {
 
                     }else if(value.equals("newFollower")){
 
+                        Intent intent = new Intent(this, HomePageActivity.class);
+
+                        String followerId = getIntent().getStringExtra("newFollowerId");
+                        intent.putExtra("type", "follower");
+                        intent.putExtra("followerId", followerId);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                        finish();
+
                     }else if(value.equals("newPost")){
                         Intent intent = new Intent(this, HomePageActivity.class);
 

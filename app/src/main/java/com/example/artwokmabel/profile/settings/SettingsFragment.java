@@ -180,8 +180,10 @@ public class SettingsFragment extends Fragment {
                             @Override
                             public void onAccountDeactivated(boolean isSuccessful) {
                                 if(isSuccessful){
+                                    FirebaseAuth.getInstance().signOut();
+
                                     Intent intent = new Intent(getActivity(), AppHostActivity.class);
-                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                     intent.putExtra("LOGOUT", true);
                                     startActivity(intent);
                                 }

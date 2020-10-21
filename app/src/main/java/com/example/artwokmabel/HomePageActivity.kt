@@ -122,6 +122,11 @@ class HomePageActivity : AppCompatActivity() {
                 ))
                 nav_view.selectedItemId = R.id.chat_graph
                 currentNavController?.value?.navigate(action)
+            }else if(type == "follower"){
+                val followerId = intent.getStringExtra("followerId")
+                val action = HomeGraphDirections.actionGlobalProfileFragment2(followerId)
+                nav_view.selectedItemId = R.id.home_graph
+                currentNavController?.value?.navigate(action)
             }
         }
 
