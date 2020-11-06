@@ -2,6 +2,8 @@ package com.example.artwokmabel.login;
 
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -101,6 +103,18 @@ public class CreateAccountPasswordFragment extends Fragment {
             binding.progressBar.setVisibility(View.VISIBLE);
             registrationViewModel.createAccountAndLogin(password);
         }
+    }
+
+    public void onPrivacyPolicyClicked(){
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW);
+        browserIntent.setData(Uri.parse("http://artwok.bss.design/Privacy.html"));
+        startActivity(browserIntent);
+    }
+
+    public void onTermsOfUseClicked(){
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW);
+        browserIntent.setData(Uri.parse("http://artwok.bss.design/Terms%20of%20use.html"));
+        startActivity(browserIntent);
     }
 
     public void onLoginClicked(){

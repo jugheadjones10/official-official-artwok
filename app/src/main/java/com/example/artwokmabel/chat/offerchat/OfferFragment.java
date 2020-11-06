@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -91,12 +92,14 @@ public class OfferFragment extends Fragment {
     private ValueEventListener allMessagesListener;
     private ChildEventListener childrenMessagesListener;
 
+    private IsTransactionDoneViewModel isTransactionDoneViewModel;
+    public boolean isTransactionDone = false;
+
     private static OfferFragment instance;
     public static OfferFragment getInstance(){
         return instance;
     }
 
-    //Change everything within to real-time info. Only use orderChat for the people and listing id.
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -129,6 +132,7 @@ public class OfferFragment extends Fragment {
 
         //ViewModel
         offerViewModel = new ViewModelProvider(requireActivity()).get(OfferViewModel.class);
+        isTransactionDoneViewModel = new ViewModelProvider(this).get(IsTransactionDoneViewModel.class);
 
         //Connect to viewModel to get LiveData for Listing and AgreementDetails
         connectToViewModels();
@@ -152,9 +156,10 @@ public class OfferFragment extends Fragment {
 
     private void connectToViewModels(){
 
+        Log.d("angels", "connectToViewModels");
+
         //This is so that message adapter can access listing id and then use that to access listing information
         offerViewModel.setListingsId(orderChat.getListing().getPostid());
-
 
         offerViewModel.getListing(orderChat.getListing().getPostid()).observe(getViewLifecycleOwner(), new Observer<Listing>() {
             @Override
@@ -170,23 +175,25 @@ public class OfferFragment extends Fragment {
         offerViewModel.getAgreementDetails().observe(getViewLifecycleOwner(), new Observer<AgreementDetails>() {
             @Override
             public void onChanged(AgreementDetails agreementDetails) {
+                Log.d("angels", "does observe even run?");
                 if(agreementDetails != null){
                     //liveAgreementDetails = agreementDetails;
-                    SendAgreementInfo(agreementDetails);
+
+//                    Log.d("angels", "offerViewModel onChanged");
+//                    SendAgreementInfo(agreementDetails);
                 }else{
-                    offerViewModel.setAgreementDetails(new AgreementDetails(
-                            liveListing.getPrice(),
-                            liveListing.getDelivery(),
-                            liveListing.getReturn_exchange(),
-                            "",
-                            "",
-                            ""
-                    ));
+                    Log.d("angels", "offerViewModel onChanged and agreementDetails was null");
+//                    offerViewModel.setAgreementDetails(new AgreementDetails(
+//                        liveListing.getPrice(),
+//                        liveListing.getDelivery(),
+//                        liveListing.getReturn_exchange(),
+//                        "",
+//                        "",
+//                        ""
+//                    ));
                 }
             }
         });
-
-
     }
 
     private void inflateChatBar(){
@@ -283,6 +290,7 @@ public class OfferFragment extends Fragment {
                         messages.add(snapshot.getValue(OfferMessage.class));
                     }else if(snapshot.child("type").getValue().equals("agreement-details")) {
                         agreementDetails = snapshot.getValue(AgreementDetails.class);
+                        Log.d("angels", "onStart in I found agreementDetails" + agreementDetails.getPrice());
 //                        offerViewModel.setAgreementDetails(snapshot.getValue(AgreementDetails.class));
 
                         //What if I press go to document before the agreementDetails data is loaded?
@@ -291,6 +299,7 @@ public class OfferFragment extends Fragment {
                 }
 
                 if(agreementDetails == null){
+                    Log.d("angels", "agreementDetails is null");
                     agreementDetails = new AgreementDetails(
                             liveListing.getPrice(),
                             liveListing.getDelivery(),
@@ -300,6 +309,7 @@ public class OfferFragment extends Fragment {
                             ""
                     );
                 }
+                offerViewModel.setAgreementDetails(agreementDetails);
 
                 if(messages.size() != 0){
 
@@ -312,8 +322,9 @@ public class OfferFragment extends Fragment {
                     if(acceptedMessageList.size() == 1){
 
                         //Disable changing agreement details after deal is accepted
-                        //binding.mainAppBar.getMenu().getItem(0).setEnabled(false);
-                        offerViewModel.setIsTransactionFinished(true);
+                        //isTransactionDoneViewModel.setIsTransactionDone(true);
+                        isTransactionDone = true;
+                        Log.d("isDone", "within acceptedMessageList size equals to one");
 
                         //If I am the seller, I am given the option to deliver, and indicate as delivered
                         if(messageMeId.equals(orderChat.getListing().getUserid())) {
@@ -387,7 +398,6 @@ public class OfferFragment extends Fragment {
                             binding.reviewButton.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-
                                     OfferFragmentDirections.ActionOfferFragmentToReviewFragment action =
                                             OfferFragmentDirections.actionOfferFragmentToReviewFragment(orderChat, lastMessage.getMessageID());
                                     navController.navigate(action);
@@ -406,7 +416,6 @@ public class OfferFragment extends Fragment {
 
             }
         };
-
 
         RootRef.child("Offers").child(messageMeId).child(theOtherId).child(orderChat.getListing().getPostid())
             .addValueEventListener(allMessagesListener);
@@ -489,6 +498,12 @@ public class OfferFragment extends Fragment {
 
         RootRef.child("Offers").child(messageMeId).child(theOtherId).child(orderChat.getListing().getPostid())
                 .addChildEventListener(childrenMessagesListener);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        offerViewModel.setAgreementDetails(null);
     }
 
     private void sendOfferMessage(String price){

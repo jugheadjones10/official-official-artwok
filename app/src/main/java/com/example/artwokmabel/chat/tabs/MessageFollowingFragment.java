@@ -18,13 +18,14 @@ import com.example.artwokmabel.ChatGraphDirections;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.MessageFollowingFragmentBinding;
 import com.example.artwokmabel.models.User;
+import com.example.artwokmabel.profile.people.FollowingAdapter;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class MessageFollowingFragment extends Fragment {
 
-    private MessageFollowingAdapter adapter;
+    private FollowingAdapter adapter;
 
     public MessageFollowingFragmentBinding binding;
     private MessageFollowingViewModel viewModel;
@@ -55,7 +56,7 @@ public class MessageFollowingFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         navController = Navigation.findNavController(requireActivity(), R.id.nav_host_container);
 
-        adapter = new MessageFollowingAdapter(getActivity(), navController);
+        adapter =  new FollowingAdapter(getContext(), navController);
         binding.friendsFragmentRecyclerview.setAdapter(adapter);
     }
 
@@ -65,7 +66,7 @@ public class MessageFollowingFragment extends Fragment {
             @Override
             public void onChanged(@Nullable List<User> users) {
                 if (users != null) {
-                    adapter.setUsersList(users);
+                    adapter.setFollowingsList(users);
                 }
             }
         });

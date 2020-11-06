@@ -2,6 +2,7 @@ package com.example.artwokmabel.chat.offerchat;
 
 import android.os.Bundle;
 import android.text.InputFilter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -33,6 +34,7 @@ public class OfferAgreementFragment extends Fragment {
     private Listing listing;
     private AgreementDetails agreementDetails;
     private OfferViewModel viewModel;
+    private IsTransactionDoneViewModel isTransactionDoneViewModel;
     private NavController navController;
 
     public OfferAgreementFragment(){
@@ -46,7 +48,7 @@ public class OfferAgreementFragment extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_offer_agreement, container, false);
         binding.priceEditText.setFilters(new InputFilter[]{new DecimalDigitsInputFilter()});
 
-        viewModel = new ViewModelProvider(requireActivity()).get(OfferViewModel.class);
+
         listing = OfferAgreementFragmentArgs.fromBundle(getArguments()).getListing();
         agreementDetails = OfferAgreementFragmentArgs.fromBundle(getArguments()).getAgreementDetails();
 
@@ -60,6 +62,9 @@ public class OfferAgreementFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         navController = Navigation.findNavController(requireActivity(), R.id.nav_host_container);
 
+        viewModel = new ViewModelProvider(requireActivity()).get(OfferViewModel.class);
+        isTransactionDoneViewModel = new ViewModelProvider(navController.getBackStackEntry(R.id.offerFragment)).get(IsTransactionDoneViewModel.class);
+
         ((AppCompatActivity)requireActivity()).setSupportActionBar(binding.toolbar);
         ((AppCompatActivity)requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity)requireActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -72,17 +77,7 @@ public class OfferAgreementFragment extends Fragment {
                 .error(R.drawable.placeholder_color_new)
                 .into(binding.listingPic);
 
-        viewModel.getIsTransactionFinished().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean aBoolean) {
-                if(aBoolean != null){
-                    //If transaction is finished
-                    if(aBoolean){
-                        binding.toolbar.getMenu().removeItem(R.id.save);
-                    }
-                }
-            }
-        });
+        Log.d("isDone", "" + OfferFragment.getInstance().isTransactionDone);
 
 //        viewModel.getAgreementDetails().observe(getViewLifecycleOwner(), new Observer<AgreementDetails>() {
 //            @Override
@@ -118,6 +113,11 @@ public class OfferAgreementFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.offer_agreement_menu, menu);
+
+        if(OfferFragment.getInstance().isTransactionDone){
+            menu.findItem(R.id.save).setVisible(false);
+            menu.findItem(R.id.save).setEnabled(false);
+        }
     }
 
     @Override
@@ -145,16 +145,25 @@ public class OfferAgreementFragment extends Fragment {
             }else if(refund.isEmpty()){
                 Toast.makeText(requireContext(), "Please input refund details", Toast.LENGTH_LONG).show();
             }else{
-                viewModel.updateOfferDetails(
-                    new AgreementDetails(
+                AgreementDetails agreementDetails = new AgreementDetails(
                         Double.parseDouble(price),
                         delivery,
                         refund,
                         binding.shipmentDeadlineEditText.getText().toString(),
                         binding.sellerRequestEditText.getText().toString(),
                         binding.buyerRequestEditText.getText().toString()
-                    )
                 );
+                OfferFragment.getInstance().SendAgreementInfo(agreementDetails);
+//                viewModel.updateOfferDetails(
+//                    new AgreementDetails(
+//                        Double.parseDouble(price),
+//                        delivery,
+//                        refund,
+//                        binding.shipmentDeadlineEditText.getText().toString(),
+//                        binding.sellerRequestEditText.getText().toString(),
+//                        binding.buyerRequestEditText.getText().toString()
+//                    )
+//                );
 
                 navController.navigateUp();
             }

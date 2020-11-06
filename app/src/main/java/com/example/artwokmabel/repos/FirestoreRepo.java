@@ -2286,7 +2286,7 @@ public class FirestoreRepo {
                             Collections.sort(messages, new SortMessages());
                             Message lastMessage;
                             if(messages.size() > 0){
-                                lastMessage = messages.get(messages.size() - 1);
+                                lastMessage = messages.get(0);
                                 Log.d("parkseroi", "Orders and Sells : FUCK" + lastMessage.getMessage());
                             }else{
                                 lastMessage = new Message("", "", "", "", "", "", "", 0, "");
@@ -2698,7 +2698,7 @@ public class FirestoreRepo {
 
     class SortMessages implements Comparator<Message> {
         public int compare(Message a, Message b){
-            return Math.toIntExact((a.getNanopast() - b.getNanopast())/1000);
+            return Math.toIntExact((b.getNanopast() - a.getNanopast())/1000);
         }
     }
 
