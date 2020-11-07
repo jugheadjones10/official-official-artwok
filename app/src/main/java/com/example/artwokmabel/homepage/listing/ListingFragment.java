@@ -185,7 +185,7 @@ public class ListingFragment extends Fragment {
     public void onOfferClicked(Listing listing){
         int currentGraph = navController.getGraph().getId();
         if(currentGraph == R.id.home_graph){
-            ListingFragmentDirectionsp.ActionListingFragmentToOfferFragment action =
+            ListingFragmentDirections.ActionListingFragmentToOfferFragment action =
                     ListingFragmentDirections.actionListingFragmentToOfferFragment((FirestoreRepo.getInstance().changeListingToMeBuy(listing,
                             new Message("", "", "", "","","", "", 0, "false"))));
             navController.navigate(action);

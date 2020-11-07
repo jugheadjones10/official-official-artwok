@@ -150,7 +150,7 @@ public class FirestorePagingAdapterImpl extends FirestorePagingAdapter<ListingPo
             postViewHolder.binding.setTime(TimeWrangler.changeNanopastToReadableDate(mainPost.getNanopast()));
             postViewHolder.binding.setFavorite(postViewHolder.binding.favorite);
 
-            if(mainPost.getUserid().equals(FirebaseAuth.getInstance().getCurrentUser().getUid()) || mainPost.getUserid().equals(FirestoreRepo.artwokId)){
+            if(mainPost.getUserid().equals(FirebaseAuth.getInstance().getCurrentUser().getUid()) || FirebaseAuth.getInstance().getCurrentUser().getUid().equals(FirestoreRepo.artwokId)){
                 postViewHolder.binding.favorite.setImageResource(R.drawable.ic_menu);
             }else {
                 if(user.getFav_posts().contains(mainPost.getPostId())){
@@ -202,7 +202,7 @@ public class FirestorePagingAdapterImpl extends FirestorePagingAdapter<ListingPo
                     },
                     //On fav clicked
                     (MainPost post, ImageView favorite) -> {
-                        if(mainPost.getUserid().equals(FirebaseAuth.getInstance().getCurrentUser().getUid()) || mainPost.getUserid().equals(FirestoreRepo.artwokId)){
+                        if(mainPost.getUserid().equals(FirebaseAuth.getInstance().getCurrentUser().getUid()) || FirebaseAuth.getInstance().getCurrentUser().getUid().equals(FirestoreRepo.artwokId)){
                             String[] items = {"Delete", "Report"};
                             new MaterialAlertDialogBuilder(mContext)
                                 .setItems(items, (dialog, which) -> {
