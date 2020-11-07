@@ -312,7 +312,7 @@ public class FirestorePagingAdapterImpl extends FirestorePagingAdapter<ListingPo
                 }
             });
 
-            if(listingModel.getUserid().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+            if(listingModel.getUserid().equals(FirebaseAuth.getInstance().getCurrentUser().getUid()) || FirebaseAuth.getInstance().getCurrentUser().getUid().equals(FirestoreRepo.artwokId)){
                 listingViewHolder.binding.favorite.setImageResource(R.drawable.ic_menu);
             }else {
                 if(user.getFav_listings().contains(listingModel.getPostid())){
@@ -352,7 +352,7 @@ public class FirestorePagingAdapterImpl extends FirestorePagingAdapter<ListingPo
                 },
                 //On fav clicked
                 (Listing listing, ImageView favorite) -> {
-                    if(listingModel.getUserid().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+                    if(listingModel.getUserid().equals(FirebaseAuth.getInstance().getCurrentUser().getUid()) || FirebaseAuth.getInstance().getCurrentUser().getUid().equals(FirestoreRepo.artwokId)){
                         String[] items = {"Delete", "Report"};
                         new MaterialAlertDialogBuilder(mContext)
                                 .setItems(items, (dialog, which) -> {
