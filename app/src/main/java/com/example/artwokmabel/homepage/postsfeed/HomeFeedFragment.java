@@ -216,8 +216,6 @@ public class HomeFeedFragment extends Fragment {
                     binding.recyclerview.setAdapter(adapter);
                     adapter.startListening();
                 }
-
-
             }
         });
     }

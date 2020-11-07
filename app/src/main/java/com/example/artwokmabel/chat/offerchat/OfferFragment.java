@@ -325,6 +325,7 @@ public class OfferFragment extends Fragment {
                         //isTransactionDoneViewModel.setIsTransactionDone(true);
                         isTransactionDone = true;
                         Log.d("isDone", "within acceptedMessageList size equals to one");
+                        Log.d("isDone", "within acceptedMessageList size equals to one");
 
                         //If I am the seller, I am given the option to deliver, and indicate as delivered
                         if(messageMeId.equals(orderChat.getListing().getUserid())) {
