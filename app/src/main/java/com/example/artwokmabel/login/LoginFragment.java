@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -47,14 +48,17 @@ public class LoginFragment extends Fragment {
         binding.progressBar.setVisibility(View.GONE);
 
         navController = Navigation.findNavController(view);
-        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(),
-            new OnBackPressedCallback(true) {
-                @Override
-                public void handleOnBackPressed() {
-                    viewModel.refuseAuthentication();
-                    navController.popBackStack();
-                }
-            });
+//        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(),
+//            new OnBackPressedCallback(true) {
+//                @Override
+//                public void handleOnBackPressed() {
+//                    viewModel.refuseAuthentication();
+//                    navController.popBackStack();
+//                }
+//            });
+
+        ((AppCompatActivity)requireActivity()).setSupportActionBar(binding.toolbar);
+        ((AppCompatActivity)requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         viewModel.authenticationState.observe(getViewLifecycleOwner(),
             new Observer<LoginViewModel.AuthenticationState>() {

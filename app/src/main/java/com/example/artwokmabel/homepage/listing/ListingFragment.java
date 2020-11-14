@@ -125,10 +125,10 @@ public class ListingFragment extends Fragment {
                     binding.setUser(user);
                     Log.d("profileimage", user.getUid() + user.getProfile_url());
                     Picasso.get()
-                            .load(user.getProfile_url())
-                            .placeholder(R.drawable.placeholder_black_new)
-                            .error(R.drawable.placeholder_color_new)
-                            .into(binding.profilePicture);
+                        .load(user.getProfile_url())
+                        .placeholder(R.drawable.placeholder_black_new)
+                        .error(R.drawable.placeholder_color_new)
+                        .into(binding.profilePicture);
                 }
             }
         });

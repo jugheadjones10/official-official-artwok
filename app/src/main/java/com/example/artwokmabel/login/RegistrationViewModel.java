@@ -61,15 +61,30 @@ public class RegistrationViewModel extends ViewModel {
         });
     }
 
-    public boolean userCancelledRegistration() {
-        // Clear existing registration data
-        //Do more testing on this
+    public boolean userCancelledEmail(String email) {
+        this.email = email;
         registrationState.setValue(RegistrationState.COLLECT_EMAIL);
         return true;
     }
 
+    public boolean userCancelledUsername(String username) {
+        this.username = username;
+        registrationState.setValue(RegistrationState.COLLECT_EMAIL);
+        return true;
+    }
+
+    public boolean userCancelledPW() {
+        registrationState.setValue(RegistrationState.COLLECT_USERNAME);
+        return true;
+    }
+
+
     public String getEmail() {
         return email;
+    }
+
+    public String getUsername(){
+        return username;
     }
 
     public String getPassword(){

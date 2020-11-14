@@ -37,8 +37,6 @@ public class FollowingAdapter extends RecyclerView.Adapter<FollowingAdapter.myHo
         return instance;
     }
 
-
-
     public FollowingAdapter(Context context, NavController navController){
         this.mAuth = FirebaseAuth.getInstance();
         this.mContext = context;
@@ -92,9 +90,16 @@ public class FollowingAdapter extends RecyclerView.Adapter<FollowingAdapter.myHo
             },
             //On Chat Clicked
             (User user) -> {
-                PeopleFragmentDirections.ActionPeopleFragmentToChatFragment action =
-                        PeopleFragmentDirections.actionPeopleFragmentToChatFragment(user.getUid(), user.getUsername(), user.getProfile_url());
-                navController.navigate(action);
+                if(navController.getCurrentDestination().getId() == R.id.profile_graph){
+                    PeopleFragmentDirections.ActionPeopleFragmentToChatFragment action =
+                            PeopleFragmentDirections.actionPeopleFragmentToChatFragment(user.getUid(), user.getUsername(), user.getProfile_url());
+                    navController.navigate(action);
+                }else if(navController.getCurrentDestination().getId() == R.id.chat_graph){
+                    PeopleFragmentDirections.ActionPeopleFragmentToChatFragment action =
+                            PeopleFragmentDirections.actionPeopleFragmentToChatFragment(user.getUid(), user.getUsername(), user.getProfile_url());
+                    navController.navigate(action);
+                }
+
             }
         ));
 

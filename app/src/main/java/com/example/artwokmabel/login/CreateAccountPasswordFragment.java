@@ -6,14 +6,17 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,12 +49,7 @@ public class CreateAccountPasswordFragment extends Fragment {
         ViewModelProvider provider = new ViewModelProvider(requireActivity());
         registrationViewModel = provider.get(RegistrationViewModel.class);
         loginViewModel = provider.get(LoginViewModel.class);
-        navController = Navigation.findNavController(view);
-
-//        AppBarConfiguration appBarConfiguration =
-//                new AppBarConfiguration.Builder(navController.getGraph()).build();
-//        NavigationUI.setupWithNavController(
-//                binding.zeroUiToolbar, navController, appBarConfiguration);
+        navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
 
         binding.passwordEditText.requestFocus();
         InputMethodManager imm = (InputMethodManager)
@@ -60,15 +58,11 @@ public class CreateAccountPasswordFragment extends Fragment {
         binding.setCreateAccountPasswordFragment(this);
         binding.progressBar.setVisibility(View.GONE);
 
-//        ((AppCompatActivity)requireActivity()).setSupportActionBar(binding.zeroUiToolbar);
-//        ((AppCompatActivity)requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         registrationViewModel.getRegistrationState().observe(getViewLifecycleOwner(), state -> {
             binding.progressBar.setVisibility(View.GONE);
             switch (state) {
                 case REGISTRATION_COMPLETE:
                     loginViewModel.authenticate(registrationViewModel.getEmail(), registrationViewModel.getPassword());
-                    //navController.popBackStack(R.id.loginFragment, false);
                     navController.navigate(R.id.loginFragment);
                     break;
                 case REGISTRATION_FAILED:
@@ -77,15 +71,22 @@ public class CreateAccountPasswordFragment extends Fragment {
             }
         });
 
-//        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
-//            @Override
-//            public void handleOnBackPressed() {
-//                registrationViewModel.userCancelledRegistration();
-//                //Compare the below two
-//                //navController.popBackStack(R.id.loginFragment, false);
-//                navController.navigateUp();
-//            }
-//        });
+        binding.upButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requireActivity().onBackPressed();
+            }
+        });
+
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                Log.d("sweefkin", "Handle on back pressed");
+                registrationViewModel.userCancelledPW();
+                navController.navigateUp();
+            }
+        });
+
     }
 
     public void onCreateAccountClicked(){

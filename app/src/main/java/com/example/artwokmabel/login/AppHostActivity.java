@@ -1,6 +1,9 @@
 package com.example.artwokmabel.login;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.NavigationUI;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +17,12 @@ import com.example.artwokmabel.repos.FirestoreRepo;
 
 
 public class AppHostActivity extends AppCompatActivity {
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        return Navigation.findNavController(this, R.id.nav_host_fragment).navigateUp()
+                || false;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +78,7 @@ public class AppHostActivity extends AppCompatActivity {
                         );
 
                     } else if(value.equals("newComment")){
+
 //                        Intent intent = new Intent(this, PostActivity.class);
 //
 //                        FirestoreRepo.getInstance().getPost(getIntent().getStringExtra("postId"),
@@ -78,15 +88,16 @@ public class AppHostActivity extends AppCompatActivity {
 //                                startActivity(intent);
 //                                finish();
 //                        });
+
                         Intent intent = new Intent(this, HomePageActivity.class);
                         FirestoreRepo.getInstance().getPost(getIntent().getStringExtra("postId"),
-                                (MainPost post) -> {
-                                    intent.putExtra("type", "comment");
-                                    intent.putExtra("post", post);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                    startActivity(intent);
-                                    finish();
-                                });
+                            (MainPost post) -> {
+                                intent.putExtra("type", "comment");
+                                intent.putExtra("post", post);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(intent);
+                                finish();
+                            });
 
                     }else if(value.equals("newFollower")){
 

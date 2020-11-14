@@ -4,6 +4,7 @@ package com.example.artwokmabel.login;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,7 +14,9 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -45,12 +48,7 @@ public class CreateAccountEmailFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         viewModel = new ViewModelProvider(requireActivity()).get(RegistrationViewModel.class);
-        navController = Navigation.findNavController(view);
-
-//        AppBarConfiguration appBarConfiguration =
-//                new AppBarConfiguration.Builder(navController.getGraph()).build();
-//        NavigationUI.setupWithNavController(
-//                binding.zeroUiToolbar, navController, appBarConfiguration);
+        navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
 
         binding.emailEditText.requestFocus();
         InputMethodManager imm = (InputMethodManager)
@@ -59,8 +57,9 @@ public class CreateAccountEmailFragment extends Fragment {
         binding.setCreateAccountEmailFragment(this);
         binding.progressBar.setVisibility(View.GONE);
 
-        ((AppCompatActivity)requireActivity()).setSupportActionBar(binding.zeroUiToolbar);
-        ((AppCompatActivity)requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if(viewModel.getEmail() != null){
+            binding.emailEditText.setText(viewModel.getEmail());
+        }
 
         viewModel.getRegistrationState().observe(getViewLifecycleOwner(), state -> {
             binding.progressBar.setVisibility(View.GONE);
@@ -69,21 +68,29 @@ public class CreateAccountEmailFragment extends Fragment {
                     binding.emailEditText.setError("Sorry, this email already exists");
                     break;
                 case COLLECT_USERNAME:
+                    Log.d("sweefkin", "collected username");
                     navController.navigate(R.id.action_createAccountEmailFragment_to_createAccountUsernameFragment);
                     break;
             }
         });
 
-//        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
-//            @Override
-//            public void handleOnBackPressed() {
-//                viewModel.userCancelledRegistration();
-//                Compare the below two
-//                navController.popBackStack(R.id.loginOptionsFragment, false);
-//                navController.navigateUp();
-//            }
-//        });
+        binding.upButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requireActivity().onBackPressed();
+            }
+        });
+
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                String email = binding.emailEditText.getText().toString().trim();
+                viewModel.userCancelledEmail(email);
+                navController.navigateUp();
+            }
+        });
     }
+
 
     public void emailOnNextClicked(){
         String email = binding.emailEditText.getText().toString().trim();

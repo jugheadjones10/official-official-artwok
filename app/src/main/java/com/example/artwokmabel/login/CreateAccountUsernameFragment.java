@@ -4,8 +4,10 @@ package com.example.artwokmabel.login;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -13,7 +15,9 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -44,7 +48,7 @@ public class CreateAccountUsernameFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         viewModel = new ViewModelProvider(requireActivity()).get(RegistrationViewModel.class);
-        navController = Navigation.findNavController(view);
+        navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
 
         binding.usernameEditText.requestFocus();
         InputMethodManager imm = (InputMethodManager)
@@ -53,13 +57,9 @@ public class CreateAccountUsernameFragment extends Fragment {
         binding.setCreateAccountUsernameFragment(this);
         binding.progressBar.setVisibility(View.GONE);
 
-//        ((AppCompatActivity)requireActivity()).setSupportActionBar(binding.zeroUiToolbar);
-//        ((AppCompatActivity)requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-//        appBarConfiguration =
-//                new AppBarConfiguration.Builder(navController.getGraph()).build();
-//        NavigationUI.setupWithNavController(
-//                binding.zeroUiToolbar, navController, appBarConfiguration);
+        if(viewModel.getUsername() != null){
+            binding.usernameEditText.setText(viewModel.getUsername());
+        }
 
         viewModel.getRegistrationState().observe(getViewLifecycleOwner(), state -> {
             binding.progressBar.setVisibility(View.GONE);
@@ -73,14 +73,24 @@ public class CreateAccountUsernameFragment extends Fragment {
             }
         });
 
-//        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
-//            @Override
-//            public void handleOnBackPressed() {
-//                viewModel.userCancelledRegistration();
-//                navController.navigateUp();
-//            }
-//        });
+        binding.upButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requireActivity().onBackPressed();
+            }
+        });
+
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                Log.d("sweefkin", "Handle on back pressed");
+                String username = binding.usernameEditText.getText().toString().trim();
+                viewModel.userCancelledUsername(username);
+                navController.navigateUp();
+            }
+        });
     }
+
 
     public void onUsernameNextClicked(){
         String username = binding.usernameEditText.getText().toString().trim();
