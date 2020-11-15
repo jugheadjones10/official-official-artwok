@@ -26,7 +26,6 @@ import com.example.artwokmabel.HomePageActivity;
 import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.FragmentHomeFeedBinding;
 import com.example.artwokmabel.homepage.adapters.PostsAdapter;
-import com.example.artwokmabel.models.Listing;
 import com.example.artwokmabel.models.ListingPost;
 import com.example.artwokmabel.models.User;
 import com.example.artwokmabel.repos.FirestoreRepo;
@@ -36,8 +35,6 @@ import com.firebase.ui.firestore.paging.FirestorePagingOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
-
-import java.util.List;
 
 public class HomeFeedFragment extends Fragment {
 
@@ -83,7 +80,7 @@ public class HomeFeedFragment extends Fragment {
             @Override
             public void onDestinationChanged(@NonNull NavController controller,
                                              @NonNull NavDestination destination, @Nullable Bundle arguments) {
-                if(destination.getId() == R.id.postFragment || destination.getId() == R.id.listingFragment || destination.getId() == R.id.offerFragment) {
+                if(destination.getId() == R.id.postFragment || destination.getId() == R.id.listingFragmentA || destination.getId() == R.id.offerFragment) {
                     HomePageActivity.Companion.getBottomNavBar().setVisibility(View.GONE);
                 } else {
                     HomePageActivity.Companion.getBottomNavBar().setVisibility(View.VISIBLE);

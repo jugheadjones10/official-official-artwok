@@ -54,7 +54,7 @@
         android:name="com.example.artwokmabel.homepage.listingstab.ListingsTabFragment"
         android:label="ListingsTabFragment" />
     <fragment
-        android:id="@+id/listingFragment"
+        android:id="@+id/listingFragmentA"
         android:name="com.example.artwokmabel.homepage.listing.ListingFragment"
         android:label="ListingFragment" >
         <argument
@@ -67,7 +67,7 @@
     <fragment
         android:id="@+id/homeFeedFragment"
         android:name="com.example.artwokmabel.homepage.postsfeed.HomeFeedFragment"
-        android:label="HomeFeedFragment" /><action android:id="@+id/action_global_listingFragment" app:destination="@id/listingFragment"/>
+        android:label="HomeFeedFragment" /><action android:id="@+id/action_global_listingFragment" app:destination="@id/listingFragmentA"/>
     <fragment
         android:id="@+id/postFragment"
         android:name="com.example.artwokmabel.homepage.post.PostFragment"
