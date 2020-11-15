@@ -80,7 +80,7 @@ public class HomeFeedFragment extends Fragment {
             @Override
             public void onDestinationChanged(@NonNull NavController controller,
                                              @NonNull NavDestination destination, @Nullable Bundle arguments) {
-                if(destination.getId() == R.id.postFragment || destination.getId() == R.id.listingFragmentA || destination.getId() == R.id.offerFragment) {
+                if(destination.getId() == R.id.postFragment || destination.getId() == R.id.listingFragmentC || destination.getId() == R.id.offerFragment) {
                     HomePageActivity.Companion.getBottomNavBar().setVisibility(View.GONE);
                 } else {
                     HomePageActivity.Companion.getBottomNavBar().setVisibility(View.VISIBLE);

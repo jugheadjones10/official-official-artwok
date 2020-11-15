@@ -54,7 +54,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:615648868486:android:ef3af5613192d5d388b907",
         "android_client_info": {
-          "package_name": "com.example.artwokmabel"
+          "package_name": "com.artwok.artwokmabel"
         }
       },
       "oauth_client": [
@@ -62,7 +62,7 @@
           "client_id": "615648868486-qfcg87bjv509orv1gb6m0vggnj8ejlg0.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.artwokmabel",
+            "package_name": "com.artwok.artwokmabel",
             "certificate_hash": "564819dcb6215b69f00731984f694342694f67d4"
           }
         },
@@ -70,7 +70,7 @@
           "client_id": "615648868486-6oe10qmusq71euub0v0r2fuiia3776le.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.artwokmabel",
+            "package_name": "com.artwok.artwokmabel",
             "certificate_hash": "88e2ba6e3cfd0be6c65f7d61096bd9190301527a"
           }
         },
