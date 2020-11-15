@@ -2075,6 +2075,12 @@ public class FirestoreRepo {
             .orderBy("nanopast", Query.Direction.DESCENDING);
     }
 
+    public Query getStaticListingPostsQuery (List<String> followingIds){
+        return db.collection("ListingPosts")
+                .whereIn("userid", followingIds)
+                .orderBy("nanopast", Query.Direction.DESCENDING);
+    }
+
     public LiveData<Query> getListingPostsQuery (){
         DocumentReference userRef = FirestoreRepo.getInstance().getUserRef(FirebaseAuth.getInstance().getCurrentUser().getUid());
 

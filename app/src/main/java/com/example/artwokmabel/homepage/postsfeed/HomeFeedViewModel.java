@@ -44,12 +44,14 @@ public class HomeFeedViewModel extends ViewModel {
         return FirestoreRepo.getInstance().getUserOnce(uid);
     }
 
-//    public Query getFeedPostsQuery(List<String> followingIds){
-//        return FirestoreRepo.getInstance().getListingPostsQuery(followingIds);
+    public Query getFeedPostsQuery(List<String> followingIds){
+        return FirestoreRepo.getInstance().getStaticListingPostsQuery(followingIds);
+    }
+//
+//    public LiveData<Query> getFeedPostsQuery(){
+//        return FirestoreRepo.getInstance().getListingPostsQuery();
 //    }
 
-    public LiveData<Query> getFeedPostsQuery(){
-        return FirestoreRepo.getInstance().getListingPostsQuery();
-    }
+
 
 }
