@@ -1,6 +1,7 @@
 package com.example.artwokmabel.homepage.post;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,7 @@ import com.example.artwokmabel.Utils.TimeWrangler;
 import com.example.artwokmabel.databinding.ItemCommentBinding;
 import com.example.artwokmabel.models.Comment;
 import com.example.artwokmabel.R;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
@@ -154,8 +156,19 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
     public class OnDeleteClicked{
         public void onDeleteClicked(Comment comment){
             Log.d("commentshenan", "Does delete comment run");
+            new MaterialAlertDialogBuilder(mContext)
+                    .setTitle("Delete Comment?")
+                    .setMessage("This action cannot be reversed!")
+                    .setNeutralButton("Cancel", null)
+                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            viewModel.deleteComment(comment.getComment_id(), postId, postPosterId);
+                        }
+                    })
+                    .show();
 
-            viewModel.deleteComment(comment.getComment_id(), postId, postPosterId);
+
         }
     }
 

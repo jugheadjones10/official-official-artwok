@@ -14,8 +14,10 @@ import androidx.navigation.NavController;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.artwokmabel.ChatGraphDirections;
 import com.example.artwokmabel.ProfileGraphDirections;
 import com.example.artwokmabel.R;
+import com.example.artwokmabel.chat.MessageFragmentDirections;
 import com.example.artwokmabel.databinding.ItemFollowingBinding;
 import com.example.artwokmabel.models.User;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -68,9 +70,16 @@ public class FollowingAdapter extends RecyclerView.Adapter<FollowingAdapter.myHo
         holder.binding.setCallbacks(new UserItemCallback(
             //On User Clicked
             (User user) -> {
-                ProfileGraphDirections.ActionProfileGraphSelf action =
-                        ProfileGraphDirections.actionProfileGraphSelf(user.getUid());
-                navController.navigate(action);
+
+                if(navController.getCurrentDestination().getId() == R.id.profile_graph){
+                    ProfileGraphDirections.ActionProfileGraphSelf action =
+                            ProfileGraphDirections.actionProfileGraphSelf(user.getUid());
+                    navController.navigate(action);
+                }else if(navController.getCurrentDestination().getId() == R.id.chat_graph){
+                    ChatGraphDirections.ActionGlobalProfileFragment3 action =
+                            ChatGraphDirections.actionGlobalProfileFragment3(user.getUid());
+                    navController.navigate(action);
+                }
             },
             //On Button Clicked
             (Button button, User user) -> {
@@ -95,11 +104,10 @@ public class FollowingAdapter extends RecyclerView.Adapter<FollowingAdapter.myHo
                             PeopleFragmentDirections.actionPeopleFragmentToChatFragment(user.getUid(), user.getUsername(), user.getProfile_url());
                     navController.navigate(action);
                 }else if(navController.getCurrentDestination().getId() == R.id.chat_graph){
-                    PeopleFragmentDirections.ActionPeopleFragmentToChatFragment action =
-                            PeopleFragmentDirections.actionPeopleFragmentToChatFragment(user.getUid(), user.getUsername(), user.getProfile_url());
+                    MessageFragmentDirections.ActionChatGraphToChatFragment action =
+                            MessageFragmentDirections.actionChatGraphToChatFragment(user.getUid(), user.getUsername(), user.getProfile_url());
                     navController.navigate(action);
                 }
-
             }
         ));
 
