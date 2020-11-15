@@ -58,7 +58,7 @@ import static com.example.artwokmabel.profile.utils.ImagePickerActivity.SHOW_ALL
 
 public class UploadListingRichTextEditorFragment extends Fragment {
 
-    public static final List<String> palette_colors = Arrays.asList("#000000", "#ffffff", "#FC1D1D", "#F5A525", "#FFF614", "#686868",
+    public static final List<String> palette_colors = Arrays.asList("#000000", "#00ffffff", "#FC1D1D", "#F5A525", "#FFF614", "#686868",
             "#2638AA", "#009B4D", "#01BBD4", "#9BDAF6", "#F9F9F9",
             "#FF7978", "#FEBE76", "#F6E58D", "#ADEE5F", "#95AFC0",
             "#E572FD", "#FF98E8", "#85E7FF", "#DFF9FA", "#686EE0");
