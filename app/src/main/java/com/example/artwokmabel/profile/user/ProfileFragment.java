@@ -109,7 +109,7 @@ public class ProfileFragment extends Fragment {
                     user = new User(
                         "deleted user",
                         "",
-                        "https://firebasestorage.googleapis.com/v0/b/artwok-database.appspot.com/o/Images%2F3T7wbXsgYSOT85JNLbfpieDilHd2%2FpromoTab-bg-idMe.jpg?alt=media&token=a08fbb37-6dfa-4bea-b557-c5bccafca81a",
+                        "https://firebasestorage.googleapis.com/v0/b/artwok-database.appspot.com/o/placeholder_color_new.jpg?alt=media&token=1a919828-88bc-410d-a45e-c47b9825155d",
                         new ArrayList<String>(),
                         new ArrayList<String>(),
                         new ArrayList<String>(),

@@ -1,6 +1,7 @@
 package com.example.artwokmabel.homepage.postsfeed;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.paging.PagedList;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -33,6 +35,7 @@ import com.firebase.ui.firestore.paging.FirestorePagingAdapter;
 import com.firebase.ui.firestore.paging.FirestorePagingOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.Query;
 
 import java.util.List;
 
@@ -42,6 +45,9 @@ public class HomeFeedFragment extends Fragment {
     private Bundle recyclerViewState;
     private Parcelable mListState;
 
+    private Query query;
+    private User user;
+    FirestorePagingOptions<ListingPost> options;
 
     private FragmentHomeFeedBinding binding;
     private HomeFeedViewModel viewModel;
@@ -50,6 +56,8 @@ public class HomeFeedFragment extends Fragment {
     private NavController navController;
     private FirestorePagingAdapter<ListingPost, RecyclerView.ViewHolder> adapter;
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
+    private int pos;
 
 //    private List<MainPost> feedPosts;
     //Todo: add horizontal scrollable listings
@@ -86,12 +94,18 @@ public class HomeFeedFragment extends Fragment {
         viewModel =  new ViewModelProvider(requireActivity()).get(HomeFeedViewModel.class);
         observeViewModel(viewModel);
 
-        setUpPostsAdapter();
+        Log.d("tracking", "in on view created");
+        //if(query == null || user == null){
+            setUpPostsAdapter();
+//        }else{
+//            setUpNormal();
+//        }
 
         binding.swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                adapter.refresh();
+                //adapter.refresh();
+                setUpPostsAdapter();
             }
         });
 
@@ -132,17 +146,20 @@ public class HomeFeedFragment extends Fragment {
     }
 
     //Below is an attempt to save scroll state
-//    @Override
-//    public void onPause() {
-//        super.onPause();
-//        recyclerViewState = new Bundle();
-//        mListState = binding.recyclerview.getLayoutManager().onSaveInstanceState();
-//        recyclerViewState.putParcelable(KEY_RECYCLER_STATE, mListState);
-//    }
-//
-//    @Override
-//    public void onResume() {
-//        super.onResume();
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.d("tracking", "on Pause");
+        recyclerViewState = new Bundle();
+        mListState = binding.recyclerview.getLayoutManager().onSaveInstanceState();
+        recyclerViewState.putParcelable(KEY_RECYCLER_STATE, mListState);
+        //pos = binding.recyclerview.getScrollY();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d("tracking", "on Resume");
 //        if (recyclerViewState != null) {
 //            new Handler().postDelayed(new Runnable() {
 //
@@ -156,12 +173,12 @@ public class HomeFeedFragment extends Fragment {
 //        }
 //
 //        binding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
-//
-//    }
+    }
 
     @Override
     public void onStart() {
         super.onStart();
+        Log.d("tracking", "on Start");
         if(adapter != null) {
             adapter.startListening();
         }
@@ -170,6 +187,8 @@ public class HomeFeedFragment extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
+        Log.d("tracking", "on Stop");
+
         if(adapter != null) {
             adapter.stopListening();
         }
@@ -186,22 +205,41 @@ public class HomeFeedFragment extends Fragment {
 //        });
     }
 
-    private void setUpPostsAdapter(){
-        viewModel.getUserOnce(FirebaseAuth.getInstance().getCurrentUser().getUid()).observe(getViewLifecycleOwner(), new Observer<User>() {
-            @Override
-            public void onChanged(User user) {
-                if(user != null){
 
-                    Log.d("numtimes", "I've been loaded!");
+    private void setUpNormal() {
+        if (recyclerViewState != null) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mListState = recyclerViewState.getParcelable(KEY_RECYCLER_STATE);
+                    binding.recyclerview.getLayoutManager().onRestoreInstanceState(mListState);
+                }
+            }, 50);
+        }
+       binding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        //binding.recyclerview.setScrollY(pos);
+        binding.recyclerview.setAdapter(adapter);
+    }
+
+    private void setUpPostsAdapter(){
+
+        viewModel.getFeedPostsQuery().observe(getViewLifecycleOwner(), new Observer<Query>() {
+            @Override
+            public void onChanged(Query query) {
+                if(query != null){
+
+                    HomeFeedFragment.this.query = query;
+
                     PagedList.Config config = new PagedList.Config.Builder()
                             .setEnablePlaceholders(false)
-                            .setInitialLoadSizeHint(4)
-                            .setPrefetchDistance(2)
-                            .setPageSize(3)
+                            .setInitialLoadSizeHint(6)
+                            .setPrefetchDistance(10)
+                            .setPageSize(10)
                             .build();
 
-                    FirestorePagingOptions<ListingPost> options = new FirestorePagingOptions.Builder<ListingPost>()
-                            .setQuery(viewModel.getFeedPostsQuery(user.getFollowing()), config, new SnapshotParser<ListingPost>() {
+                    options = new FirestorePagingOptions.Builder<ListingPost>()
+                            .setQuery(query, config, new SnapshotParser<ListingPost>() {
                                 @NonNull
                                 @Override
                                 public ListingPost parseSnapshot(@NonNull DocumentSnapshot snapshot) {
@@ -211,12 +249,54 @@ public class HomeFeedFragment extends Fragment {
                             })
                             .build();
 
-                    adapter = new FirestorePagingAdapterImpl(options, user, getContext(), navController, binding.swipeRefreshLayout);
+                    viewModel.getUser(FirebaseAuth.getInstance().getCurrentUser().getUid()).observe(getViewLifecycleOwner(), new Observer<User>() {
+                        @Override
+                        public void onChanged(User user) {
+                            if(user != null){
+                                HomeFeedFragment.this.user = user;
+                                adapter = new FirestorePagingAdapterImpl(options, user, getContext(), navController, binding.swipeRefreshLayout);
 
-                    binding.recyclerview.setAdapter(adapter);
-                    adapter.startListening();
+                                binding.recyclerview.setAdapter(adapter);
+                                adapter.startListening();
+                            }
+                        }
+                    });
                 }
             }
         });
+
+//        viewModel.getUserOnce(FirebaseAuth.getInstance().getCurrentUser().getUid()).observe(getViewLifecycleOwner(), new Observer<User>() {
+//            @Override
+//            public void onChanged(User user) {
+//                if(user != null){
+//
+//                    Log.d("tracking", "got user once");
+//                    Log.d("numtimes", "I've been loaded!");
+//
+//                    PagedList.Config config = new PagedList.Config.Builder()
+//                            .setEnablePlaceholders(false)
+//                            .setInitialLoadSizeHint(4)
+//                            .setPrefetchDistance(2)
+//                            .setPageSize(3)
+//                            .build();
+//
+//                    FirestorePagingOptions<ListingPost> options = new FirestorePagingOptions.Builder<ListingPost>()
+//                            .setQuery(viewModel.getFeedPostsQuery(user.getFollowing()), config, new SnapshotParser<ListingPost>() {
+//                                @NonNull
+//                                @Override
+//                                public ListingPost parseSnapshot(@NonNull DocumentSnapshot snapshot) {
+//                                    Log.d("checkpost", "Within parse snapshot" + snapshot.getString("username"));
+//                                    return FirestoreRepo.getInstance().changeDocToListingPostModel(snapshot);
+//                                }
+//                            })
+//                            .build();
+//
+//                    adapter = new FirestorePagingAdapterImpl(options, user, getContext(), navController, binding.swipeRefreshLayout);
+//
+//                    binding.recyclerview.setAdapter(adapter);
+//                    adapter.startListening();
+//                }
+//            }
+//        });
     }
 }

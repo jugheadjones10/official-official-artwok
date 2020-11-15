@@ -433,7 +433,7 @@ public class FirestoreRepo {
                                             User userObject = new User(
                                                     username.toLowerCase(),
                                                     uid,
-                                                    "https://firebasestorage.googleapis.com/v0/b/artwok-database.appspot.com/o/Default_images%2Faccount.png?alt=media&token=8c34c02a-4c2c-4708-a802-73af4978b7d0",
+                                                    "https://firebasestorage.googleapis.com/v0/b/artwok-database.appspot.com/o/placeholder_color_new.jpg?alt=media&token=1a919828-88bc-410d-a45e-c47b9825155d",
                                                     following,
                                                     new ArrayList<String>(),
                                                     new ArrayList<String>(),
@@ -2073,6 +2073,40 @@ public class FirestoreRepo {
         return db.collectionGroup("Posts")
             .whereIn("userid", followingIds)
             .orderBy("nanopast", Query.Direction.DESCENDING);
+    }
+
+    public LiveData<Query> getListingPostsQuery (){
+        DocumentReference userRef = FirestoreRepo.getInstance().getUserRef(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+        final MutableLiveData<Query> query = new MutableLiveData<>();
+
+        userRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot snapshot, @Nullable FirebaseFirestoreException e) {
+                ArrayList<String> following = (ArrayList<String>) snapshot.get("following");
+
+                if(following.size() > 0){
+                    query.setValue(db.collection("ListingPosts")
+                            .whereIn("userid", following)
+                            .orderBy("nanopast", Query.Direction.DESCENDING));
+                }
+            }
+        });
+
+        return query;
+//        db.collection("ListingPosts")
+//            .whereIn("userid", followingIds)
+//            .orderBy("nanopast", Query.Direction.DESCENDING)
+//            .get()
+//            .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+//                @Override
+//                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+//                    for(QueryDocumentSnapshot snapshot : queryDocumentSnapshots){
+//                        Log.d("queryretrieval", snapshot.getString("userid"));
+//                    }
+//                }
+//            });
+
     }
 
     public Query getListingPostsQuery (List<String> followingIds){
