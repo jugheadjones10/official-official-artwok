@@ -20,6 +20,9 @@ import com.example.artwokmabel.R;
 import com.example.artwokmabel.databinding.FragmentForgotPasswordBinding;
 import com.example.artwokmabel.repos.FirestoreRepo;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class ForgotPasswordFragment extends Fragment {
 
     private FragmentForgotPasswordBinding binding;
@@ -60,8 +63,11 @@ public class ForgotPasswordFragment extends Fragment {
 
     public void onResetPasswordClicked(){
 
-        if(binding.emailForgotPassword.getText().toString().isEmpty()){
-            Toast.makeText(requireContext(), "Please input an email", Toast.LENGTH_LONG).show();
+        String email = binding.emailForgotPassword.getText().toString().trim();
+        if(email.isEmpty()) {
+            binding.emailForgotPassword.setError("Please enter an email");
+        }else if(!isEmailValid(email)){
+            binding.emailForgotPassword.setError("Please enter a valid email");
         }else{
             FirestoreRepo.getInstance().sendResetPasswordEmail(binding.emailForgotPassword.getText().toString(),
                     isSuccessful -> {
@@ -74,4 +80,10 @@ public class ForgotPasswordFragment extends Fragment {
         }
     }
 
+    private static boolean isEmailValid(String email) {
+        String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
 }
