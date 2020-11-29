@@ -78,8 +78,6 @@
         <!-- <action android:name="com.google.firebase.MESSAGING_EVENT" /> -->
         <!-- </intent-filter> -->
         <!-- </service> -->
-        <activity android:name="com.onegravity.rteditor.media.choose.MediaChooserActivity" />
-        <activity android:name="com.onegravity.rteditor.media.crop.CropImageActivity" />
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_application_id" /> <!-- Image Picker activity -->

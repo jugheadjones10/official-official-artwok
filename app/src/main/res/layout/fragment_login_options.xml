@@ -38,7 +38,7 @@
             android:contentDescription="@string/Login_couple_image"
             android:src="@drawable/login_couple_fun"
             app:layout_constraintBottom_toBottomOf="parent"
-            tools:layout_editor_absoluteX="-144dp" />
+            tools:layout_editor_absoluteX="0dp" />
 
         <ImageView
             android:id="@+id/imageView8"
@@ -85,10 +85,10 @@
             android:id="@+id/create_account_button_material"
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="240dp"
-            android:layout_height="@dimen/zero_ui_login_blue_buttons"
+            android:layout_height="0dp"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
             android:layout_marginEnd="24dp"
+            android:layout_marginBottom="4dp"
             android:elevation="3dp"
             android:onClick="@{() -> LoginOptionsFragment.onCreateAccountClicked()}"
             android:text="@string/Login_create_account"
@@ -97,12 +97,10 @@
             android:textSize="14sp"
             app:backgroundTint="@color/login_buttons_color"
             app:cornerRadius="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/login_button_material"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.503"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.885" />
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <!--            android:onClick="@{() -> ongoogleloginclicked.onGoogleLoginClicked()}"-->
 <!--        <ImageView-->
