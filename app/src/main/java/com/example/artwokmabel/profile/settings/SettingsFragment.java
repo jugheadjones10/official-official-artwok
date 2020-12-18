@@ -158,13 +158,30 @@ public class SettingsFragment extends Fragment {
     }
 
     public void onLogout(){
-        FirebaseAuth.getInstance().signOut();
-//        HomePageActivity.Companion.getBottomNavBar().setSelectedItemId(R.id.home_graph);
-//        navController.popBackStack();
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
+        builder.setMessage("Log out?")
+                .setPositiveButton("Log out", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        FirebaseAuth.getInstance().signOut();
+                        Intent intent = new Intent(getContext(), AppHostActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
 
-        Intent intent = new Intent(getContext(), AppHostActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
+        AlertDialog alertdialog = builder.create();
+        alertdialog.setOnShowListener( new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface arg0) {
+                alertdialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.red));
+            }
+        });
+        alertdialog.show();
     }
 
     public interface OnAccountDeactivated{

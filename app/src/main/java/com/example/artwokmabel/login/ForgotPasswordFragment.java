@@ -86,4 +86,5 @@ public class ForgotPasswordFragment extends Fragment {
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
     }
+
 }

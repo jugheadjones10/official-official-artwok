@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,8 @@ import com.example.artwokmabel.homepage.request.upload.UploadRequestDetailsViewM
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class UploadListingDetailsFragment extends Fragment {
 
@@ -43,7 +46,9 @@ public class UploadListingDetailsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_upload_listing_details, container, false);
         binding.setOncategoryclicked(new UploadListingDetailsFragment.OnSelectCateogry());
-        binding.priceEditText.setFilters(new InputFilter[]{new DigitsInputFilter(3, 2, Double.POSITIVE_INFINITY)});
+        binding.priceEditText.setFilters(new InputFilter[]{
+                new DecimalDigitsInputFilter(2, 2)
+        });
 
         finalizedCategories = new ArrayList<>();
         instance = this;
@@ -54,7 +59,7 @@ public class UploadListingDetailsFragment extends Fragment {
     }
 
     private void observeViewModel(UploadRequestDetailsViewModel viewModel) {
-        viewModel.getAllCategoriesObservable().observe(this, new Observer<List<Category>>() {
+        viewModel.getAllCategoriesObservable().observe(getViewLifecycleOwner(), new Observer<List<Category>>() {
             @Override
             public void onChanged(@Nullable List<Category> categories) {
                 if (categories != null) {
@@ -134,95 +139,34 @@ public class UploadListingDetailsFragment extends Fragment {
         }
     }
 
-    public class DigitsInputFilter implements InputFilter {
+    public class DecimalDigitsInputFilter implements InputFilter {
+        private int mDigitsBeforeZero;
+        private int mDigitsAfterZero;
+        private Pattern mPattern;
 
-        private final String DOT = ".";
+        private static final int DIGITS_BEFORE_ZERO_DEFAULT = 100;
+        private static final int DIGITS_AFTER_ZERO_DEFAULT = 100;
 
-        private int mMaxIntegerDigitsLength;
-        private int mMaxDigitsAfterLength;
-        private double mMax;
-
-
-        public DigitsInputFilter(int maxDigitsBeforeDot, int maxDigitsAfterDot, double maxValue) {
-            mMaxIntegerDigitsLength = maxDigitsBeforeDot;
-            mMaxDigitsAfterLength = maxDigitsAfterDot;
-            mMax = maxValue;
+        public DecimalDigitsInputFilter(Integer digitsBeforeZero, Integer digitsAfterZero) {
+            this.mDigitsBeforeZero = (digitsBeforeZero != null ? digitsBeforeZero : DIGITS_BEFORE_ZERO_DEFAULT);
+            this.mDigitsAfterZero = (digitsAfterZero != null ? digitsAfterZero : DIGITS_AFTER_ZERO_DEFAULT);
+            mPattern = Pattern.compile("-?[0-9]{0," + (mDigitsBeforeZero) + "}+((\\.[0-9]{0," + (mDigitsAfterZero)
+                    + "})?)||(\\.)?");
         }
 
         @Override
         public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
-            String allText = getAllText(source, dest, dstart);
-            String onlyDigitsText = getOnlyDigitsPart(allText);
-
-            if (allText.isEmpty()) {
+            String replacement = source.subSequence(start, end).toString();
+            String newVal = dest.subSequence(0, dstart).toString() + replacement
+                    + dest.subSequence(dend, dest.length()).toString();
+            Matcher matcher = mPattern.matcher(newVal);
+            if (matcher.matches())
                 return null;
-            } else {
-                double enteredValue;
-                try {
-                    enteredValue = Double.parseDouble(onlyDigitsText);
-                } catch (NumberFormatException e) {
-                    return "";
-                }
-                return checkMaxValueRule(enteredValue, onlyDigitsText);
-            }
-        }
 
-
-        private CharSequence checkMaxValueRule(double enteredValue, String onlyDigitsText) {
-            if (enteredValue > mMax) {
+            if (TextUtils.isEmpty(source))
+                return dest.subSequence(dstart, dend);
+            else
                 return "";
-            } else {
-                return handleInputRules(onlyDigitsText);
-            }
-        }
-
-        private CharSequence handleInputRules(String onlyDigitsText) {
-            if (isDecimalDigit(onlyDigitsText)) {
-                return checkRuleForDecimalDigits(onlyDigitsText);
-            } else {
-                return checkRuleForIntegerDigits(onlyDigitsText.length());
-            }
-        }
-
-        private boolean isDecimalDigit(String onlyDigitsText) {
-            return onlyDigitsText.contains(DOT);
-        }
-
-        private CharSequence checkRuleForDecimalDigits(String onlyDigitsPart) {
-            String afterDotPart = onlyDigitsPart.substring(onlyDigitsPart.indexOf(DOT), onlyDigitsPart.length() - 1);
-            if (afterDotPart.length() > mMaxDigitsAfterLength) {
-                return "";
-            }
-            return null;
-        }
-
-        private CharSequence checkRuleForIntegerDigits(int allTextLength) {
-            if (allTextLength > mMaxIntegerDigitsLength) {
-                return "";
-            }
-            return null;
-        }
-
-        private String getOnlyDigitsPart(String text) {
-            return text.replaceAll("[^0-9?!\\.]", "");
-        }
-
-        private String getAllText(CharSequence source, Spanned dest, int dstart) {
-            String allText = "";
-            if (!dest.toString().isEmpty()) {
-                if (source.toString().isEmpty()) {
-                    allText = deleteCharAtIndex(dest, dstart);
-                } else {
-                    allText = new StringBuilder(dest).insert(dstart, source).toString();
-                }
-            }
-            return allText;
-        }
-
-        private String deleteCharAtIndex(Spanned dest, int dstart) {
-            StringBuilder builder = new StringBuilder(dest);
-            builder.deleteCharAt(dstart);
-            return builder.toString();
         }
     }
 }
