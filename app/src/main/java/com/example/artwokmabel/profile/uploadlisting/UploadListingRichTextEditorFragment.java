@@ -661,6 +661,11 @@ public class UploadListingRichTextEditorFragment extends Fragment {
                         //get the two inputs
                         String i = one.getText().toString();
                         String j = two.getText().toString();
+
+                        if (!j.startsWith("http://") || !j.startsWith("https://")){
+                            j = "https://" + j;
+                        }
+
                         mEditor.insertLink(j,i);
 //                        clearAllBackgrounds();
                     }

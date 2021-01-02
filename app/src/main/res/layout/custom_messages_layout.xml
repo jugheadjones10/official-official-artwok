@@ -44,6 +44,8 @@
             android:maxWidth="300dp"
             android:paddingHorizontal="10dp"
             android:paddingVertical="5dp"
+            android:autoLink="web"
+            android:textIsSelectable="true"
             android:text="receiver messages here"
             android:textColor="@android:color/black"
             android:textSize="16sp"
@@ -64,6 +66,8 @@
             android:paddingHorizontal="10dp"
             android:paddingVertical="5dp"
             android:text="sender messages"
+            android:autoLink="web"
+            android:textIsSelectable="true"
             android:textColor="@android:color/black"
             android:textSize="16sp"
             android:textStyle="normal" />
